@@ -1,4 +1,4 @@
-name: Test and Build
+name: Test
 
 on:
   pull_request:
@@ -12,11 +12,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Install dependencies
-        env:
-          LAB_CUSTOMER: ${{ secrets.LAB_CUSTOMER }}
-          LAB_URL: ${{ secrets.LAB_URL }}
-          LAB_IAM_URL: ${{ secrets.LAB_IAM_URL }}
-          LAB_TOKEN: ${{ secrets.LAB_TOKEN }}
         run: |
           sudo apt-get update -y && sudo apt-get upgrade -y
           sudo apt-get install -y ca-certificates
@@ -27,6 +22,11 @@ jobs:
           sudo tar -C /usr/local -xzf go1.20.6.linux-amd64.tar.gz
           echo "export PATH=$PATH:/usr/local/go/bin" >> $GITHUB_ENV
       - name: Run tests
+        env:
+          LAB_CUSTOMER: ${{ secrets.LAB_CUSTOMER }}
+          LAB_URL: ${{ secrets.LAB_URL }}
+          LAB_IAM_URL: ${{ secrets.LAB_IAM_URL }}
+          LAB_TOKEN: ${{ secrets.LAB_TOKEN }}
         run: |
           cd provider/cmd/pulumi-resource-vco/tests
           go test helper_functions.go main_test.go -v
