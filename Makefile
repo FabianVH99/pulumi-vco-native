@@ -1,10 +1,10 @@
-PROJECT_NAME := Pulumi Xyz Resource Provider
+PROJECT_NAME := Pulumi Vco Resource Provider
 
-PACK             := xyz
+PACK             := vco
 PACKDIR          := sdk
-PROJECT          := github.com/pulumi/pulumi-xyz
-NODE_MODULE_NAME := @pulumi/xyz
-NUGET_PKG_NAME   := Pulumi.Xyz
+PROJECT          := github.com/fabianv-cloud/pulumi-vco-native
+NODE_MODULE_NAME := @pulumi/vco
+NUGET_PKG_NAME   := Pulumi.Vco
 
 PROVIDER        := pulumi-resource-${PACK}
 VERSION         ?= $(shell pulumictl get version)

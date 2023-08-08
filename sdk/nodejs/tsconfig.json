@@ -15,7 +15,27 @@
     "files": [
         "index.ts",
         "provider.ts",
-        "random.ts",
+        "resources/antiAffinityGroup.ts",
+        "resources/antiAffinityGroupVM.ts",
+        "resources/cloudspace.ts",
+        "resources/connectedCloudspace.ts",
+        "resources/disk.ts",
+        "resources/exposedDisk.ts",
+        "resources/externalNetwork.ts",
+        "resources/host.ts",
+        "resources/index.ts",
+        "resources/loadBalancer.ts",
+        "resources/objectSpaceLink.ts",
+        "resources/portForward.ts",
+        "resources/reverseProxy.ts",
+        "resources/serverPool.ts",
+        "resources/virtualMachine.ts",
+        "resources/virtualMachineCD.ts",
+        "resources/virtualMachineDisk.ts",
+        "resources/virtualMachineNIC.ts",
+        "types/index.ts",
+        "types/input.ts",
+        "types/output.ts",
         "utilities.ts"
     ]
 }

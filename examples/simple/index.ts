@@ -1,5 +1,5 @@
-import * as xyz from "@pulumi/xyz";
+import * as vco from "@pulumi/vco";
 
-const random = new xyz.Random("my-random", { length: 24 });
+const random = new vco.Random("my-random", { length: 24 });
 
 export const output = random.result;
