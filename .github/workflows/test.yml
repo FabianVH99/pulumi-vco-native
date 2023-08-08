@@ -1,0 +1,29 @@
+name: Test and Build
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        env:
+          LAB_CUSTOMER: ${{ secrets.LAB_CUSTOMER }}
+          LAB_URL: ${{ secrets.LAB_URL }}
+          LAB_IAM_URL: ${{ secrets.LAB_IAM_URL }}
+          LAB_TOKEN: ${{ secrets.LAB_TOKEN }}
+        run: |
+          sudo apt-get update -y && sudo apt-get upgrade -y
+          sudo apt-get install -y ca-certificates
+          echo 'Installing Dependencies...'
+          sudo apt-get -y install build-essential wget
+          echo 'Installing go...'
+          wget https://go.dev/dl/go1.20.6.linux-amd64.tar.gz
+          sudo tar -C /usr/local -xzf go1.20.6.linux-amd64.tar.gz
+          echo "export PATH=$PATH:/usr/local/go/bin" >> $GITHUB_ENV
+      - name: Run tests
+        run: |
+          cd provider/cmd/pulumi-resource-vco/tests
+          go test helper_functions.go main_test.go -v

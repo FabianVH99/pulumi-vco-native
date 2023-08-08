@@ -15,8 +15,8 @@ var DiskState resources.DiskState
 
 func TestProvider(t *testing.T) {
 	token := refreshJWT()
-	customer := os.Getenv("lab_customer")
-	url := os.Getenv("lab_url")
+	customer := os.Getenv("LAB_CUSTOMER")
+	url := os.Getenv("LAB_URL")
 
 	t.Run("TestCloudspace", func(t *testing.T) {
 		cloudspace := resources.Cloudspace{}

@@ -8,7 +8,7 @@ import (
 )
 
 func refreshJWT() string {
-	url := fmt.Sprintf("%s/%s", os.Getenv("lab_iam_url"), "/v1/oauth/jwt/refresh")
+	url := fmt.Sprintf("%s/%s", os.Getenv("LAB_IAM_URL"), "/v1/oauth/jwt/refresh")
 
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
@@ -16,7 +16,7 @@ func refreshJWT() string {
 		panic(fmt.Errorf("failed to refresh JWT: %s", err))
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", os.Getenv("lab_token")))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", os.Getenv("LAB_TOKEN")))
 	response, err := client.Do(req)
 	if err != nil {
 		panic(fmt.Errorf("failed to refresh JWT: %s", err))
