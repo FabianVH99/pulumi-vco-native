@@ -45,6 +45,7 @@ go_sdk:: $(WORKING_DIR)/bin/$(PROVIDER)
 nodejs_sdk:: VERSION := $(shell pulumictl get version --language javascript)
 nodejs_sdk::
 	rm -rf sdk/nodejs
+	chmod +x $(WORKING_DIR)/bin/$(PROVIDER)
 	pulumi package gen-sdk $(WORKING_DIR)/bin/$(PROVIDER) --language nodejs
 	cd ${PACKDIR}/nodejs/ && \
 		yarn install && \
