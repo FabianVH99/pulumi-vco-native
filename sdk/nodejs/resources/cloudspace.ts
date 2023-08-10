@@ -39,24 +39,24 @@ export class Cloudspace extends pulumi.CustomResource {
     public readonly customerID!: pulumi.Output<string>;
     public /*out*/ readonly external_network_id!: pulumi.Output<string>;
     public /*out*/ readonly external_network_ip!: pulumi.Output<string>;
-    public readonly firewall_custom!: pulumi.Output<outputs.resources.FirewallCustom>;
-    public readonly host!: pulumi.Output<string>;
+    public readonly firewall_custom!: pulumi.Output<outputs.resources.FirewallCustom | undefined>;
+    public readonly host!: pulumi.Output<string | undefined>;
     public readonly local_domain!: pulumi.Output<string>;
     public readonly location!: pulumi.Output<string>;
-    public readonly memory_quota!: pulumi.Output<number>;
+    public readonly memory_quota!: pulumi.Output<number | undefined>;
     public readonly name!: pulumi.Output<string>;
-    public readonly parent_cloudspace_id!: pulumi.Output<string>;
+    public readonly parent_cloudspace_id!: pulumi.Output<string | undefined>;
     public readonly private!: pulumi.Output<boolean>;
     public /*out*/ readonly private_network!: pulumi.Output<string>;
-    public readonly public_ip_quota!: pulumi.Output<number>;
+    public readonly public_ip_quota!: pulumi.Output<number | undefined>;
     public /*out*/ readonly resource_limits!: pulumi.Output<outputs.resources.ResourceLimits>;
     public /*out*/ readonly router_type!: pulumi.Output<string>;
     public /*out*/ readonly status!: pulumi.Output<string>;
     public readonly token!: pulumi.Output<string>;
     public /*out*/ readonly update_time!: pulumi.Output<number>;
     public readonly url!: pulumi.Output<string>;
-    public readonly vcpu_quota!: pulumi.Output<number>;
-    public readonly vdisk_space_quota!: pulumi.Output<number>;
+    public readonly vcpu_quota!: pulumi.Output<number | undefined>;
+    public readonly vdisk_space_quota!: pulumi.Output<number | undefined>;
 
     /**
      * Create a Cloudspace resource with the given unique name, arguments, and options.
@@ -75,26 +75,11 @@ export class Cloudspace extends pulumi.CustomResource {
             if ((!args || args.externalNetworkID === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'externalNetworkID'");
             }
-            if ((!args || args.firewall_custom === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'firewall_custom'");
-            }
-            if ((!args || args.host === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'host'");
-            }
-            if ((!args || args.local_domain === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'local_domain'");
-            }
             if ((!args || args.location === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'location'");
             }
-            if ((!args || args.memory_quota === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'memory_quota'");
-            }
             if ((!args || args.name === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'name'");
-            }
-            if ((!args || args.parent_cloudspace_id === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'parent_cloudspace_id'");
             }
             if ((!args || args.private === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'private'");
@@ -102,20 +87,11 @@ export class Cloudspace extends pulumi.CustomResource {
             if ((!args || args.privateNetwork === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'privateNetwork'");
             }
-            if ((!args || args.public_ip_quota === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'public_ip_quota'");
-            }
             if ((!args || args.token === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'token'");
             }
             if ((!args || args.url === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'url'");
-            }
-            if ((!args || args.vcpu_quota === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'vcpu_quota'");
-            }
-            if ((!args || args.vdisk_space_quota === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'vdisk_space_quota'");
             }
             resourceInputs["customerID"] = args ? args.customerID : undefined;
             resourceInputs["externalNetworkID"] = args ? args.externalNetworkID : undefined;
@@ -180,18 +156,18 @@ export class Cloudspace extends pulumi.CustomResource {
 export interface CloudspaceArgs {
     customerID: pulumi.Input<string>;
     externalNetworkID: pulumi.Input<number>;
-    firewall_custom: pulumi.Input<inputs.resources.FirewallCustomArgs>;
-    host: pulumi.Input<string>;
-    local_domain: pulumi.Input<string>;
+    firewall_custom?: pulumi.Input<inputs.resources.FirewallCustomArgs>;
+    host?: pulumi.Input<string>;
+    local_domain?: pulumi.Input<string>;
     location: pulumi.Input<string>;
-    memory_quota: pulumi.Input<number>;
+    memory_quota?: pulumi.Input<number>;
     name: pulumi.Input<string>;
-    parent_cloudspace_id: pulumi.Input<string>;
+    parent_cloudspace_id?: pulumi.Input<string>;
     private: pulumi.Input<boolean>;
     privateNetwork: pulumi.Input<string>;
-    public_ip_quota: pulumi.Input<number>;
+    public_ip_quota?: pulumi.Input<number>;
     token: pulumi.Input<string>;
     url: pulumi.Input<string>;
-    vcpu_quota: pulumi.Input<number>;
-    vdisk_space_quota: pulumi.Input<number>;
+    vcpu_quota?: pulumi.Input<number>;
+    vdisk_space_quota?: pulumi.Input<number>;
 }

@@ -18,20 +18,22 @@ class ExposedDiskArgs:
                  cloudspace_id: pulumi.Input[str],
                  customer_id: pulumi.Input[str],
                  disk_id: pulumi.Input[int],
-                 iops: pulumi.Input[int],
-                 max_connections: pulumi.Input[int],
                  token: pulumi.Input[str],
-                 url: pulumi.Input[str]):
+                 url: pulumi.Input[str],
+                 iops: Optional[pulumi.Input[int]] = None,
+                 max_connections: Optional[pulumi.Input[int]] = None):
         """
         The set of arguments for constructing a ExposedDisk resource.
         """
         pulumi.set(__self__, "cloudspace_id", cloudspace_id)
         pulumi.set(__self__, "customer_id", customer_id)
         pulumi.set(__self__, "disk_id", disk_id)
-        pulumi.set(__self__, "iops", iops)
-        pulumi.set(__self__, "max_connections", max_connections)
         pulumi.set(__self__, "token", token)
         pulumi.set(__self__, "url", url)
+        if iops is not None:
+            pulumi.set(__self__, "iops", iops)
+        if max_connections is not None:
+            pulumi.set(__self__, "max_connections", max_connections)
 
     @property
     @pulumi.getter
@@ -62,24 +64,6 @@ class ExposedDiskArgs:
 
     @property
     @pulumi.getter
-    def iops(self) -> pulumi.Input[int]:
-        return pulumi.get(self, "iops")
-
-    @iops.setter
-    def iops(self, value: pulumi.Input[int]):
-        pulumi.set(self, "iops", value)
-
-    @property
-    @pulumi.getter
-    def max_connections(self) -> pulumi.Input[int]:
-        return pulumi.get(self, "max_connections")
-
-    @max_connections.setter
-    def max_connections(self, value: pulumi.Input[int]):
-        pulumi.set(self, "max_connections", value)
-
-    @property
-    @pulumi.getter
     def token(self) -> pulumi.Input[str]:
         return pulumi.get(self, "token")
 
@@ -95,6 +79,24 @@ class ExposedDiskArgs:
     @url.setter
     def url(self, value: pulumi.Input[str]):
         pulumi.set(self, "url", value)
+
+    @property
+    @pulumi.getter
+    def iops(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "iops")
+
+    @iops.setter
+    def iops(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "iops", value)
+
+    @property
+    @pulumi.getter
+    def max_connections(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "max_connections")
+
+    @max_connections.setter
+    def max_connections(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "max_connections", value)
 
 
 class ExposedDisk(pulumi.CustomResource):
@@ -163,11 +165,7 @@ class ExposedDisk(pulumi.CustomResource):
             if disk_id is None and not opts.urn:
                 raise TypeError("Missing required property 'disk_id'")
             __props__.__dict__["disk_id"] = disk_id
-            if iops is None and not opts.urn:
-                raise TypeError("Missing required property 'iops'")
             __props__.__dict__["iops"] = iops
-            if max_connections is None and not opts.urn:
-                raise TypeError("Missing required property 'max_connections'")
             __props__.__dict__["max_connections"] = max_connections
             if token is None and not opts.urn:
                 raise TypeError("Missing required property 'token'")
@@ -232,12 +230,12 @@ class ExposedDisk(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def iops(self) -> pulumi.Output[int]:
+    def iops(self) -> pulumi.Output[Optional[int]]:
         return pulumi.get(self, "iops")
 
     @property
     @pulumi.getter
-    def max_connections(self) -> pulumi.Output[int]:
+    def max_connections(self) -> pulumi.Output[Optional[int]]:
         return pulumi.get(self, "max_connections")
 
     @property

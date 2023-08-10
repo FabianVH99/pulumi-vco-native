@@ -16,27 +16,31 @@ class VirtualMachineNICArgs:
     def __init__(__self__, *,
                  cloudspace_id: pulumi.Input[str],
                  customer_id: pulumi.Input[str],
-                 external_cloudspace_id: pulumi.Input[str],
                  external_network_id: pulumi.Input[int],
-                 external_network_ip: pulumi.Input[str],
-                 external_network_type: pulumi.Input[str],
-                 model: pulumi.Input[str],
                  token: pulumi.Input[str],
                  url: pulumi.Input[str],
-                 vm_id: pulumi.Input[int]):
+                 vm_id: pulumi.Input[int],
+                 external_cloudspace_id: Optional[pulumi.Input[str]] = None,
+                 external_network_ip: Optional[pulumi.Input[str]] = None,
+                 external_network_type: Optional[pulumi.Input[str]] = None,
+                 model: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a VirtualMachineNIC resource.
         """
         pulumi.set(__self__, "cloudspace_id", cloudspace_id)
         pulumi.set(__self__, "customer_id", customer_id)
-        pulumi.set(__self__, "external_cloudspace_id", external_cloudspace_id)
         pulumi.set(__self__, "external_network_id", external_network_id)
-        pulumi.set(__self__, "external_network_ip", external_network_ip)
-        pulumi.set(__self__, "external_network_type", external_network_type)
-        pulumi.set(__self__, "model", model)
         pulumi.set(__self__, "token", token)
         pulumi.set(__self__, "url", url)
         pulumi.set(__self__, "vm_id", vm_id)
+        if external_cloudspace_id is not None:
+            pulumi.set(__self__, "external_cloudspace_id", external_cloudspace_id)
+        if external_network_ip is not None:
+            pulumi.set(__self__, "external_network_ip", external_network_ip)
+        if external_network_type is not None:
+            pulumi.set(__self__, "external_network_type", external_network_type)
+        if model is not None:
+            pulumi.set(__self__, "model", model)
 
     @property
     @pulumi.getter
@@ -58,48 +62,12 @@ class VirtualMachineNICArgs:
 
     @property
     @pulumi.getter
-    def external_cloudspace_id(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "external_cloudspace_id")
-
-    @external_cloudspace_id.setter
-    def external_cloudspace_id(self, value: pulumi.Input[str]):
-        pulumi.set(self, "external_cloudspace_id", value)
-
-    @property
-    @pulumi.getter
     def external_network_id(self) -> pulumi.Input[int]:
         return pulumi.get(self, "external_network_id")
 
     @external_network_id.setter
     def external_network_id(self, value: pulumi.Input[int]):
         pulumi.set(self, "external_network_id", value)
-
-    @property
-    @pulumi.getter
-    def external_network_ip(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "external_network_ip")
-
-    @external_network_ip.setter
-    def external_network_ip(self, value: pulumi.Input[str]):
-        pulumi.set(self, "external_network_ip", value)
-
-    @property
-    @pulumi.getter
-    def external_network_type(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "external_network_type")
-
-    @external_network_type.setter
-    def external_network_type(self, value: pulumi.Input[str]):
-        pulumi.set(self, "external_network_type", value)
-
-    @property
-    @pulumi.getter
-    def model(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "model")
-
-    @model.setter
-    def model(self, value: pulumi.Input[str]):
-        pulumi.set(self, "model", value)
 
     @property
     @pulumi.getter
@@ -127,6 +95,42 @@ class VirtualMachineNICArgs:
     @vm_id.setter
     def vm_id(self, value: pulumi.Input[int]):
         pulumi.set(self, "vm_id", value)
+
+    @property
+    @pulumi.getter
+    def external_cloudspace_id(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "external_cloudspace_id")
+
+    @external_cloudspace_id.setter
+    def external_cloudspace_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "external_cloudspace_id", value)
+
+    @property
+    @pulumi.getter
+    def external_network_ip(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "external_network_ip")
+
+    @external_network_ip.setter
+    def external_network_ip(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "external_network_ip", value)
+
+    @property
+    @pulumi.getter
+    def external_network_type(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "external_network_type")
+
+    @external_network_type.setter
+    def external_network_type(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "external_network_type", value)
+
+    @property
+    @pulumi.getter
+    def model(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "model")
+
+    @model.setter
+    def model(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "model", value)
 
 
 class VirtualMachineNIC(pulumi.CustomResource):
@@ -198,20 +202,12 @@ class VirtualMachineNIC(pulumi.CustomResource):
             if customer_id is None and not opts.urn:
                 raise TypeError("Missing required property 'customer_id'")
             __props__.__dict__["customer_id"] = customer_id
-            if external_cloudspace_id is None and not opts.urn:
-                raise TypeError("Missing required property 'external_cloudspace_id'")
             __props__.__dict__["external_cloudspace_id"] = external_cloudspace_id
             if external_network_id is None and not opts.urn:
                 raise TypeError("Missing required property 'external_network_id'")
             __props__.__dict__["external_network_id"] = external_network_id
-            if external_network_ip is None and not opts.urn:
-                raise TypeError("Missing required property 'external_network_ip'")
             __props__.__dict__["external_network_ip"] = external_network_ip
-            if external_network_type is None and not opts.urn:
-                raise TypeError("Missing required property 'external_network_type'")
             __props__.__dict__["external_network_type"] = external_network_type
-            if model is None and not opts.urn:
-                raise TypeError("Missing required property 'model'")
             __props__.__dict__["model"] = model
             if token is None and not opts.urn:
                 raise TypeError("Missing required property 'token'")
@@ -293,12 +289,12 @@ class VirtualMachineNIC(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def external_network_ip(self) -> pulumi.Output[str]:
+    def external_network_ip(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "external_network_ip")
 
     @property
     @pulumi.getter
-    def external_network_type(self) -> pulumi.Output[str]:
+    def external_network_type(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "external_network_type")
 
     @property

@@ -15,98 +15,67 @@ __all__ = ['VirtualMachineArgs', 'VirtualMachine']
 @pulumi.input_type
 class VirtualMachineArgs:
     def __init__(__self__, *,
-                 acronis: pulumi.Input[bool],
-                 all_vm_disks: pulumi.Input[bool],
-                 boot_disk_id: pulumi.Input[int],
-                 boot_type: pulumi.Input[str],
-                 cdrom_id: pulumi.Input[int],
                  cloudspace_id: pulumi.Input[str],
                  customer_id: pulumi.Input[str],
-                 data_disks: pulumi.Input[Sequence[pulumi.Input[int]]],
                  description: pulumi.Input[str],
-                 disk_size: pulumi.Input[int],
-                 enable_vm_agent: pulumi.Input[bool],
-                 image_id: pulumi.Input[int],
                  memory: pulumi.Input[int],
                  name: pulumi.Input[str],
-                 os_name: pulumi.Input[str],
-                 os_type: pulumi.Input[str],
-                 private_ip: pulumi.Input[str],
-                 snapshot_id: pulumi.Input[str],
                  token: pulumi.Input[str],
                  url: pulumi.Input[str],
-                 user_data: pulumi.Input[str],
-                 vcpus: pulumi.Input[int]):
+                 vcpus: pulumi.Input[int],
+                 acronis: Optional[pulumi.Input[bool]] = None,
+                 all_vm_disks: Optional[pulumi.Input[bool]] = None,
+                 boot_disk_id: Optional[pulumi.Input[int]] = None,
+                 boot_type: Optional[pulumi.Input[str]] = None,
+                 cdrom_id: Optional[pulumi.Input[int]] = None,
+                 data_disks: Optional[pulumi.Input[Sequence[pulumi.Input[int]]]] = None,
+                 disk_size: Optional[pulumi.Input[int]] = None,
+                 enable_vm_agent: Optional[pulumi.Input[bool]] = None,
+                 image_id: Optional[pulumi.Input[int]] = None,
+                 os_name: Optional[pulumi.Input[str]] = None,
+                 os_type: Optional[pulumi.Input[str]] = None,
+                 private_ip: Optional[pulumi.Input[str]] = None,
+                 snapshot_id: Optional[pulumi.Input[str]] = None,
+                 user_data: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a VirtualMachine resource.
         """
-        pulumi.set(__self__, "acronis", acronis)
-        pulumi.set(__self__, "all_vm_disks", all_vm_disks)
-        pulumi.set(__self__, "boot_disk_id", boot_disk_id)
-        pulumi.set(__self__, "boot_type", boot_type)
-        pulumi.set(__self__, "cdrom_id", cdrom_id)
         pulumi.set(__self__, "cloudspace_id", cloudspace_id)
         pulumi.set(__self__, "customer_id", customer_id)
-        pulumi.set(__self__, "data_disks", data_disks)
         pulumi.set(__self__, "description", description)
-        pulumi.set(__self__, "disk_size", disk_size)
-        pulumi.set(__self__, "enable_vm_agent", enable_vm_agent)
-        pulumi.set(__self__, "image_id", image_id)
         pulumi.set(__self__, "memory", memory)
         pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "os_name", os_name)
-        pulumi.set(__self__, "os_type", os_type)
-        pulumi.set(__self__, "private_ip", private_ip)
-        pulumi.set(__self__, "snapshot_id", snapshot_id)
         pulumi.set(__self__, "token", token)
         pulumi.set(__self__, "url", url)
-        pulumi.set(__self__, "user_data", user_data)
         pulumi.set(__self__, "vcpus", vcpus)
-
-    @property
-    @pulumi.getter
-    def acronis(self) -> pulumi.Input[bool]:
-        return pulumi.get(self, "acronis")
-
-    @acronis.setter
-    def acronis(self, value: pulumi.Input[bool]):
-        pulumi.set(self, "acronis", value)
-
-    @property
-    @pulumi.getter
-    def all_vm_disks(self) -> pulumi.Input[bool]:
-        return pulumi.get(self, "all_vm_disks")
-
-    @all_vm_disks.setter
-    def all_vm_disks(self, value: pulumi.Input[bool]):
-        pulumi.set(self, "all_vm_disks", value)
-
-    @property
-    @pulumi.getter
-    def boot_disk_id(self) -> pulumi.Input[int]:
-        return pulumi.get(self, "boot_disk_id")
-
-    @boot_disk_id.setter
-    def boot_disk_id(self, value: pulumi.Input[int]):
-        pulumi.set(self, "boot_disk_id", value)
-
-    @property
-    @pulumi.getter
-    def boot_type(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "boot_type")
-
-    @boot_type.setter
-    def boot_type(self, value: pulumi.Input[str]):
-        pulumi.set(self, "boot_type", value)
-
-    @property
-    @pulumi.getter
-    def cdrom_id(self) -> pulumi.Input[int]:
-        return pulumi.get(self, "cdrom_id")
-
-    @cdrom_id.setter
-    def cdrom_id(self, value: pulumi.Input[int]):
-        pulumi.set(self, "cdrom_id", value)
+        if acronis is not None:
+            pulumi.set(__self__, "acronis", acronis)
+        if all_vm_disks is not None:
+            pulumi.set(__self__, "all_vm_disks", all_vm_disks)
+        if boot_disk_id is not None:
+            pulumi.set(__self__, "boot_disk_id", boot_disk_id)
+        if boot_type is not None:
+            pulumi.set(__self__, "boot_type", boot_type)
+        if cdrom_id is not None:
+            pulumi.set(__self__, "cdrom_id", cdrom_id)
+        if data_disks is not None:
+            pulumi.set(__self__, "data_disks", data_disks)
+        if disk_size is not None:
+            pulumi.set(__self__, "disk_size", disk_size)
+        if enable_vm_agent is not None:
+            pulumi.set(__self__, "enable_vm_agent", enable_vm_agent)
+        if image_id is not None:
+            pulumi.set(__self__, "image_id", image_id)
+        if os_name is not None:
+            pulumi.set(__self__, "os_name", os_name)
+        if os_type is not None:
+            pulumi.set(__self__, "os_type", os_type)
+        if private_ip is not None:
+            pulumi.set(__self__, "private_ip", private_ip)
+        if snapshot_id is not None:
+            pulumi.set(__self__, "snapshot_id", snapshot_id)
+        if user_data is not None:
+            pulumi.set(__self__, "user_data", user_data)
 
     @property
     @pulumi.getter
@@ -128,48 +97,12 @@ class VirtualMachineArgs:
 
     @property
     @pulumi.getter
-    def data_disks(self) -> pulumi.Input[Sequence[pulumi.Input[int]]]:
-        return pulumi.get(self, "data_disks")
-
-    @data_disks.setter
-    def data_disks(self, value: pulumi.Input[Sequence[pulumi.Input[int]]]):
-        pulumi.set(self, "data_disks", value)
-
-    @property
-    @pulumi.getter
     def description(self) -> pulumi.Input[str]:
         return pulumi.get(self, "description")
 
     @description.setter
     def description(self, value: pulumi.Input[str]):
         pulumi.set(self, "description", value)
-
-    @property
-    @pulumi.getter
-    def disk_size(self) -> pulumi.Input[int]:
-        return pulumi.get(self, "disk_size")
-
-    @disk_size.setter
-    def disk_size(self, value: pulumi.Input[int]):
-        pulumi.set(self, "disk_size", value)
-
-    @property
-    @pulumi.getter
-    def enable_vm_agent(self) -> pulumi.Input[bool]:
-        return pulumi.get(self, "enable_vm_agent")
-
-    @enable_vm_agent.setter
-    def enable_vm_agent(self, value: pulumi.Input[bool]):
-        pulumi.set(self, "enable_vm_agent", value)
-
-    @property
-    @pulumi.getter
-    def image_id(self) -> pulumi.Input[int]:
-        return pulumi.get(self, "image_id")
-
-    @image_id.setter
-    def image_id(self, value: pulumi.Input[int]):
-        pulumi.set(self, "image_id", value)
 
     @property
     @pulumi.getter
@@ -191,42 +124,6 @@ class VirtualMachineArgs:
 
     @property
     @pulumi.getter
-    def os_name(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "os_name")
-
-    @os_name.setter
-    def os_name(self, value: pulumi.Input[str]):
-        pulumi.set(self, "os_name", value)
-
-    @property
-    @pulumi.getter
-    def os_type(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "os_type")
-
-    @os_type.setter
-    def os_type(self, value: pulumi.Input[str]):
-        pulumi.set(self, "os_type", value)
-
-    @property
-    @pulumi.getter
-    def private_ip(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "private_ip")
-
-    @private_ip.setter
-    def private_ip(self, value: pulumi.Input[str]):
-        pulumi.set(self, "private_ip", value)
-
-    @property
-    @pulumi.getter
-    def snapshot_id(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "snapshot_id")
-
-    @snapshot_id.setter
-    def snapshot_id(self, value: pulumi.Input[str]):
-        pulumi.set(self, "snapshot_id", value)
-
-    @property
-    @pulumi.getter
     def token(self) -> pulumi.Input[str]:
         return pulumi.get(self, "token")
 
@@ -245,21 +142,138 @@ class VirtualMachineArgs:
 
     @property
     @pulumi.getter
-    def user_data(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "user_data")
-
-    @user_data.setter
-    def user_data(self, value: pulumi.Input[str]):
-        pulumi.set(self, "user_data", value)
-
-    @property
-    @pulumi.getter
     def vcpus(self) -> pulumi.Input[int]:
         return pulumi.get(self, "vcpus")
 
     @vcpus.setter
     def vcpus(self, value: pulumi.Input[int]):
         pulumi.set(self, "vcpus", value)
+
+    @property
+    @pulumi.getter
+    def acronis(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "acronis")
+
+    @acronis.setter
+    def acronis(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "acronis", value)
+
+    @property
+    @pulumi.getter
+    def all_vm_disks(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "all_vm_disks")
+
+    @all_vm_disks.setter
+    def all_vm_disks(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "all_vm_disks", value)
+
+    @property
+    @pulumi.getter
+    def boot_disk_id(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "boot_disk_id")
+
+    @boot_disk_id.setter
+    def boot_disk_id(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "boot_disk_id", value)
+
+    @property
+    @pulumi.getter
+    def boot_type(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "boot_type")
+
+    @boot_type.setter
+    def boot_type(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "boot_type", value)
+
+    @property
+    @pulumi.getter
+    def cdrom_id(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "cdrom_id")
+
+    @cdrom_id.setter
+    def cdrom_id(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "cdrom_id", value)
+
+    @property
+    @pulumi.getter
+    def data_disks(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[int]]]]:
+        return pulumi.get(self, "data_disks")
+
+    @data_disks.setter
+    def data_disks(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[int]]]]):
+        pulumi.set(self, "data_disks", value)
+
+    @property
+    @pulumi.getter
+    def disk_size(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "disk_size")
+
+    @disk_size.setter
+    def disk_size(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "disk_size", value)
+
+    @property
+    @pulumi.getter
+    def enable_vm_agent(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "enable_vm_agent")
+
+    @enable_vm_agent.setter
+    def enable_vm_agent(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "enable_vm_agent", value)
+
+    @property
+    @pulumi.getter
+    def image_id(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "image_id")
+
+    @image_id.setter
+    def image_id(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "image_id", value)
+
+    @property
+    @pulumi.getter
+    def os_name(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "os_name")
+
+    @os_name.setter
+    def os_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "os_name", value)
+
+    @property
+    @pulumi.getter
+    def os_type(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "os_type")
+
+    @os_type.setter
+    def os_type(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "os_type", value)
+
+    @property
+    @pulumi.getter
+    def private_ip(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "private_ip")
+
+    @private_ip.setter
+    def private_ip(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "private_ip", value)
+
+    @property
+    @pulumi.getter
+    def snapshot_id(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "snapshot_id")
+
+    @snapshot_id.setter
+    def snapshot_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "snapshot_id", value)
+
+    @property
+    @pulumi.getter
+    def user_data(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "user_data")
+
+    @user_data.setter
+    def user_data(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "user_data", value)
 
 
 class VirtualMachine(pulumi.CustomResource):
@@ -349,20 +363,10 @@ class VirtualMachine(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = VirtualMachineArgs.__new__(VirtualMachineArgs)
 
-            if acronis is None and not opts.urn:
-                raise TypeError("Missing required property 'acronis'")
             __props__.__dict__["acronis"] = acronis
-            if all_vm_disks is None and not opts.urn:
-                raise TypeError("Missing required property 'all_vm_disks'")
             __props__.__dict__["all_vm_disks"] = all_vm_disks
-            if boot_disk_id is None and not opts.urn:
-                raise TypeError("Missing required property 'boot_disk_id'")
             __props__.__dict__["boot_disk_id"] = boot_disk_id
-            if boot_type is None and not opts.urn:
-                raise TypeError("Missing required property 'boot_type'")
             __props__.__dict__["boot_type"] = boot_type
-            if cdrom_id is None and not opts.urn:
-                raise TypeError("Missing required property 'cdrom_id'")
             __props__.__dict__["cdrom_id"] = cdrom_id
             if cloudspace_id is None and not opts.urn:
                 raise TypeError("Missing required property 'cloudspace_id'")
@@ -370,20 +374,12 @@ class VirtualMachine(pulumi.CustomResource):
             if customer_id is None and not opts.urn:
                 raise TypeError("Missing required property 'customer_id'")
             __props__.__dict__["customer_id"] = customer_id
-            if data_disks is None and not opts.urn:
-                raise TypeError("Missing required property 'data_disks'")
             __props__.__dict__["data_disks"] = data_disks
             if description is None and not opts.urn:
                 raise TypeError("Missing required property 'description'")
             __props__.__dict__["description"] = description
-            if disk_size is None and not opts.urn:
-                raise TypeError("Missing required property 'disk_size'")
             __props__.__dict__["disk_size"] = disk_size
-            if enable_vm_agent is None and not opts.urn:
-                raise TypeError("Missing required property 'enable_vm_agent'")
             __props__.__dict__["enable_vm_agent"] = enable_vm_agent
-            if image_id is None and not opts.urn:
-                raise TypeError("Missing required property 'image_id'")
             __props__.__dict__["image_id"] = image_id
             if memory is None and not opts.urn:
                 raise TypeError("Missing required property 'memory'")
@@ -391,17 +387,9 @@ class VirtualMachine(pulumi.CustomResource):
             if name is None and not opts.urn:
                 raise TypeError("Missing required property 'name'")
             __props__.__dict__["name"] = name
-            if os_name is None and not opts.urn:
-                raise TypeError("Missing required property 'os_name'")
             __props__.__dict__["os_name"] = os_name
-            if os_type is None and not opts.urn:
-                raise TypeError("Missing required property 'os_type'")
             __props__.__dict__["os_type"] = os_type
-            if private_ip is None and not opts.urn:
-                raise TypeError("Missing required property 'private_ip'")
             __props__.__dict__["private_ip"] = private_ip
-            if snapshot_id is None and not opts.urn:
-                raise TypeError("Missing required property 'snapshot_id'")
             __props__.__dict__["snapshot_id"] = snapshot_id
             if token is None and not opts.urn:
                 raise TypeError("Missing required property 'token'")
@@ -409,8 +397,6 @@ class VirtualMachine(pulumi.CustomResource):
             if url is None and not opts.urn:
                 raise TypeError("Missing required property 'url'")
             __props__.__dict__["url"] = url
-            if user_data is None and not opts.urn:
-                raise TypeError("Missing required property 'user_data'")
             __props__.__dict__["user_data"] = user_data
             if vcpus is None and not opts.urn:
                 raise TypeError("Missing required property 'vcpus'")
@@ -499,7 +485,7 @@ class VirtualMachine(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def acronis(self) -> pulumi.Output[bool]:
+    def acronis(self) -> pulumi.Output[Optional[bool]]:
         return pulumi.get(self, "acronis")
 
     @property
@@ -509,7 +495,7 @@ class VirtualMachine(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def all_vm_disks(self) -> pulumi.Output[bool]:
+    def all_vm_disks(self) -> pulumi.Output[Optional[bool]]:
         return pulumi.get(self, "all_vm_disks")
 
     @property
@@ -534,7 +520,7 @@ class VirtualMachine(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def cdrom_id(self) -> pulumi.Output[int]:
+    def cdrom_id(self) -> pulumi.Output[Optional[int]]:
         return pulumi.get(self, "cdrom_id")
 
     @property
@@ -564,7 +550,7 @@ class VirtualMachine(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def data_disks(self) -> pulumi.Output[Sequence[int]]:
+    def data_disks(self) -> pulumi.Output[Optional[Sequence[int]]]:
         return pulumi.get(self, "data_disks")
 
     @property
@@ -574,7 +560,7 @@ class VirtualMachine(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def disk_size(self) -> pulumi.Output[int]:
+    def disk_size(self) -> pulumi.Output[Optional[int]]:
         return pulumi.get(self, "disk_size")
 
     @property
@@ -584,7 +570,7 @@ class VirtualMachine(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def enable_vm_agent(self) -> pulumi.Output[bool]:
+    def enable_vm_agent(self) -> pulumi.Output[Optional[bool]]:
         return pulumi.get(self, "enable_vm_agent")
 
     @property
@@ -634,22 +620,22 @@ class VirtualMachine(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def os_name(self) -> pulumi.Output[str]:
+    def os_name(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "os_name")
 
     @property
     @pulumi.getter
-    def os_type(self) -> pulumi.Output[str]:
+    def os_type(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "os_type")
 
     @property
     @pulumi.getter
-    def private_ip(self) -> pulumi.Output[str]:
+    def private_ip(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "private_ip")
 
     @property
     @pulumi.getter
-    def snapshot_id(self) -> pulumi.Output[str]:
+    def snapshot_id(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "snapshot_id")
 
     @property
@@ -684,7 +670,7 @@ class VirtualMachine(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def user_data(self) -> pulumi.Output[str]:
+    def user_data(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "user_data")
 
     @property

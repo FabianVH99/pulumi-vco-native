@@ -32,7 +32,7 @@ type LoadBalancerArgs struct {
 	CustomerID   string  `pulumi:"customerID"`
 	CloudSpaceID string  `pulumi:"cloudspace_id"`
 	Name         string  `pulumi:"name"`
-	Description  *string `pulumi:"description"`
+	Description  *string `pulumi:"description,optional"`
 	Type         string  `pulumi:"type"`
 	FrontEnd     FrontEnd
 	BackEnd      BackEnd
@@ -40,14 +40,14 @@ type LoadBalancerArgs struct {
 
 type FrontEnd struct {
 	Port      int     `pulumi:"port" json:"port"`
-	IPAddress *string `pulumi:"ip_address" json:"ip_address"`
-	TLS       *TLS    `pulumi:"tls" json:"tls"`
+	IPAddress *string `pulumi:"ip_address,optional" json:"ip_address"`
+	TLS       *TLS    `pulumi:"tls,optional" json:"tls"`
 }
 
 type TLS struct {
-	IsEnabled      *bool   `pulumi:"is_enabled" json:"is_enabled"`
-	Domain         *string `pulumi:"domain" json:"domain"`
-	TLSTermination *bool   `pulumi:"tls_termination" json:"tls_termination"`
+	IsEnabled      *bool   `pulumi:"is_enabled,optional" json:"is_enabled"`
+	Domain         *string `pulumi:"domain,optional" json:"domain"`
+	TLSTermination *bool   `pulumi:"tls_termination,optional" json:"tls_termination"`
 }
 
 type BackEnd struct {

@@ -40,9 +40,6 @@ func NewLoadBalancer(ctx *pulumi.Context,
 	if args.CustomerID == nil {
 		return nil, errors.New("invalid value for required argument 'CustomerID'")
 	}
-	if args.Description == nil {
-		return nil, errors.New("invalid value for required argument 'Description'")
-	}
 	if args.Name == nil {
 		return nil, errors.New("invalid value for required argument 'Name'")
 	}
@@ -88,20 +85,20 @@ func (LoadBalancerState) ElementType() reflect.Type {
 }
 
 type loadBalancerArgs struct {
-	Cloudspace_id string `pulumi:"cloudspace_id"`
-	CustomerID    string `pulumi:"customerID"`
-	Description   string `pulumi:"description"`
-	Name          string `pulumi:"name"`
-	Token         string `pulumi:"token"`
-	Type          string `pulumi:"type"`
-	Url           string `pulumi:"url"`
+	Cloudspace_id string  `pulumi:"cloudspace_id"`
+	CustomerID    string  `pulumi:"customerID"`
+	Description   *string `pulumi:"description"`
+	Name          string  `pulumi:"name"`
+	Token         string  `pulumi:"token"`
+	Type          string  `pulumi:"type"`
+	Url           string  `pulumi:"url"`
 }
 
 // The set of arguments for constructing a LoadBalancer resource.
 type LoadBalancerArgs struct {
 	Cloudspace_id pulumi.StringInput
 	CustomerID    pulumi.StringInput
-	Description   pulumi.StringInput
+	Description   pulumi.StringPtrInput
 	Name          pulumi.StringInput
 	Token         pulumi.StringInput
 	Type          pulumi.StringInput

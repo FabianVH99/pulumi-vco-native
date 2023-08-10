@@ -96,8 +96,8 @@ namespace Pulumi.Vco.Resources
         [Input("customerID", required: true)]
         public Input<string> CustomerID { get; set; } = null!;
 
-        [Input("description", required: true)]
-        public Input<string> Description { get; set; } = null!;
+        [Input("description")]
+        public Input<string>? Description { get; set; }
 
         [Input("front_end", required: true)]
         public Input<Inputs.ReverseProxyFrontEndArgs> Front_end { get; set; } = null!;

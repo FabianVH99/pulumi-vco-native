@@ -22,7 +22,7 @@ namespace Pulumi.Vco.Resources
         public Output<string> Description { get; private set; } = null!;
 
         [Output("detach")]
-        public Output<bool> Detach { get; private set; } = null!;
+        public Output<bool?> Detach { get; private set; } = null!;
 
         [Output("disk_id")]
         public Output<int> Disk_id { get; private set; } = null!;
@@ -40,7 +40,7 @@ namespace Pulumi.Vco.Resources
         public Output<bool> Exposed { get; private set; } = null!;
 
         [Output("iops")]
-        public Output<int> Iops { get; private set; } = null!;
+        public Output<int?> Iops { get; private set; } = null!;
 
         [Output("iotune")]
         public Output<Outputs.IOTune> Iotune { get; private set; } = null!;
@@ -55,7 +55,7 @@ namespace Pulumi.Vco.Resources
         public Output<string> Order { get; private set; } = null!;
 
         [Output("permanently")]
-        public Output<bool> Permanently { get; private set; } = null!;
+        public Output<bool?> Permanently { get; private set; } = null!;
 
         [Output("port")]
         public Output<int> Port { get; private set; } = null!;
@@ -123,8 +123,8 @@ namespace Pulumi.Vco.Resources
         [Input("description", required: true)]
         public Input<string> Description { get; set; } = null!;
 
-        [Input("detach", required: true)]
-        public Input<bool> Detach { get; set; } = null!;
+        [Input("detach")]
+        public Input<bool>? Detach { get; set; }
 
         [Input("disk_name", required: true)]
         public Input<string> Disk_name { get; set; } = null!;
@@ -132,17 +132,17 @@ namespace Pulumi.Vco.Resources
         [Input("disk_size", required: true)]
         public Input<int> Disk_size { get; set; } = null!;
 
-        [Input("disk_type", required: true)]
-        public Input<string> Disk_type { get; set; } = null!;
+        [Input("disk_type")]
+        public Input<string>? Disk_type { get; set; }
 
-        [Input("iops", required: true)]
-        public Input<int> Iops { get; set; } = null!;
+        [Input("iops")]
+        public Input<int>? Iops { get; set; }
 
         [Input("location", required: true)]
         public Input<string> Location { get; set; } = null!;
 
-        [Input("permanently", required: true)]
-        public Input<bool> Permanently { get; set; } = null!;
+        [Input("permanently")]
+        public Input<bool>? Permanently { get; set; }
 
         [Input("token", required: true)]
         public Input<string> Token { get; set; } = null!;
@@ -150,8 +150,8 @@ namespace Pulumi.Vco.Resources
         [Input("url", required: true)]
         public Input<string> Url { get; set; } = null!;
 
-        [Input("vm_id", required: true)]
-        public Input<string> Vm_id { get; set; } = null!;
+        [Input("vm_id")]
+        public Input<string>? Vm_id { get; set; }
 
         public DiskArgs()
         {

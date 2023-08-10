@@ -12,20 +12,20 @@ namespace Pulumi.Vco.Resources.Inputs
 
     public sealed class HealthCheckArgs : global::Pulumi.ResourceArgs
     {
-        [Input("interval", required: true)]
-        public Input<int> Interval { get; set; } = null!;
+        [Input("interval")]
+        public Input<int>? Interval { get; set; }
 
-        [Input("path", required: true)]
-        public Input<string> Path { get; set; } = null!;
+        [Input("path")]
+        public Input<string>? Path { get; set; }
 
-        [Input("port", required: true)]
-        public Input<int> Port { get; set; } = null!;
+        [Input("port")]
+        public Input<int>? Port { get; set; }
 
-        [Input("scheme", required: true)]
-        public Input<string> Scheme { get; set; } = null!;
+        [Input("scheme")]
+        public Input<string>? Scheme { get; set; }
 
-        [Input("timeout", required: true)]
-        public Input<int> Timeout { get; set; } = null!;
+        [Input("timeout")]
+        public Input<int>? Timeout { get; set; }
 
         public HealthCheckArgs()
         {

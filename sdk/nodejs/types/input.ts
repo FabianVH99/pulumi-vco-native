@@ -7,20 +7,20 @@ import * as outputs from "../types/output";
 
 export namespace resources {
     export interface FirewallCustomArgs {
-        cdrom_id: pulumi.Input<number>;
-        disk_size: pulumi.Input<number>;
-        image_id: pulumi.Input<number>;
-        memory: pulumi.Input<number>;
-        type: pulumi.Input<string>;
-        vcpus: pulumi.Input<number>;
+        cdrom_id?: pulumi.Input<number>;
+        disk_size?: pulumi.Input<number>;
+        image_id?: pulumi.Input<number>;
+        memory?: pulumi.Input<number>;
+        type?: pulumi.Input<string>;
+        vcpus?: pulumi.Input<number>;
     }
 
     export interface HealthCheckArgs {
-        interval: pulumi.Input<number>;
-        path: pulumi.Input<string>;
-        port: pulumi.Input<number>;
-        scheme: pulumi.Input<string>;
-        timeout: pulumi.Input<number>;
+        interval?: pulumi.Input<number>;
+        path?: pulumi.Input<string>;
+        port?: pulumi.Input<number>;
+        scheme?: pulumi.Input<string>;
+        timeout?: pulumi.Input<number>;
     }
 
     export interface LetsEncryptArgs {
@@ -29,12 +29,12 @@ export namespace resources {
     }
 
     export interface OptionsArgs {
-        health_check: pulumi.Input<inputs.resources.HealthCheckArgs>;
-        sticky_session_cookie: pulumi.Input<inputs.resources.StickySessionCookieArgs>;
+        health_check?: pulumi.Input<inputs.resources.HealthCheckArgs>;
+        sticky_session_cookie?: pulumi.Input<inputs.resources.StickySessionCookieArgs>;
     }
 
     export interface ReverseProxyBackendArgs {
-        options: pulumi.Input<inputs.resources.OptionsArgs>;
+        options?: pulumi.Input<inputs.resources.OptionsArgs>;
         scheme: pulumi.Input<string>;
         serverpool_id: pulumi.Input<string>;
         target_port: pulumi.Input<number>;
@@ -42,18 +42,18 @@ export namespace resources {
 
     export interface ReverseProxyFrontEndArgs {
         domain: pulumi.Input<string>;
-        http_port: pulumi.Input<number>;
-        https_port: pulumi.Input<number>;
-        ip_address: pulumi.Input<string>;
+        http_port?: pulumi.Input<number>;
+        https_port?: pulumi.Input<number>;
+        ip_address?: pulumi.Input<string>;
         letsencrypt: pulumi.Input<inputs.resources.LetsEncryptArgs>;
         scheme: pulumi.Input<string>;
     }
 
     export interface StickySessionCookieArgs {
-        http_only: pulumi.Input<boolean>;
-        name: pulumi.Input<string>;
-        same_site: pulumi.Input<string>;
-        secure: pulumi.Input<boolean>;
+        http_only?: pulumi.Input<boolean>;
+        name?: pulumi.Input<string>;
+        same_site?: pulumi.Input<string>;
+        secure?: pulumi.Input<boolean>;
     }
 
 }

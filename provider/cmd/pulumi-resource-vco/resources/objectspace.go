@@ -45,12 +45,12 @@ type ObjectSpaceArgs struct {
 	CustomerID       string  `pulumi:"customerID"`
 	Location         string  `pulumi:"location"`
 	Name             string  `pulumi:"name"`
-	Domain           *string `pulumi:"domain"`
-	CloudspaceID     *string `pulumi:"cloudspaceID"`
-	Subnet           *string `pulumi:"subnet"`
-	ExternalNetwork  *int    `pulumi:"externalNetwork"`
-	LetsencryptEmail *string `pulumi:"letsencryptEmail"`
-	Letsencrypt      *bool   `pulumi:"letsencrypt"`
+	Domain           *string `pulumi:"domain,optional"`
+	CloudspaceID     *string `pulumi:"cloudspaceID,optional"`
+	Subnet           *string `pulumi:"subnet,optional"`
+	ExternalNetwork  *int    `pulumi:"externalNetwork,optional"`
+	LetsencryptEmail *string `pulumi:"letsencryptEmail,optional"`
+	Letsencrypt      *bool   `pulumi:"letsencrypt,optional"`
 }
 
 func (obj ObjectSpace) Create(ctx p.Context, name string, input ObjectSpaceArgs, preview bool) (string, ObjectSpaceState, error) {

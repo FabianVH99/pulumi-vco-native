@@ -45,9 +45,6 @@ func NewPortForward(ctx *pulumi.Context,
 	if args.Local_port == nil {
 		return nil, errors.New("invalid value for required argument 'Local_port'")
 	}
-	if args.Nested_cs_id == nil {
-		return nil, errors.New("invalid value for required argument 'Nested_cs_id'")
-	}
 	if args.Protocol == nil {
 		return nil, errors.New("invalid value for required argument 'Protocol'")
 	}
@@ -56,9 +53,6 @@ func NewPortForward(ctx *pulumi.Context,
 	}
 	if args.Public_port == nil {
 		return nil, errors.New("invalid value for required argument 'Public_port'")
-	}
-	if args.Till_public_port == nil {
-		return nil, errors.New("invalid value for required argument 'Till_public_port'")
 	}
 	if args.Token == nil {
 		return nil, errors.New("invalid value for required argument 'Token'")
@@ -102,17 +96,17 @@ func (PortForwardState) ElementType() reflect.Type {
 }
 
 type portForwardArgs struct {
-	Cloudspace_id    string `pulumi:"cloudspace_id"`
-	CustomerID       string `pulumi:"customerID"`
-	Local_port       int    `pulumi:"local_port"`
-	Nested_cs_id     string `pulumi:"nested_cs_id"`
-	Protocol         string `pulumi:"protocol"`
-	Public_ip        string `pulumi:"public_ip"`
-	Public_port      int    `pulumi:"public_port"`
-	Till_public_port int    `pulumi:"till_public_port"`
-	Token            string `pulumi:"token"`
-	Url              string `pulumi:"url"`
-	Vm_id            int    `pulumi:"vm_id"`
+	Cloudspace_id    string  `pulumi:"cloudspace_id"`
+	CustomerID       string  `pulumi:"customerID"`
+	Local_port       int     `pulumi:"local_port"`
+	Nested_cs_id     *string `pulumi:"nested_cs_id"`
+	Protocol         string  `pulumi:"protocol"`
+	Public_ip        string  `pulumi:"public_ip"`
+	Public_port      int     `pulumi:"public_port"`
+	Till_public_port *int    `pulumi:"till_public_port"`
+	Token            string  `pulumi:"token"`
+	Url              string  `pulumi:"url"`
+	Vm_id            int     `pulumi:"vm_id"`
 }
 
 // The set of arguments for constructing a PortForward resource.
@@ -120,11 +114,11 @@ type PortForwardArgs struct {
 	Cloudspace_id    pulumi.StringInput
 	CustomerID       pulumi.StringInput
 	Local_port       pulumi.IntInput
-	Nested_cs_id     pulumi.StringInput
+	Nested_cs_id     pulumi.StringPtrInput
 	Protocol         pulumi.StringInput
 	Public_ip        pulumi.StringInput
 	Public_port      pulumi.IntInput
-	Till_public_port pulumi.IntInput
+	Till_public_port pulumi.IntPtrInput
 	Token            pulumi.StringInput
 	Url              pulumi.StringInput
 	Vm_id            pulumi.IntInput

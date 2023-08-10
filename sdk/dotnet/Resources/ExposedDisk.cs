@@ -25,10 +25,10 @@ namespace Pulumi.Vco.Resources
         public Output<Outputs.Endpoint> Endpoint { get; private set; } = null!;
 
         [Output("iops")]
-        public Output<int> Iops { get; private set; } = null!;
+        public Output<int?> Iops { get; private set; } = null!;
 
         [Output("max_connections")]
-        public Output<int> Max_connections { get; private set; } = null!;
+        public Output<int?> Max_connections { get; private set; } = null!;
 
         [Output("protocol")]
         public Output<string> Protocol { get; private set; } = null!;
@@ -93,11 +93,11 @@ namespace Pulumi.Vco.Resources
         [Input("disk_id", required: true)]
         public Input<int> Disk_id { get; set; } = null!;
 
-        [Input("iops", required: true)]
-        public Input<int> Iops { get; set; } = null!;
+        [Input("iops")]
+        public Input<int>? Iops { get; set; }
 
-        [Input("max_connections", required: true)]
-        public Input<int> Max_connections { get; set; } = null!;
+        [Input("max_connections")]
+        public Input<int>? Max_connections { get; set; }
 
         [Input("token", required: true)]
         public Input<string> Token { get; set; } = null!;

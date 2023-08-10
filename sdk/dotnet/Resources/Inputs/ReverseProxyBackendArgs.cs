@@ -12,8 +12,8 @@ namespace Pulumi.Vco.Resources.Inputs
 
     public sealed class ReverseProxyBackendArgs : global::Pulumi.ResourceArgs
     {
-        [Input("options", required: true)]
-        public Input<Inputs.OptionsArgs> Options { get; set; } = null!;
+        [Input("options")]
+        public Input<Inputs.OptionsArgs>? Options { get; set; }
 
         [Input("scheme", required: true)]
         public Input<string> Scheme { get; set; } = null!;

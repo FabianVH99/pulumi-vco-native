@@ -18,39 +18,47 @@ class CloudspaceArgs:
     def __init__(__self__, *,
                  customer_id: pulumi.Input[str],
                  external_network_id: pulumi.Input[int],
-                 firewall_custom: pulumi.Input['FirewallCustomArgs'],
-                 host: pulumi.Input[str],
-                 local_domain: pulumi.Input[str],
                  location: pulumi.Input[str],
-                 memory_quota: pulumi.Input[int],
                  name: pulumi.Input[str],
-                 parent_cloudspace_id: pulumi.Input[str],
                  private: pulumi.Input[bool],
                  private_network: pulumi.Input[str],
-                 public_ip_quota: pulumi.Input[int],
                  token: pulumi.Input[str],
                  url: pulumi.Input[str],
-                 vcpu_quota: pulumi.Input[int],
-                 vdisk_space_quota: pulumi.Input[int]):
+                 firewall_custom: Optional[pulumi.Input['FirewallCustomArgs']] = None,
+                 host: Optional[pulumi.Input[str]] = None,
+                 local_domain: Optional[pulumi.Input[str]] = None,
+                 memory_quota: Optional[pulumi.Input[int]] = None,
+                 parent_cloudspace_id: Optional[pulumi.Input[str]] = None,
+                 public_ip_quota: Optional[pulumi.Input[int]] = None,
+                 vcpu_quota: Optional[pulumi.Input[int]] = None,
+                 vdisk_space_quota: Optional[pulumi.Input[int]] = None):
         """
         The set of arguments for constructing a Cloudspace resource.
         """
         pulumi.set(__self__, "customer_id", customer_id)
         pulumi.set(__self__, "external_network_id", external_network_id)
-        pulumi.set(__self__, "firewall_custom", firewall_custom)
-        pulumi.set(__self__, "host", host)
-        pulumi.set(__self__, "local_domain", local_domain)
         pulumi.set(__self__, "location", location)
-        pulumi.set(__self__, "memory_quota", memory_quota)
         pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "parent_cloudspace_id", parent_cloudspace_id)
         pulumi.set(__self__, "private", private)
         pulumi.set(__self__, "private_network", private_network)
-        pulumi.set(__self__, "public_ip_quota", public_ip_quota)
         pulumi.set(__self__, "token", token)
         pulumi.set(__self__, "url", url)
-        pulumi.set(__self__, "vcpu_quota", vcpu_quota)
-        pulumi.set(__self__, "vdisk_space_quota", vdisk_space_quota)
+        if firewall_custom is not None:
+            pulumi.set(__self__, "firewall_custom", firewall_custom)
+        if host is not None:
+            pulumi.set(__self__, "host", host)
+        if local_domain is not None:
+            pulumi.set(__self__, "local_domain", local_domain)
+        if memory_quota is not None:
+            pulumi.set(__self__, "memory_quota", memory_quota)
+        if parent_cloudspace_id is not None:
+            pulumi.set(__self__, "parent_cloudspace_id", parent_cloudspace_id)
+        if public_ip_quota is not None:
+            pulumi.set(__self__, "public_ip_quota", public_ip_quota)
+        if vcpu_quota is not None:
+            pulumi.set(__self__, "vcpu_quota", vcpu_quota)
+        if vdisk_space_quota is not None:
+            pulumi.set(__self__, "vdisk_space_quota", vdisk_space_quota)
 
     @property
     @pulumi.getter(name="customerID")
@@ -72,33 +80,6 @@ class CloudspaceArgs:
 
     @property
     @pulumi.getter
-    def firewall_custom(self) -> pulumi.Input['FirewallCustomArgs']:
-        return pulumi.get(self, "firewall_custom")
-
-    @firewall_custom.setter
-    def firewall_custom(self, value: pulumi.Input['FirewallCustomArgs']):
-        pulumi.set(self, "firewall_custom", value)
-
-    @property
-    @pulumi.getter
-    def host(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "host")
-
-    @host.setter
-    def host(self, value: pulumi.Input[str]):
-        pulumi.set(self, "host", value)
-
-    @property
-    @pulumi.getter
-    def local_domain(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "local_domain")
-
-    @local_domain.setter
-    def local_domain(self, value: pulumi.Input[str]):
-        pulumi.set(self, "local_domain", value)
-
-    @property
-    @pulumi.getter
     def location(self) -> pulumi.Input[str]:
         return pulumi.get(self, "location")
 
@@ -108,30 +89,12 @@ class CloudspaceArgs:
 
     @property
     @pulumi.getter
-    def memory_quota(self) -> pulumi.Input[int]:
-        return pulumi.get(self, "memory_quota")
-
-    @memory_quota.setter
-    def memory_quota(self, value: pulumi.Input[int]):
-        pulumi.set(self, "memory_quota", value)
-
-    @property
-    @pulumi.getter
     def name(self) -> pulumi.Input[str]:
         return pulumi.get(self, "name")
 
     @name.setter
     def name(self, value: pulumi.Input[str]):
         pulumi.set(self, "name", value)
-
-    @property
-    @pulumi.getter
-    def parent_cloudspace_id(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "parent_cloudspace_id")
-
-    @parent_cloudspace_id.setter
-    def parent_cloudspace_id(self, value: pulumi.Input[str]):
-        pulumi.set(self, "parent_cloudspace_id", value)
 
     @property
     @pulumi.getter
@@ -153,15 +116,6 @@ class CloudspaceArgs:
 
     @property
     @pulumi.getter
-    def public_ip_quota(self) -> pulumi.Input[int]:
-        return pulumi.get(self, "public_ip_quota")
-
-    @public_ip_quota.setter
-    def public_ip_quota(self, value: pulumi.Input[int]):
-        pulumi.set(self, "public_ip_quota", value)
-
-    @property
-    @pulumi.getter
     def token(self) -> pulumi.Input[str]:
         return pulumi.get(self, "token")
 
@@ -180,20 +134,74 @@ class CloudspaceArgs:
 
     @property
     @pulumi.getter
-    def vcpu_quota(self) -> pulumi.Input[int]:
+    def firewall_custom(self) -> Optional[pulumi.Input['FirewallCustomArgs']]:
+        return pulumi.get(self, "firewall_custom")
+
+    @firewall_custom.setter
+    def firewall_custom(self, value: Optional[pulumi.Input['FirewallCustomArgs']]):
+        pulumi.set(self, "firewall_custom", value)
+
+    @property
+    @pulumi.getter
+    def host(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "host")
+
+    @host.setter
+    def host(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "host", value)
+
+    @property
+    @pulumi.getter
+    def local_domain(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "local_domain")
+
+    @local_domain.setter
+    def local_domain(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "local_domain", value)
+
+    @property
+    @pulumi.getter
+    def memory_quota(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "memory_quota")
+
+    @memory_quota.setter
+    def memory_quota(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "memory_quota", value)
+
+    @property
+    @pulumi.getter
+    def parent_cloudspace_id(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "parent_cloudspace_id")
+
+    @parent_cloudspace_id.setter
+    def parent_cloudspace_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "parent_cloudspace_id", value)
+
+    @property
+    @pulumi.getter
+    def public_ip_quota(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "public_ip_quota")
+
+    @public_ip_quota.setter
+    def public_ip_quota(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "public_ip_quota", value)
+
+    @property
+    @pulumi.getter
+    def vcpu_quota(self) -> Optional[pulumi.Input[int]]:
         return pulumi.get(self, "vcpu_quota")
 
     @vcpu_quota.setter
-    def vcpu_quota(self, value: pulumi.Input[int]):
+    def vcpu_quota(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "vcpu_quota", value)
 
     @property
     @pulumi.getter
-    def vdisk_space_quota(self) -> pulumi.Input[int]:
+    def vdisk_space_quota(self) -> Optional[pulumi.Input[int]]:
         return pulumi.get(self, "vdisk_space_quota")
 
     @vdisk_space_quota.setter
-    def vdisk_space_quota(self, value: pulumi.Input[int]):
+    def vdisk_space_quota(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "vdisk_space_quota", value)
 
 
@@ -278,26 +286,16 @@ class Cloudspace(pulumi.CustomResource):
             if external_network_id is None and not opts.urn:
                 raise TypeError("Missing required property 'external_network_id'")
             __props__.__dict__["external_network_id"] = external_network_id
-            if firewall_custom is None and not opts.urn:
-                raise TypeError("Missing required property 'firewall_custom'")
             __props__.__dict__["firewall_custom"] = firewall_custom
-            if host is None and not opts.urn:
-                raise TypeError("Missing required property 'host'")
             __props__.__dict__["host"] = host
-            if local_domain is None and not opts.urn:
-                raise TypeError("Missing required property 'local_domain'")
             __props__.__dict__["local_domain"] = local_domain
             if location is None and not opts.urn:
                 raise TypeError("Missing required property 'location'")
             __props__.__dict__["location"] = location
-            if memory_quota is None and not opts.urn:
-                raise TypeError("Missing required property 'memory_quota'")
             __props__.__dict__["memory_quota"] = memory_quota
             if name is None and not opts.urn:
                 raise TypeError("Missing required property 'name'")
             __props__.__dict__["name"] = name
-            if parent_cloudspace_id is None and not opts.urn:
-                raise TypeError("Missing required property 'parent_cloudspace_id'")
             __props__.__dict__["parent_cloudspace_id"] = parent_cloudspace_id
             if private is None and not opts.urn:
                 raise TypeError("Missing required property 'private'")
@@ -305,8 +303,6 @@ class Cloudspace(pulumi.CustomResource):
             if private_network is None and not opts.urn:
                 raise TypeError("Missing required property 'private_network'")
             __props__.__dict__["private_network"] = private_network
-            if public_ip_quota is None and not opts.urn:
-                raise TypeError("Missing required property 'public_ip_quota'")
             __props__.__dict__["public_ip_quota"] = public_ip_quota
             if token is None and not opts.urn:
                 raise TypeError("Missing required property 'token'")
@@ -314,11 +310,7 @@ class Cloudspace(pulumi.CustomResource):
             if url is None and not opts.urn:
                 raise TypeError("Missing required property 'url'")
             __props__.__dict__["url"] = url
-            if vcpu_quota is None and not opts.urn:
-                raise TypeError("Missing required property 'vcpu_quota'")
             __props__.__dict__["vcpu_quota"] = vcpu_quota
-            if vdisk_space_quota is None and not opts.urn:
-                raise TypeError("Missing required property 'vdisk_space_quota'")
             __props__.__dict__["vdisk_space_quota"] = vdisk_space_quota
             __props__.__dict__["cloudspace_id"] = None
             __props__.__dict__["cloudspace_mode"] = None
@@ -410,12 +402,12 @@ class Cloudspace(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def firewall_custom(self) -> pulumi.Output['outputs.FirewallCustom']:
+    def firewall_custom(self) -> pulumi.Output[Optional['outputs.FirewallCustom']]:
         return pulumi.get(self, "firewall_custom")
 
     @property
     @pulumi.getter
-    def host(self) -> pulumi.Output[str]:
+    def host(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "host")
 
     @property
@@ -430,7 +422,7 @@ class Cloudspace(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def memory_quota(self) -> pulumi.Output[int]:
+    def memory_quota(self) -> pulumi.Output[Optional[int]]:
         return pulumi.get(self, "memory_quota")
 
     @property
@@ -440,7 +432,7 @@ class Cloudspace(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def parent_cloudspace_id(self) -> pulumi.Output[str]:
+    def parent_cloudspace_id(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "parent_cloudspace_id")
 
     @property
@@ -455,7 +447,7 @@ class Cloudspace(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def public_ip_quota(self) -> pulumi.Output[int]:
+    def public_ip_quota(self) -> pulumi.Output[Optional[int]]:
         return pulumi.get(self, "public_ip_quota")
 
     @property
@@ -490,11 +482,11 @@ class Cloudspace(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def vcpu_quota(self) -> pulumi.Output[int]:
+    def vcpu_quota(self) -> pulumi.Output[Optional[int]]:
         return pulumi.get(self, "vcpu_quota")
 
     @property
     @pulumi.getter
-    def vdisk_space_quota(self) -> pulumi.Output[int]:
+    def vdisk_space_quota(self) -> pulumi.Output[Optional[int]]:
         return pulumi.get(self, "vdisk_space_quota")
 

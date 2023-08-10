@@ -36,18 +36,18 @@ export class Disk extends pulumi.CustomResource {
     public /*out*/ readonly cloudspace_id!: pulumi.Output<string>;
     public readonly customerID!: pulumi.Output<string>;
     public readonly description!: pulumi.Output<string>;
-    public readonly detach!: pulumi.Output<boolean>;
+    public readonly detach!: pulumi.Output<boolean | undefined>;
     public /*out*/ readonly disk_id!: pulumi.Output<number>;
     public readonly disk_name!: pulumi.Output<string>;
     public readonly disk_size!: pulumi.Output<number>;
     public readonly disk_type!: pulumi.Output<string>;
     public /*out*/ readonly exposed!: pulumi.Output<boolean>;
-    public readonly iops!: pulumi.Output<number>;
+    public readonly iops!: pulumi.Output<number | undefined>;
     public /*out*/ readonly iotune!: pulumi.Output<outputs.resources.IOTune>;
     public readonly location!: pulumi.Output<string>;
     public /*out*/ readonly model!: pulumi.Output<string>;
     public /*out*/ readonly order!: pulumi.Output<string>;
-    public readonly permanently!: pulumi.Output<boolean>;
+    public readonly permanently!: pulumi.Output<boolean | undefined>;
     public /*out*/ readonly port!: pulumi.Output<number>;
     public /*out*/ readonly status!: pulumi.Output<string>;
     public readonly token!: pulumi.Output<string>;
@@ -71,35 +71,20 @@ export class Disk extends pulumi.CustomResource {
             if ((!args || args.description === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'description'");
             }
-            if ((!args || args.detach === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'detach'");
-            }
             if ((!args || args.disk_name === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'disk_name'");
             }
             if ((!args || args.disk_size === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'disk_size'");
             }
-            if ((!args || args.disk_type === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'disk_type'");
-            }
-            if ((!args || args.iops === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'iops'");
-            }
             if ((!args || args.location === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'location'");
-            }
-            if ((!args || args.permanently === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'permanently'");
             }
             if ((!args || args.token === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'token'");
             }
             if ((!args || args.url === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'url'");
-            }
-            if ((!args || args.vm_id === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'vm_id'");
             }
             resourceInputs["customerID"] = args ? args.customerID : undefined;
             resourceInputs["description"] = args ? args.description : undefined;
@@ -154,14 +139,14 @@ export class Disk extends pulumi.CustomResource {
 export interface DiskArgs {
     customerID: pulumi.Input<string>;
     description: pulumi.Input<string>;
-    detach: pulumi.Input<boolean>;
+    detach?: pulumi.Input<boolean>;
     disk_name: pulumi.Input<string>;
     disk_size: pulumi.Input<number>;
-    disk_type: pulumi.Input<string>;
-    iops: pulumi.Input<number>;
+    disk_type?: pulumi.Input<string>;
+    iops?: pulumi.Input<number>;
     location: pulumi.Input<string>;
-    permanently: pulumi.Input<boolean>;
+    permanently?: pulumi.Input<boolean>;
     token: pulumi.Input<string>;
     url: pulumi.Input<string>;
-    vm_id: pulumi.Input<string>;
+    vm_id?: pulumi.Input<string>;
 }

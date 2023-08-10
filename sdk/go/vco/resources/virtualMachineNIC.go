@@ -15,21 +15,21 @@ import (
 type VirtualMachineNIC struct {
 	pulumi.CustomResourceState
 
-	Cloudspace_id          pulumi.StringOutput `pulumi:"cloudspace_id"`
-	CustomerID             pulumi.StringOutput `pulumi:"customerID"`
-	Device_name            pulumi.StringOutput `pulumi:"device_name"`
-	External_cloudspace_id pulumi.StringOutput `pulumi:"external_cloudspace_id"`
-	External_network_id    pulumi.IntOutput    `pulumi:"external_network_id"`
-	External_network_ip    pulumi.StringOutput `pulumi:"external_network_ip"`
-	External_network_type  pulumi.StringOutput `pulumi:"external_network_type"`
-	Ip_address             pulumi.StringOutput `pulumi:"ip_address"`
-	Mac_address            pulumi.StringOutput `pulumi:"mac_address"`
-	Model                  pulumi.StringOutput `pulumi:"model"`
-	Network_id             pulumi.IntOutput    `pulumi:"network_id"`
-	Nic_type               pulumi.StringOutput `pulumi:"nic_type"`
-	Token                  pulumi.StringOutput `pulumi:"token"`
-	Url                    pulumi.StringOutput `pulumi:"url"`
-	Vm_id                  pulumi.IntOutput    `pulumi:"vm_id"`
+	Cloudspace_id          pulumi.StringOutput    `pulumi:"cloudspace_id"`
+	CustomerID             pulumi.StringOutput    `pulumi:"customerID"`
+	Device_name            pulumi.StringOutput    `pulumi:"device_name"`
+	External_cloudspace_id pulumi.StringOutput    `pulumi:"external_cloudspace_id"`
+	External_network_id    pulumi.IntOutput       `pulumi:"external_network_id"`
+	External_network_ip    pulumi.StringPtrOutput `pulumi:"external_network_ip"`
+	External_network_type  pulumi.StringPtrOutput `pulumi:"external_network_type"`
+	Ip_address             pulumi.StringOutput    `pulumi:"ip_address"`
+	Mac_address            pulumi.StringOutput    `pulumi:"mac_address"`
+	Model                  pulumi.StringOutput    `pulumi:"model"`
+	Network_id             pulumi.IntOutput       `pulumi:"network_id"`
+	Nic_type               pulumi.StringOutput    `pulumi:"nic_type"`
+	Token                  pulumi.StringOutput    `pulumi:"token"`
+	Url                    pulumi.StringOutput    `pulumi:"url"`
+	Vm_id                  pulumi.IntOutput       `pulumi:"vm_id"`
 }
 
 // NewVirtualMachineNIC registers a new resource with the given unique name, arguments, and options.
@@ -45,20 +45,8 @@ func NewVirtualMachineNIC(ctx *pulumi.Context,
 	if args.CustomerID == nil {
 		return nil, errors.New("invalid value for required argument 'CustomerID'")
 	}
-	if args.External_cloudspace_id == nil {
-		return nil, errors.New("invalid value for required argument 'External_cloudspace_id'")
-	}
 	if args.External_network_id == nil {
 		return nil, errors.New("invalid value for required argument 'External_network_id'")
-	}
-	if args.External_network_ip == nil {
-		return nil, errors.New("invalid value for required argument 'External_network_ip'")
-	}
-	if args.External_network_type == nil {
-		return nil, errors.New("invalid value for required argument 'External_network_type'")
-	}
-	if args.Model == nil {
-		return nil, errors.New("invalid value for required argument 'Model'")
 	}
 	if args.Token == nil {
 		return nil, errors.New("invalid value for required argument 'Token'")
@@ -102,27 +90,27 @@ func (VirtualMachineNICState) ElementType() reflect.Type {
 }
 
 type virtualMachineNICArgs struct {
-	Cloudspace_id          string `pulumi:"cloudspace_id"`
-	CustomerID             string `pulumi:"customerID"`
-	External_cloudspace_id string `pulumi:"external_cloudspace_id"`
-	External_network_id    int    `pulumi:"external_network_id"`
-	External_network_ip    string `pulumi:"external_network_ip"`
-	External_network_type  string `pulumi:"external_network_type"`
-	Model                  string `pulumi:"model"`
-	Token                  string `pulumi:"token"`
-	Url                    string `pulumi:"url"`
-	Vm_id                  int    `pulumi:"vm_id"`
+	Cloudspace_id          string  `pulumi:"cloudspace_id"`
+	CustomerID             string  `pulumi:"customerID"`
+	External_cloudspace_id *string `pulumi:"external_cloudspace_id"`
+	External_network_id    int     `pulumi:"external_network_id"`
+	External_network_ip    *string `pulumi:"external_network_ip"`
+	External_network_type  *string `pulumi:"external_network_type"`
+	Model                  *string `pulumi:"model"`
+	Token                  string  `pulumi:"token"`
+	Url                    string  `pulumi:"url"`
+	Vm_id                  int     `pulumi:"vm_id"`
 }
 
 // The set of arguments for constructing a VirtualMachineNIC resource.
 type VirtualMachineNICArgs struct {
 	Cloudspace_id          pulumi.StringInput
 	CustomerID             pulumi.StringInput
-	External_cloudspace_id pulumi.StringInput
+	External_cloudspace_id pulumi.StringPtrInput
 	External_network_id    pulumi.IntInput
-	External_network_ip    pulumi.StringInput
-	External_network_type  pulumi.StringInput
-	Model                  pulumi.StringInput
+	External_network_ip    pulumi.StringPtrInput
+	External_network_type  pulumi.StringPtrInput
+	Model                  pulumi.StringPtrInput
 	Token                  pulumi.StringInput
 	Url                    pulumi.StringInput
 	Vm_id                  pulumi.IntInput
@@ -185,12 +173,12 @@ func (o VirtualMachineNICOutput) External_network_id() pulumi.IntOutput {
 	return o.ApplyT(func(v *VirtualMachineNIC) pulumi.IntOutput { return v.External_network_id }).(pulumi.IntOutput)
 }
 
-func (o VirtualMachineNICOutput) External_network_ip() pulumi.StringOutput {
-	return o.ApplyT(func(v *VirtualMachineNIC) pulumi.StringOutput { return v.External_network_ip }).(pulumi.StringOutput)
+func (o VirtualMachineNICOutput) External_network_ip() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *VirtualMachineNIC) pulumi.StringPtrOutput { return v.External_network_ip }).(pulumi.StringPtrOutput)
 }
 
-func (o VirtualMachineNICOutput) External_network_type() pulumi.StringOutput {
-	return o.ApplyT(func(v *VirtualMachineNIC) pulumi.StringOutput { return v.External_network_type }).(pulumi.StringOutput)
+func (o VirtualMachineNICOutput) External_network_type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *VirtualMachineNIC) pulumi.StringPtrOutput { return v.External_network_type }).(pulumi.StringPtrOutput)
 }
 
 func (o VirtualMachineNICOutput) Ip_address() pulumi.StringOutput {

@@ -13,20 +13,20 @@ namespace Pulumi.Vco.Resources.Outputs
     [OutputType]
     public sealed class StickySessionCookie
     {
-        public readonly bool Http_only;
-        public readonly string Name;
-        public readonly string Same_site;
-        public readonly bool Secure;
+        public readonly bool? Http_only;
+        public readonly string? Name;
+        public readonly string? Same_site;
+        public readonly bool? Secure;
 
         [OutputConstructor]
         private StickySessionCookie(
-            bool http_only,
+            bool? http_only,
 
-            string name,
+            string? name,
 
-            string same_site,
+            string? same_site,
 
-            bool secure)
+            bool? secure)
         {
             Http_only = http_only;
             Name = name;

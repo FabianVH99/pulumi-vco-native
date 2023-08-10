@@ -13,14 +13,14 @@ namespace Pulumi.Vco.Resources.Outputs
     [OutputType]
     public sealed class ReverseProxyBackend
     {
-        public readonly Outputs.Options Options;
+        public readonly Outputs.Options? Options;
         public readonly string Scheme;
         public readonly string Serverpool_id;
         public readonly int Target_port;
 
         [OutputConstructor]
         private ReverseProxyBackend(
-            Outputs.Options options,
+            Outputs.Options? options,
 
             string scheme,
 

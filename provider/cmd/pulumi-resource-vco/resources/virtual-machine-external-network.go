@@ -32,10 +32,10 @@ type VirtualMachineNICArgs struct {
 	CloudSpaceID         string  `pulumi:"cloudspace_id"`
 	VirtualMachineID     int     `pulumi:"vm_id"`
 	ExternalNetworkID    int     `pulumi:"external_network_id"`
-	ExternalNetworkIP    *string `pulumi:"external_network_ip"`
-	Model                *string `pulumi:"model"`
-	ExternalNetworkType  *string `pulumi:"external_network_type"`
-	ExternalCloudspaceID *string `pulumi:"external_cloudspace_id"`
+	ExternalNetworkIP    *string `pulumi:"external_network_ip,optional"`
+	Model                *string `pulumi:"model,optional"`
+	ExternalNetworkType  *string `pulumi:"external_network_type,optional"`
+	ExternalCloudspaceID *string `pulumi:"external_cloudspace_id,optional"`
 }
 
 func (nic VirtualMachineNIC) Create(ctx p.Context, name string, input VirtualMachineNICArgs, preview bool) (string, VirtualMachineNICState, error) {

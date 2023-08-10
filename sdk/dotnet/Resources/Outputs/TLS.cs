@@ -13,17 +13,17 @@ namespace Pulumi.Vco.Resources.Outputs
     [OutputType]
     public sealed class TLS
     {
-        public readonly string Domain;
-        public readonly bool Is_enabled;
-        public readonly bool Tls_termination;
+        public readonly string? Domain;
+        public readonly bool? Is_enabled;
+        public readonly bool? Tls_termination;
 
         [OutputConstructor]
         private TLS(
-            string domain,
+            string? domain,
 
-            bool is_enabled,
+            bool? is_enabled,
 
-            bool tls_termination)
+            bool? tls_termination)
         {
             Domain = domain;
             Is_enabled = is_enabled;

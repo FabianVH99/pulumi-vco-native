@@ -3,8 +3,8 @@ PROJECT_NAME := Pulumi Vco Resource Provider
 PACK             := vco
 PACKDIR          := sdk
 PROJECT          := github.com/fabianv-cloud/pulumi-vco-native
-NODE_MODULE_NAME := @pulumi/vco
-NUGET_PKG_NAME   := Pulumi.Vco
+NODE_MODULE_NAME := @fabianv-cloud/vco
+NUGET_PKG_NAME   := Fabianv-cloud.Vco
 
 PROVIDER        := pulumi-resource-${PACK}
 VERSION         ?= $(shell pulumictl get version)

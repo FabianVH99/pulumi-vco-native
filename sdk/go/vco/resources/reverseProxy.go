@@ -43,9 +43,6 @@ func NewReverseProxy(ctx *pulumi.Context,
 	if args.CustomerID == nil {
 		return nil, errors.New("invalid value for required argument 'CustomerID'")
 	}
-	if args.Description == nil {
-		return nil, errors.New("invalid value for required argument 'Description'")
-	}
 	if args.Front_end == nil {
 		return nil, errors.New("invalid value for required argument 'Front_end'")
 	}
@@ -94,7 +91,7 @@ type reverseProxyArgs struct {
 	Back_end      ReverseProxyBackend  `pulumi:"back_end"`
 	Cloudspace_id string               `pulumi:"cloudspace_id"`
 	CustomerID    string               `pulumi:"customerID"`
-	Description   string               `pulumi:"description"`
+	Description   *string              `pulumi:"description"`
 	Front_end     ReverseProxyFrontEnd `pulumi:"front_end"`
 	Name          string               `pulumi:"name"`
 	Token         string               `pulumi:"token"`
@@ -106,7 +103,7 @@ type ReverseProxyArgs struct {
 	Back_end      ReverseProxyBackendInput
 	Cloudspace_id pulumi.StringInput
 	CustomerID    pulumi.StringInput
-	Description   pulumi.StringInput
+	Description   pulumi.StringPtrInput
 	Front_end     ReverseProxyFrontEndInput
 	Name          pulumi.StringInput
 	Token         pulumi.StringInput

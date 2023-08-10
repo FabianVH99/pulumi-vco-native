@@ -102,8 +102,8 @@ namespace Pulumi.Vco.Resources
         [Input("local_port", required: true)]
         public Input<int> Local_port { get; set; } = null!;
 
-        [Input("nested_cs_id", required: true)]
-        public Input<string> Nested_cs_id { get; set; } = null!;
+        [Input("nested_cs_id")]
+        public Input<string>? Nested_cs_id { get; set; }
 
         [Input("protocol", required: true)]
         public Input<string> Protocol { get; set; } = null!;
@@ -114,8 +114,8 @@ namespace Pulumi.Vco.Resources
         [Input("public_port", required: true)]
         public Input<int> Public_port { get; set; } = null!;
 
-        [Input("till_public_port", required: true)]
-        public Input<int> Till_public_port { get; set; } = null!;
+        [Input("till_public_port")]
+        public Input<int>? Till_public_port { get; set; }
 
         [Input("token", required: true)]
         public Input<string> Token { get; set; } = null!;

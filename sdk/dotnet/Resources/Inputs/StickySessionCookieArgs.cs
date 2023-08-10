@@ -12,17 +12,17 @@ namespace Pulumi.Vco.Resources.Inputs
 
     public sealed class StickySessionCookieArgs : global::Pulumi.ResourceArgs
     {
-        [Input("http_only", required: true)]
-        public Input<bool> Http_only { get; set; } = null!;
+        [Input("http_only")]
+        public Input<bool>? Http_only { get; set; }
 
-        [Input("name", required: true)]
-        public Input<string> Name { get; set; } = null!;
+        [Input("name")]
+        public Input<string>? Name { get; set; }
 
-        [Input("same_site", required: true)]
-        public Input<string> Same_site { get; set; } = null!;
+        [Input("same_site")]
+        public Input<string>? Same_site { get; set; }
 
-        [Input("secure", required: true)]
-        public Input<bool> Secure { get; set; } = null!;
+        [Input("secure")]
+        public Input<bool>? Secure { get; set; }
 
         public StickySessionCookieArgs()
         {

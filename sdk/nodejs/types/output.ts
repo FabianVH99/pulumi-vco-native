@@ -29,26 +29,26 @@ export namespace resources {
     }
 
     export interface FirewallCustom {
-        cdrom_id: number;
-        disk_size: number;
-        image_id: number;
-        memory: number;
-        type: string;
-        vcpus: number;
+        cdrom_id?: number;
+        disk_size?: number;
+        image_id?: number;
+        memory?: number;
+        type?: string;
+        vcpus?: number;
     }
 
     export interface FrontEnd {
-        ip_address: string;
+        ip_address?: string;
         port: number;
-        tls: outputs.resources.TLS;
+        tls?: outputs.resources.TLS;
     }
 
     export interface HealthCheck {
-        interval: number;
-        path: string;
-        port: number;
-        scheme: string;
-        timeout: number;
+        interval?: number;
+        path?: string;
+        port?: number;
+        scheme?: string;
+        timeout?: number;
     }
 
     export interface IOTune {
@@ -71,8 +71,8 @@ export namespace resources {
     }
 
     export interface Options {
-        health_check: outputs.resources.HealthCheck;
-        sticky_session_cookie: outputs.resources.StickySessionCookie;
+        health_check?: outputs.resources.HealthCheck;
+        sticky_session_cookie?: outputs.resources.StickySessionCookie;
     }
 
     export interface OsAccount {
@@ -89,7 +89,7 @@ export namespace resources {
     }
 
     export interface ReverseProxyBackend {
-        options: outputs.resources.Options;
+        options?: outputs.resources.Options;
         scheme: string;
         serverpool_id: string;
         target_port: number;
@@ -97,9 +97,9 @@ export namespace resources {
 
     export interface ReverseProxyFrontEnd {
         domain: string;
-        http_port: number;
-        https_port: number;
-        ip_address: string;
+        http_port?: number;
+        https_port?: number;
+        ip_address?: string;
         letsencrypt: outputs.resources.LetsEncrypt;
         scheme: string;
     }
@@ -110,16 +110,16 @@ export namespace resources {
     }
 
     export interface StickySessionCookie {
-        http_only: boolean;
-        name: string;
-        same_site: string;
-        secure: boolean;
+        http_only?: boolean;
+        name?: string;
+        same_site?: string;
+        secure?: boolean;
     }
 
     export interface TLS {
-        domain: string;
-        is_enabled: boolean;
-        tls_termination: boolean;
+        domain?: string;
+        is_enabled?: boolean;
+        tls_termination?: boolean;
     }
 
     export interface VmDisk {

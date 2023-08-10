@@ -33,24 +33,24 @@ export class VirtualMachine extends pulumi.CustomResource {
         return obj['__pulumiType'] === VirtualMachine.__pulumiType;
     }
 
-    public readonly acronis!: pulumi.Output<boolean>;
+    public readonly acronis!: pulumi.Output<boolean | undefined>;
     public /*out*/ readonly agent_status!: pulumi.Output<string>;
-    public readonly all_vm_disks!: pulumi.Output<boolean>;
+    public readonly all_vm_disks!: pulumi.Output<boolean | undefined>;
     public /*out*/ readonly anti_affinity_group_ids!: pulumi.Output<string[]>;
     public /*out*/ readonly appliance!: pulumi.Output<boolean>;
     public readonly boot_disk_id!: pulumi.Output<number>;
     public readonly boot_type!: pulumi.Output<string>;
-    public readonly cdrom_id!: pulumi.Output<number>;
+    public readonly cdrom_id!: pulumi.Output<number | undefined>;
     public readonly cloudspace_id!: pulumi.Output<string>;
     public /*out*/ readonly cpu_topology!: pulumi.Output<outputs.resources.CpuTopology>;
     public /*out*/ readonly cpus_pin_status!: pulumi.Output<boolean>;
     public /*out*/ readonly creation_time!: pulumi.Output<number>;
     public readonly customerID!: pulumi.Output<string>;
-    public readonly data_disks!: pulumi.Output<number[]>;
+    public readonly data_disks!: pulumi.Output<number[] | undefined>;
     public readonly description!: pulumi.Output<string>;
-    public readonly disk_size!: pulumi.Output<number>;
+    public readonly disk_size!: pulumi.Output<number | undefined>;
     public /*out*/ readonly disks!: pulumi.Output<outputs.resources.VmDisk[]>;
-    public readonly enable_vm_agent!: pulumi.Output<boolean>;
+    public readonly enable_vm_agent!: pulumi.Output<boolean | undefined>;
     public /*out*/ readonly hostname!: pulumi.Output<string>;
     public readonly image_id!: pulumi.Output<number>;
     public /*out*/ readonly impact_alert_hook!: pulumi.Output<string>;
@@ -60,17 +60,17 @@ export class VirtualMachine extends pulumi.CustomResource {
     public /*out*/ readonly network_interfaces!: pulumi.Output<outputs.resources.NetworkInterface[]>;
     public /*out*/ readonly os_accounts!: pulumi.Output<outputs.resources.OsAccount[]>;
     public /*out*/ readonly os_image_name!: pulumi.Output<string>;
-    public readonly os_name!: pulumi.Output<string>;
-    public readonly os_type!: pulumi.Output<string>;
-    public readonly private_ip!: pulumi.Output<string>;
-    public readonly snapshot_id!: pulumi.Output<string>;
+    public readonly os_name!: pulumi.Output<string | undefined>;
+    public readonly os_type!: pulumi.Output<string | undefined>;
+    public readonly private_ip!: pulumi.Output<string | undefined>;
+    public readonly snapshot_id!: pulumi.Output<string | undefined>;
     public /*out*/ readonly stack_id!: pulumi.Output<number>;
     public /*out*/ readonly status!: pulumi.Output<string>;
     public /*out*/ readonly storage!: pulumi.Output<number>;
     public readonly token!: pulumi.Output<string>;
     public /*out*/ readonly update_time!: pulumi.Output<number>;
     public readonly url!: pulumi.Output<string>;
-    public readonly user_data!: pulumi.Output<string>;
+    public readonly user_data!: pulumi.Output<string | undefined>;
     public readonly vcpus!: pulumi.Output<number>;
     public /*out*/ readonly vm_id!: pulumi.Output<number>;
 
@@ -85,41 +85,14 @@ export class VirtualMachine extends pulumi.CustomResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
-            if ((!args || args.acronis === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'acronis'");
-            }
-            if ((!args || args.all_vm_disks === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'all_vm_disks'");
-            }
-            if ((!args || args.boot_disk_id === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'boot_disk_id'");
-            }
-            if ((!args || args.boot_type === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'boot_type'");
-            }
-            if ((!args || args.cdrom_id === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'cdrom_id'");
-            }
             if ((!args || args.cloudspace_id === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'cloudspace_id'");
             }
             if ((!args || args.customerID === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'customerID'");
             }
-            if ((!args || args.data_disks === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'data_disks'");
-            }
             if ((!args || args.description === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'description'");
-            }
-            if ((!args || args.disk_size === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'disk_size'");
-            }
-            if ((!args || args.enable_vm_agent === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'enable_vm_agent'");
-            }
-            if ((!args || args.image_id === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'image_id'");
             }
             if ((!args || args.memory === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'memory'");
@@ -127,26 +100,11 @@ export class VirtualMachine extends pulumi.CustomResource {
             if ((!args || args.name === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'name'");
             }
-            if ((!args || args.os_name === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'os_name'");
-            }
-            if ((!args || args.os_type === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'os_type'");
-            }
-            if ((!args || args.private_ip === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'private_ip'");
-            }
-            if ((!args || args.snapshot_id === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'snapshot_id'");
-            }
             if ((!args || args.token === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'token'");
             }
             if ((!args || args.url === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'url'");
-            }
-            if ((!args || args.user_data === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'user_data'");
             }
             if ((!args || args.vcpus === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vcpus'");
@@ -242,26 +200,26 @@ export class VirtualMachine extends pulumi.CustomResource {
  * The set of arguments for constructing a VirtualMachine resource.
  */
 export interface VirtualMachineArgs {
-    acronis: pulumi.Input<boolean>;
-    all_vm_disks: pulumi.Input<boolean>;
-    boot_disk_id: pulumi.Input<number>;
-    boot_type: pulumi.Input<string>;
-    cdrom_id: pulumi.Input<number>;
+    acronis?: pulumi.Input<boolean>;
+    all_vm_disks?: pulumi.Input<boolean>;
+    boot_disk_id?: pulumi.Input<number>;
+    boot_type?: pulumi.Input<string>;
+    cdrom_id?: pulumi.Input<number>;
     cloudspace_id: pulumi.Input<string>;
     customerID: pulumi.Input<string>;
-    data_disks: pulumi.Input<pulumi.Input<number>[]>;
+    data_disks?: pulumi.Input<pulumi.Input<number>[]>;
     description: pulumi.Input<string>;
-    disk_size: pulumi.Input<number>;
-    enable_vm_agent: pulumi.Input<boolean>;
-    image_id: pulumi.Input<number>;
+    disk_size?: pulumi.Input<number>;
+    enable_vm_agent?: pulumi.Input<boolean>;
+    image_id?: pulumi.Input<number>;
     memory: pulumi.Input<number>;
     name: pulumi.Input<string>;
-    os_name: pulumi.Input<string>;
-    os_type: pulumi.Input<string>;
-    private_ip: pulumi.Input<string>;
-    snapshot_id: pulumi.Input<string>;
+    os_name?: pulumi.Input<string>;
+    os_type?: pulumi.Input<string>;
+    private_ip?: pulumi.Input<string>;
+    snapshot_id?: pulumi.Input<string>;
     token: pulumi.Input<string>;
     url: pulumi.Input<string>;
-    user_data: pulumi.Input<string>;
+    user_data?: pulumi.Input<string>;
     vcpus: pulumi.Input<number>;
 }

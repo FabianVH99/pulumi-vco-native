@@ -12,11 +12,11 @@ namespace Pulumi.Vco.Resources.Inputs
 
     public sealed class OptionsArgs : global::Pulumi.ResourceArgs
     {
-        [Input("health_check", required: true)]
-        public Input<Inputs.HealthCheckArgs> Health_check { get; set; } = null!;
+        [Input("health_check")]
+        public Input<Inputs.HealthCheckArgs>? Health_check { get; set; }
 
-        [Input("sticky_session_cookie", required: true)]
-        public Input<Inputs.StickySessionCookieArgs> Sticky_session_cookie { get; set; } = null!;
+        [Input("sticky_session_cookie")]
+        public Input<Inputs.StickySessionCookieArgs>? Sticky_session_cookie { get; set; }
 
         public OptionsArgs()
         {

@@ -15,26 +15,26 @@ import (
 type Disk struct {
 	pulumi.CustomResourceState
 
-	Cloudspace_id pulumi.StringOutput `pulumi:"cloudspace_id"`
-	CustomerID    pulumi.StringOutput `pulumi:"customerID"`
-	Description   pulumi.StringOutput `pulumi:"description"`
-	Detach        pulumi.BoolOutput   `pulumi:"detach"`
-	Disk_id       pulumi.IntOutput    `pulumi:"disk_id"`
-	Disk_name     pulumi.StringOutput `pulumi:"disk_name"`
-	Disk_size     pulumi.IntOutput    `pulumi:"disk_size"`
-	Disk_type     pulumi.StringOutput `pulumi:"disk_type"`
-	Exposed       pulumi.BoolOutput   `pulumi:"exposed"`
-	Iops          pulumi.IntOutput    `pulumi:"iops"`
-	Iotune        IOTuneOutput        `pulumi:"iotune"`
-	Location      pulumi.StringOutput `pulumi:"location"`
-	Model         pulumi.StringOutput `pulumi:"model"`
-	Order         pulumi.StringOutput `pulumi:"order"`
-	Permanently   pulumi.BoolOutput   `pulumi:"permanently"`
-	Port          pulumi.IntOutput    `pulumi:"port"`
-	Status        pulumi.StringOutput `pulumi:"status"`
-	Token         pulumi.StringOutput `pulumi:"token"`
-	Url           pulumi.StringOutput `pulumi:"url"`
-	Vm_id         pulumi.IntOutput    `pulumi:"vm_id"`
+	Cloudspace_id pulumi.StringOutput  `pulumi:"cloudspace_id"`
+	CustomerID    pulumi.StringOutput  `pulumi:"customerID"`
+	Description   pulumi.StringOutput  `pulumi:"description"`
+	Detach        pulumi.BoolPtrOutput `pulumi:"detach"`
+	Disk_id       pulumi.IntOutput     `pulumi:"disk_id"`
+	Disk_name     pulumi.StringOutput  `pulumi:"disk_name"`
+	Disk_size     pulumi.IntOutput     `pulumi:"disk_size"`
+	Disk_type     pulumi.StringOutput  `pulumi:"disk_type"`
+	Exposed       pulumi.BoolOutput    `pulumi:"exposed"`
+	Iops          pulumi.IntPtrOutput  `pulumi:"iops"`
+	Iotune        IOTuneOutput         `pulumi:"iotune"`
+	Location      pulumi.StringOutput  `pulumi:"location"`
+	Model         pulumi.StringOutput  `pulumi:"model"`
+	Order         pulumi.StringOutput  `pulumi:"order"`
+	Permanently   pulumi.BoolPtrOutput `pulumi:"permanently"`
+	Port          pulumi.IntOutput     `pulumi:"port"`
+	Status        pulumi.StringOutput  `pulumi:"status"`
+	Token         pulumi.StringOutput  `pulumi:"token"`
+	Url           pulumi.StringOutput  `pulumi:"url"`
+	Vm_id         pulumi.IntOutput     `pulumi:"vm_id"`
 }
 
 // NewDisk registers a new resource with the given unique name, arguments, and options.
@@ -50,35 +50,20 @@ func NewDisk(ctx *pulumi.Context,
 	if args.Description == nil {
 		return nil, errors.New("invalid value for required argument 'Description'")
 	}
-	if args.Detach == nil {
-		return nil, errors.New("invalid value for required argument 'Detach'")
-	}
 	if args.Disk_name == nil {
 		return nil, errors.New("invalid value for required argument 'Disk_name'")
 	}
 	if args.Disk_size == nil {
 		return nil, errors.New("invalid value for required argument 'Disk_size'")
 	}
-	if args.Disk_type == nil {
-		return nil, errors.New("invalid value for required argument 'Disk_type'")
-	}
-	if args.Iops == nil {
-		return nil, errors.New("invalid value for required argument 'Iops'")
-	}
 	if args.Location == nil {
 		return nil, errors.New("invalid value for required argument 'Location'")
-	}
-	if args.Permanently == nil {
-		return nil, errors.New("invalid value for required argument 'Permanently'")
 	}
 	if args.Token == nil {
 		return nil, errors.New("invalid value for required argument 'Token'")
 	}
 	if args.Url == nil {
 		return nil, errors.New("invalid value for required argument 'Url'")
-	}
-	if args.Vm_id == nil {
-		return nil, errors.New("invalid value for required argument 'Vm_id'")
 	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Disk
@@ -113,34 +98,34 @@ func (DiskState) ElementType() reflect.Type {
 }
 
 type diskArgs struct {
-	CustomerID  string `pulumi:"customerID"`
-	Description string `pulumi:"description"`
-	Detach      bool   `pulumi:"detach"`
-	Disk_name   string `pulumi:"disk_name"`
-	Disk_size   int    `pulumi:"disk_size"`
-	Disk_type   string `pulumi:"disk_type"`
-	Iops        int    `pulumi:"iops"`
-	Location    string `pulumi:"location"`
-	Permanently bool   `pulumi:"permanently"`
-	Token       string `pulumi:"token"`
-	Url         string `pulumi:"url"`
-	Vm_id       string `pulumi:"vm_id"`
+	CustomerID  string  `pulumi:"customerID"`
+	Description string  `pulumi:"description"`
+	Detach      *bool   `pulumi:"detach"`
+	Disk_name   string  `pulumi:"disk_name"`
+	Disk_size   int     `pulumi:"disk_size"`
+	Disk_type   *string `pulumi:"disk_type"`
+	Iops        *int    `pulumi:"iops"`
+	Location    string  `pulumi:"location"`
+	Permanently *bool   `pulumi:"permanently"`
+	Token       string  `pulumi:"token"`
+	Url         string  `pulumi:"url"`
+	Vm_id       *string `pulumi:"vm_id"`
 }
 
 // The set of arguments for constructing a Disk resource.
 type DiskArgs struct {
 	CustomerID  pulumi.StringInput
 	Description pulumi.StringInput
-	Detach      pulumi.BoolInput
+	Detach      pulumi.BoolPtrInput
 	Disk_name   pulumi.StringInput
 	Disk_size   pulumi.IntInput
-	Disk_type   pulumi.StringInput
-	Iops        pulumi.IntInput
+	Disk_type   pulumi.StringPtrInput
+	Iops        pulumi.IntPtrInput
 	Location    pulumi.StringInput
-	Permanently pulumi.BoolInput
+	Permanently pulumi.BoolPtrInput
 	Token       pulumi.StringInput
 	Url         pulumi.StringInput
-	Vm_id       pulumi.StringInput
+	Vm_id       pulumi.StringPtrInput
 }
 
 func (DiskArgs) ElementType() reflect.Type {
@@ -192,8 +177,8 @@ func (o DiskOutput) Description() pulumi.StringOutput {
 	return o.ApplyT(func(v *Disk) pulumi.StringOutput { return v.Description }).(pulumi.StringOutput)
 }
 
-func (o DiskOutput) Detach() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Disk) pulumi.BoolOutput { return v.Detach }).(pulumi.BoolOutput)
+func (o DiskOutput) Detach() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Disk) pulumi.BoolPtrOutput { return v.Detach }).(pulumi.BoolPtrOutput)
 }
 
 func (o DiskOutput) Disk_id() pulumi.IntOutput {
@@ -216,8 +201,8 @@ func (o DiskOutput) Exposed() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Disk) pulumi.BoolOutput { return v.Exposed }).(pulumi.BoolOutput)
 }
 
-func (o DiskOutput) Iops() pulumi.IntOutput {
-	return o.ApplyT(func(v *Disk) pulumi.IntOutput { return v.Iops }).(pulumi.IntOutput)
+func (o DiskOutput) Iops() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Disk) pulumi.IntPtrOutput { return v.Iops }).(pulumi.IntPtrOutput)
 }
 
 func (o DiskOutput) Iotune() IOTuneOutput {
@@ -236,8 +221,8 @@ func (o DiskOutput) Order() pulumi.StringOutput {
 	return o.ApplyT(func(v *Disk) pulumi.StringOutput { return v.Order }).(pulumi.StringOutput)
 }
 
-func (o DiskOutput) Permanently() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Disk) pulumi.BoolOutput { return v.Permanently }).(pulumi.BoolOutput)
+func (o DiskOutput) Permanently() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Disk) pulumi.BoolPtrOutput { return v.Permanently }).(pulumi.BoolPtrOutput)
 }
 
 func (o DiskOutput) Port() pulumi.IntOutput {

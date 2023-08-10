@@ -34,8 +34,8 @@ type PortForwardArgs struct {
 	Protocol         string  `pulumi:"protocol"`
 	VirtualMachineID int     `pulumi:"vm_id"`
 	PublicIP         string  `pulumi:"public_ip"`
-	TillPublicPort   *int    `pulumi:"till_public_port"`
-	NestedCSID       *string `pulumi:"nested_cs_id"`
+	TillPublicPort   *int    `pulumi:"till_public_port,optional"`
+	NestedCSID       *string `pulumi:"nested_cs_id,optional"`
 }
 
 func (pf PortForward) Create(ctx p.Context, name string, input PortForwardArgs, preview bool) (string, PortForwardState, error) {

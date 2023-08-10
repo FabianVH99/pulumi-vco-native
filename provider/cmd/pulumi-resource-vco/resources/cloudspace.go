@@ -36,12 +36,12 @@ type CloudspaceState struct {
 }
 
 type FirewallCustom struct {
-	ImageID  *int    `pulumi:"image_id"`
-	CdromID  *int    `pulumi:"cdrom_id"`
-	Type     *string `pulumi:"type"`
-	DiskSize *int    `pulumi:"disk_size"`
-	Vcpus    *int    `pulumi:"vcpus"`
-	Memory   *int    `pulumi:"memory"`
+	ImageID  *int    `pulumi:"image_id,optional"`
+	CdromID  *int    `pulumi:"cdrom_id,optional"`
+	Type     *string `pulumi:"type,optional"`
+	DiskSize *int    `pulumi:"disk_size,optional"`
+	Vcpus    *int    `pulumi:"vcpus,optional"`
+	Memory   *int    `pulumi:"memory,optional"`
 }
 
 type CloudspaceArgs struct {
@@ -53,14 +53,14 @@ type CloudspaceArgs struct {
 	PrivateNetwork     string          `pulumi:"privateNetwork"`
 	ExternalNetworkID  int             `pulumi:"externalNetworkID"`
 	Private            bool            `pulumi:"private"`
-	Host               *string         `pulumi:"host"`
-	LocalDomain        *string         `pulumi:"local_domain"`
-	VcpuQuota          *int            `pulumi:"vcpu_quota"`
-	VdiskSpaceQuota    *int            `pulumi:"vdisk_space_quota"`
-	MemoryQuota        *int            `pulumi:"memory_quota"`
-	PublicIPQuota      *int            `pulumi:"public_ip_quota"`
-	ParentCloudspaceID *string         `pulumi:"parent_cloudspace_id"`
-	FirewallCustom     *FirewallCustom `pulumi:"firewall_custom"`
+	Host               *string         `pulumi:"host,optional"`
+	LocalDomain        *string         `pulumi:"local_domain,optional"`
+	VcpuQuota          *int            `pulumi:"vcpu_quota,optional"`
+	VdiskSpaceQuota    *int            `pulumi:"vdisk_space_quota,optional"`
+	MemoryQuota        *int            `pulumi:"memory_quota,optional"`
+	PublicIPQuota      *int            `pulumi:"public_ip_quota,optional"`
+	ParentCloudspaceID *string         `pulumi:"parent_cloudspace_id,optional"`
+	FirewallCustom     *FirewallCustom `pulumi:"firewall_custom,optional"`
 }
 
 func (c Cloudspace) Create(ctx p.Context, name string, input CloudspaceArgs, preview bool) (string, CloudspaceState, error) {

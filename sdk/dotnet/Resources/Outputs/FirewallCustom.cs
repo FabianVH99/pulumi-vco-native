@@ -13,26 +13,26 @@ namespace Pulumi.Vco.Resources.Outputs
     [OutputType]
     public sealed class FirewallCustom
     {
-        public readonly int Cdrom_id;
-        public readonly int Disk_size;
-        public readonly int Image_id;
-        public readonly int Memory;
-        public readonly string Type;
-        public readonly int Vcpus;
+        public readonly int? Cdrom_id;
+        public readonly int? Disk_size;
+        public readonly int? Image_id;
+        public readonly int? Memory;
+        public readonly string? Type;
+        public readonly int? Vcpus;
 
         [OutputConstructor]
         private FirewallCustom(
-            int cdrom_id,
+            int? cdrom_id,
 
-            int disk_size,
+            int? disk_size,
 
-            int image_id,
+            int? image_id,
 
-            int memory,
+            int? memory,
 
-            string type,
+            string? type,
 
-            int vcpus)
+            int? vcpus)
         {
             Cdrom_id = cdrom_id;
             Disk_size = disk_size;

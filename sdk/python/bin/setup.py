@@ -8,8 +8,8 @@ from setuptools.command.install import install
 from subprocess import check_call
 
 
-VERSION = "0.0.1a1691535202+dirty"
-PLUGIN_VERSION = "0.0.1"
+VERSION = "0.0.7+dirty"
+PLUGIN_VERSION = "0.0.8"
 
 class InstallPluginCommand(install):
     def run(self):
@@ -37,7 +37,7 @@ def readme():
         return "vco Pulumi Package - Development Version"
 
 
-setup(name='fabianv-cloud_vco',
+setup(name='pulumi_vco',
       python_requires='>=3.7',
       version=VERSION,
       long_description=readme(),
@@ -47,7 +47,7 @@ setup(name='fabianv-cloud_vco',
       },
       packages=find_packages(),
       package_data={
-          'fabianv-cloud_vco': [
+          'pulumi_vco': [
               'py.typed',
               'pulumi-plugin.json',
           ]

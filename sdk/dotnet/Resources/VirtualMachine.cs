@@ -13,13 +13,13 @@ namespace Pulumi.Vco.Resources
     public partial class VirtualMachine : global::Pulumi.CustomResource
     {
         [Output("acronis")]
-        public Output<bool> Acronis { get; private set; } = null!;
+        public Output<bool?> Acronis { get; private set; } = null!;
 
         [Output("agent_status")]
         public Output<string> Agent_status { get; private set; } = null!;
 
         [Output("all_vm_disks")]
-        public Output<bool> All_vm_disks { get; private set; } = null!;
+        public Output<bool?> All_vm_disks { get; private set; } = null!;
 
         [Output("anti_affinity_group_ids")]
         public Output<ImmutableArray<string>> Anti_affinity_group_ids { get; private set; } = null!;
@@ -34,7 +34,7 @@ namespace Pulumi.Vco.Resources
         public Output<string> Boot_type { get; private set; } = null!;
 
         [Output("cdrom_id")]
-        public Output<int> Cdrom_id { get; private set; } = null!;
+        public Output<int?> Cdrom_id { get; private set; } = null!;
 
         [Output("cloudspace_id")]
         public Output<string> Cloudspace_id { get; private set; } = null!;
@@ -58,13 +58,13 @@ namespace Pulumi.Vco.Resources
         public Output<string> Description { get; private set; } = null!;
 
         [Output("disk_size")]
-        public Output<int> Disk_size { get; private set; } = null!;
+        public Output<int?> Disk_size { get; private set; } = null!;
 
         [Output("disks")]
         public Output<ImmutableArray<Outputs.VmDisk>> Disks { get; private set; } = null!;
 
         [Output("enable_vm_agent")]
-        public Output<bool> Enable_vm_agent { get; private set; } = null!;
+        public Output<bool?> Enable_vm_agent { get; private set; } = null!;
 
         [Output("hostname")]
         public Output<string> Hostname { get; private set; } = null!;
@@ -94,16 +94,16 @@ namespace Pulumi.Vco.Resources
         public Output<string> Os_image_name { get; private set; } = null!;
 
         [Output("os_name")]
-        public Output<string> Os_name { get; private set; } = null!;
+        public Output<string?> Os_name { get; private set; } = null!;
 
         [Output("os_type")]
-        public Output<string> Os_type { get; private set; } = null!;
+        public Output<string?> Os_type { get; private set; } = null!;
 
         [Output("private_ip")]
-        public Output<string> Private_ip { get; private set; } = null!;
+        public Output<string?> Private_ip { get; private set; } = null!;
 
         [Output("snapshot_id")]
-        public Output<string> Snapshot_id { get; private set; } = null!;
+        public Output<string?> Snapshot_id { get; private set; } = null!;
 
         [Output("stack_id")]
         public Output<int> Stack_id { get; private set; } = null!;
@@ -124,7 +124,7 @@ namespace Pulumi.Vco.Resources
         public Output<string> Url { get; private set; } = null!;
 
         [Output("user_data")]
-        public Output<string> User_data { get; private set; } = null!;
+        public Output<string?> User_data { get; private set; } = null!;
 
         [Output("vcpus")]
         public Output<int> Vcpus { get; private set; } = null!;
@@ -177,20 +177,20 @@ namespace Pulumi.Vco.Resources
 
     public sealed class VirtualMachineArgs : global::Pulumi.ResourceArgs
     {
-        [Input("acronis", required: true)]
-        public Input<bool> Acronis { get; set; } = null!;
+        [Input("acronis")]
+        public Input<bool>? Acronis { get; set; }
 
-        [Input("all_vm_disks", required: true)]
-        public Input<bool> All_vm_disks { get; set; } = null!;
+        [Input("all_vm_disks")]
+        public Input<bool>? All_vm_disks { get; set; }
 
-        [Input("boot_disk_id", required: true)]
-        public Input<int> Boot_disk_id { get; set; } = null!;
+        [Input("boot_disk_id")]
+        public Input<int>? Boot_disk_id { get; set; }
 
-        [Input("boot_type", required: true)]
-        public Input<string> Boot_type { get; set; } = null!;
+        [Input("boot_type")]
+        public Input<string>? Boot_type { get; set; }
 
-        [Input("cdrom_id", required: true)]
-        public Input<int> Cdrom_id { get; set; } = null!;
+        [Input("cdrom_id")]
+        public Input<int>? Cdrom_id { get; set; }
 
         [Input("cloudspace_id", required: true)]
         public Input<string> Cloudspace_id { get; set; } = null!;
@@ -198,7 +198,7 @@ namespace Pulumi.Vco.Resources
         [Input("customerID", required: true)]
         public Input<string> CustomerID { get; set; } = null!;
 
-        [Input("data_disks", required: true)]
+        [Input("data_disks")]
         private InputList<int>? _data_disks;
         public InputList<int> Data_disks
         {
@@ -209,14 +209,14 @@ namespace Pulumi.Vco.Resources
         [Input("description", required: true)]
         public Input<string> Description { get; set; } = null!;
 
-        [Input("disk_size", required: true)]
-        public Input<int> Disk_size { get; set; } = null!;
+        [Input("disk_size")]
+        public Input<int>? Disk_size { get; set; }
 
-        [Input("enable_vm_agent", required: true)]
-        public Input<bool> Enable_vm_agent { get; set; } = null!;
+        [Input("enable_vm_agent")]
+        public Input<bool>? Enable_vm_agent { get; set; }
 
-        [Input("image_id", required: true)]
-        public Input<int> Image_id { get; set; } = null!;
+        [Input("image_id")]
+        public Input<int>? Image_id { get; set; }
 
         [Input("memory", required: true)]
         public Input<int> Memory { get; set; } = null!;
@@ -224,17 +224,17 @@ namespace Pulumi.Vco.Resources
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        [Input("os_name", required: true)]
-        public Input<string> Os_name { get; set; } = null!;
+        [Input("os_name")]
+        public Input<string>? Os_name { get; set; }
 
-        [Input("os_type", required: true)]
-        public Input<string> Os_type { get; set; } = null!;
+        [Input("os_type")]
+        public Input<string>? Os_type { get; set; }
 
-        [Input("private_ip", required: true)]
-        public Input<string> Private_ip { get; set; } = null!;
+        [Input("private_ip")]
+        public Input<string>? Private_ip { get; set; }
 
-        [Input("snapshot_id", required: true)]
-        public Input<string> Snapshot_id { get; set; } = null!;
+        [Input("snapshot_id")]
+        public Input<string>? Snapshot_id { get; set; }
 
         [Input("token", required: true)]
         public Input<string> Token { get; set; } = null!;
@@ -242,8 +242,8 @@ namespace Pulumi.Vco.Resources
         [Input("url", required: true)]
         public Input<string> Url { get; set; } = null!;
 
-        [Input("user_data", required: true)]
-        public Input<string> User_data { get; set; } = null!;
+        [Input("user_data")]
+        public Input<string>? User_data { get; set; }
 
         [Input("vcpus", required: true)]
         public Input<int> Vcpus { get; set; } = null!;

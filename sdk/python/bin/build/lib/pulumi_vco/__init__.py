@@ -9,10 +9,10 @@ from .provider import *
 
 # Make subpackages available:
 if typing.TYPE_CHECKING:
-    import fabianv-cloud_vco.resources as __resources
+    import pulumi_vco.resources as __resources
     resources = __resources
 else:
-    resources = _utilities.lazy_import('fabianv-cloud_vco.resources')
+    resources = _utilities.lazy_import('pulumi_vco.resources')
 
 _utilities.register(
     resource_modules="""
@@ -20,7 +20,7 @@ _utilities.register(
  {
   "pkg": "vco",
   "mod": "resources",
-  "fqn": "fabianv-cloud_vco.resources",
+  "fqn": "pulumi_vco.resources",
   "classes": {
    "vco:resources:AntiAffinityGroup": "AntiAffinityGroup",
    "vco:resources:AntiAffinityGroupVM": "AntiAffinityGroupVM",
@@ -48,7 +48,7 @@ _utilities.register(
  {
   "pkg": "vco",
   "token": "pulumi:providers:vco",
-  "fqn": "fabianv-cloud_vco",
+  "fqn": "pulumi_vco",
   "class": "Provider"
  }
 ]

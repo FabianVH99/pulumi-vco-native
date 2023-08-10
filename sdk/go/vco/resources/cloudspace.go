@@ -15,30 +15,30 @@ import (
 type Cloudspace struct {
 	pulumi.CustomResourceState
 
-	Cloudspace_id        pulumi.StringOutput  `pulumi:"cloudspace_id"`
-	Cloudspace_mode      pulumi.StringOutput  `pulumi:"cloudspace_mode"`
-	Creation_time        pulumi.IntOutput     `pulumi:"creation_time"`
-	CustomerID           pulumi.StringOutput  `pulumi:"customerID"`
-	External_network_id  pulumi.StringOutput  `pulumi:"external_network_id"`
-	External_network_ip  pulumi.StringOutput  `pulumi:"external_network_ip"`
-	Firewall_custom      FirewallCustomOutput `pulumi:"firewall_custom"`
-	Host                 pulumi.StringOutput  `pulumi:"host"`
-	Local_domain         pulumi.StringOutput  `pulumi:"local_domain"`
-	Location             pulumi.StringOutput  `pulumi:"location"`
-	Memory_quota         pulumi.IntOutput     `pulumi:"memory_quota"`
-	Name                 pulumi.StringOutput  `pulumi:"name"`
-	Parent_cloudspace_id pulumi.StringOutput  `pulumi:"parent_cloudspace_id"`
-	Private              pulumi.BoolOutput    `pulumi:"private"`
-	Private_network      pulumi.StringOutput  `pulumi:"private_network"`
-	Public_ip_quota      pulumi.IntOutput     `pulumi:"public_ip_quota"`
-	Resource_limits      ResourceLimitsOutput `pulumi:"resource_limits"`
-	Router_type          pulumi.StringOutput  `pulumi:"router_type"`
-	Status               pulumi.StringOutput  `pulumi:"status"`
-	Token                pulumi.StringOutput  `pulumi:"token"`
-	Update_time          pulumi.IntOutput     `pulumi:"update_time"`
-	Url                  pulumi.StringOutput  `pulumi:"url"`
-	Vcpu_quota           pulumi.IntOutput     `pulumi:"vcpu_quota"`
-	Vdisk_space_quota    pulumi.IntOutput     `pulumi:"vdisk_space_quota"`
+	Cloudspace_id        pulumi.StringOutput     `pulumi:"cloudspace_id"`
+	Cloudspace_mode      pulumi.StringOutput     `pulumi:"cloudspace_mode"`
+	Creation_time        pulumi.IntOutput        `pulumi:"creation_time"`
+	CustomerID           pulumi.StringOutput     `pulumi:"customerID"`
+	External_network_id  pulumi.StringOutput     `pulumi:"external_network_id"`
+	External_network_ip  pulumi.StringOutput     `pulumi:"external_network_ip"`
+	Firewall_custom      FirewallCustomPtrOutput `pulumi:"firewall_custom"`
+	Host                 pulumi.StringPtrOutput  `pulumi:"host"`
+	Local_domain         pulumi.StringOutput     `pulumi:"local_domain"`
+	Location             pulumi.StringOutput     `pulumi:"location"`
+	Memory_quota         pulumi.IntPtrOutput     `pulumi:"memory_quota"`
+	Name                 pulumi.StringOutput     `pulumi:"name"`
+	Parent_cloudspace_id pulumi.StringPtrOutput  `pulumi:"parent_cloudspace_id"`
+	Private              pulumi.BoolOutput       `pulumi:"private"`
+	Private_network      pulumi.StringOutput     `pulumi:"private_network"`
+	Public_ip_quota      pulumi.IntPtrOutput     `pulumi:"public_ip_quota"`
+	Resource_limits      ResourceLimitsOutput    `pulumi:"resource_limits"`
+	Router_type          pulumi.StringOutput     `pulumi:"router_type"`
+	Status               pulumi.StringOutput     `pulumi:"status"`
+	Token                pulumi.StringOutput     `pulumi:"token"`
+	Update_time          pulumi.IntOutput        `pulumi:"update_time"`
+	Url                  pulumi.StringOutput     `pulumi:"url"`
+	Vcpu_quota           pulumi.IntPtrOutput     `pulumi:"vcpu_quota"`
+	Vdisk_space_quota    pulumi.IntPtrOutput     `pulumi:"vdisk_space_quota"`
 }
 
 // NewCloudspace registers a new resource with the given unique name, arguments, and options.
@@ -54,26 +54,11 @@ func NewCloudspace(ctx *pulumi.Context,
 	if args.ExternalNetworkID == nil {
 		return nil, errors.New("invalid value for required argument 'ExternalNetworkID'")
 	}
-	if args.Firewall_custom == nil {
-		return nil, errors.New("invalid value for required argument 'Firewall_custom'")
-	}
-	if args.Host == nil {
-		return nil, errors.New("invalid value for required argument 'Host'")
-	}
-	if args.Local_domain == nil {
-		return nil, errors.New("invalid value for required argument 'Local_domain'")
-	}
 	if args.Location == nil {
 		return nil, errors.New("invalid value for required argument 'Location'")
 	}
-	if args.Memory_quota == nil {
-		return nil, errors.New("invalid value for required argument 'Memory_quota'")
-	}
 	if args.Name == nil {
 		return nil, errors.New("invalid value for required argument 'Name'")
-	}
-	if args.Parent_cloudspace_id == nil {
-		return nil, errors.New("invalid value for required argument 'Parent_cloudspace_id'")
 	}
 	if args.Private == nil {
 		return nil, errors.New("invalid value for required argument 'Private'")
@@ -81,20 +66,11 @@ func NewCloudspace(ctx *pulumi.Context,
 	if args.PrivateNetwork == nil {
 		return nil, errors.New("invalid value for required argument 'PrivateNetwork'")
 	}
-	if args.Public_ip_quota == nil {
-		return nil, errors.New("invalid value for required argument 'Public_ip_quota'")
-	}
 	if args.Token == nil {
 		return nil, errors.New("invalid value for required argument 'Token'")
 	}
 	if args.Url == nil {
 		return nil, errors.New("invalid value for required argument 'Url'")
-	}
-	if args.Vcpu_quota == nil {
-		return nil, errors.New("invalid value for required argument 'Vcpu_quota'")
-	}
-	if args.Vdisk_space_quota == nil {
-		return nil, errors.New("invalid value for required argument 'Vdisk_space_quota'")
 	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Cloudspace
@@ -129,42 +105,42 @@ func (CloudspaceState) ElementType() reflect.Type {
 }
 
 type cloudspaceArgs struct {
-	CustomerID           string         `pulumi:"customerID"`
-	ExternalNetworkID    int            `pulumi:"externalNetworkID"`
-	Firewall_custom      FirewallCustom `pulumi:"firewall_custom"`
-	Host                 string         `pulumi:"host"`
-	Local_domain         string         `pulumi:"local_domain"`
-	Location             string         `pulumi:"location"`
-	Memory_quota         int            `pulumi:"memory_quota"`
-	Name                 string         `pulumi:"name"`
-	Parent_cloudspace_id string         `pulumi:"parent_cloudspace_id"`
-	Private              bool           `pulumi:"private"`
-	PrivateNetwork       string         `pulumi:"privateNetwork"`
-	Public_ip_quota      int            `pulumi:"public_ip_quota"`
-	Token                string         `pulumi:"token"`
-	Url                  string         `pulumi:"url"`
-	Vcpu_quota           int            `pulumi:"vcpu_quota"`
-	Vdisk_space_quota    int            `pulumi:"vdisk_space_quota"`
+	CustomerID           string          `pulumi:"customerID"`
+	ExternalNetworkID    int             `pulumi:"externalNetworkID"`
+	Firewall_custom      *FirewallCustom `pulumi:"firewall_custom"`
+	Host                 *string         `pulumi:"host"`
+	Local_domain         *string         `pulumi:"local_domain"`
+	Location             string          `pulumi:"location"`
+	Memory_quota         *int            `pulumi:"memory_quota"`
+	Name                 string          `pulumi:"name"`
+	Parent_cloudspace_id *string         `pulumi:"parent_cloudspace_id"`
+	Private              bool            `pulumi:"private"`
+	PrivateNetwork       string          `pulumi:"privateNetwork"`
+	Public_ip_quota      *int            `pulumi:"public_ip_quota"`
+	Token                string          `pulumi:"token"`
+	Url                  string          `pulumi:"url"`
+	Vcpu_quota           *int            `pulumi:"vcpu_quota"`
+	Vdisk_space_quota    *int            `pulumi:"vdisk_space_quota"`
 }
 
 // The set of arguments for constructing a Cloudspace resource.
 type CloudspaceArgs struct {
 	CustomerID           pulumi.StringInput
 	ExternalNetworkID    pulumi.IntInput
-	Firewall_custom      FirewallCustomInput
-	Host                 pulumi.StringInput
-	Local_domain         pulumi.StringInput
+	Firewall_custom      FirewallCustomPtrInput
+	Host                 pulumi.StringPtrInput
+	Local_domain         pulumi.StringPtrInput
 	Location             pulumi.StringInput
-	Memory_quota         pulumi.IntInput
+	Memory_quota         pulumi.IntPtrInput
 	Name                 pulumi.StringInput
-	Parent_cloudspace_id pulumi.StringInput
+	Parent_cloudspace_id pulumi.StringPtrInput
 	Private              pulumi.BoolInput
 	PrivateNetwork       pulumi.StringInput
-	Public_ip_quota      pulumi.IntInput
+	Public_ip_quota      pulumi.IntPtrInput
 	Token                pulumi.StringInput
 	Url                  pulumi.StringInput
-	Vcpu_quota           pulumi.IntInput
-	Vdisk_space_quota    pulumi.IntInput
+	Vcpu_quota           pulumi.IntPtrInput
+	Vdisk_space_quota    pulumi.IntPtrInput
 }
 
 func (CloudspaceArgs) ElementType() reflect.Type {
@@ -228,12 +204,12 @@ func (o CloudspaceOutput) External_network_ip() pulumi.StringOutput {
 	return o.ApplyT(func(v *Cloudspace) pulumi.StringOutput { return v.External_network_ip }).(pulumi.StringOutput)
 }
 
-func (o CloudspaceOutput) Firewall_custom() FirewallCustomOutput {
-	return o.ApplyT(func(v *Cloudspace) FirewallCustomOutput { return v.Firewall_custom }).(FirewallCustomOutput)
+func (o CloudspaceOutput) Firewall_custom() FirewallCustomPtrOutput {
+	return o.ApplyT(func(v *Cloudspace) FirewallCustomPtrOutput { return v.Firewall_custom }).(FirewallCustomPtrOutput)
 }
 
-func (o CloudspaceOutput) Host() pulumi.StringOutput {
-	return o.ApplyT(func(v *Cloudspace) pulumi.StringOutput { return v.Host }).(pulumi.StringOutput)
+func (o CloudspaceOutput) Host() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Cloudspace) pulumi.StringPtrOutput { return v.Host }).(pulumi.StringPtrOutput)
 }
 
 func (o CloudspaceOutput) Local_domain() pulumi.StringOutput {
@@ -244,16 +220,16 @@ func (o CloudspaceOutput) Location() pulumi.StringOutput {
 	return o.ApplyT(func(v *Cloudspace) pulumi.StringOutput { return v.Location }).(pulumi.StringOutput)
 }
 
-func (o CloudspaceOutput) Memory_quota() pulumi.IntOutput {
-	return o.ApplyT(func(v *Cloudspace) pulumi.IntOutput { return v.Memory_quota }).(pulumi.IntOutput)
+func (o CloudspaceOutput) Memory_quota() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Cloudspace) pulumi.IntPtrOutput { return v.Memory_quota }).(pulumi.IntPtrOutput)
 }
 
 func (o CloudspaceOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Cloudspace) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
-func (o CloudspaceOutput) Parent_cloudspace_id() pulumi.StringOutput {
-	return o.ApplyT(func(v *Cloudspace) pulumi.StringOutput { return v.Parent_cloudspace_id }).(pulumi.StringOutput)
+func (o CloudspaceOutput) Parent_cloudspace_id() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Cloudspace) pulumi.StringPtrOutput { return v.Parent_cloudspace_id }).(pulumi.StringPtrOutput)
 }
 
 func (o CloudspaceOutput) Private() pulumi.BoolOutput {
@@ -264,8 +240,8 @@ func (o CloudspaceOutput) Private_network() pulumi.StringOutput {
 	return o.ApplyT(func(v *Cloudspace) pulumi.StringOutput { return v.Private_network }).(pulumi.StringOutput)
 }
 
-func (o CloudspaceOutput) Public_ip_quota() pulumi.IntOutput {
-	return o.ApplyT(func(v *Cloudspace) pulumi.IntOutput { return v.Public_ip_quota }).(pulumi.IntOutput)
+func (o CloudspaceOutput) Public_ip_quota() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Cloudspace) pulumi.IntPtrOutput { return v.Public_ip_quota }).(pulumi.IntPtrOutput)
 }
 
 func (o CloudspaceOutput) Resource_limits() ResourceLimitsOutput {
@@ -292,12 +268,12 @@ func (o CloudspaceOutput) Url() pulumi.StringOutput {
 	return o.ApplyT(func(v *Cloudspace) pulumi.StringOutput { return v.Url }).(pulumi.StringOutput)
 }
 
-func (o CloudspaceOutput) Vcpu_quota() pulumi.IntOutput {
-	return o.ApplyT(func(v *Cloudspace) pulumi.IntOutput { return v.Vcpu_quota }).(pulumi.IntOutput)
+func (o CloudspaceOutput) Vcpu_quota() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Cloudspace) pulumi.IntPtrOutput { return v.Vcpu_quota }).(pulumi.IntPtrOutput)
 }
 
-func (o CloudspaceOutput) Vdisk_space_quota() pulumi.IntOutput {
-	return o.ApplyT(func(v *Cloudspace) pulumi.IntOutput { return v.Vdisk_space_quota }).(pulumi.IntOutput)
+func (o CloudspaceOutput) Vdisk_space_quota() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Cloudspace) pulumi.IntPtrOutput { return v.Vdisk_space_quota }).(pulumi.IntPtrOutput)
 }
 
 func init() {

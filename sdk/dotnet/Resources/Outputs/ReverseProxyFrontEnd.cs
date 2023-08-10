@@ -14,9 +14,9 @@ namespace Pulumi.Vco.Resources.Outputs
     public sealed class ReverseProxyFrontEnd
     {
         public readonly string Domain;
-        public readonly int Http_port;
-        public readonly int Https_port;
-        public readonly string Ip_address;
+        public readonly int? Http_port;
+        public readonly int? Https_port;
+        public readonly string? Ip_address;
         public readonly Outputs.LetsEncrypt Letsencrypt;
         public readonly string Scheme;
 
@@ -24,11 +24,11 @@ namespace Pulumi.Vco.Resources.Outputs
         private ReverseProxyFrontEnd(
             string domain,
 
-            int http_port,
+            int? http_port,
 
-            int https_port,
+            int? https_port,
 
-            string ip_address,
+            string? ip_address,
 
             Outputs.LetsEncrypt letsencrypt,
 

@@ -17,31 +17,36 @@ class DiskArgs:
     def __init__(__self__, *,
                  customer_id: pulumi.Input[str],
                  description: pulumi.Input[str],
-                 detach: pulumi.Input[bool],
                  disk_name: pulumi.Input[str],
                  disk_size: pulumi.Input[int],
-                 disk_type: pulumi.Input[str],
-                 iops: pulumi.Input[int],
                  location: pulumi.Input[str],
-                 permanently: pulumi.Input[bool],
                  token: pulumi.Input[str],
                  url: pulumi.Input[str],
-                 vm_id: pulumi.Input[str]):
+                 detach: Optional[pulumi.Input[bool]] = None,
+                 disk_type: Optional[pulumi.Input[str]] = None,
+                 iops: Optional[pulumi.Input[int]] = None,
+                 permanently: Optional[pulumi.Input[bool]] = None,
+                 vm_id: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a Disk resource.
         """
         pulumi.set(__self__, "customer_id", customer_id)
         pulumi.set(__self__, "description", description)
-        pulumi.set(__self__, "detach", detach)
         pulumi.set(__self__, "disk_name", disk_name)
         pulumi.set(__self__, "disk_size", disk_size)
-        pulumi.set(__self__, "disk_type", disk_type)
-        pulumi.set(__self__, "iops", iops)
         pulumi.set(__self__, "location", location)
-        pulumi.set(__self__, "permanently", permanently)
         pulumi.set(__self__, "token", token)
         pulumi.set(__self__, "url", url)
-        pulumi.set(__self__, "vm_id", vm_id)
+        if detach is not None:
+            pulumi.set(__self__, "detach", detach)
+        if disk_type is not None:
+            pulumi.set(__self__, "disk_type", disk_type)
+        if iops is not None:
+            pulumi.set(__self__, "iops", iops)
+        if permanently is not None:
+            pulumi.set(__self__, "permanently", permanently)
+        if vm_id is not None:
+            pulumi.set(__self__, "vm_id", vm_id)
 
     @property
     @pulumi.getter(name="customerID")
@@ -63,15 +68,6 @@ class DiskArgs:
 
     @property
     @pulumi.getter
-    def detach(self) -> pulumi.Input[bool]:
-        return pulumi.get(self, "detach")
-
-    @detach.setter
-    def detach(self, value: pulumi.Input[bool]):
-        pulumi.set(self, "detach", value)
-
-    @property
-    @pulumi.getter
     def disk_name(self) -> pulumi.Input[str]:
         return pulumi.get(self, "disk_name")
 
@@ -90,39 +86,12 @@ class DiskArgs:
 
     @property
     @pulumi.getter
-    def disk_type(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "disk_type")
-
-    @disk_type.setter
-    def disk_type(self, value: pulumi.Input[str]):
-        pulumi.set(self, "disk_type", value)
-
-    @property
-    @pulumi.getter
-    def iops(self) -> pulumi.Input[int]:
-        return pulumi.get(self, "iops")
-
-    @iops.setter
-    def iops(self, value: pulumi.Input[int]):
-        pulumi.set(self, "iops", value)
-
-    @property
-    @pulumi.getter
     def location(self) -> pulumi.Input[str]:
         return pulumi.get(self, "location")
 
     @location.setter
     def location(self, value: pulumi.Input[str]):
         pulumi.set(self, "location", value)
-
-    @property
-    @pulumi.getter
-    def permanently(self) -> pulumi.Input[bool]:
-        return pulumi.get(self, "permanently")
-
-    @permanently.setter
-    def permanently(self, value: pulumi.Input[bool]):
-        pulumi.set(self, "permanently", value)
 
     @property
     @pulumi.getter
@@ -144,11 +113,47 @@ class DiskArgs:
 
     @property
     @pulumi.getter
-    def vm_id(self) -> pulumi.Input[str]:
+    def detach(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "detach")
+
+    @detach.setter
+    def detach(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "detach", value)
+
+    @property
+    @pulumi.getter
+    def disk_type(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "disk_type")
+
+    @disk_type.setter
+    def disk_type(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "disk_type", value)
+
+    @property
+    @pulumi.getter
+    def iops(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "iops")
+
+    @iops.setter
+    def iops(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "iops", value)
+
+    @property
+    @pulumi.getter
+    def permanently(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "permanently")
+
+    @permanently.setter
+    def permanently(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "permanently", value)
+
+    @property
+    @pulumi.getter
+    def vm_id(self) -> Optional[pulumi.Input[str]]:
         return pulumi.get(self, "vm_id")
 
     @vm_id.setter
-    def vm_id(self, value: pulumi.Input[str]):
+    def vm_id(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "vm_id", value)
 
 
@@ -225,8 +230,6 @@ class Disk(pulumi.CustomResource):
             if description is None and not opts.urn:
                 raise TypeError("Missing required property 'description'")
             __props__.__dict__["description"] = description
-            if detach is None and not opts.urn:
-                raise TypeError("Missing required property 'detach'")
             __props__.__dict__["detach"] = detach
             if disk_name is None and not opts.urn:
                 raise TypeError("Missing required property 'disk_name'")
@@ -234,17 +237,11 @@ class Disk(pulumi.CustomResource):
             if disk_size is None and not opts.urn:
                 raise TypeError("Missing required property 'disk_size'")
             __props__.__dict__["disk_size"] = disk_size
-            if disk_type is None and not opts.urn:
-                raise TypeError("Missing required property 'disk_type'")
             __props__.__dict__["disk_type"] = disk_type
-            if iops is None and not opts.urn:
-                raise TypeError("Missing required property 'iops'")
             __props__.__dict__["iops"] = iops
             if location is None and not opts.urn:
                 raise TypeError("Missing required property 'location'")
             __props__.__dict__["location"] = location
-            if permanently is None and not opts.urn:
-                raise TypeError("Missing required property 'permanently'")
             __props__.__dict__["permanently"] = permanently
             if token is None and not opts.urn:
                 raise TypeError("Missing required property 'token'")
@@ -252,8 +249,6 @@ class Disk(pulumi.CustomResource):
             if url is None and not opts.urn:
                 raise TypeError("Missing required property 'url'")
             __props__.__dict__["url"] = url
-            if vm_id is None and not opts.urn:
-                raise TypeError("Missing required property 'vm_id'")
             __props__.__dict__["vm_id"] = vm_id
             __props__.__dict__["cloudspace_id"] = None
             __props__.__dict__["disk_id"] = None
@@ -324,7 +319,7 @@ class Disk(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def detach(self) -> pulumi.Output[bool]:
+    def detach(self) -> pulumi.Output[Optional[bool]]:
         return pulumi.get(self, "detach")
 
     @property
@@ -354,7 +349,7 @@ class Disk(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def iops(self) -> pulumi.Output[int]:
+    def iops(self) -> pulumi.Output[Optional[int]]:
         return pulumi.get(self, "iops")
 
     @property
@@ -379,7 +374,7 @@ class Disk(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def permanently(self) -> pulumi.Output[bool]:
+    def permanently(self) -> pulumi.Output[Optional[bool]]:
         return pulumi.get(self, "permanently")
 
     @property

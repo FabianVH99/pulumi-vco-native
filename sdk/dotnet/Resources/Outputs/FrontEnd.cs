@@ -13,17 +13,17 @@ namespace Pulumi.Vco.Resources.Outputs
     [OutputType]
     public sealed class FrontEnd
     {
-        public readonly string Ip_address;
+        public readonly string? Ip_address;
         public readonly int Port;
-        public readonly Outputs.TLS Tls;
+        public readonly Outputs.TLS? Tls;
 
         [OutputConstructor]
         private FrontEnd(
-            string ip_address,
+            string? ip_address,
 
             int port,
 
-            Outputs.TLS tls)
+            Outputs.TLS? tls)
         {
             Ip_address = ip_address;
             Port = port;

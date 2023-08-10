@@ -26,16 +26,16 @@ type ReverseProxyArgs struct {
 	CustomerID           string               `pulumi:"customerID"`
 	CloudSpaceID         string               `pulumi:"cloudspace_id"`
 	Name                 string               `pulumi:"name"`
-	Description          *string              `pulumi:"description"`
+	Description          *string              `pulumi:"description,optional"`
 	ReverseProxyFrontEnd ReverseProxyFrontEnd `pulumi:"front_end"`
 	ReverseProxyBackend  ReverseProxyBackend  `pulumi:"back_end"`
 }
 
 type ReverseProxyFrontEnd struct {
 	Domain      string      `pulumi:"domain" json:"domain"`
-	HTTPPort    *int        `pulumi:"http_port" json:"http_port"`
-	HTTPSPort   *int        `pulumi:"https_port" json:"https_port"`
-	IPAddress   *string     `pulumi:"ip_address" json:"ip_address"`
+	HTTPPort    *int        `pulumi:"http_port,optional" json:"http_port"`
+	HTTPSPort   *int        `pulumi:"https_port,optional" json:"https_port"`
+	IPAddress   *string     `pulumi:"ip_address,optional" json:"ip_address"`
 	Scheme      string      `pulumi:"scheme" json:"scheme"`
 	LetsEncrypt LetsEncrypt `pulumi:"letsencrypt" json:"letsencrypt"`
 }
@@ -49,27 +49,27 @@ type ReverseProxyBackend struct {
 	Scheme       string   `pulumi:"scheme" json:"scheme"`
 	ServerpoolID string   `pulumi:"serverpool_id" json:"serverpool_id"`
 	TargetPort   int      `pulumi:"target_port" json:"target_port"`
-	Options      *Options `pulumi:"options" json:"options"`
+	Options      *Options `pulumi:"options,optional" json:"options"`
 }
 
 type Options struct {
-	StickySessionCookie *StickySessionCookie `pulumi:"sticky_session_cookie" json:"sticky_session_cookie"`
-	HealthCheck         *HealthCheck         `pulumi:"health_check" json:"health_check"`
+	StickySessionCookie *StickySessionCookie `pulumi:"sticky_session_cookie,optional" json:"sticky_session_cookie"`
+	HealthCheck         *HealthCheck         `pulumi:"health_check,optional" json:"health_check"`
 }
 
 type StickySessionCookie struct {
-	Name     *string `pulumi:"name" json:"name"`
-	Secure   *bool   `pulumi:"secure" json:"secure"`
-	HttpOnly *bool   `pulumi:"http_only" json:"http_only"`
-	SameSite *string `pulumi:"same_site" json:"same_site"`
+	Name     *string `pulumi:"name,optional" json:"name"`
+	Secure   *bool   `pulumi:"secure,optional" json:"secure"`
+	HttpOnly *bool   `pulumi:"http_only,optional" json:"http_only"`
+	SameSite *string `pulumi:"same_site,optional" json:"same_site"`
 }
 
 type HealthCheck struct {
-	Path     *string `pulumi:"path" json:"path"`
-	Scheme   *string `pulumi:"scheme" json:"scheme"`
-	Port     *int    `pulumi:"port" json:"port"`
-	Interval *int    `pulumi:"interval" json:"interval"`
-	Timeout  *int    `pulumi:"timeout" json:"timeout"`
+	Path     *string `pulumi:"path,optional" json:"path"`
+	Scheme   *string `pulumi:"scheme,optional" json:"scheme"`
+	Port     *int    `pulumi:"port,optional" json:"port"`
+	Interval *int    `pulumi:"interval,optional" json:"interval"`
+	Timeout  *int    `pulumi:"timeout,optional" json:"timeout"`
 }
 
 func (rp ReverseProxy) Create(ctx p.Context, name string, input ReverseProxyArgs, preview bool) (string, ReverseProxyState, error) {

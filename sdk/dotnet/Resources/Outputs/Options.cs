@@ -13,14 +13,14 @@ namespace Pulumi.Vco.Resources.Outputs
     [OutputType]
     public sealed class Options
     {
-        public readonly Outputs.HealthCheck Health_check;
-        public readonly Outputs.StickySessionCookie Sticky_session_cookie;
+        public readonly Outputs.HealthCheck? Health_check;
+        public readonly Outputs.StickySessionCookie? Sticky_session_cookie;
 
         [OutputConstructor]
         private Options(
-            Outputs.HealthCheck health_check,
+            Outputs.HealthCheck? health_check,
 
-            Outputs.StickySessionCookie sticky_session_cookie)
+            Outputs.StickySessionCookie? sticky_session_cookie)
         {
             Health_check = health_check;
             Sticky_session_cookie = sticky_session_cookie;

@@ -12,23 +12,23 @@ namespace Pulumi.Vco.Resources.Inputs
 
     public sealed class FirewallCustomArgs : global::Pulumi.ResourceArgs
     {
-        [Input("cdrom_id", required: true)]
-        public Input<int> Cdrom_id { get; set; } = null!;
+        [Input("cdrom_id")]
+        public Input<int>? Cdrom_id { get; set; }
 
-        [Input("disk_size", required: true)]
-        public Input<int> Disk_size { get; set; } = null!;
+        [Input("disk_size")]
+        public Input<int>? Disk_size { get; set; }
 
-        [Input("image_id", required: true)]
-        public Input<int> Image_id { get; set; } = null!;
+        [Input("image_id")]
+        public Input<int>? Image_id { get; set; }
 
-        [Input("memory", required: true)]
-        public Input<int> Memory { get; set; } = null!;
+        [Input("memory")]
+        public Input<int>? Memory { get; set; }
 
-        [Input("type", required: true)]
-        public Input<string> Type { get; set; } = null!;
+        [Input("type")]
+        public Input<string>? Type { get; set; }
 
-        [Input("vcpus", required: true)]
-        public Input<int> Vcpus { get; set; } = null!;
+        [Input("vcpus")]
+        public Input<int>? Vcpus { get; set; }
 
         public FirewallCustomArgs()
         {

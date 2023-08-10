@@ -28,10 +28,10 @@ namespace Pulumi.Vco.Resources
         public Output<int> External_network_id { get; private set; } = null!;
 
         [Output("external_network_ip")]
-        public Output<string> External_network_ip { get; private set; } = null!;
+        public Output<string?> External_network_ip { get; private set; } = null!;
 
         [Output("external_network_type")]
-        public Output<string> External_network_type { get; private set; } = null!;
+        public Output<string?> External_network_type { get; private set; } = null!;
 
         [Output("ip_address")]
         public Output<string> Ip_address { get; private set; } = null!;
@@ -108,20 +108,20 @@ namespace Pulumi.Vco.Resources
         [Input("customerID", required: true)]
         public Input<string> CustomerID { get; set; } = null!;
 
-        [Input("external_cloudspace_id", required: true)]
-        public Input<string> External_cloudspace_id { get; set; } = null!;
+        [Input("external_cloudspace_id")]
+        public Input<string>? External_cloudspace_id { get; set; }
 
         [Input("external_network_id", required: true)]
         public Input<int> External_network_id { get; set; } = null!;
 
-        [Input("external_network_ip", required: true)]
-        public Input<string> External_network_ip { get; set; } = null!;
+        [Input("external_network_ip")]
+        public Input<string>? External_network_ip { get; set; }
 
-        [Input("external_network_type", required: true)]
-        public Input<string> External_network_type { get; set; } = null!;
+        [Input("external_network_type")]
+        public Input<string>? External_network_type { get; set; }
 
-        [Input("model", required: true)]
-        public Input<string> Model { get; set; } = null!;
+        [Input("model")]
+        public Input<string>? Model { get; set; }
 
         [Input("token", required: true)]
         public Input<string> Token { get; set; } = null!;

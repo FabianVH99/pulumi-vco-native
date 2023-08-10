@@ -31,10 +31,10 @@ namespace Pulumi.Vco.Resources
         public Output<string> External_network_ip { get; private set; } = null!;
 
         [Output("firewall_custom")]
-        public Output<Outputs.FirewallCustom> Firewall_custom { get; private set; } = null!;
+        public Output<Outputs.FirewallCustom?> Firewall_custom { get; private set; } = null!;
 
         [Output("host")]
-        public Output<string> Host { get; private set; } = null!;
+        public Output<string?> Host { get; private set; } = null!;
 
         [Output("local_domain")]
         public Output<string> Local_domain { get; private set; } = null!;
@@ -43,13 +43,13 @@ namespace Pulumi.Vco.Resources
         public Output<string> Location { get; private set; } = null!;
 
         [Output("memory_quota")]
-        public Output<int> Memory_quota { get; private set; } = null!;
+        public Output<int?> Memory_quota { get; private set; } = null!;
 
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
         [Output("parent_cloudspace_id")]
-        public Output<string> Parent_cloudspace_id { get; private set; } = null!;
+        public Output<string?> Parent_cloudspace_id { get; private set; } = null!;
 
         [Output("private")]
         public Output<bool> Private { get; private set; } = null!;
@@ -58,7 +58,7 @@ namespace Pulumi.Vco.Resources
         public Output<string> Private_network { get; private set; } = null!;
 
         [Output("public_ip_quota")]
-        public Output<int> Public_ip_quota { get; private set; } = null!;
+        public Output<int?> Public_ip_quota { get; private set; } = null!;
 
         [Output("resource_limits")]
         public Output<Outputs.ResourceLimits> Resource_limits { get; private set; } = null!;
@@ -79,10 +79,10 @@ namespace Pulumi.Vco.Resources
         public Output<string> Url { get; private set; } = null!;
 
         [Output("vcpu_quota")]
-        public Output<int> Vcpu_quota { get; private set; } = null!;
+        public Output<int?> Vcpu_quota { get; private set; } = null!;
 
         [Output("vdisk_space_quota")]
-        public Output<int> Vdisk_space_quota { get; private set; } = null!;
+        public Output<int?> Vdisk_space_quota { get; private set; } = null!;
 
 
         /// <summary>
@@ -135,26 +135,26 @@ namespace Pulumi.Vco.Resources
         [Input("externalNetworkID", required: true)]
         public Input<int> ExternalNetworkID { get; set; } = null!;
 
-        [Input("firewall_custom", required: true)]
-        public Input<Inputs.FirewallCustomArgs> Firewall_custom { get; set; } = null!;
+        [Input("firewall_custom")]
+        public Input<Inputs.FirewallCustomArgs>? Firewall_custom { get; set; }
 
-        [Input("host", required: true)]
-        public Input<string> Host { get; set; } = null!;
+        [Input("host")]
+        public Input<string>? Host { get; set; }
 
-        [Input("local_domain", required: true)]
-        public Input<string> Local_domain { get; set; } = null!;
+        [Input("local_domain")]
+        public Input<string>? Local_domain { get; set; }
 
         [Input("location", required: true)]
         public Input<string> Location { get; set; } = null!;
 
-        [Input("memory_quota", required: true)]
-        public Input<int> Memory_quota { get; set; } = null!;
+        [Input("memory_quota")]
+        public Input<int>? Memory_quota { get; set; }
 
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        [Input("parent_cloudspace_id", required: true)]
-        public Input<string> Parent_cloudspace_id { get; set; } = null!;
+        [Input("parent_cloudspace_id")]
+        public Input<string>? Parent_cloudspace_id { get; set; }
 
         [Input("private", required: true)]
         public Input<bool> Private { get; set; } = null!;
@@ -162,8 +162,8 @@ namespace Pulumi.Vco.Resources
         [Input("privateNetwork", required: true)]
         public Input<string> PrivateNetwork { get; set; } = null!;
 
-        [Input("public_ip_quota", required: true)]
-        public Input<int> Public_ip_quota { get; set; } = null!;
+        [Input("public_ip_quota")]
+        public Input<int>? Public_ip_quota { get; set; }
 
         [Input("token", required: true)]
         public Input<string> Token { get; set; } = null!;
@@ -171,11 +171,11 @@ namespace Pulumi.Vco.Resources
         [Input("url", required: true)]
         public Input<string> Url { get; set; } = null!;
 
-        [Input("vcpu_quota", required: true)]
-        public Input<int> Vcpu_quota { get; set; } = null!;
+        [Input("vcpu_quota")]
+        public Input<int>? Vcpu_quota { get; set; }
 
-        [Input("vdisk_space_quota", required: true)]
-        public Input<int> Vdisk_space_quota { get; set; } = null!;
+        [Input("vdisk_space_quota")]
+        public Input<int>? Vdisk_space_quota { get; set; }
 
         public CloudspaceArgs()
         {

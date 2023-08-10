@@ -140,64 +140,67 @@ class Endpoint(dict):
 @pulumi.output_type
 class FirewallCustom(dict):
     def __init__(__self__, *,
-                 cdrom_id: int,
-                 disk_size: int,
-                 image_id: int,
-                 memory: int,
-                 type: str,
-                 vcpus: int):
-        pulumi.set(__self__, "cdrom_id", cdrom_id)
-        pulumi.set(__self__, "disk_size", disk_size)
-        pulumi.set(__self__, "image_id", image_id)
-        pulumi.set(__self__, "memory", memory)
-        pulumi.set(__self__, "type", type)
-        pulumi.set(__self__, "vcpus", vcpus)
+                 cdrom_id: Optional[int] = None,
+                 disk_size: Optional[int] = None,
+                 image_id: Optional[int] = None,
+                 memory: Optional[int] = None,
+                 type: Optional[str] = None,
+                 vcpus: Optional[int] = None):
+        if cdrom_id is not None:
+            pulumi.set(__self__, "cdrom_id", cdrom_id)
+        if disk_size is not None:
+            pulumi.set(__self__, "disk_size", disk_size)
+        if image_id is not None:
+            pulumi.set(__self__, "image_id", image_id)
+        if memory is not None:
+            pulumi.set(__self__, "memory", memory)
+        if type is not None:
+            pulumi.set(__self__, "type", type)
+        if vcpus is not None:
+            pulumi.set(__self__, "vcpus", vcpus)
 
     @property
     @pulumi.getter
-    def cdrom_id(self) -> int:
+    def cdrom_id(self) -> Optional[int]:
         return pulumi.get(self, "cdrom_id")
 
     @property
     @pulumi.getter
-    def disk_size(self) -> int:
+    def disk_size(self) -> Optional[int]:
         return pulumi.get(self, "disk_size")
 
     @property
     @pulumi.getter
-    def image_id(self) -> int:
+    def image_id(self) -> Optional[int]:
         return pulumi.get(self, "image_id")
 
     @property
     @pulumi.getter
-    def memory(self) -> int:
+    def memory(self) -> Optional[int]:
         return pulumi.get(self, "memory")
 
     @property
     @pulumi.getter
-    def type(self) -> str:
+    def type(self) -> Optional[str]:
         return pulumi.get(self, "type")
 
     @property
     @pulumi.getter
-    def vcpus(self) -> int:
+    def vcpus(self) -> Optional[int]:
         return pulumi.get(self, "vcpus")
 
 
 @pulumi.output_type
 class FrontEnd(dict):
     def __init__(__self__, *,
-                 ip_address: str,
                  port: int,
-                 tls: 'outputs.TLS'):
-        pulumi.set(__self__, "ip_address", ip_address)
+                 ip_address: Optional[str] = None,
+                 tls: Optional['outputs.TLS'] = None):
         pulumi.set(__self__, "port", port)
-        pulumi.set(__self__, "tls", tls)
-
-    @property
-    @pulumi.getter
-    def ip_address(self) -> str:
-        return pulumi.get(self, "ip_address")
+        if ip_address is not None:
+            pulumi.set(__self__, "ip_address", ip_address)
+        if tls is not None:
+            pulumi.set(__self__, "tls", tls)
 
     @property
     @pulumi.getter
@@ -206,47 +209,57 @@ class FrontEnd(dict):
 
     @property
     @pulumi.getter
-    def tls(self) -> 'outputs.TLS':
+    def ip_address(self) -> Optional[str]:
+        return pulumi.get(self, "ip_address")
+
+    @property
+    @pulumi.getter
+    def tls(self) -> Optional['outputs.TLS']:
         return pulumi.get(self, "tls")
 
 
 @pulumi.output_type
 class HealthCheck(dict):
     def __init__(__self__, *,
-                 interval: int,
-                 path: str,
-                 port: int,
-                 scheme: str,
-                 timeout: int):
-        pulumi.set(__self__, "interval", interval)
-        pulumi.set(__self__, "path", path)
-        pulumi.set(__self__, "port", port)
-        pulumi.set(__self__, "scheme", scheme)
-        pulumi.set(__self__, "timeout", timeout)
+                 interval: Optional[int] = None,
+                 path: Optional[str] = None,
+                 port: Optional[int] = None,
+                 scheme: Optional[str] = None,
+                 timeout: Optional[int] = None):
+        if interval is not None:
+            pulumi.set(__self__, "interval", interval)
+        if path is not None:
+            pulumi.set(__self__, "path", path)
+        if port is not None:
+            pulumi.set(__self__, "port", port)
+        if scheme is not None:
+            pulumi.set(__self__, "scheme", scheme)
+        if timeout is not None:
+            pulumi.set(__self__, "timeout", timeout)
 
     @property
     @pulumi.getter
-    def interval(self) -> int:
+    def interval(self) -> Optional[int]:
         return pulumi.get(self, "interval")
 
     @property
     @pulumi.getter
-    def path(self) -> str:
+    def path(self) -> Optional[str]:
         return pulumi.get(self, "path")
 
     @property
     @pulumi.getter
-    def port(self) -> int:
+    def port(self) -> Optional[int]:
         return pulumi.get(self, "port")
 
     @property
     @pulumi.getter
-    def scheme(self) -> str:
+    def scheme(self) -> Optional[str]:
         return pulumi.get(self, "scheme")
 
     @property
     @pulumi.getter
-    def timeout(self) -> int:
+    def timeout(self) -> Optional[int]:
         return pulumi.get(self, "timeout")
 
 
@@ -338,19 +351,21 @@ class NetworkInterface(dict):
 @pulumi.output_type
 class Options(dict):
     def __init__(__self__, *,
-                 health_check: 'outputs.HealthCheck',
-                 sticky_session_cookie: 'outputs.StickySessionCookie'):
-        pulumi.set(__self__, "health_check", health_check)
-        pulumi.set(__self__, "sticky_session_cookie", sticky_session_cookie)
+                 health_check: Optional['outputs.HealthCheck'] = None,
+                 sticky_session_cookie: Optional['outputs.StickySessionCookie'] = None):
+        if health_check is not None:
+            pulumi.set(__self__, "health_check", health_check)
+        if sticky_session_cookie is not None:
+            pulumi.set(__self__, "sticky_session_cookie", sticky_session_cookie)
 
     @property
     @pulumi.getter
-    def health_check(self) -> 'outputs.HealthCheck':
+    def health_check(self) -> Optional['outputs.HealthCheck']:
         return pulumi.get(self, "health_check")
 
     @property
     @pulumi.getter
-    def sticky_session_cookie(self) -> 'outputs.StickySessionCookie':
+    def sticky_session_cookie(self) -> Optional['outputs.StickySessionCookie']:
         return pulumi.get(self, "sticky_session_cookie")
 
 
@@ -416,19 +431,15 @@ class ResourceLimits(dict):
 @pulumi.output_type
 class ReverseProxyBackend(dict):
     def __init__(__self__, *,
-                 options: 'outputs.Options',
                  scheme: str,
                  serverpool_id: str,
-                 target_port: int):
-        pulumi.set(__self__, "options", options)
+                 target_port: int,
+                 options: Optional['outputs.Options'] = None):
         pulumi.set(__self__, "scheme", scheme)
         pulumi.set(__self__, "serverpool_id", serverpool_id)
         pulumi.set(__self__, "target_port", target_port)
-
-    @property
-    @pulumi.getter
-    def options(self) -> 'outputs.Options':
-        return pulumi.get(self, "options")
+        if options is not None:
+            pulumi.set(__self__, "options", options)
 
     @property
     @pulumi.getter
@@ -445,42 +456,35 @@ class ReverseProxyBackend(dict):
     def target_port(self) -> int:
         return pulumi.get(self, "target_port")
 
+    @property
+    @pulumi.getter
+    def options(self) -> Optional['outputs.Options']:
+        return pulumi.get(self, "options")
+
 
 @pulumi.output_type
 class ReverseProxyFrontEnd(dict):
     def __init__(__self__, *,
                  domain: str,
-                 http_port: int,
-                 https_port: int,
-                 ip_address: str,
                  letsencrypt: 'outputs.LetsEncrypt',
-                 scheme: str):
+                 scheme: str,
+                 http_port: Optional[int] = None,
+                 https_port: Optional[int] = None,
+                 ip_address: Optional[str] = None):
         pulumi.set(__self__, "domain", domain)
-        pulumi.set(__self__, "http_port", http_port)
-        pulumi.set(__self__, "https_port", https_port)
-        pulumi.set(__self__, "ip_address", ip_address)
         pulumi.set(__self__, "letsencrypt", letsencrypt)
         pulumi.set(__self__, "scheme", scheme)
+        if http_port is not None:
+            pulumi.set(__self__, "http_port", http_port)
+        if https_port is not None:
+            pulumi.set(__self__, "https_port", https_port)
+        if ip_address is not None:
+            pulumi.set(__self__, "ip_address", ip_address)
 
     @property
     @pulumi.getter
     def domain(self) -> str:
         return pulumi.get(self, "domain")
-
-    @property
-    @pulumi.getter
-    def http_port(self) -> int:
-        return pulumi.get(self, "http_port")
-
-    @property
-    @pulumi.getter
-    def https_port(self) -> int:
-        return pulumi.get(self, "https_port")
-
-    @property
-    @pulumi.getter
-    def ip_address(self) -> str:
-        return pulumi.get(self, "ip_address")
 
     @property
     @pulumi.getter
@@ -491,6 +495,21 @@ class ReverseProxyFrontEnd(dict):
     @pulumi.getter
     def scheme(self) -> str:
         return pulumi.get(self, "scheme")
+
+    @property
+    @pulumi.getter
+    def http_port(self) -> Optional[int]:
+        return pulumi.get(self, "http_port")
+
+    @property
+    @pulumi.getter
+    def https_port(self) -> Optional[int]:
+        return pulumi.get(self, "https_port")
+
+    @property
+    @pulumi.getter
+    def ip_address(self) -> Optional[str]:
+        return pulumi.get(self, "ip_address")
 
 
 @pulumi.output_type
@@ -515,59 +534,66 @@ class ServerPoolHost(dict):
 @pulumi.output_type
 class StickySessionCookie(dict):
     def __init__(__self__, *,
-                 http_only: bool,
-                 name: str,
-                 same_site: str,
-                 secure: bool):
-        pulumi.set(__self__, "http_only", http_only)
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "same_site", same_site)
-        pulumi.set(__self__, "secure", secure)
+                 http_only: Optional[bool] = None,
+                 name: Optional[str] = None,
+                 same_site: Optional[str] = None,
+                 secure: Optional[bool] = None):
+        if http_only is not None:
+            pulumi.set(__self__, "http_only", http_only)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if same_site is not None:
+            pulumi.set(__self__, "same_site", same_site)
+        if secure is not None:
+            pulumi.set(__self__, "secure", secure)
 
     @property
     @pulumi.getter
-    def http_only(self) -> bool:
+    def http_only(self) -> Optional[bool]:
         return pulumi.get(self, "http_only")
 
     @property
     @pulumi.getter
-    def name(self) -> str:
+    def name(self) -> Optional[str]:
         return pulumi.get(self, "name")
 
     @property
     @pulumi.getter
-    def same_site(self) -> str:
+    def same_site(self) -> Optional[str]:
         return pulumi.get(self, "same_site")
 
     @property
     @pulumi.getter
-    def secure(self) -> bool:
+    def secure(self) -> Optional[bool]:
         return pulumi.get(self, "secure")
 
 
 @pulumi.output_type
 class TLS(dict):
     def __init__(__self__, *,
-                 domain: str,
-                 is_enabled: bool,
-                 tls_termination: bool):
-        pulumi.set(__self__, "domain", domain)
-        pulumi.set(__self__, "is_enabled", is_enabled)
-        pulumi.set(__self__, "tls_termination", tls_termination)
+                 domain: Optional[str] = None,
+                 is_enabled: Optional[bool] = None,
+                 tls_termination: Optional[bool] = None):
+        if domain is not None:
+            pulumi.set(__self__, "domain", domain)
+        if is_enabled is not None:
+            pulumi.set(__self__, "is_enabled", is_enabled)
+        if tls_termination is not None:
+            pulumi.set(__self__, "tls_termination", tls_termination)
 
     @property
     @pulumi.getter
-    def domain(self) -> str:
+    def domain(self) -> Optional[str]:
         return pulumi.get(self, "domain")
 
     @property
     @pulumi.getter
-    def is_enabled(self) -> bool:
+    def is_enabled(self) -> Optional[bool]:
         return pulumi.get(self, "is_enabled")
 
     @property
     @pulumi.getter
-    def tls_termination(self) -> bool:
+    def tls_termination(self) -> Optional[bool]:
         return pulumi.get(self, "tls_termination")
 
 

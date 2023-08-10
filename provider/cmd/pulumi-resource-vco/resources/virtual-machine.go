@@ -83,22 +83,22 @@ type VirtualMachineArgs struct {
 	CloudSpaceID  string  `pulumi:"cloudspace_id"`
 	Name          string  `pulumi:"name"`
 	Description   string  `pulumi:"description"`
-	DataDisks     *[]int  `pulumi:"data_disks"`
+	DataDisks     *[]int  `pulumi:"data_disks,optional"`
 	Vcpus         int     `pulumi:"vcpus"`
 	Memory        int     `pulumi:"memory"`
-	PrivateIP     *string `pulumi:"private_ip"`
-	UserData      *string `pulumi:"user_data"`
-	ImageID       *int    `pulumi:"image_id"`
-	DiskSize      *int    `pulumi:"disk_size"`
-	CdromID       *int    `pulumi:"cdrom_id"`
-	BootDiskID    *int    `pulumi:"boot_disk_id"`
-	OsType        *string `pulumi:"os_type"`
-	OsName        *string `pulumi:"os_name"`
-	EnableVMAgent *bool   `pulumi:"enable_vm_agent"`
-	SnapshotID    *string `pulumi:"snapshot_id"`
-	AllVMDisks    *bool   `pulumi:"all_vm_disks"`
-	Acronis       *bool   `pulumi:"acronis"`
-	BootType      *string `pulumi:"boot_type"`
+	PrivateIP     *string `pulumi:"private_ip,optional"`
+	UserData      *string `pulumi:"user_data,optional"`
+	ImageID       *int    `pulumi:"image_id,optional"`
+	DiskSize      *int    `pulumi:"disk_size,optional"`
+	CdromID       *int    `pulumi:"cdrom_id,optional"`
+	BootDiskID    *int    `pulumi:"boot_disk_id,optional"`
+	OsType        *string `pulumi:"os_type,optional"`
+	OsName        *string `pulumi:"os_name,optional"`
+	EnableVMAgent *bool   `pulumi:"enable_vm_agent,optional"`
+	SnapshotID    *string `pulumi:"snapshot_id,optional"`
+	AllVMDisks    *bool   `pulumi:"all_vm_disks,optional"`
+	Acronis       *bool   `pulumi:"acronis,optional"`
+	BootType      *string `pulumi:"boot_type,optional"`
 }
 
 func (vm VirtualMachine) Create(ctx p.Context, name string, input VirtualMachineArgs, preview bool) (string, VirtualMachineState, error) {

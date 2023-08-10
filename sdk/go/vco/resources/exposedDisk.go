@@ -19,8 +19,8 @@ type ExposedDisk struct {
 	CustomerID      pulumi.StringOutput `pulumi:"customerID"`
 	Disk_id         pulumi.IntOutput    `pulumi:"disk_id"`
 	Endpoint        EndpointOutput      `pulumi:"endpoint"`
-	Iops            pulumi.IntOutput    `pulumi:"iops"`
-	Max_connections pulumi.IntOutput    `pulumi:"max_connections"`
+	Iops            pulumi.IntPtrOutput `pulumi:"iops"`
+	Max_connections pulumi.IntPtrOutput `pulumi:"max_connections"`
 	Protocol        pulumi.StringOutput `pulumi:"protocol"`
 	Token           pulumi.StringOutput `pulumi:"token"`
 	Url             pulumi.StringOutput `pulumi:"url"`
@@ -41,12 +41,6 @@ func NewExposedDisk(ctx *pulumi.Context,
 	}
 	if args.Disk_id == nil {
 		return nil, errors.New("invalid value for required argument 'Disk_id'")
-	}
-	if args.Iops == nil {
-		return nil, errors.New("invalid value for required argument 'Iops'")
-	}
-	if args.Max_connections == nil {
-		return nil, errors.New("invalid value for required argument 'Max_connections'")
 	}
 	if args.Token == nil {
 		return nil, errors.New("invalid value for required argument 'Token'")
@@ -90,8 +84,8 @@ type exposedDiskArgs struct {
 	Cloudspace_id   string `pulumi:"cloudspace_id"`
 	CustomerID      string `pulumi:"customerID"`
 	Disk_id         int    `pulumi:"disk_id"`
-	Iops            int    `pulumi:"iops"`
-	Max_connections int    `pulumi:"max_connections"`
+	Iops            *int   `pulumi:"iops"`
+	Max_connections *int   `pulumi:"max_connections"`
 	Token           string `pulumi:"token"`
 	Url             string `pulumi:"url"`
 }
@@ -101,8 +95,8 @@ type ExposedDiskArgs struct {
 	Cloudspace_id   pulumi.StringInput
 	CustomerID      pulumi.StringInput
 	Disk_id         pulumi.IntInput
-	Iops            pulumi.IntInput
-	Max_connections pulumi.IntInput
+	Iops            pulumi.IntPtrInput
+	Max_connections pulumi.IntPtrInput
 	Token           pulumi.StringInput
 	Url             pulumi.StringInput
 }
@@ -160,12 +154,12 @@ func (o ExposedDiskOutput) Endpoint() EndpointOutput {
 	return o.ApplyT(func(v *ExposedDisk) EndpointOutput { return v.Endpoint }).(EndpointOutput)
 }
 
-func (o ExposedDiskOutput) Iops() pulumi.IntOutput {
-	return o.ApplyT(func(v *ExposedDisk) pulumi.IntOutput { return v.Iops }).(pulumi.IntOutput)
+func (o ExposedDiskOutput) Iops() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *ExposedDisk) pulumi.IntPtrOutput { return v.Iops }).(pulumi.IntPtrOutput)
 }
 
-func (o ExposedDiskOutput) Max_connections() pulumi.IntOutput {
-	return o.ApplyT(func(v *ExposedDisk) pulumi.IntOutput { return v.Max_connections }).(pulumi.IntOutput)
+func (o ExposedDiskOutput) Max_connections() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *ExposedDisk) pulumi.IntPtrOutput { return v.Max_connections }).(pulumi.IntPtrOutput)
 }
 
 func (o ExposedDiskOutput) Protocol() pulumi.StringOutput {

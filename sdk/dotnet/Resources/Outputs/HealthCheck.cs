@@ -13,23 +13,23 @@ namespace Pulumi.Vco.Resources.Outputs
     [OutputType]
     public sealed class HealthCheck
     {
-        public readonly int Interval;
-        public readonly string Path;
-        public readonly int Port;
-        public readonly string Scheme;
-        public readonly int Timeout;
+        public readonly int? Interval;
+        public readonly string? Path;
+        public readonly int? Port;
+        public readonly string? Scheme;
+        public readonly int? Timeout;
 
         [OutputConstructor]
         private HealthCheck(
-            int interval,
+            int? interval,
 
-            string path,
+            string? path,
 
-            int port,
+            int? port,
 
-            string scheme,
+            string? scheme,
 
-            int timeout)
+            int? timeout)
         {
             Interval = interval;
             Path = path;

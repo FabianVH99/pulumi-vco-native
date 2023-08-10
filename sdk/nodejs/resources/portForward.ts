@@ -64,9 +64,6 @@ export class PortForward extends pulumi.CustomResource {
             if ((!args || args.local_port === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'local_port'");
             }
-            if ((!args || args.nested_cs_id === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'nested_cs_id'");
-            }
             if ((!args || args.protocol === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'protocol'");
             }
@@ -75,9 +72,6 @@ export class PortForward extends pulumi.CustomResource {
             }
             if ((!args || args.public_port === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'public_port'");
-            }
-            if ((!args || args.till_public_port === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'till_public_port'");
             }
             if ((!args || args.token === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'token'");
@@ -126,11 +120,11 @@ export interface PortForwardArgs {
     cloudspace_id: pulumi.Input<string>;
     customerID: pulumi.Input<string>;
     local_port: pulumi.Input<number>;
-    nested_cs_id: pulumi.Input<string>;
+    nested_cs_id?: pulumi.Input<string>;
     protocol: pulumi.Input<string>;
     public_ip: pulumi.Input<string>;
     public_port: pulumi.Input<number>;
-    till_public_port: pulumi.Input<number>;
+    till_public_port?: pulumi.Input<number>;
     token: pulumi.Input<string>;
     url: pulumi.Input<string>;
     vm_id: pulumi.Input<number>;

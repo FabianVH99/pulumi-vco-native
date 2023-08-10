@@ -61,9 +61,6 @@ export class LoadBalancer extends pulumi.CustomResource {
             if ((!args || args.customerID === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'customerID'");
             }
-            if ((!args || args.description === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'description'");
-            }
             if ((!args || args.name === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'name'");
             }
@@ -109,7 +106,7 @@ export class LoadBalancer extends pulumi.CustomResource {
 export interface LoadBalancerArgs {
     cloudspace_id: pulumi.Input<string>;
     customerID: pulumi.Input<string>;
-    description: pulumi.Input<string>;
+    description?: pulumi.Input<string>;
     name: pulumi.Input<string>;
     token: pulumi.Input<string>;
     type: pulumi.Input<string>;

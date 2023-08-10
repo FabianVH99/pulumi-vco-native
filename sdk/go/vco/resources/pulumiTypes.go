@@ -130,12 +130,12 @@ func (o EndpointOutput) User() pulumi.StringOutput {
 }
 
 type FirewallCustom struct {
-	Cdrom_id  int    `pulumi:"cdrom_id"`
-	Disk_size int    `pulumi:"disk_size"`
-	Image_id  int    `pulumi:"image_id"`
-	Memory    int    `pulumi:"memory"`
-	Type      string `pulumi:"type"`
-	Vcpus     int    `pulumi:"vcpus"`
+	Cdrom_id  *int    `pulumi:"cdrom_id"`
+	Disk_size *int    `pulumi:"disk_size"`
+	Image_id  *int    `pulumi:"image_id"`
+	Memory    *int    `pulumi:"memory"`
+	Type      *string `pulumi:"type"`
+	Vcpus     *int    `pulumi:"vcpus"`
 }
 
 // FirewallCustomInput is an input type that accepts FirewallCustomArgs and FirewallCustomOutput values.
@@ -150,12 +150,12 @@ type FirewallCustomInput interface {
 }
 
 type FirewallCustomArgs struct {
-	Cdrom_id  pulumi.IntInput    `pulumi:"cdrom_id"`
-	Disk_size pulumi.IntInput    `pulumi:"disk_size"`
-	Image_id  pulumi.IntInput    `pulumi:"image_id"`
-	Memory    pulumi.IntInput    `pulumi:"memory"`
-	Type      pulumi.StringInput `pulumi:"type"`
-	Vcpus     pulumi.IntInput    `pulumi:"vcpus"`
+	Cdrom_id  pulumi.IntPtrInput    `pulumi:"cdrom_id"`
+	Disk_size pulumi.IntPtrInput    `pulumi:"disk_size"`
+	Image_id  pulumi.IntPtrInput    `pulumi:"image_id"`
+	Memory    pulumi.IntPtrInput    `pulumi:"memory"`
+	Type      pulumi.StringPtrInput `pulumi:"type"`
+	Vcpus     pulumi.IntPtrInput    `pulumi:"vcpus"`
 }
 
 func (FirewallCustomArgs) ElementType() reflect.Type {
@@ -168,6 +168,47 @@ func (i FirewallCustomArgs) ToFirewallCustomOutput() FirewallCustomOutput {
 
 func (i FirewallCustomArgs) ToFirewallCustomOutputWithContext(ctx context.Context) FirewallCustomOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(FirewallCustomOutput)
+}
+
+func (i FirewallCustomArgs) ToFirewallCustomPtrOutput() FirewallCustomPtrOutput {
+	return i.ToFirewallCustomPtrOutputWithContext(context.Background())
+}
+
+func (i FirewallCustomArgs) ToFirewallCustomPtrOutputWithContext(ctx context.Context) FirewallCustomPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FirewallCustomOutput).ToFirewallCustomPtrOutputWithContext(ctx)
+}
+
+// FirewallCustomPtrInput is an input type that accepts FirewallCustomArgs, FirewallCustomPtr and FirewallCustomPtrOutput values.
+// You can construct a concrete instance of `FirewallCustomPtrInput` via:
+//
+//	        FirewallCustomArgs{...}
+//
+//	or:
+//
+//	        nil
+type FirewallCustomPtrInput interface {
+	pulumi.Input
+
+	ToFirewallCustomPtrOutput() FirewallCustomPtrOutput
+	ToFirewallCustomPtrOutputWithContext(context.Context) FirewallCustomPtrOutput
+}
+
+type firewallCustomPtrType FirewallCustomArgs
+
+func FirewallCustomPtr(v *FirewallCustomArgs) FirewallCustomPtrInput {
+	return (*firewallCustomPtrType)(v)
+}
+
+func (*firewallCustomPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FirewallCustom)(nil)).Elem()
+}
+
+func (i *firewallCustomPtrType) ToFirewallCustomPtrOutput() FirewallCustomPtrOutput {
+	return i.ToFirewallCustomPtrOutputWithContext(context.Background())
+}
+
+func (i *firewallCustomPtrType) ToFirewallCustomPtrOutputWithContext(ctx context.Context) FirewallCustomPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FirewallCustomPtrOutput)
 }
 
 type FirewallCustomOutput struct{ *pulumi.OutputState }
@@ -184,34 +225,122 @@ func (o FirewallCustomOutput) ToFirewallCustomOutputWithContext(ctx context.Cont
 	return o
 }
 
-func (o FirewallCustomOutput) Cdrom_id() pulumi.IntOutput {
-	return o.ApplyT(func(v FirewallCustom) int { return v.Cdrom_id }).(pulumi.IntOutput)
+func (o FirewallCustomOutput) ToFirewallCustomPtrOutput() FirewallCustomPtrOutput {
+	return o.ToFirewallCustomPtrOutputWithContext(context.Background())
 }
 
-func (o FirewallCustomOutput) Disk_size() pulumi.IntOutput {
-	return o.ApplyT(func(v FirewallCustom) int { return v.Disk_size }).(pulumi.IntOutput)
+func (o FirewallCustomOutput) ToFirewallCustomPtrOutputWithContext(ctx context.Context) FirewallCustomPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FirewallCustom) *FirewallCustom {
+		return &v
+	}).(FirewallCustomPtrOutput)
 }
 
-func (o FirewallCustomOutput) Image_id() pulumi.IntOutput {
-	return o.ApplyT(func(v FirewallCustom) int { return v.Image_id }).(pulumi.IntOutput)
+func (o FirewallCustomOutput) Cdrom_id() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FirewallCustom) *int { return v.Cdrom_id }).(pulumi.IntPtrOutput)
 }
 
-func (o FirewallCustomOutput) Memory() pulumi.IntOutput {
-	return o.ApplyT(func(v FirewallCustom) int { return v.Memory }).(pulumi.IntOutput)
+func (o FirewallCustomOutput) Disk_size() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FirewallCustom) *int { return v.Disk_size }).(pulumi.IntPtrOutput)
 }
 
-func (o FirewallCustomOutput) Type() pulumi.StringOutput {
-	return o.ApplyT(func(v FirewallCustom) string { return v.Type }).(pulumi.StringOutput)
+func (o FirewallCustomOutput) Image_id() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FirewallCustom) *int { return v.Image_id }).(pulumi.IntPtrOutput)
 }
 
-func (o FirewallCustomOutput) Vcpus() pulumi.IntOutput {
-	return o.ApplyT(func(v FirewallCustom) int { return v.Vcpus }).(pulumi.IntOutput)
+func (o FirewallCustomOutput) Memory() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FirewallCustom) *int { return v.Memory }).(pulumi.IntPtrOutput)
+}
+
+func (o FirewallCustomOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FirewallCustom) *string { return v.Type }).(pulumi.StringPtrOutput)
+}
+
+func (o FirewallCustomOutput) Vcpus() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FirewallCustom) *int { return v.Vcpus }).(pulumi.IntPtrOutput)
+}
+
+type FirewallCustomPtrOutput struct{ *pulumi.OutputState }
+
+func (FirewallCustomPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FirewallCustom)(nil)).Elem()
+}
+
+func (o FirewallCustomPtrOutput) ToFirewallCustomPtrOutput() FirewallCustomPtrOutput {
+	return o
+}
+
+func (o FirewallCustomPtrOutput) ToFirewallCustomPtrOutputWithContext(ctx context.Context) FirewallCustomPtrOutput {
+	return o
+}
+
+func (o FirewallCustomPtrOutput) Elem() FirewallCustomOutput {
+	return o.ApplyT(func(v *FirewallCustom) FirewallCustom {
+		if v != nil {
+			return *v
+		}
+		var ret FirewallCustom
+		return ret
+	}).(FirewallCustomOutput)
+}
+
+func (o FirewallCustomPtrOutput) Cdrom_id() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FirewallCustom) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Cdrom_id
+	}).(pulumi.IntPtrOutput)
+}
+
+func (o FirewallCustomPtrOutput) Disk_size() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FirewallCustom) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Disk_size
+	}).(pulumi.IntPtrOutput)
+}
+
+func (o FirewallCustomPtrOutput) Image_id() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FirewallCustom) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Image_id
+	}).(pulumi.IntPtrOutput)
+}
+
+func (o FirewallCustomPtrOutput) Memory() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FirewallCustom) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Memory
+	}).(pulumi.IntPtrOutput)
+}
+
+func (o FirewallCustomPtrOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FirewallCustom) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Type
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o FirewallCustomPtrOutput) Vcpus() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FirewallCustom) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Vcpus
+	}).(pulumi.IntPtrOutput)
 }
 
 type FrontEnd struct {
-	Ip_address string `pulumi:"ip_address"`
-	Port       int    `pulumi:"port"`
-	Tls        TLS    `pulumi:"tls"`
+	Ip_address *string `pulumi:"ip_address"`
+	Port       int     `pulumi:"port"`
+	Tls        *TLS    `pulumi:"tls"`
 }
 
 type FrontEndOutput struct{ *pulumi.OutputState }
@@ -228,24 +357,24 @@ func (o FrontEndOutput) ToFrontEndOutputWithContext(ctx context.Context) FrontEn
 	return o
 }
 
-func (o FrontEndOutput) Ip_address() pulumi.StringOutput {
-	return o.ApplyT(func(v FrontEnd) string { return v.Ip_address }).(pulumi.StringOutput)
+func (o FrontEndOutput) Ip_address() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FrontEnd) *string { return v.Ip_address }).(pulumi.StringPtrOutput)
 }
 
 func (o FrontEndOutput) Port() pulumi.IntOutput {
 	return o.ApplyT(func(v FrontEnd) int { return v.Port }).(pulumi.IntOutput)
 }
 
-func (o FrontEndOutput) Tls() TLSOutput {
-	return o.ApplyT(func(v FrontEnd) TLS { return v.Tls }).(TLSOutput)
+func (o FrontEndOutput) Tls() TLSPtrOutput {
+	return o.ApplyT(func(v FrontEnd) *TLS { return v.Tls }).(TLSPtrOutput)
 }
 
 type HealthCheck struct {
-	Interval int    `pulumi:"interval"`
-	Path     string `pulumi:"path"`
-	Port     int    `pulumi:"port"`
-	Scheme   string `pulumi:"scheme"`
-	Timeout  int    `pulumi:"timeout"`
+	Interval *int    `pulumi:"interval"`
+	Path     *string `pulumi:"path"`
+	Port     *int    `pulumi:"port"`
+	Scheme   *string `pulumi:"scheme"`
+	Timeout  *int    `pulumi:"timeout"`
 }
 
 // HealthCheckInput is an input type that accepts HealthCheckArgs and HealthCheckOutput values.
@@ -260,11 +389,11 @@ type HealthCheckInput interface {
 }
 
 type HealthCheckArgs struct {
-	Interval pulumi.IntInput    `pulumi:"interval"`
-	Path     pulumi.StringInput `pulumi:"path"`
-	Port     pulumi.IntInput    `pulumi:"port"`
-	Scheme   pulumi.StringInput `pulumi:"scheme"`
-	Timeout  pulumi.IntInput    `pulumi:"timeout"`
+	Interval pulumi.IntPtrInput    `pulumi:"interval"`
+	Path     pulumi.StringPtrInput `pulumi:"path"`
+	Port     pulumi.IntPtrInput    `pulumi:"port"`
+	Scheme   pulumi.StringPtrInput `pulumi:"scheme"`
+	Timeout  pulumi.IntPtrInput    `pulumi:"timeout"`
 }
 
 func (HealthCheckArgs) ElementType() reflect.Type {
@@ -277,6 +406,47 @@ func (i HealthCheckArgs) ToHealthCheckOutput() HealthCheckOutput {
 
 func (i HealthCheckArgs) ToHealthCheckOutputWithContext(ctx context.Context) HealthCheckOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(HealthCheckOutput)
+}
+
+func (i HealthCheckArgs) ToHealthCheckPtrOutput() HealthCheckPtrOutput {
+	return i.ToHealthCheckPtrOutputWithContext(context.Background())
+}
+
+func (i HealthCheckArgs) ToHealthCheckPtrOutputWithContext(ctx context.Context) HealthCheckPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(HealthCheckOutput).ToHealthCheckPtrOutputWithContext(ctx)
+}
+
+// HealthCheckPtrInput is an input type that accepts HealthCheckArgs, HealthCheckPtr and HealthCheckPtrOutput values.
+// You can construct a concrete instance of `HealthCheckPtrInput` via:
+//
+//	        HealthCheckArgs{...}
+//
+//	or:
+//
+//	        nil
+type HealthCheckPtrInput interface {
+	pulumi.Input
+
+	ToHealthCheckPtrOutput() HealthCheckPtrOutput
+	ToHealthCheckPtrOutputWithContext(context.Context) HealthCheckPtrOutput
+}
+
+type healthCheckPtrType HealthCheckArgs
+
+func HealthCheckPtr(v *HealthCheckArgs) HealthCheckPtrInput {
+	return (*healthCheckPtrType)(v)
+}
+
+func (*healthCheckPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**HealthCheck)(nil)).Elem()
+}
+
+func (i *healthCheckPtrType) ToHealthCheckPtrOutput() HealthCheckPtrOutput {
+	return i.ToHealthCheckPtrOutputWithContext(context.Background())
+}
+
+func (i *healthCheckPtrType) ToHealthCheckPtrOutputWithContext(ctx context.Context) HealthCheckPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(HealthCheckPtrOutput)
 }
 
 type HealthCheckOutput struct{ *pulumi.OutputState }
@@ -293,24 +463,103 @@ func (o HealthCheckOutput) ToHealthCheckOutputWithContext(ctx context.Context) H
 	return o
 }
 
-func (o HealthCheckOutput) Interval() pulumi.IntOutput {
-	return o.ApplyT(func(v HealthCheck) int { return v.Interval }).(pulumi.IntOutput)
+func (o HealthCheckOutput) ToHealthCheckPtrOutput() HealthCheckPtrOutput {
+	return o.ToHealthCheckPtrOutputWithContext(context.Background())
 }
 
-func (o HealthCheckOutput) Path() pulumi.StringOutput {
-	return o.ApplyT(func(v HealthCheck) string { return v.Path }).(pulumi.StringOutput)
+func (o HealthCheckOutput) ToHealthCheckPtrOutputWithContext(ctx context.Context) HealthCheckPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v HealthCheck) *HealthCheck {
+		return &v
+	}).(HealthCheckPtrOutput)
 }
 
-func (o HealthCheckOutput) Port() pulumi.IntOutput {
-	return o.ApplyT(func(v HealthCheck) int { return v.Port }).(pulumi.IntOutput)
+func (o HealthCheckOutput) Interval() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v HealthCheck) *int { return v.Interval }).(pulumi.IntPtrOutput)
 }
 
-func (o HealthCheckOutput) Scheme() pulumi.StringOutput {
-	return o.ApplyT(func(v HealthCheck) string { return v.Scheme }).(pulumi.StringOutput)
+func (o HealthCheckOutput) Path() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v HealthCheck) *string { return v.Path }).(pulumi.StringPtrOutput)
 }
 
-func (o HealthCheckOutput) Timeout() pulumi.IntOutput {
-	return o.ApplyT(func(v HealthCheck) int { return v.Timeout }).(pulumi.IntOutput)
+func (o HealthCheckOutput) Port() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v HealthCheck) *int { return v.Port }).(pulumi.IntPtrOutput)
+}
+
+func (o HealthCheckOutput) Scheme() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v HealthCheck) *string { return v.Scheme }).(pulumi.StringPtrOutput)
+}
+
+func (o HealthCheckOutput) Timeout() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v HealthCheck) *int { return v.Timeout }).(pulumi.IntPtrOutput)
+}
+
+type HealthCheckPtrOutput struct{ *pulumi.OutputState }
+
+func (HealthCheckPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**HealthCheck)(nil)).Elem()
+}
+
+func (o HealthCheckPtrOutput) ToHealthCheckPtrOutput() HealthCheckPtrOutput {
+	return o
+}
+
+func (o HealthCheckPtrOutput) ToHealthCheckPtrOutputWithContext(ctx context.Context) HealthCheckPtrOutput {
+	return o
+}
+
+func (o HealthCheckPtrOutput) Elem() HealthCheckOutput {
+	return o.ApplyT(func(v *HealthCheck) HealthCheck {
+		if v != nil {
+			return *v
+		}
+		var ret HealthCheck
+		return ret
+	}).(HealthCheckOutput)
+}
+
+func (o HealthCheckPtrOutput) Interval() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *HealthCheck) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Interval
+	}).(pulumi.IntPtrOutput)
+}
+
+func (o HealthCheckPtrOutput) Path() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *HealthCheck) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Path
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o HealthCheckPtrOutput) Port() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *HealthCheck) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Port
+	}).(pulumi.IntPtrOutput)
+}
+
+func (o HealthCheckPtrOutput) Scheme() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *HealthCheck) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Scheme
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o HealthCheckPtrOutput) Timeout() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *HealthCheck) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Timeout
+	}).(pulumi.IntPtrOutput)
 }
 
 type IOTune struct {
@@ -463,8 +712,8 @@ func (o NetworkInterfaceArrayOutput) Index(i pulumi.IntInput) NetworkInterfaceOu
 }
 
 type Options struct {
-	Health_check          HealthCheck         `pulumi:"health_check"`
-	Sticky_session_cookie StickySessionCookie `pulumi:"sticky_session_cookie"`
+	Health_check          *HealthCheck         `pulumi:"health_check"`
+	Sticky_session_cookie *StickySessionCookie `pulumi:"sticky_session_cookie"`
 }
 
 // OptionsInput is an input type that accepts OptionsArgs and OptionsOutput values.
@@ -479,8 +728,8 @@ type OptionsInput interface {
 }
 
 type OptionsArgs struct {
-	Health_check          HealthCheckInput         `pulumi:"health_check"`
-	Sticky_session_cookie StickySessionCookieInput `pulumi:"sticky_session_cookie"`
+	Health_check          HealthCheckPtrInput         `pulumi:"health_check"`
+	Sticky_session_cookie StickySessionCookiePtrInput `pulumi:"sticky_session_cookie"`
 }
 
 func (OptionsArgs) ElementType() reflect.Type {
@@ -493,6 +742,47 @@ func (i OptionsArgs) ToOptionsOutput() OptionsOutput {
 
 func (i OptionsArgs) ToOptionsOutputWithContext(ctx context.Context) OptionsOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(OptionsOutput)
+}
+
+func (i OptionsArgs) ToOptionsPtrOutput() OptionsPtrOutput {
+	return i.ToOptionsPtrOutputWithContext(context.Background())
+}
+
+func (i OptionsArgs) ToOptionsPtrOutputWithContext(ctx context.Context) OptionsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OptionsOutput).ToOptionsPtrOutputWithContext(ctx)
+}
+
+// OptionsPtrInput is an input type that accepts OptionsArgs, OptionsPtr and OptionsPtrOutput values.
+// You can construct a concrete instance of `OptionsPtrInput` via:
+//
+//	        OptionsArgs{...}
+//
+//	or:
+//
+//	        nil
+type OptionsPtrInput interface {
+	pulumi.Input
+
+	ToOptionsPtrOutput() OptionsPtrOutput
+	ToOptionsPtrOutputWithContext(context.Context) OptionsPtrOutput
+}
+
+type optionsPtrType OptionsArgs
+
+func OptionsPtr(v *OptionsArgs) OptionsPtrInput {
+	return (*optionsPtrType)(v)
+}
+
+func (*optionsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Options)(nil)).Elem()
+}
+
+func (i *optionsPtrType) ToOptionsPtrOutput() OptionsPtrOutput {
+	return i.ToOptionsPtrOutputWithContext(context.Background())
+}
+
+func (i *optionsPtrType) ToOptionsPtrOutputWithContext(ctx context.Context) OptionsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OptionsPtrOutput)
 }
 
 type OptionsOutput struct{ *pulumi.OutputState }
@@ -509,12 +799,64 @@ func (o OptionsOutput) ToOptionsOutputWithContext(ctx context.Context) OptionsOu
 	return o
 }
 
-func (o OptionsOutput) Health_check() HealthCheckOutput {
-	return o.ApplyT(func(v Options) HealthCheck { return v.Health_check }).(HealthCheckOutput)
+func (o OptionsOutput) ToOptionsPtrOutput() OptionsPtrOutput {
+	return o.ToOptionsPtrOutputWithContext(context.Background())
 }
 
-func (o OptionsOutput) Sticky_session_cookie() StickySessionCookieOutput {
-	return o.ApplyT(func(v Options) StickySessionCookie { return v.Sticky_session_cookie }).(StickySessionCookieOutput)
+func (o OptionsOutput) ToOptionsPtrOutputWithContext(ctx context.Context) OptionsPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Options) *Options {
+		return &v
+	}).(OptionsPtrOutput)
+}
+
+func (o OptionsOutput) Health_check() HealthCheckPtrOutput {
+	return o.ApplyT(func(v Options) *HealthCheck { return v.Health_check }).(HealthCheckPtrOutput)
+}
+
+func (o OptionsOutput) Sticky_session_cookie() StickySessionCookiePtrOutput {
+	return o.ApplyT(func(v Options) *StickySessionCookie { return v.Sticky_session_cookie }).(StickySessionCookiePtrOutput)
+}
+
+type OptionsPtrOutput struct{ *pulumi.OutputState }
+
+func (OptionsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Options)(nil)).Elem()
+}
+
+func (o OptionsPtrOutput) ToOptionsPtrOutput() OptionsPtrOutput {
+	return o
+}
+
+func (o OptionsPtrOutput) ToOptionsPtrOutputWithContext(ctx context.Context) OptionsPtrOutput {
+	return o
+}
+
+func (o OptionsPtrOutput) Elem() OptionsOutput {
+	return o.ApplyT(func(v *Options) Options {
+		if v != nil {
+			return *v
+		}
+		var ret Options
+		return ret
+	}).(OptionsOutput)
+}
+
+func (o OptionsPtrOutput) Health_check() HealthCheckPtrOutput {
+	return o.ApplyT(func(v *Options) *HealthCheck {
+		if v == nil {
+			return nil
+		}
+		return v.Health_check
+	}).(HealthCheckPtrOutput)
+}
+
+func (o OptionsPtrOutput) Sticky_session_cookie() StickySessionCookiePtrOutput {
+	return o.ApplyT(func(v *Options) *StickySessionCookie {
+		if v == nil {
+			return nil
+		}
+		return v.Sticky_session_cookie
+	}).(StickySessionCookiePtrOutput)
 }
 
 type OsAccount struct {
@@ -607,10 +949,10 @@ func (o ResourceLimitsOutput) Vdisk_space_quota() pulumi.Float64Output {
 }
 
 type ReverseProxyBackend struct {
-	Options       Options `pulumi:"options"`
-	Scheme        string  `pulumi:"scheme"`
-	Serverpool_id string  `pulumi:"serverpool_id"`
-	Target_port   int     `pulumi:"target_port"`
+	Options       *Options `pulumi:"options"`
+	Scheme        string   `pulumi:"scheme"`
+	Serverpool_id string   `pulumi:"serverpool_id"`
+	Target_port   int      `pulumi:"target_port"`
 }
 
 // ReverseProxyBackendInput is an input type that accepts ReverseProxyBackendArgs and ReverseProxyBackendOutput values.
@@ -625,7 +967,7 @@ type ReverseProxyBackendInput interface {
 }
 
 type ReverseProxyBackendArgs struct {
-	Options       OptionsInput       `pulumi:"options"`
+	Options       OptionsPtrInput    `pulumi:"options"`
 	Scheme        pulumi.StringInput `pulumi:"scheme"`
 	Serverpool_id pulumi.StringInput `pulumi:"serverpool_id"`
 	Target_port   pulumi.IntInput    `pulumi:"target_port"`
@@ -657,8 +999,8 @@ func (o ReverseProxyBackendOutput) ToReverseProxyBackendOutputWithContext(ctx co
 	return o
 }
 
-func (o ReverseProxyBackendOutput) Options() OptionsOutput {
-	return o.ApplyT(func(v ReverseProxyBackend) Options { return v.Options }).(OptionsOutput)
+func (o ReverseProxyBackendOutput) Options() OptionsPtrOutput {
+	return o.ApplyT(func(v ReverseProxyBackend) *Options { return v.Options }).(OptionsPtrOutput)
 }
 
 func (o ReverseProxyBackendOutput) Scheme() pulumi.StringOutput {
@@ -675,9 +1017,9 @@ func (o ReverseProxyBackendOutput) Target_port() pulumi.IntOutput {
 
 type ReverseProxyFrontEnd struct {
 	Domain      string      `pulumi:"domain"`
-	Http_port   int         `pulumi:"http_port"`
-	Https_port  int         `pulumi:"https_port"`
-	Ip_address  string      `pulumi:"ip_address"`
+	Http_port   *int        `pulumi:"http_port"`
+	Https_port  *int        `pulumi:"https_port"`
+	Ip_address  *string     `pulumi:"ip_address"`
 	Letsencrypt LetsEncrypt `pulumi:"letsencrypt"`
 	Scheme      string      `pulumi:"scheme"`
 }
@@ -694,12 +1036,12 @@ type ReverseProxyFrontEndInput interface {
 }
 
 type ReverseProxyFrontEndArgs struct {
-	Domain      pulumi.StringInput `pulumi:"domain"`
-	Http_port   pulumi.IntInput    `pulumi:"http_port"`
-	Https_port  pulumi.IntInput    `pulumi:"https_port"`
-	Ip_address  pulumi.StringInput `pulumi:"ip_address"`
-	Letsencrypt LetsEncryptInput   `pulumi:"letsencrypt"`
-	Scheme      pulumi.StringInput `pulumi:"scheme"`
+	Domain      pulumi.StringInput    `pulumi:"domain"`
+	Http_port   pulumi.IntPtrInput    `pulumi:"http_port"`
+	Https_port  pulumi.IntPtrInput    `pulumi:"https_port"`
+	Ip_address  pulumi.StringPtrInput `pulumi:"ip_address"`
+	Letsencrypt LetsEncryptInput      `pulumi:"letsencrypt"`
+	Scheme      pulumi.StringInput    `pulumi:"scheme"`
 }
 
 func (ReverseProxyFrontEndArgs) ElementType() reflect.Type {
@@ -732,16 +1074,16 @@ func (o ReverseProxyFrontEndOutput) Domain() pulumi.StringOutput {
 	return o.ApplyT(func(v ReverseProxyFrontEnd) string { return v.Domain }).(pulumi.StringOutput)
 }
 
-func (o ReverseProxyFrontEndOutput) Http_port() pulumi.IntOutput {
-	return o.ApplyT(func(v ReverseProxyFrontEnd) int { return v.Http_port }).(pulumi.IntOutput)
+func (o ReverseProxyFrontEndOutput) Http_port() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v ReverseProxyFrontEnd) *int { return v.Http_port }).(pulumi.IntPtrOutput)
 }
 
-func (o ReverseProxyFrontEndOutput) Https_port() pulumi.IntOutput {
-	return o.ApplyT(func(v ReverseProxyFrontEnd) int { return v.Https_port }).(pulumi.IntOutput)
+func (o ReverseProxyFrontEndOutput) Https_port() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v ReverseProxyFrontEnd) *int { return v.Https_port }).(pulumi.IntPtrOutput)
 }
 
-func (o ReverseProxyFrontEndOutput) Ip_address() pulumi.StringOutput {
-	return o.ApplyT(func(v ReverseProxyFrontEnd) string { return v.Ip_address }).(pulumi.StringOutput)
+func (o ReverseProxyFrontEndOutput) Ip_address() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ReverseProxyFrontEnd) *string { return v.Ip_address }).(pulumi.StringPtrOutput)
 }
 
 func (o ReverseProxyFrontEndOutput) Letsencrypt() LetsEncryptOutput {
@@ -800,10 +1142,10 @@ func (o ServerPoolHostArrayOutput) Index(i pulumi.IntInput) ServerPoolHostOutput
 }
 
 type StickySessionCookie struct {
-	Http_only bool   `pulumi:"http_only"`
-	Name      string `pulumi:"name"`
-	Same_site string `pulumi:"same_site"`
-	Secure    bool   `pulumi:"secure"`
+	Http_only *bool   `pulumi:"http_only"`
+	Name      *string `pulumi:"name"`
+	Same_site *string `pulumi:"same_site"`
+	Secure    *bool   `pulumi:"secure"`
 }
 
 // StickySessionCookieInput is an input type that accepts StickySessionCookieArgs and StickySessionCookieOutput values.
@@ -818,10 +1160,10 @@ type StickySessionCookieInput interface {
 }
 
 type StickySessionCookieArgs struct {
-	Http_only pulumi.BoolInput   `pulumi:"http_only"`
-	Name      pulumi.StringInput `pulumi:"name"`
-	Same_site pulumi.StringInput `pulumi:"same_site"`
-	Secure    pulumi.BoolInput   `pulumi:"secure"`
+	Http_only pulumi.BoolPtrInput   `pulumi:"http_only"`
+	Name      pulumi.StringPtrInput `pulumi:"name"`
+	Same_site pulumi.StringPtrInput `pulumi:"same_site"`
+	Secure    pulumi.BoolPtrInput   `pulumi:"secure"`
 }
 
 func (StickySessionCookieArgs) ElementType() reflect.Type {
@@ -834,6 +1176,47 @@ func (i StickySessionCookieArgs) ToStickySessionCookieOutput() StickySessionCook
 
 func (i StickySessionCookieArgs) ToStickySessionCookieOutputWithContext(ctx context.Context) StickySessionCookieOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(StickySessionCookieOutput)
+}
+
+func (i StickySessionCookieArgs) ToStickySessionCookiePtrOutput() StickySessionCookiePtrOutput {
+	return i.ToStickySessionCookiePtrOutputWithContext(context.Background())
+}
+
+func (i StickySessionCookieArgs) ToStickySessionCookiePtrOutputWithContext(ctx context.Context) StickySessionCookiePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(StickySessionCookieOutput).ToStickySessionCookiePtrOutputWithContext(ctx)
+}
+
+// StickySessionCookiePtrInput is an input type that accepts StickySessionCookieArgs, StickySessionCookiePtr and StickySessionCookiePtrOutput values.
+// You can construct a concrete instance of `StickySessionCookiePtrInput` via:
+//
+//	        StickySessionCookieArgs{...}
+//
+//	or:
+//
+//	        nil
+type StickySessionCookiePtrInput interface {
+	pulumi.Input
+
+	ToStickySessionCookiePtrOutput() StickySessionCookiePtrOutput
+	ToStickySessionCookiePtrOutputWithContext(context.Context) StickySessionCookiePtrOutput
+}
+
+type stickySessionCookiePtrType StickySessionCookieArgs
+
+func StickySessionCookiePtr(v *StickySessionCookieArgs) StickySessionCookiePtrInput {
+	return (*stickySessionCookiePtrType)(v)
+}
+
+func (*stickySessionCookiePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**StickySessionCookie)(nil)).Elem()
+}
+
+func (i *stickySessionCookiePtrType) ToStickySessionCookiePtrOutput() StickySessionCookiePtrOutput {
+	return i.ToStickySessionCookiePtrOutputWithContext(context.Background())
+}
+
+func (i *stickySessionCookiePtrType) ToStickySessionCookiePtrOutputWithContext(ctx context.Context) StickySessionCookiePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(StickySessionCookiePtrOutput)
 }
 
 type StickySessionCookieOutput struct{ *pulumi.OutputState }
@@ -850,26 +1233,96 @@ func (o StickySessionCookieOutput) ToStickySessionCookieOutputWithContext(ctx co
 	return o
 }
 
-func (o StickySessionCookieOutput) Http_only() pulumi.BoolOutput {
-	return o.ApplyT(func(v StickySessionCookie) bool { return v.Http_only }).(pulumi.BoolOutput)
+func (o StickySessionCookieOutput) ToStickySessionCookiePtrOutput() StickySessionCookiePtrOutput {
+	return o.ToStickySessionCookiePtrOutputWithContext(context.Background())
 }
 
-func (o StickySessionCookieOutput) Name() pulumi.StringOutput {
-	return o.ApplyT(func(v StickySessionCookie) string { return v.Name }).(pulumi.StringOutput)
+func (o StickySessionCookieOutput) ToStickySessionCookiePtrOutputWithContext(ctx context.Context) StickySessionCookiePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v StickySessionCookie) *StickySessionCookie {
+		return &v
+	}).(StickySessionCookiePtrOutput)
 }
 
-func (o StickySessionCookieOutput) Same_site() pulumi.StringOutput {
-	return o.ApplyT(func(v StickySessionCookie) string { return v.Same_site }).(pulumi.StringOutput)
+func (o StickySessionCookieOutput) Http_only() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v StickySessionCookie) *bool { return v.Http_only }).(pulumi.BoolPtrOutput)
 }
 
-func (o StickySessionCookieOutput) Secure() pulumi.BoolOutput {
-	return o.ApplyT(func(v StickySessionCookie) bool { return v.Secure }).(pulumi.BoolOutput)
+func (o StickySessionCookieOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v StickySessionCookie) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+func (o StickySessionCookieOutput) Same_site() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v StickySessionCookie) *string { return v.Same_site }).(pulumi.StringPtrOutput)
+}
+
+func (o StickySessionCookieOutput) Secure() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v StickySessionCookie) *bool { return v.Secure }).(pulumi.BoolPtrOutput)
+}
+
+type StickySessionCookiePtrOutput struct{ *pulumi.OutputState }
+
+func (StickySessionCookiePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**StickySessionCookie)(nil)).Elem()
+}
+
+func (o StickySessionCookiePtrOutput) ToStickySessionCookiePtrOutput() StickySessionCookiePtrOutput {
+	return o
+}
+
+func (o StickySessionCookiePtrOutput) ToStickySessionCookiePtrOutputWithContext(ctx context.Context) StickySessionCookiePtrOutput {
+	return o
+}
+
+func (o StickySessionCookiePtrOutput) Elem() StickySessionCookieOutput {
+	return o.ApplyT(func(v *StickySessionCookie) StickySessionCookie {
+		if v != nil {
+			return *v
+		}
+		var ret StickySessionCookie
+		return ret
+	}).(StickySessionCookieOutput)
+}
+
+func (o StickySessionCookiePtrOutput) Http_only() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *StickySessionCookie) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Http_only
+	}).(pulumi.BoolPtrOutput)
+}
+
+func (o StickySessionCookiePtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *StickySessionCookie) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Name
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o StickySessionCookiePtrOutput) Same_site() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *StickySessionCookie) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Same_site
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o StickySessionCookiePtrOutput) Secure() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *StickySessionCookie) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Secure
+	}).(pulumi.BoolPtrOutput)
 }
 
 type TLS struct {
-	Domain          string `pulumi:"domain"`
-	Is_enabled      bool   `pulumi:"is_enabled"`
-	Tls_termination bool   `pulumi:"tls_termination"`
+	Domain          *string `pulumi:"domain"`
+	Is_enabled      *bool   `pulumi:"is_enabled"`
+	Tls_termination *bool   `pulumi:"tls_termination"`
 }
 
 type TLSOutput struct{ *pulumi.OutputState }
@@ -886,16 +1339,67 @@ func (o TLSOutput) ToTLSOutputWithContext(ctx context.Context) TLSOutput {
 	return o
 }
 
-func (o TLSOutput) Domain() pulumi.StringOutput {
-	return o.ApplyT(func(v TLS) string { return v.Domain }).(pulumi.StringOutput)
+func (o TLSOutput) Domain() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v TLS) *string { return v.Domain }).(pulumi.StringPtrOutput)
 }
 
-func (o TLSOutput) Is_enabled() pulumi.BoolOutput {
-	return o.ApplyT(func(v TLS) bool { return v.Is_enabled }).(pulumi.BoolOutput)
+func (o TLSOutput) Is_enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v TLS) *bool { return v.Is_enabled }).(pulumi.BoolPtrOutput)
 }
 
-func (o TLSOutput) Tls_termination() pulumi.BoolOutput {
-	return o.ApplyT(func(v TLS) bool { return v.Tls_termination }).(pulumi.BoolOutput)
+func (o TLSOutput) Tls_termination() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v TLS) *bool { return v.Tls_termination }).(pulumi.BoolPtrOutput)
+}
+
+type TLSPtrOutput struct{ *pulumi.OutputState }
+
+func (TLSPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**TLS)(nil)).Elem()
+}
+
+func (o TLSPtrOutput) ToTLSPtrOutput() TLSPtrOutput {
+	return o
+}
+
+func (o TLSPtrOutput) ToTLSPtrOutputWithContext(ctx context.Context) TLSPtrOutput {
+	return o
+}
+
+func (o TLSPtrOutput) Elem() TLSOutput {
+	return o.ApplyT(func(v *TLS) TLS {
+		if v != nil {
+			return *v
+		}
+		var ret TLS
+		return ret
+	}).(TLSOutput)
+}
+
+func (o TLSPtrOutput) Domain() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *TLS) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Domain
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o TLSPtrOutput) Is_enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *TLS) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Is_enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+func (o TLSPtrOutput) Tls_termination() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *TLS) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Tls_termination
+	}).(pulumi.BoolPtrOutput)
 }
 
 type VmDisk struct {
@@ -987,23 +1491,30 @@ func (o VmDiskArrayOutput) Index(i pulumi.IntInput) VmDiskOutput {
 
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*FirewallCustomInput)(nil)).Elem(), FirewallCustomArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FirewallCustomPtrInput)(nil)).Elem(), FirewallCustomArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*HealthCheckInput)(nil)).Elem(), HealthCheckArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*HealthCheckPtrInput)(nil)).Elem(), HealthCheckArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*LetsEncryptInput)(nil)).Elem(), LetsEncryptArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OptionsInput)(nil)).Elem(), OptionsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*OptionsPtrInput)(nil)).Elem(), OptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ReverseProxyBackendInput)(nil)).Elem(), ReverseProxyBackendArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ReverseProxyFrontEndInput)(nil)).Elem(), ReverseProxyFrontEndArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*StickySessionCookieInput)(nil)).Elem(), StickySessionCookieArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*StickySessionCookiePtrInput)(nil)).Elem(), StickySessionCookieArgs{})
 	pulumi.RegisterOutputType(BackEndStateOutput{})
 	pulumi.RegisterOutputType(CpuTopologyOutput{})
 	pulumi.RegisterOutputType(EndpointOutput{})
 	pulumi.RegisterOutputType(FirewallCustomOutput{})
+	pulumi.RegisterOutputType(FirewallCustomPtrOutput{})
 	pulumi.RegisterOutputType(FrontEndOutput{})
 	pulumi.RegisterOutputType(HealthCheckOutput{})
+	pulumi.RegisterOutputType(HealthCheckPtrOutput{})
 	pulumi.RegisterOutputType(IOTuneOutput{})
 	pulumi.RegisterOutputType(LetsEncryptOutput{})
 	pulumi.RegisterOutputType(NetworkInterfaceOutput{})
 	pulumi.RegisterOutputType(NetworkInterfaceArrayOutput{})
 	pulumi.RegisterOutputType(OptionsOutput{})
+	pulumi.RegisterOutputType(OptionsPtrOutput{})
 	pulumi.RegisterOutputType(OsAccountOutput{})
 	pulumi.RegisterOutputType(OsAccountArrayOutput{})
 	pulumi.RegisterOutputType(ResourceLimitsOutput{})
@@ -1012,7 +1523,9 @@ func init() {
 	pulumi.RegisterOutputType(ServerPoolHostOutput{})
 	pulumi.RegisterOutputType(ServerPoolHostArrayOutput{})
 	pulumi.RegisterOutputType(StickySessionCookieOutput{})
+	pulumi.RegisterOutputType(StickySessionCookiePtrOutput{})
 	pulumi.RegisterOutputType(TLSOutput{})
+	pulumi.RegisterOutputType(TLSPtrOutput{})
 	pulumi.RegisterOutputType(VmDiskOutput{})
 	pulumi.RegisterOutputType(VmDiskArrayOutput{})
 }

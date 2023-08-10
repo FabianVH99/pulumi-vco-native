@@ -19,22 +19,23 @@ class ReverseProxyArgs:
                  back_end: pulumi.Input['ReverseProxyBackendArgs'],
                  cloudspace_id: pulumi.Input[str],
                  customer_id: pulumi.Input[str],
-                 description: pulumi.Input[str],
                  front_end: pulumi.Input['ReverseProxyFrontEndArgs'],
                  name: pulumi.Input[str],
                  token: pulumi.Input[str],
-                 url: pulumi.Input[str]):
+                 url: pulumi.Input[str],
+                 description: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a ReverseProxy resource.
         """
         pulumi.set(__self__, "back_end", back_end)
         pulumi.set(__self__, "cloudspace_id", cloudspace_id)
         pulumi.set(__self__, "customer_id", customer_id)
-        pulumi.set(__self__, "description", description)
         pulumi.set(__self__, "front_end", front_end)
         pulumi.set(__self__, "name", name)
         pulumi.set(__self__, "token", token)
         pulumi.set(__self__, "url", url)
+        if description is not None:
+            pulumi.set(__self__, "description", description)
 
     @property
     @pulumi.getter
@@ -62,15 +63,6 @@ class ReverseProxyArgs:
     @customer_id.setter
     def customer_id(self, value: pulumi.Input[str]):
         pulumi.set(self, "customer_id", value)
-
-    @property
-    @pulumi.getter
-    def description(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "description")
-
-    @description.setter
-    def description(self, value: pulumi.Input[str]):
-        pulumi.set(self, "description", value)
 
     @property
     @pulumi.getter
@@ -107,6 +99,15 @@ class ReverseProxyArgs:
     @url.setter
     def url(self, value: pulumi.Input[str]):
         pulumi.set(self, "url", value)
+
+    @property
+    @pulumi.getter
+    def description(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "description")
+
+    @description.setter
+    def description(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "description", value)
 
 
 class ReverseProxy(pulumi.CustomResource):
@@ -177,8 +178,6 @@ class ReverseProxy(pulumi.CustomResource):
             if customer_id is None and not opts.urn:
                 raise TypeError("Missing required property 'customer_id'")
             __props__.__dict__["customer_id"] = customer_id
-            if description is None and not opts.urn:
-                raise TypeError("Missing required property 'description'")
             __props__.__dict__["description"] = description
             if front_end is None and not opts.urn:
                 raise TypeError("Missing required property 'front_end'")

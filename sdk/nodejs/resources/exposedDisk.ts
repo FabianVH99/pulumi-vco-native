@@ -37,8 +37,8 @@ export class ExposedDisk extends pulumi.CustomResource {
     public readonly customerID!: pulumi.Output<string>;
     public readonly disk_id!: pulumi.Output<number>;
     public /*out*/ readonly endpoint!: pulumi.Output<outputs.resources.Endpoint>;
-    public readonly iops!: pulumi.Output<number>;
-    public readonly max_connections!: pulumi.Output<number>;
+    public readonly iops!: pulumi.Output<number | undefined>;
+    public readonly max_connections!: pulumi.Output<number | undefined>;
     public /*out*/ readonly protocol!: pulumi.Output<string>;
     public readonly token!: pulumi.Output<string>;
     public readonly url!: pulumi.Output<string>;
@@ -62,12 +62,6 @@ export class ExposedDisk extends pulumi.CustomResource {
             }
             if ((!args || args.disk_id === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'disk_id'");
-            }
-            if ((!args || args.iops === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'iops'");
-            }
-            if ((!args || args.max_connections === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'max_connections'");
             }
             if ((!args || args.token === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'token'");
@@ -107,8 +101,8 @@ export interface ExposedDiskArgs {
     cloudspace_id: pulumi.Input<string>;
     customerID: pulumi.Input<string>;
     disk_id: pulumi.Input<number>;
-    iops: pulumi.Input<number>;
-    max_connections: pulumi.Input<number>;
+    iops?: pulumi.Input<number>;
+    max_connections?: pulumi.Input<number>;
     token: pulumi.Input<string>;
     url: pulumi.Input<string>;
 }

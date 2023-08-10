@@ -33,8 +33,8 @@ type ExposedDiskArgs struct {
 	CustomerID     string `pulumi:"customerID"`
 	CloudSpaceID   string `pulumi:"cloudspace_id"`
 	DiskID         int    `pulumi:"disk_id"`
-	IOPS           *int   `pulumi:"iops"`
-	MaxConnections *int   `pulumi:"max_connections"`
+	IOPS           *int   `pulumi:"iops,optional"`
+	MaxConnections *int   `pulumi:"max_connections,optional"`
 }
 
 func (ExposedDisk) Create(ctx p.Context, name string, input ExposedDiskArgs, preview bool) (string, ExposedDiskState, error) {

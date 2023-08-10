@@ -39,11 +39,11 @@ type DiskArgs struct {
 	DiskName        string  `pulumi:"disk_name"`
 	DiskDescription string  `pulumi:"description"`
 	DiskSize        int     `pulumi:"disk_size"`
-	Iops            *int    `pulumi:"iops"`
-	DiskType        *string `pulumi:"disk_type"`
-	VmID            *string `pulumi:"vm_id"`
-	Detach          *bool   `pulumi:"detach"`
-	Permanently     *bool   `pulumi:"permanently"`
+	Iops            *int    `pulumi:"iops,optional"`
+	DiskType        *string `pulumi:"disk_type,optional"`
+	VmID            *string `pulumi:"vm_id,optional"`
+	Detach          *bool   `pulumi:"detach,optional"`
+	Permanently     *bool   `pulumi:"permanently,optional"`
 }
 
 func (d Disk) Create(ctx p.Context, name string, input DiskArgs, preview bool) (string, DiskState, error) {

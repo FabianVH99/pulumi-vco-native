@@ -64,9 +64,6 @@ export class ReverseProxy extends pulumi.CustomResource {
             if ((!args || args.customerID === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'customerID'");
             }
-            if ((!args || args.description === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'description'");
-            }
             if ((!args || args.front_end === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'front_end'");
             }
@@ -113,7 +110,7 @@ export interface ReverseProxyArgs {
     back_end: pulumi.Input<inputs.resources.ReverseProxyBackendArgs>;
     cloudspace_id: pulumi.Input<string>;
     customerID: pulumi.Input<string>;
-    description: pulumi.Input<string>;
+    description?: pulumi.Input<string>;
     front_end: pulumi.Input<inputs.resources.ReverseProxyFrontEndArgs>;
     name: pulumi.Input<string>;
     token: pulumi.Input<string>;

@@ -36,8 +36,8 @@ export class VirtualMachineNIC extends pulumi.CustomResource {
     public /*out*/ readonly device_name!: pulumi.Output<string>;
     public readonly external_cloudspace_id!: pulumi.Output<string>;
     public readonly external_network_id!: pulumi.Output<number>;
-    public readonly external_network_ip!: pulumi.Output<string>;
-    public readonly external_network_type!: pulumi.Output<string>;
+    public readonly external_network_ip!: pulumi.Output<string | undefined>;
+    public readonly external_network_type!: pulumi.Output<string | undefined>;
     public /*out*/ readonly ip_address!: pulumi.Output<string>;
     public /*out*/ readonly mac_address!: pulumi.Output<string>;
     public readonly model!: pulumi.Output<string>;
@@ -64,20 +64,8 @@ export class VirtualMachineNIC extends pulumi.CustomResource {
             if ((!args || args.customerID === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'customerID'");
             }
-            if ((!args || args.external_cloudspace_id === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'external_cloudspace_id'");
-            }
             if ((!args || args.external_network_id === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'external_network_id'");
-            }
-            if ((!args || args.external_network_ip === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'external_network_ip'");
-            }
-            if ((!args || args.external_network_type === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'external_network_type'");
-            }
-            if ((!args || args.model === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'model'");
             }
             if ((!args || args.token === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'token'");
@@ -131,11 +119,11 @@ export class VirtualMachineNIC extends pulumi.CustomResource {
 export interface VirtualMachineNICArgs {
     cloudspace_id: pulumi.Input<string>;
     customerID: pulumi.Input<string>;
-    external_cloudspace_id: pulumi.Input<string>;
+    external_cloudspace_id?: pulumi.Input<string>;
     external_network_id: pulumi.Input<number>;
-    external_network_ip: pulumi.Input<string>;
-    external_network_type: pulumi.Input<string>;
-    model: pulumi.Input<string>;
+    external_network_ip?: pulumi.Input<string>;
+    external_network_type?: pulumi.Input<string>;
+    model?: pulumi.Input<string>;
     token: pulumi.Input<string>;
     url: pulumi.Input<string>;
     vm_id: pulumi.Input<number>;

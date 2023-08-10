@@ -15,14 +15,14 @@ namespace Pulumi.Vco.Resources.Inputs
         [Input("domain", required: true)]
         public Input<string> Domain { get; set; } = null!;
 
-        [Input("http_port", required: true)]
-        public Input<int> Http_port { get; set; } = null!;
+        [Input("http_port")]
+        public Input<int>? Http_port { get; set; }
 
-        [Input("https_port", required: true)]
-        public Input<int> Https_port { get; set; } = null!;
+        [Input("https_port")]
+        public Input<int>? Https_port { get; set; }
 
-        [Input("ip_address", required: true)]
-        public Input<string> Ip_address { get; set; } = null!;
+        [Input("ip_address")]
+        public Input<string>? Ip_address { get; set; }
 
         [Input("letsencrypt", required: true)]
         public Input<Inputs.LetsEncryptArgs> Letsencrypt { get; set; } = null!;
