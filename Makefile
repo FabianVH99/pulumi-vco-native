@@ -33,6 +33,7 @@ test_provider::
 dotnet_sdk:: DOTNET_VERSION := $(shell pulumictl get version --language dotnet)
 dotnet_sdk::
 	rm -rf sdk/dotnet
+	chmod +x $(WORKING_DIR)/bin/$(PROVIDER)
 	pulumi package gen-sdk $(WORKING_DIR)/bin/$(PROVIDER) --language dotnet
 	cd ${PACKDIR}/dotnet/&& \
 		echo "${DOTNET_VERSION}" >version.txt && \
@@ -40,6 +41,7 @@ dotnet_sdk::
 
 go_sdk:: $(WORKING_DIR)/bin/$(PROVIDER)
 	rm -rf sdk/go
+	chmod +x $(WORKING_DIR)/bin/$(PROVIDER)
 	pulumi package gen-sdk $(WORKING_DIR)/bin/$(PROVIDER) --language go
 
 nodejs_sdk:: VERSION := $(shell pulumictl get version --language javascript)
@@ -58,6 +60,7 @@ nodejs_sdk::
 python_sdk:: PYPI_VERSION := $(shell pulumictl get version --language python)
 python_sdk::
 	rm -rf sdk/python
+	chmod +x $(WORKING_DIR)/bin/$(PROVIDER)
 	pulumi package gen-sdk $(WORKING_DIR)/bin/$(PROVIDER) --language python
 	cp README.md ${PACKDIR}/python/
 	cd ${PACKDIR}/python/ && \
