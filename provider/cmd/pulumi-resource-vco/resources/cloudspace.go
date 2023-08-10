@@ -20,6 +20,9 @@ type ResourceLimits struct {
 
 type CloudspaceState struct {
 	CloudspaceArgs
+	URL               string         `json:"url" pulumi:"url"`
+	Token             string         `json:"token" pulumi:"token"`
+	CustomerID        string         `json:"customerID" pulumi:"customerID"`
 	CloudSpaceID      string         `json:"cloudspace_id" pulumi:"cloudspace_id"`
 	Name              string         `json:"name" pulumi:"name"`
 	Status            string         `json:"status" pulumi:"status"`
@@ -158,18 +161,22 @@ func (c Cloudspace) Create(ctx p.Context, name string, input CloudspaceArgs, pre
 		return "", state, err
 	}
 
+	state.URL = input.URL
+	state.Token = input.URL
+	state.CustomerID = input.CustomerID
+
 	return name, updatedState, nil
 }
 
 func (Cloudspace) Read(ctx p.Context, state CloudspaceState, input CloudspaceArgs) (CloudspaceState, error) {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s", input.URL, input.CustomerID, state.CloudSpaceID)
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s", state.URL, state.CustomerID, state.CloudSpaceID)
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return CloudspaceState{}, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
@@ -182,18 +189,22 @@ func (Cloudspace) Read(ctx p.Context, state CloudspaceState, input CloudspaceArg
 		return CloudspaceState{}, err
 	}
 
+	state.URL = input.URL
+	state.Token = input.URL
+	state.CustomerID = input.CustomerID
+
 	return result, nil
 }
 
 func (Cloudspace) Delete(ctx p.Context, state CloudspaceState, input CloudspaceArgs) (bool, error) {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s", input.URL, input.CustomerID, state.CloudSpaceID)
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s", state.URL, state.CustomerID, state.CloudSpaceID)
 	client := &http.Client{}
 	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(nil))
 	if err != nil {
 		return false, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
