@@ -66,6 +66,10 @@ type CloudspaceArgs struct {
 func (c Cloudspace) Create(ctx p.Context, name string, input CloudspaceArgs, preview bool) (string, CloudspaceState, error) {
 	state := CloudspaceState{CloudspaceArgs: input}
 
+	if preview {
+		return name, state, nil
+	}
+
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces", input.URL, input.CustomerID)
 	payload := map[string]interface{}{
 		"name":            input.Name,
