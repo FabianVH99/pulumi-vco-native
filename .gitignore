@@ -1,5 +1,4 @@
 /vendor/
-**/bin/
 **/obj/
 **/node_modules/
 **/.vs
