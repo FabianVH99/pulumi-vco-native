@@ -6,7 +6,7 @@ import (
 	"github.com/pulumi/pulumi-go-provider/infer"
 )
 
-var Version = "0.0.1"
+var Version = "0.1.0"
 
 func main() {
 	p.RunProvider("vco", Version,
