@@ -104,6 +104,10 @@ type VirtualMachineArgs struct {
 func (vm VirtualMachine) Create(ctx p.Context, name string, input VirtualMachineArgs, preview bool) (string, VirtualMachineState, error) {
 	state := VirtualMachineState{VirtualMachineArgs: input}
 
+	if preview {
+		return name, state, nil
+	}
+
 	u, err := url.Parse(fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/vms", input.URL, input.CustomerID, input.CloudSpaceID))
 	if err != nil {
 		return "", state, err

@@ -27,6 +27,11 @@ type HostArgs struct {
 
 func (Host) Create(ctx p.Context, name string, input HostArgs, preview bool) (string, HostState, error) {
 	state := HostState{HostArgs: input}
+
+	if preview {
+		return name, state, nil
+	}
+
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/server-pools/%s/hosts?address=%s", input.URL, input.CustomerID, input.CloudSpaceID, input.ServerPoolID, input.Address)
 
 	client := &http.Client{}

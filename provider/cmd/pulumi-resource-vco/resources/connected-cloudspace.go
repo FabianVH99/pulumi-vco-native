@@ -29,6 +29,11 @@ type ConnectedCloudspaceArgs struct {
 
 func (cs ConnectedCloudspace) Create(ctx p.Context, name string, input ConnectedCloudspaceArgs, preview bool) (string, ConnectedCloudspaceState, error) {
 	state := ConnectedCloudspaceState{ConnectedCloudspaceArgs: input}
+
+	if preview {
+		return name, state, nil
+	}
+
 	state.ConnectedCloudSpaceID = input.ConnectedCloudSpaceID
 	state.RemoteCloudSpaceIP = input.RemoteCloudSpaceIP
 	state.LocalCloudSpaceIP = input.LocalCloudSpaceIP

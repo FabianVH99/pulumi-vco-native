@@ -29,6 +29,10 @@ type VirtualMachineDiskArgs struct {
 func (VirtualMachineDisk) Create(ctx p.Context, name string, input VirtualMachineDiskArgs, preview bool) (string, VirtualMachineDiskState, error) {
 	state := VirtualMachineDiskState{VirtualMachineDiskArgs: input}
 
+	if preview {
+		return name, state, nil
+	}
+
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/vms/%d/disks?disk_id=%d", input.URL, input.CustomerID, input.CloudSpaceID, input.VirtualMachineID, input.DiskID)
 
 	client := &http.Client{}

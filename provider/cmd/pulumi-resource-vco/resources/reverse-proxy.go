@@ -75,6 +75,10 @@ type HealthCheck struct {
 func (rp ReverseProxy) Create(ctx p.Context, name string, input ReverseProxyArgs, preview bool) (string, ReverseProxyState, error) {
 	state := ReverseProxyState{ReverseProxyArgs: input}
 
+	if preview {
+		return name, state, nil
+	}
+
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/reverse-proxies", input.URL, input.CustomerID, input.CloudSpaceID)
 	payload := map[string]interface{}{
 		"name": input.Name,

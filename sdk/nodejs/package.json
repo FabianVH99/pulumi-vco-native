@@ -1,5 +1,5 @@
 {
-    "name": "@pulumi/vco",
+    "name": "@fabianv-cloud/vco",
     "version": "${VERSION}",
     "scripts": {
         "build": "tsc",

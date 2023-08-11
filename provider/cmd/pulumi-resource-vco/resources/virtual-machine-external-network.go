@@ -41,6 +41,10 @@ type VirtualMachineNICArgs struct {
 func (nic VirtualMachineNIC) Create(ctx p.Context, name string, input VirtualMachineNICArgs, preview bool) (string, VirtualMachineNICState, error) {
 	state := VirtualMachineNICState{VirtualMachineNICArgs: input}
 
+	if preview {
+		return name, state, nil
+	}
+
 	u, err := url.Parse(fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/vms/%d/external-nics", input.URL, input.CustomerID, input.CloudSpaceID, input.VirtualMachineID))
 	if err != nil {
 		return "", state, err

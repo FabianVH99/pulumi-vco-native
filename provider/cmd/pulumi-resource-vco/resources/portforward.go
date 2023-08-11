@@ -41,6 +41,10 @@ type PortForwardArgs struct {
 func (pf PortForward) Create(ctx p.Context, name string, input PortForwardArgs, preview bool) (string, PortForwardState, error) {
 	state := PortForwardState{PortForwardArgs: input}
 
+	if preview {
+		return name, state, nil
+	}
+
 	u, err := url.Parse(fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/portforwards", input.URL, input.CustomerID, input.CloudSpaceID))
 	if err != nil {
 		return "", state, err

@@ -35,6 +35,10 @@ type ServerPoolArgs struct {
 func (sv ServerPool) Create(ctx p.Context, name string, input ServerPoolArgs, preview bool) (string, ServerPoolState, error) {
 	state := ServerPoolState{ServerPoolArgs: input}
 
+	if preview {
+		return name, state, nil
+	}
+
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/server-pools?name=%s&description=%s", input.URL, input.CustomerID, input.CloudSpaceID, input.Name, input.Description)
 
 	client := &http.Client{}

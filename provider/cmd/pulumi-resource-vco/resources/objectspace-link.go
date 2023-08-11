@@ -26,6 +26,11 @@ type ObjectSpaceLinkArgs struct {
 
 func (ObjectSpaceLink) Create(ctx p.Context, name string, input ObjectSpaceLinkArgs, preview bool) (string, ObjectSpaceLinkState, error) {
 	state := ObjectSpaceLinkState{ObjectSpaceLinkArgs: input}
+
+	if preview {
+		return name, state, nil
+	}
+
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/objectspaces?objectspace_id=%s", input.URL, input.CustomerID, input.CloudSpaceID, input.ObjectSpaceID)
 
 	client := &http.Client{}

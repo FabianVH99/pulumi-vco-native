@@ -40,6 +40,10 @@ type ExposedDiskArgs struct {
 func (ExposedDisk) Create(ctx p.Context, name string, input ExposedDiskArgs, preview bool) (string, ExposedDiskState, error) {
 	state := ExposedDiskState{ExposedDiskArgs: input}
 
+	if preview {
+		return name, state, nil
+	}
+
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/exposed-disks", input.URL, input.CustomerID, input.CloudSpaceID)
 	payload := map[string]interface{}{
 		"disk_id": input.DiskID,

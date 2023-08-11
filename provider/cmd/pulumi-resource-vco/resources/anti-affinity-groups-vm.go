@@ -28,6 +28,10 @@ type AntiAffinityGroupVMArgs struct {
 func (agvm AntiAffinityGroupVM) Create(ctx p.Context, name string, input AntiAffinityGroupVMArgs, preview bool) (string, AntiAffinityGroupVMState, error) {
 	state := AntiAffinityGroupVMState{AntiAffinityGroupVMArgs: input}
 
+	if preview {
+		return name, state, nil
+	}
+
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/anti-affinity-groups/%s/vms?vm_id=%d", input.URL, input.CustomerID, input.CloudSpaceID, input.GroupID, input.VirtualMachineID)
 
 	client := &http.Client{}

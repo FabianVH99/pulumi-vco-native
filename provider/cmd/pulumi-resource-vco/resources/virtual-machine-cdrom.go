@@ -32,6 +32,10 @@ type VirtualMachineCDArgs struct {
 func (cd VirtualMachineCD) Create(ctx p.Context, name string, input VirtualMachineCDArgs, preview bool) (string, VirtualMachineCDState, error) {
 	state := VirtualMachineCDState{VirtualMachineCDArgs: input}
 
+	if preview {
+		return name, state, nil
+	}
+
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/vms/%d/cdrom-images?cdrom_id=%d", input.URL, input.CustomerID, input.CloudSpaceID, input.VirtualMachineID, input.CdRomID)
 
 	client := &http.Client{}

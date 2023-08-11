@@ -54,7 +54,7 @@ This will:
    
 ```bash
 $ cd examples/simple
-$ yarn link @pulumi/vco
+$ yarn link @fabianv-cloud/vco
 $ yarn install
 $ pulumi stack init test
 $ pulumi up

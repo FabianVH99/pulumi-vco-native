@@ -29,6 +29,10 @@ type AntiAffinityGroupArgs struct {
 func (ag AntiAffinityGroup) Create(ctx p.Context, name string, input AntiAffinityGroupArgs, preview bool) (string, AntiAffinityGroupState, error) {
 	state := AntiAffinityGroupState{AntiAffinityGroupArgs: input}
 
+	if preview {
+		return name, state, nil
+	}
+
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/anti-affinity-groups?spread=%d&group_id=%s", input.URL, input.CustomerID, input.CloudSpaceID, input.Spread, input.GroupID)
 
 	client := &http.Client{}

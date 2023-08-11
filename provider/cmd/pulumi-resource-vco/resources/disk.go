@@ -50,6 +50,10 @@ func (d Disk) Create(ctx p.Context, name string, input DiskArgs, preview bool) (
 	state := DiskState{DiskArgs: input}
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/locations/%s/disks?disk_name=%s&description=%s&disk_size=%d", input.URL, input.CustomerID, input.Location, input.DiskName, input.DiskDescription, input.DiskSize)
 
+	if preview {
+		return name, state, nil
+	}
+
 	client := &http.Client{}
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(nil))
 	if err != nil {

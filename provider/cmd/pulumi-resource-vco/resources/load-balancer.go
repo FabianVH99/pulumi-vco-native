@@ -58,6 +58,10 @@ type BackEnd struct {
 func (lb LoadBalancer) Create(ctx p.Context, name string, input LoadBalancerArgs, preview bool) (string, LoadBalancerState, error) {
 	state := LoadBalancerState{LoadBalancerArgs: input}
 
+	if preview {
+		return name, state, nil
+	}
+
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/load-balancers", input.URL, input.CustomerID, input.CloudSpaceID)
 	payload := map[string]interface{}{
 		"name": input.Name,

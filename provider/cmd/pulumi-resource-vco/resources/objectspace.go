@@ -55,6 +55,11 @@ type ObjectSpaceArgs struct {
 
 func (obj ObjectSpace) Create(ctx p.Context, name string, input ObjectSpaceArgs, preview bool) (string, ObjectSpaceState, error) {
 	state := ObjectSpaceState{ObjectSpaceArgs: input}
+
+	if preview {
+		return name, state, nil
+	}
+
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/objectspaces?name=%s&location=%s", input.URL, input.CustomerID, input.Name, input.Location)
 	payload := map[string]interface{}{}
 

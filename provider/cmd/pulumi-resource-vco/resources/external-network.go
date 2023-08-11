@@ -31,6 +31,11 @@ type ExternalNetworkArgs struct {
 
 func (ExternalNetwork) Create(ctx p.Context, name string, input ExternalNetworkArgs, preview bool) (string, ExternalNetworkState, error) {
 	state := ExternalNetworkState{ExternalNetworkArgs: input}
+
+	if preview {
+		return name, state, nil
+	}
+
 	state.ExternalNetworkID = input.ExternalNetworkID
 	state.Metric = input.Metric
 	state.ExternalNetworkIP = input.ExternalNetworkIP
