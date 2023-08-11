@@ -1,3 +1,3 @@
-name: cloudspace
+name: cloudspace_example
 runtime: dotnet
-description: A minimal C# Pulumi program
+description: A C# Pulumi program demonstrating how to create a cloudspace resource.

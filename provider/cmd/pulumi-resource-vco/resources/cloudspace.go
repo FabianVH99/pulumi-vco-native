@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	p "github.com/pulumi/pulumi-go-provider"
+	"log"
 	"net/http"
 )
 
@@ -145,6 +146,7 @@ func (c Cloudspace) Create(ctx p.Context, name string, input CloudspaceArgs, pre
 
 	resp, err := client.Do(req)
 	if err != nil {
+		log.Fatalf("Error making API request: %v", err)
 		return "", state, err
 	}
 	defer resp.Body.Close()
@@ -155,15 +157,14 @@ func (c Cloudspace) Create(ctx p.Context, name string, input CloudspaceArgs, pre
 	}
 
 	state.CloudSpaceID = result["cloudspace_id"].(string)
+	state.URL = input.URL
+	state.Token = input.URL
+	state.CustomerID = input.CustomerID
 
 	updatedState, err := c.Read(ctx, state, input)
 	if err != nil {
 		return "", state, err
 	}
-
-	state.URL = input.URL
-	state.Token = input.URL
-	state.CustomerID = input.CustomerID
 
 	return name, updatedState, nil
 }
@@ -180,6 +181,7 @@ func (Cloudspace) Read(ctx p.Context, state CloudspaceState, input CloudspaceArg
 
 	resp, err := client.Do(req)
 	if err != nil {
+		log.Fatalf("Error making API request: %v", err)
 		return CloudspaceState{}, err
 	}
 	defer resp.Body.Close()
@@ -189,9 +191,9 @@ func (Cloudspace) Read(ctx p.Context, state CloudspaceState, input CloudspaceArg
 		return CloudspaceState{}, err
 	}
 
-	state.URL = input.URL
-	state.Token = input.URL
-	state.CustomerID = input.CustomerID
+	result.URL = state.URL
+	result.Token = state.URL
+	result.CustomerID = state.CustomerID
 
 	return result, nil
 }
@@ -208,6 +210,7 @@ func (Cloudspace) Delete(ctx p.Context, state CloudspaceState, input CloudspaceA
 
 	resp, err := client.Do(req)
 	if err != nil {
+		log.Fatalf("Error making API request: %v", err)
 		return false, err
 	}
 	defer resp.Body.Close()
