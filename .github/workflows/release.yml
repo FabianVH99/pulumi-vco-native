@@ -44,15 +44,6 @@ jobs:
       - name: Build Provider
         run: make provider
       - run: git status --porcelain
-      - name: Tar provider binaries
-        run: tar -zcf ${{ github.workspace }}/bin/provider.tar.gz -C ${{
-          github.workspace}}/bin/ pulumi-resource-${{ env.PROVIDER }}
-          pulumi-gen-${{ env.PROVIDER}}
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: pulumi-${{ env.PROVIDER }}-provider.tar.gz
-          path: ${{ github.workspace }}/bin/provider.tar.gz
   publish_binary:
     needs: prerequisites
     name: publish
