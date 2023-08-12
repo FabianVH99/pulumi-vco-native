@@ -10,6 +10,11 @@ export type Cloudspace = import("./cloudspace").Cloudspace;
 export const Cloudspace: typeof import("./cloudspace").Cloudspace = null as any;
 utilities.lazyLoad(exports, ["Cloudspace"], () => require("./cloudspace"));
 
+export { DiskArgs } from "./disk";
+export type Disk = import("./disk").Disk;
+export const Disk: typeof import("./disk").Disk = null as any;
+utilities.lazyLoad(exports, ["Disk"], () => require("./disk"));
+
 
 const _module = {
     version: utilities.getVersion(),
@@ -17,6 +22,8 @@ const _module = {
         switch (type) {
             case "vco:base:Cloudspace":
                 return new Cloudspace(name, <any>undefined, { urn })
+            case "vco:base:Disk":
+                return new Disk(name, <any>undefined, { urn })
             default:
                 throw new Error(`unknown resource type ${type}`);
         }

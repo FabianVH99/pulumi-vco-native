@@ -13,10 +13,35 @@
         "strict": true
     },
     "files": [
+        "anti_affinity_group/antiAffinityGroupVM.ts",
+        "anti_affinity_group/index.ts",
         "base/cloudspace.ts",
+        "base/disk.ts",
         "base/index.ts",
+        "cloudspace/antiAffinityGroup.ts",
+        "cloudspace/connectedCloudspace.ts",
+        "cloudspace/externalNetwork.ts",
+        "cloudspace/index.ts",
+        "cloudspace/portForward.ts",
+        "cloudspace/virtualMachine.ts",
+        "disk/exposedDisk.ts",
+        "disk/index.ts",
         "index.ts",
+        "ingress/host.ts",
+        "ingress/index.ts",
+        "ingress/loadBalancer.ts",
+        "ingress/reverseProxy.ts",
+        "ingress/serverPool.ts",
+        "objectspace/index.ts",
+        "objectspace/objectSpaceLink.ts",
         "provider.ts",
-        "utilities.ts"
+        "types/index.ts",
+        "types/input.ts",
+        "types/output.ts",
+        "utilities.ts",
+        "virtual_machine/index.ts",
+        "virtual_machine/virtualMachineCD.ts",
+        "virtual_machine/virtualMachineDisk.ts",
+        "virtual_machine/virtualMachineNIC.ts"
     ]
 }

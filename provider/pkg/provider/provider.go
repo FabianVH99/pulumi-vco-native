@@ -56,7 +56,6 @@ func NewProvider() p.Provider {
 		Resources: []infer.InferredResource{
 			infer.Resource[base.Cloudspace, base.CloudspaceArgs, base.CloudspaceState](),
 			infer.Resource[base.Disk, base.DiskArgs, base.DiskState](),
-			infer.Resource[base.ObjectSpace, base.ObjectSpaceArgs, base.ObjectSpaceState](),
 			infer.Resource[cloudspace.AntiAffinityGroup, cloudspace.AntiAffinityGroupArgs, cloudspace.AntiAffinityGroupState](),
 			infer.Resource[cloudspace.VirtualMachine, cloudspace.VirtualMachineArgs, cloudspace.VirtualMachineState](),
 			infer.Resource[cloudspace.ConnectedCloudspace, cloudspace.ConnectedCloudspaceArgs, cloudspace.ConnectedCloudspaceState](),

@@ -36,6 +36,68 @@
     "publisher": "Whitesky.cloud",
     "repository": "https://github.com/fabianv-cloud/pulumi-vco-native",
     "resources": {
+        "vco:anti_affinity_group:AntiAffinityGroupVM": {
+            "inputProperties": {
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "group_id": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "vm_id": {
+                    "type": "integer"
+                }
+            },
+            "properties": {
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "group_id": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "vm_id": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "group_id",
+                "vm_id",
+                "status"
+            ],
+            "requiredInputs": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "group_id",
+                "vm_id"
+            ]
+        },
         "vco:base:Cloudspace": {
             "inputProperties": {
                 "cdrom_id": {
@@ -219,6 +281,1696 @@
                 "external_network_id",
                 "private"
             ]
+        },
+        "vco:base:Disk": {
+            "inputProperties": {
+                "customerID": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "detach": {
+                    "type": "boolean"
+                },
+                "disk_name": {
+                    "type": "string"
+                },
+                "disk_size": {
+                    "type": "integer"
+                },
+                "disk_type": {
+                    "type": "string"
+                },
+                "iops": {
+                    "type": "integer"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "permanently": {
+                    "type": "boolean"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "vm_id": {
+                    "type": "string"
+                }
+            },
+            "properties": {
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "detach": {
+                    "type": "boolean"
+                },
+                "disk_id": {
+                    "type": "integer"
+                },
+                "disk_name": {
+                    "type": "string"
+                },
+                "disk_size": {
+                    "type": "integer"
+                },
+                "disk_type": {
+                    "type": "string"
+                },
+                "exposed": {
+                    "type": "boolean"
+                },
+                "iops": {
+                    "type": "integer"
+                },
+                "iotune": {
+                    "$ref": "#/types/vco:base:IOTune"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "model": {
+                    "type": "string"
+                },
+                "order": {
+                    "type": "string"
+                },
+                "permanently": {
+                    "type": "boolean"
+                },
+                "port": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "vm_id": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "url",
+                "token",
+                "customerID",
+                "location",
+                "description",
+                "status",
+                "disk_size",
+                "disk_name",
+                "description",
+                "exposed",
+                "disk_id",
+                "disk_type",
+                "order",
+                "vm_id",
+                "port",
+                "model",
+                "iotune",
+                "cloudspace_id"
+            ],
+            "requiredInputs": [
+                "url",
+                "token",
+                "customerID",
+                "location",
+                "disk_name",
+                "description",
+                "disk_size"
+            ]
+        },
+        "vco:cloudspace:AntiAffinityGroup": {
+            "inputProperties": {
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "group_id": {
+                    "type": "string"
+                },
+                "spread": {
+                    "type": "integer"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "properties": {
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "group_id": {
+                    "type": "string"
+                },
+                "spread": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "group_id",
+                "spread",
+                "status"
+            ],
+            "requiredInputs": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "group_id",
+                "spread"
+            ]
+        },
+        "vco:cloudspace:ConnectedCloudspace": {
+            "inputProperties": {
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "connected_cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "local_cloudspace_ip ": {
+                    "type": "string"
+                },
+                "remote_cloudspace_ip ": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "properties": {
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "connected_cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "local_cloudspace_ip": {
+                    "type": "string"
+                },
+                "remote_cloudspace_ip": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "connected_cloudspace_id",
+                "remote_cloudspace_ip",
+                "local_cloudspace_ip",
+                "status"
+            ],
+            "requiredInputs": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "connected_cloudspace_id",
+                "remote_cloudspace_ip ",
+                "local_cloudspace_ip "
+            ]
+        },
+        "vco:cloudspace:ExternalNetwork": {
+            "inputProperties": {
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "external_network_id": {
+                    "type": "string"
+                },
+                "external_network_ip": {
+                    "type": "string"
+                },
+                "external_network_type": {
+                    "type": "string"
+                },
+                "metric": {
+                    "type": "integer"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "properties": {
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "external_network_id": {
+                    "type": "string"
+                },
+                "external_network_ip": {
+                    "type": "string"
+                },
+                "external_network_type": {
+                    "type": "string"
+                },
+                "metric": {
+                    "type": "integer"
+                },
+                "success": {
+                    "type": "boolean"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "external_network_type",
+                "external_network_id",
+                "metric",
+                "external_network_ip",
+                "success"
+            ],
+            "requiredInputs": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "external_network_id",
+                "external_network_type",
+                "metric",
+                "external_network_ip"
+            ]
+        },
+        "vco:cloudspace:PortForward": {
+            "inputProperties": {
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "local_port": {
+                    "type": "integer"
+                },
+                "nested_cs_id": {
+                    "type": "string"
+                },
+                "protocol": {
+                    "type": "string"
+                },
+                "public_ip": {
+                    "type": "string"
+                },
+                "public_port": {
+                    "type": "integer"
+                },
+                "till_public_port": {
+                    "type": "integer"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "vm_id": {
+                    "type": "integer"
+                }
+            },
+            "properties": {
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "local_port": {
+                    "type": "integer"
+                },
+                "nested_cs_id": {
+                    "type": "string"
+                },
+                "portforward_id": {
+                    "type": "string"
+                },
+                "protocol": {
+                    "type": "string"
+                },
+                "public_ip": {
+                    "type": "string"
+                },
+                "public_port": {
+                    "type": "integer"
+                },
+                "till_public_port": {
+                    "type": "integer"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "vm_id": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "portforward_id",
+                "local_port",
+                "public_port",
+                "protocol",
+                "vm_id",
+                "public_ip",
+                "till_public_port",
+                "nested_cs_id"
+            ],
+            "requiredInputs": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "local_port",
+                "public_port",
+                "protocol",
+                "vm_id",
+                "public_ip"
+            ]
+        },
+        "vco:cloudspace:VirtualMachine": {
+            "inputProperties": {
+                "acronis": {
+                    "type": "boolean"
+                },
+                "all_vm_disks": {
+                    "type": "boolean"
+                },
+                "boot_disk_id": {
+                    "type": "integer"
+                },
+                "boot_type": {
+                    "type": "string"
+                },
+                "cdrom_id": {
+                    "type": "integer"
+                },
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "data_disks": {
+                    "items": {
+                        "type": "integer"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "disk_size": {
+                    "type": "integer"
+                },
+                "enable_vm_agent": {
+                    "type": "boolean"
+                },
+                "image_id": {
+                    "type": "integer"
+                },
+                "memory": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "os_name": {
+                    "type": "string"
+                },
+                "os_type": {
+                    "type": "string"
+                },
+                "private_ip": {
+                    "type": "string"
+                },
+                "snapshot_id": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "user_data": {
+                    "type": "string"
+                },
+                "vcpus": {
+                    "type": "integer"
+                }
+            },
+            "properties": {
+                "acronis": {
+                    "type": "boolean"
+                },
+                "agent_status": {
+                    "type": "string"
+                },
+                "all_vm_disks": {
+                    "type": "boolean"
+                },
+                "anti_affinity_group_ids": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "appliance": {
+                    "type": "boolean"
+                },
+                "boot_disk_id": {
+                    "type": "integer"
+                },
+                "boot_type": {
+                    "type": "string"
+                },
+                "cdrom_id": {
+                    "type": "integer"
+                },
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "cpu_topology": {
+                    "$ref": "#/types/vco:cloudspace:CpuTopology"
+                },
+                "cpus_pin_status": {
+                    "type": "boolean"
+                },
+                "creation_time": {
+                    "type": "number"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "data_disks": {
+                    "items": {
+                        "type": "integer"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "disk_size": {
+                    "type": "integer"
+                },
+                "disks": {
+                    "items": {
+                        "$ref": "#/types/vco:cloudspace:VmDisk"
+                    },
+                    "type": "array"
+                },
+                "enable_vm_agent": {
+                    "type": "boolean"
+                },
+                "hostname": {
+                    "type": "string"
+                },
+                "image_id": {
+                    "type": "integer"
+                },
+                "impact_alert_hook": {
+                    "type": "string"
+                },
+                "locked": {
+                    "type": "boolean"
+                },
+                "memory": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "network_interfaces": {
+                    "items": {
+                        "$ref": "#/types/vco:cloudspace:NetworkInterface"
+                    },
+                    "type": "array"
+                },
+                "os_accounts": {
+                    "items": {
+                        "$ref": "#/types/vco:cloudspace:OsAccount"
+                    },
+                    "type": "array"
+                },
+                "os_image_name": {
+                    "type": "string"
+                },
+                "os_name": {
+                    "type": "string"
+                },
+                "os_type": {
+                    "type": "string"
+                },
+                "private_ip": {
+                    "type": "string"
+                },
+                "snapshot_id": {
+                    "type": "string"
+                },
+                "stack_id": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "storage": {
+                    "type": "integer"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "update_time": {
+                    "type": "number"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "user_data": {
+                    "type": "string"
+                },
+                "vcpus": {
+                    "type": "integer"
+                },
+                "vm_id": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "vm_id",
+                "name",
+                "description",
+                "boot_disk_id",
+                "cloudspace_id",
+                "status",
+                "update_time",
+                "creation_time",
+                "vcpus",
+                "storage",
+                "memory",
+                "agent_status",
+                "image_id",
+                "locked",
+                "stack_id",
+                "impact_alert_hook",
+                "os_image_name",
+                "hostname",
+                "anti_affinity_group_ids",
+                "disks",
+                "os_accounts",
+                "network_interfaces",
+                "appliance",
+                "cpus_pin_status",
+                "boot_type",
+                "cpu_topology"
+            ],
+            "requiredInputs": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "name",
+                "description",
+                "vcpus",
+                "memory"
+            ]
+        },
+        "vco:disk:ExposedDisk": {
+            "inputProperties": {
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "disk_id": {
+                    "type": "integer"
+                },
+                "iops": {
+                    "type": "integer"
+                },
+                "max_connections": {
+                    "type": "integer"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "properties": {
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "disk_id": {
+                    "type": "integer"
+                },
+                "endpoint": {
+                    "$ref": "#/types/vco:disk:Endpoint"
+                },
+                "iops": {
+                    "type": "integer"
+                },
+                "max_connections": {
+                    "type": "integer"
+                },
+                "protocol": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "disk_id",
+                "protocol",
+                "endpoint"
+            ],
+            "requiredInputs": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "disk_id"
+            ]
+        },
+        "vco:ingress:Host": {
+            "inputProperties": {
+                "address": {
+                    "type": "string"
+                },
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "serverpool_id": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "host_id": {
+                    "type": "string"
+                },
+                "serverpool_id": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "serverpool_id",
+                "host_id",
+                "address"
+            ],
+            "requiredInputs": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "serverpool_id",
+                "address"
+            ]
+        },
+        "vco:ingress:LoadBalancer": {
+            "inputProperties": {
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "properties": {
+                "back_end": {
+                    "$ref": "#/types/vco:ingress:BackEndState"
+                },
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "front_end": {
+                    "$ref": "#/types/vco:ingress:FrontEnd"
+                },
+                "loadbalancer_id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "loadbalancer_id",
+                "name",
+                "description",
+                "type",
+                "front_end",
+                "back_end"
+            ],
+            "requiredInputs": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "name",
+                "type"
+            ]
+        },
+        "vco:ingress:ReverseProxy": {
+            "inputProperties": {
+                "back_end": {
+                    "$ref": "#/types/vco:ingress:ReverseProxyBackend"
+                },
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "front_end": {
+                    "$ref": "#/types/vco:ingress:ReverseProxyFrontEnd"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "properties": {
+                "back_end": {
+                    "$ref": "#/types/vco:ingress:ReverseProxyBackend"
+                },
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "front_end": {
+                    "$ref": "#/types/vco:ingress:ReverseProxyFrontEnd"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "reverseproxy_id": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "front_end",
+                "back_end",
+                "reverseproxy_id",
+                "name",
+                "description",
+                "type",
+                "front_end",
+                "back_end"
+            ],
+            "requiredInputs": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "name",
+                "front_end",
+                "back_end"
+            ]
+        },
+        "vco:ingress:ServerPool": {
+            "inputProperties": {
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "properties": {
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "hosts": {
+                    "items": {
+                        "$ref": "#/types/vco:ingress:ServerPoolHost"
+                    },
+                    "type": "array"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "serverpool_id": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "serverpool_id",
+                "name",
+                "description",
+                "hosts"
+            ],
+            "requiredInputs": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "name",
+                "description"
+            ]
+        },
+        "vco:objectspace:ObjectSpaceLink": {
+            "inputProperties": {
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "objectspace_id": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "properties": {
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "objectspace_id": {
+                    "type": "string"
+                },
+                "success": {
+                    "type": "boolean"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "objectspace_id",
+                "success"
+            ],
+            "requiredInputs": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "objectspace_id"
+            ]
+        },
+        "vco:virtual_machine:VirtualMachineCD": {
+            "inputProperties": {
+                "cdrom_id": {
+                    "type": "integer"
+                },
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "vm_id": {
+                    "type": "integer"
+                }
+            },
+            "properties": {
+                "cdrom_id": {
+                    "type": "integer"
+                },
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "disk_size": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "vm_id": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "cdrom_id",
+                "vm_id",
+                "name",
+                "description",
+                "status",
+                "disk_size"
+            ],
+            "requiredInputs": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "vm_id",
+                "cdrom_id"
+            ]
+        },
+        "vco:virtual_machine:VirtualMachineDisk": {
+            "inputProperties": {
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "disk_id": {
+                    "type": "integer"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "vm_id": {
+                    "type": "integer"
+                }
+            },
+            "properties": {
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "disk_id": {
+                    "type": "integer"
+                },
+                "success": {
+                    "type": "boolean"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "vm_id": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "vm_id",
+                "disk_id",
+                "success"
+            ],
+            "requiredInputs": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "vm_id",
+                "disk_id"
+            ]
+        },
+        "vco:virtual_machine:VirtualMachineNIC": {
+            "inputProperties": {
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "external_cloudspace_id": {
+                    "type": "string"
+                },
+                "external_network_id": {
+                    "type": "integer"
+                },
+                "external_network_ip": {
+                    "type": "string"
+                },
+                "external_network_type": {
+                    "type": "string"
+                },
+                "model": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "vm_id": {
+                    "type": "integer"
+                }
+            },
+            "properties": {
+                "cloudspace_id": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "device_name": {
+                    "type": "string"
+                },
+                "external_cloudspace_id": {
+                    "type": "string"
+                },
+                "external_network_id": {
+                    "type": "integer"
+                },
+                "external_network_ip": {
+                    "type": "string"
+                },
+                "external_network_type": {
+                    "type": "string"
+                },
+                "ip_address": {
+                    "type": "string"
+                },
+                "mac_address": {
+                    "type": "string"
+                },
+                "model": {
+                    "type": "string"
+                },
+                "network_id": {
+                    "type": "integer"
+                },
+                "nic_type": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "vm_id": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "external_network_id",
+                "vm_id",
+                "device_name",
+                "mac_address",
+                "ip_address",
+                "network_id",
+                "nic_type",
+                "model",
+                "external_cloudspace_id"
+            ],
+            "requiredInputs": [
+                "url",
+                "token",
+                "customerID",
+                "cloudspace_id",
+                "vm_id",
+                "external_network_id"
+            ]
+        }
+    },
+    "types": {
+        "vco:base:IOTune": {
+            "properties": {
+                "iops": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "iops"
+            ],
+            "type": "object"
+        },
+        "vco:cloudspace:CpuTopology": {
+            "properties": {
+                "cores": {
+                    "type": "integer"
+                },
+                "sockets": {
+                    "type": "integer"
+                },
+                "threads": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "cores",
+                "threads",
+                "sockets"
+            ],
+            "type": "object"
+        },
+        "vco:cloudspace:NetworkInterface": {
+            "properties": {
+                "device_name": {
+                    "type": "string"
+                },
+                "external_cloudspace_id": {
+                    "type": "string"
+                },
+                "ip_address": {
+                    "type": "string"
+                },
+                "mac_address": {
+                    "type": "string"
+                },
+                "model": {
+                    "type": "string"
+                },
+                "network_id": {
+                    "type": "integer"
+                },
+                "nic_type": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "device_name",
+                "mac_address",
+                "ip_address",
+                "network_id",
+                "nic_type",
+                "model",
+                "external_cloudspace_id"
+            ],
+            "type": "object"
+        },
+        "vco:cloudspace:OsAccount": {
+            "properties": {
+                "login": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "login",
+                "password"
+            ],
+            "type": "object"
+        },
+        "vco:cloudspace:VmDisk": {
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "disk_id": {
+                    "type": "integer"
+                },
+                "disk_name": {
+                    "type": "string"
+                },
+                "disk_size": {
+                    "type": "integer"
+                },
+                "disk_type": {
+                    "type": "string"
+                },
+                "exposed": {
+                    "type": "boolean"
+                },
+                "order": {
+                    "type": "string"
+                },
+                "pci_bus": {
+                    "type": "integer"
+                },
+                "pci_slot": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "status",
+                "disk_size",
+                "disk_name",
+                "description",
+                "exposed",
+                "pci_bus",
+                "pci_slot",
+                "disk_id",
+                "disk_type",
+                "order"
+            ],
+            "type": "object"
+        },
+        "vco:disk:Endpoint": {
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                },
+                "private_address": {
+                    "type": "string"
+                },
+                "private_port": {
+                    "type": "integer"
+                },
+                "psk": {
+                    "type": "string"
+                },
+                "user": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "psk",
+                "user",
+                "port",
+                "name",
+                "address",
+                "private_port",
+                "private_address"
+            ],
+            "type": "object"
+        },
+        "vco:ingress:BackEndState": {
+            "properties": {
+                "serverpool_id": {
+                    "type": "string"
+                },
+                "serverpool_name": {
+                    "type": "string"
+                },
+                "target_port": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "serverpool_id",
+                "serverpool_name",
+                "target_port"
+            ],
+            "type": "object"
+        },
+        "vco:ingress:FrontEnd": {
+            "properties": {
+                "ip_address": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                },
+                "tls": {
+                    "$ref": "#/types/vco:ingress:TLS"
+                }
+            },
+            "required": [
+                "port"
+            ],
+            "type": "object"
+        },
+        "vco:ingress:HealthCheck": {
+            "properties": {
+                "interval": {
+                    "type": "integer"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                },
+                "scheme": {
+                    "type": "string"
+                },
+                "timeout": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "vco:ingress:LetsEncrypt": {
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "enabled": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "enabled",
+                "email"
+            ],
+            "type": "object"
+        },
+        "vco:ingress:Options": {
+            "properties": {
+                "health_check": {
+                    "$ref": "#/types/vco:ingress:HealthCheck"
+                },
+                "sticky_session_cookie": {
+                    "$ref": "#/types/vco:ingress:StickySessionCookie"
+                }
+            },
+            "type": "object"
+        },
+        "vco:ingress:ReverseProxyBackend": {
+            "properties": {
+                "options": {
+                    "$ref": "#/types/vco:ingress:Options"
+                },
+                "scheme": {
+                    "type": "string"
+                },
+                "serverpool_id": {
+                    "type": "string"
+                },
+                "target_port": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "scheme",
+                "serverpool_id",
+                "target_port"
+            ],
+            "type": "object"
+        },
+        "vco:ingress:ReverseProxyFrontEnd": {
+            "properties": {
+                "domain": {
+                    "type": "string"
+                },
+                "http_port": {
+                    "type": "integer"
+                },
+                "https_port": {
+                    "type": "integer"
+                },
+                "ip_address": {
+                    "type": "string"
+                },
+                "letsencrypt": {
+                    "$ref": "#/types/vco:ingress:LetsEncrypt"
+                },
+                "scheme": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "domain",
+                "scheme",
+                "letsencrypt"
+            ],
+            "type": "object"
+        },
+        "vco:ingress:ServerPoolHost": {
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "host_id": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "host_id",
+                "address"
+            ],
+            "type": "object"
+        },
+        "vco:ingress:StickySessionCookie": {
+            "properties": {
+                "http_only": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "same_site": {
+                    "type": "string"
+                },
+                "secure": {
+                    "type": "boolean"
+                }
+            },
+            "type": "object"
+        },
+        "vco:ingress:TLS": {
+            "properties": {
+                "domain": {
+                    "type": "string"
+                },
+                "is_enabled": {
+                    "type": "boolean"
+                },
+                "tls_termination": {
+                    "type": "boolean"
+                }
+            },
+            "type": "object"
         }
     }
 }

@@ -7,7 +7,6 @@ import (
 	p "github.com/pulumi/pulumi-go-provider"
 	"github.com/pulumi/pulumi-go-provider/infer"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
-	"log"
 	"net/http"
 )
 
@@ -92,7 +91,7 @@ func (c Cloudspace) WireDependencies(f infer.FieldSelector, args *CloudspaceArgs
 	f.OutputField(&state.PrivateNetwork).DependsOn(f.InputField(&args.PrivateNetwork))
 }
 
-func (Cloudspace) Create(ctx p.Context, name string, input CloudspaceArgs, preview bool) (string, CloudspaceState, error) {
+func (c Cloudspace) Create(ctx p.Context, name string, input CloudspaceArgs, preview bool) (string, CloudspaceState, error) {
 	state := CloudspaceState{CloudspaceArgs: input}
 	id, err := resource.NewUniqueHex(name, 8, 0)
 	if err != nil {
@@ -167,7 +166,7 @@ func (Cloudspace) Create(ctx p.Context, name string, input CloudspaceArgs, previ
 	client := &http.Client{}
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonPayload))
 	if err != nil {
-		log.Fatalf("Error making API request: %v", err)
+		fmt.Printf("Error making API request: %v", err)
 		return "", state, err
 	}
 	req.Header.Set("Content-Type", "application/json")
@@ -175,7 +174,7 @@ func (Cloudspace) Create(ctx p.Context, name string, input CloudspaceArgs, previ
 
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Fatalf("Error making API request: %v", err)
+		fmt.Printf("Error making API request: %v", err)
 		return "", state, err
 	}
 	defer resp.Body.Close()
@@ -188,10 +187,16 @@ func (Cloudspace) Create(ctx p.Context, name string, input CloudspaceArgs, previ
 	state.CloudSpaceID = result["cloudspace_id"].(string)
 	state.id(result["cloudspace_id"].(string))
 
-	return id, state, nil
+	updatedState, err := c.Read(nil, id, state)
+	if err != nil {
+		fmt.Printf("Error retrieving resource: %v", err)
+		return "", state, err
+	}
+
+	return id, updatedState, nil
 }
 
-func (Cloudspace) Read(ctx p.Context, state CloudspaceState, input CloudspaceArgs) (CloudspaceState, error) {
+func (Cloudspace) Read(ctx p.Context, id string, state CloudspaceState) (CloudspaceState, error) {
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s", state.URL, state.CustomerID, state.CloudSpaceID)
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
@@ -203,7 +208,7 @@ func (Cloudspace) Read(ctx p.Context, state CloudspaceState, input CloudspaceArg
 
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Fatalf("Error making API request: %v", err)
+		fmt.Printf("Error making API request: %v", err)
 		return CloudspaceState{}, err
 	}
 	defer resp.Body.Close()
@@ -218,29 +223,27 @@ func (Cloudspace) Read(ctx p.Context, state CloudspaceState, input CloudspaceArg
 	return result, nil
 }
 
-func (Cloudspace) Delete(ctx p.Context, state CloudspaceState, input CloudspaceArgs) (bool, error) {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s", state.URL, state.CustomerID, state.CloudSpaceID)
+func (Cloudspace) Delete(ctx p.Context, id string, props CloudspaceState) error {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s", props.URL, props.CustomerID, props.CloudSpaceID)
 	client := &http.Client{}
 	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(nil))
 	if err != nil {
-		return false, err
+		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", props.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Fatalf("Error making API request: %v", err)
-		return false, err
+		fmt.Printf("Error making API request: %v\n", err)
+		return err
 	}
 	defer resp.Body.Close()
 
 	var result map[string]interface{}
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
-		return false, err
+		return err
 	}
 
-	status := result["success"].(bool)
-
-	return status, nil
+	return nil
 }
