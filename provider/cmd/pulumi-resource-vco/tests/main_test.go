@@ -1,17 +1,23 @@
 package tests
 
 import (
-	"github.com/fabianv-cloud/pulumi-vco-native/provider/cmd/pulumi-resource-vco/resources"
+	"github.com/fabianv-cloud/pulumi-vco-native/provider/pkg/provider/anti_affinity_group"
+	"github.com/fabianv-cloud/pulumi-vco-native/provider/pkg/provider/base"
+	"github.com/fabianv-cloud/pulumi-vco-native/provider/pkg/provider/cloudspace"
+	"github.com/fabianv-cloud/pulumi-vco-native/provider/pkg/provider/disk"
+	"github.com/fabianv-cloud/pulumi-vco-native/provider/pkg/provider/ingress"
+	"github.com/fabianv-cloud/pulumi-vco-native/provider/pkg/provider/objectspace"
+	"github.com/fabianv-cloud/pulumi-vco-native/provider/pkg/provider/virtual_machine"
 	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
 )
 
-var CloudSpaceState resources.CloudspaceState
-var VirtualMachineState resources.VirtualMachineState
-var ServerPoolState resources.ServerPoolState
-var AntiAffinityGroupState resources.AntiAffinityGroupState
-var DiskState resources.DiskState
+var CloudSpaceState base.CloudspaceState
+var VirtualMachineState cloudspace.VirtualMachineState
+var ServerPoolState ingress.ServerPoolState
+var AntiAffinityGroupState cloudspace.AntiAffinityGroupState
+var DiskState base.DiskState
 
 func TestProvider(t *testing.T) {
 	token := refreshJWT()
@@ -19,9 +25,9 @@ func TestProvider(t *testing.T) {
 	url := os.Getenv("LAB_URL")
 
 	t.Run("TestCloudspace", func(t *testing.T) {
-		cloudspace := resources.Cloudspace{}
+		cloudspace := base.Cloudspace{}
 
-		_, state, err := cloudspace.Create(nil, "cs-test-pulumi", resources.CloudspaceArgs{
+		_, state, err := cloudspace.Create(nil, "cs-test-pulumi", base.CloudspaceArgs{
 			URL:               url,
 			Token:             token,
 			CustomerID:        customer,
@@ -38,9 +44,9 @@ func TestProvider(t *testing.T) {
 	})
 
 	t.Run("TestAntiAffinityGroup", func(t *testing.T) {
-		antiAffinityGroup := resources.AntiAffinityGroup{}
+		antiAffinityGroup := cloudspace.AntiAffinityGroup{}
 
-		_, state, err := antiAffinityGroup.Create(nil, "ag-test-pulumi", resources.AntiAffinityGroupArgs{
+		_, state, err := antiAffinityGroup.Create(nil, "ag-test-pulumi", cloudspace.AntiAffinityGroupArgs{
 			URL:          url,
 			Token:        token,
 			CustomerID:   customer,
@@ -51,7 +57,7 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, "INCOMPLETE", state.Status)
 
-		status, updatedState, err := antiAffinityGroup.Update(nil, state, resources.AntiAffinityGroupArgs{
+		status, updatedState, err := antiAffinityGroup.Update(nil, state, cloudspace.AntiAffinityGroupArgs{
 			URL:          url,
 			Token:        token,
 			CustomerID:   customer,
@@ -66,9 +72,9 @@ func TestProvider(t *testing.T) {
 	})
 
 	t.Run("TestConnectedCloudspace", func(t *testing.T) {
-		cloudspace := resources.Cloudspace{}
+		new_cloudspace := base.Cloudspace{}
 
-		_, csState, err := cloudspace.Create(nil, "cs-test-pulumi-2", resources.CloudspaceArgs{
+		_, csState, err := new_cloudspace.Create(nil, "cs-test-pulumi-2", base.CloudspaceArgs{
 			URL:               url,
 			Token:             token,
 			CustomerID:        customer,
@@ -81,9 +87,9 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, "DEPLOYED", csState.Status)
 
-		connectedCloudspace := resources.ConnectedCloudspace{}
+		connectedCloudspace := cloudspace.ConnectedCloudspace{}
 
-		_, cCsState, err := connectedCloudspace.Create(nil, "cCs-test-pulumi", resources.ConnectedCloudspaceArgs{
+		_, cCsState, err := connectedCloudspace.Create(nil, "cCs-test-pulumi", cloudspace.ConnectedCloudspaceArgs{
 			URL:                   url,
 			Token:                 token,
 			CustomerID:            customer,
@@ -95,7 +101,7 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, CloudSpaceState.CloudSpaceID, cCsState.ConnectedCloudSpaceID)
 
-		statusCode, err := connectedCloudspace.Delete(nil, resources.ConnectedCloudspaceArgs{
+		statusCode, err := connectedCloudspace.Delete(nil, cloudspace.ConnectedCloudspaceArgs{
 			URL:                   url,
 			Token:                 token,
 			CustomerID:            customer,
@@ -107,7 +113,7 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, 204, statusCode)
 
-		csDeleteStatus, err := cloudspace.Delete(nil, csState, resources.CloudspaceArgs{
+		csDeleteStatus, err := new_cloudspace.Delete(nil, csState, base.CloudspaceArgs{
 			URL:        url,
 			Token:      token,
 			CustomerID: customer,
@@ -117,9 +123,9 @@ func TestProvider(t *testing.T) {
 	})
 
 	t.Run("TestDisk", func(t *testing.T) {
-		disk := resources.Disk{}
+		new_disk := base.Disk{}
 
-		_, state, err := disk.Create(nil, "disk-test-pulumi", resources.DiskArgs{
+		_, state, err := new_disk.Create(nil, "disk-test-pulumi", base.DiskArgs{
 			URL:             url,
 			Token:           token,
 			CustomerID:      customer,
@@ -133,9 +139,9 @@ func TestProvider(t *testing.T) {
 
 		DiskState = state
 
-		exposedDisk := resources.ExposedDisk{}
+		exposedDisk := disk.ExposedDisk{}
 
-		_, exposedDiskState, err := exposedDisk.Create(nil, "edisk-test-pulumi", resources.ExposedDiskArgs{
+		_, exposedDiskState, err := exposedDisk.Create(nil, "edisk-test-pulumi", disk.ExposedDiskArgs{
 			URL:        url,
 			Token:      token,
 			CustomerID: customer,
@@ -145,9 +151,9 @@ func TestProvider(t *testing.T) {
 		assert.Equal(t, state.DiskID, exposedDiskState.DiskID)
 	})
 	t.Run("TestExternalNetwork", func(t *testing.T) {
-		externalNetwork := resources.ExternalNetwork{}
+		externalNetwork := cloudspace.ExternalNetwork{}
 
-		_, state, err := externalNetwork.Create(nil, "ext-test-pulumi", resources.ExternalNetworkArgs{
+		_, state, err := externalNetwork.Create(nil, "ext-test-pulumi", cloudspace.ExternalNetworkArgs{
 			URL:                 url,
 			Token:               token,
 			CustomerID:          customer,
@@ -160,7 +166,7 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, true, state.Status)
 
-		updateStatus, updatedState, err := externalNetwork.Update(nil, state, resources.ExternalNetworkArgs{
+		updateStatus, updatedState, err := externalNetwork.Update(nil, state, cloudspace.ExternalNetworkArgs{
 			URL:               url,
 			Token:             token,
 			CustomerID:        customer,
@@ -172,7 +178,7 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, true, updateStatus)
 
-		deleteStatus, err := externalNetwork.Delete(nil, resources.ExternalNetworkArgs{
+		deleteStatus, err := externalNetwork.Delete(nil, cloudspace.ExternalNetworkArgs{
 			URL:               url,
 			Token:             token,
 			CustomerID:        customer,
@@ -184,9 +190,9 @@ func TestProvider(t *testing.T) {
 		assert.Equal(t, true, deleteStatus)
 	})
 	t.Run("TestServerPool", func(t *testing.T) {
-		serverPool := resources.ServerPool{}
+		serverPool := ingress.ServerPool{}
 
-		_, state, err := serverPool.Create(nil, "sv-test-pulumi", resources.ServerPoolArgs{
+		_, state, err := serverPool.Create(nil, "sv-test-pulumi", ingress.ServerPoolArgs{
 			URL:          url,
 			Token:        token,
 			CustomerID:   customer,
@@ -197,7 +203,7 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.NotEmpty(t, state.ServerPoolID)
 
-		updateStatus, updatedState, err := serverPool.Update(nil, state, resources.ServerPoolArgs{
+		updateStatus, updatedState, err := serverPool.Update(nil, state, ingress.ServerPoolArgs{
 			URL:          url,
 			Token:        token,
 			CustomerID:   customer,
@@ -211,9 +217,9 @@ func TestProvider(t *testing.T) {
 		ServerPoolState = updatedState
 	})
 	t.Run("TestHost", func(t *testing.T) {
-		host := resources.Host{}
+		host := ingress.Host{}
 
-		_, hostState, err := host.Create(nil, "host-test-pulumi", resources.HostArgs{
+		_, hostState, err := host.Create(nil, "host-test-pulumi", ingress.HostArgs{
 			URL:          url,
 			Token:        token,
 			CustomerID:   customer,
@@ -224,7 +230,7 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.NotEmpty(t, hostState.HostID)
 
-		status, err := host.Delete(nil, hostState, resources.HostArgs{
+		status, err := host.Delete(nil, hostState, ingress.HostArgs{
 			URL:          url,
 			Token:        token,
 			CustomerID:   customer,
@@ -236,19 +242,19 @@ func TestProvider(t *testing.T) {
 		assert.Equal(t, true, status)
 	})
 	t.Run("TestLoadBalancer", func(t *testing.T) {
-		loadBalancer := resources.LoadBalancer{}
+		loadBalancer := ingress.LoadBalancer{}
 
-		_, state, err := loadBalancer.Create(nil, "lb-test-pulumi", resources.LoadBalancerArgs{
+		_, state, err := loadBalancer.Create(nil, "lb-test-pulumi", ingress.LoadBalancerArgs{
 			URL:          url,
 			Token:        token,
 			CustomerID:   customer,
 			CloudSpaceID: CloudSpaceState.CloudSpaceID,
 			Name:         "Pulumi_lb_test",
 			Type:         "tcp",
-			FrontEnd: resources.FrontEnd{
+			FrontEnd: ingress.FrontEnd{
 				Port: 23,
 			},
-			BackEnd: resources.BackEnd{
+			BackEnd: ingress.BackEnd{
 				ServerpoolID: ServerPoolState.ServerPoolID,
 				TargetPort:   23,
 			},
@@ -256,17 +262,17 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.NotEmpty(t, state.LoadBalancerID)
 
-		updateStatus, _, err := loadBalancer.Update(nil, state, resources.LoadBalancerArgs{
+		updateStatus, _, err := loadBalancer.Update(nil, state, ingress.LoadBalancerArgs{
 			URL:          url,
 			Token:        token,
 			CustomerID:   customer,
 			CloudSpaceID: CloudSpaceState.CloudSpaceID,
 			Name:         "Pulumi_lb_test",
 			Type:         "udp",
-			FrontEnd: resources.FrontEnd{
+			FrontEnd: ingress.FrontEnd{
 				Port: 23,
 			},
-			BackEnd: resources.BackEnd{
+			BackEnd: ingress.BackEnd{
 				ServerpoolID: ServerPoolState.ServerPoolID,
 				TargetPort:   23,
 			},
@@ -274,7 +280,7 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, true, updateStatus)
 
-		status, err := loadBalancer.Delete(nil, state, resources.LoadBalancerArgs{
+		status, err := loadBalancer.Delete(nil, state, ingress.LoadBalancerArgs{
 			URL:          url,
 			Token:        token,
 			CustomerID:   customer,
@@ -284,23 +290,23 @@ func TestProvider(t *testing.T) {
 		assert.Equal(t, true, status)
 	})
 	t.Run("TestReverseProxy", func(t *testing.T) {
-		reverseProxy := resources.ReverseProxy{}
+		reverseProxy := ingress.ReverseProxy{}
 
-		_, state, err := reverseProxy.Create(nil, "rp-test-pulumi", resources.ReverseProxyArgs{
+		_, state, err := reverseProxy.Create(nil, "rp-test-pulumi", ingress.ReverseProxyArgs{
 			URL:          url,
 			Token:        token,
 			CustomerID:   customer,
 			CloudSpaceID: CloudSpaceState.CloudSpaceID,
 			Name:         "Reverse_Proxy_Pulumi",
-			ReverseProxyFrontEnd: resources.ReverseProxyFrontEnd{
+			ReverseProxyFrontEnd: ingress.ReverseProxyFrontEnd{
 				Domain:   "Pulumi",
 				Scheme:   "http",
 				HTTPPort: intPtr(25),
-				LetsEncrypt: resources.LetsEncrypt{
+				LetsEncrypt: ingress.LetsEncrypt{
 					Enabled: false,
 				},
 			},
-			ReverseProxyBackend: resources.ReverseProxyBackend{
+			ReverseProxyBackend: ingress.ReverseProxyBackend{
 				Scheme:       "http",
 				ServerpoolID: ServerPoolState.ServerPoolID,
 				TargetPort:   25,
@@ -309,21 +315,21 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.NotEmpty(t, state.ReverseProxyID)
 
-		updateStatus, updatedState, err := reverseProxy.Update(nil, state, resources.ReverseProxyArgs{
+		updateStatus, updatedState, err := reverseProxy.Update(nil, state, ingress.ReverseProxyArgs{
 			URL:          url,
 			Token:        token,
 			CustomerID:   customer,
 			CloudSpaceID: CloudSpaceState.CloudSpaceID,
 			Name:         "Reverse_Proxy_Pulumi",
-			ReverseProxyFrontEnd: resources.ReverseProxyFrontEnd{
+			ReverseProxyFrontEnd: ingress.ReverseProxyFrontEnd{
 				Domain:   "Pulumi",
 				Scheme:   "http",
 				HTTPPort: intPtr(25),
-				LetsEncrypt: resources.LetsEncrypt{
+				LetsEncrypt: ingress.LetsEncrypt{
 					Enabled: false,
 				},
 			},
-			ReverseProxyBackend: resources.ReverseProxyBackend{
+			ReverseProxyBackend: ingress.ReverseProxyBackend{
 				Scheme:       "http",
 				ServerpoolID: ServerPoolState.ServerPoolID,
 				TargetPort:   26,
@@ -332,7 +338,7 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, true, updateStatus)
 
-		deleteStatus, err := reverseProxy.Delete(nil, updatedState, resources.ReverseProxyArgs{
+		deleteStatus, err := reverseProxy.Delete(nil, updatedState, ingress.ReverseProxyArgs{
 			URL:          url,
 			Token:        token,
 			CustomerID:   customer,
@@ -342,9 +348,9 @@ func TestProvider(t *testing.T) {
 		assert.Equal(t, true, deleteStatus)
 	})
 	t.Run("TestObjectSpace", func(t *testing.T) {
-		objectSpace := resources.ObjectSpace{}
+		objectSpace := base.ObjectSpace{}
 
-		_, state, err := objectSpace.Create(nil, "obj-test-pulumi", resources.ObjectSpaceArgs{
+		_, state, err := objectSpace.Create(nil, "obj-test-pulumi", base.ObjectSpaceArgs{
 			URL:        url,
 			Token:      token,
 			CustomerID: customer,
@@ -354,9 +360,9 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.NotEmpty(t, state.ObjectSpaceID)
 
-		objectSpaceLink := resources.ObjectSpaceLink{}
+		objectSpaceLink := objectspace.ObjectSpaceLink{}
 
-		_, linkState, err := objectSpaceLink.Create(nil, "objlink-test-pulumi", resources.ObjectSpaceLinkArgs{
+		_, linkState, err := objectSpaceLink.Create(nil, "objlink-test-pulumi", objectspace.ObjectSpaceLinkArgs{
 			URL:           url,
 			Token:         token,
 			CustomerID:    customer,
@@ -366,7 +372,7 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, true, linkState.Status)
 
-		status, err := objectSpaceLink.Delete(nil, linkState, resources.ObjectSpaceLinkArgs{
+		status, err := objectSpaceLink.Delete(nil, linkState, objectspace.ObjectSpaceLinkArgs{
 			URL:          url,
 			Token:        token,
 			CustomerID:   customer,
@@ -375,7 +381,7 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, true, status)
 
-		deleteStatus, err := objectSpace.Delete(nil, state, resources.ObjectSpaceArgs{
+		deleteStatus, err := objectSpace.Delete(nil, state, base.ObjectSpaceArgs{
 			URL:        url,
 			Token:      token,
 			CustomerID: customer,
@@ -384,9 +390,9 @@ func TestProvider(t *testing.T) {
 		assert.Equal(t, true, deleteStatus)
 	})
 	t.Run("TestVirtualMachine", func(t *testing.T) {
-		virtualMachine := resources.VirtualMachine{}
+		virtualMachine := cloudspace.VirtualMachine{}
 
-		_, state, err := virtualMachine.Create(nil, "vm-test-pulumi", resources.VirtualMachineArgs{
+		_, state, err := virtualMachine.Create(nil, "vm-test-pulumi", cloudspace.VirtualMachineArgs{
 			URL:          url,
 			Token:        token,
 			CustomerID:   customer,
@@ -405,9 +411,9 @@ func TestProvider(t *testing.T) {
 		VirtualMachineState = state
 	})
 	t.Run("TestVirtualMachineAntiAffinityGroup", func(t *testing.T) {
-		antiAffinityVM := resources.AntiAffinityGroupVM{}
+		antiAffinityVM := anti_affinity_group.AntiAffinityGroupVM{}
 
-		_, state, err := antiAffinityVM.Create(nil, "vm-test-pulumi", resources.AntiAffinityGroupVMArgs{
+		_, state, err := antiAffinityVM.Create(nil, "vm-test-pulumi", anti_affinity_group.AntiAffinityGroupVMArgs{
 			URL:              url,
 			Token:            token,
 			CustomerID:       customer,
@@ -418,7 +424,7 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, "RUNNING", state.Status)
 
-		deleteStatus, err := antiAffinityVM.Delete(nil, state, resources.AntiAffinityGroupVMArgs{
+		deleteStatus, err := antiAffinityVM.Delete(nil, state, anti_affinity_group.AntiAffinityGroupVMArgs{
 			URL:          url,
 			Token:        token,
 			CustomerID:   customer,
@@ -430,9 +436,9 @@ func TestProvider(t *testing.T) {
 	})
 
 	t.Run("TestPortForward", func(t *testing.T) {
-		portForward := resources.PortForward{}
+		portForward := cloudspace.PortForward{}
 
-		_, state, err := portForward.Create(nil, "pf-test-pulumi", resources.PortForwardArgs{
+		_, state, err := portForward.Create(nil, "pf-test-pulumi", cloudspace.PortForwardArgs{
 			URL:              url,
 			Token:            token,
 			CustomerID:       customer,
@@ -446,7 +452,7 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.NotEmpty(t, state.PortForwardID)
 
-		updatedState, err := portForward.Update(nil, state, resources.PortForwardArgs{
+		updatedState, err := portForward.Update(nil, state, cloudspace.PortForwardArgs{
 			URL:              url,
 			Token:            token,
 			CustomerID:       customer,
@@ -459,7 +465,7 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, "udp", updatedState.Protocol)
 
-		statusCode, err := portForward.Delete(nil, updatedState, resources.PortForwardArgs{
+		statusCode, err := portForward.Delete(nil, updatedState, cloudspace.PortForwardArgs{
 			URL:          url,
 			Token:        token,
 			CustomerID:   customer,
@@ -469,9 +475,9 @@ func TestProvider(t *testing.T) {
 		assert.Equal(t, 200, statusCode)
 	})
 	t.Run("TestVirtualMachineCDrom", func(t *testing.T) {
-		virtualMachineCD := resources.VirtualMachineCD{}
+		virtualMachineCD := virtual_machine.VirtualMachineCD{}
 
-		_, state, err := virtualMachineCD.Create(nil, "vmcd-test-pulumi", resources.VirtualMachineCDArgs{
+		_, state, err := virtualMachineCD.Create(nil, "vmcd-test-pulumi", virtual_machine.VirtualMachineCDArgs{
 			URL:              url,
 			Token:            token,
 			CustomerID:       customer,
@@ -482,7 +488,7 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, "CREATED", state.Status)
 
-		deleteStatus, err := virtualMachineCD.Delete(nil, state, resources.VirtualMachineCDArgs{
+		deleteStatus, err := virtualMachineCD.Delete(nil, state, virtual_machine.VirtualMachineCDArgs{
 			URL:              url,
 			Token:            token,
 			CustomerID:       customer,
@@ -493,9 +499,9 @@ func TestProvider(t *testing.T) {
 		assert.Equal(t, true, deleteStatus)
 	})
 	t.Run("TestVirtualMachineDisk", func(t *testing.T) {
-		virtualMachineDisk := resources.VirtualMachineDisk{}
+		virtualMachineDisk := virtual_machine.VirtualMachineDisk{}
 
-		_, state, err := virtualMachineDisk.Create(nil, "vmdsk-test-pulumi", resources.VirtualMachineDiskArgs{
+		_, state, err := virtualMachineDisk.Create(nil, "vmdsk-test-pulumi", virtual_machine.VirtualMachineDiskArgs{
 			URL:              url,
 			Token:            token,
 			CustomerID:       customer,
@@ -506,7 +512,7 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, true, state.Success)
 
-		deleteStatus, err := virtualMachineDisk.Delete(nil, state, resources.VirtualMachineDiskArgs{
+		deleteStatus, err := virtualMachineDisk.Delete(nil, state, virtual_machine.VirtualMachineDiskArgs{
 			URL:              url,
 			Token:            token,
 			CustomerID:       customer,
@@ -518,9 +524,9 @@ func TestProvider(t *testing.T) {
 		assert.Equal(t, true, deleteStatus)
 	})
 	t.Run("TestVirtualMachineNIC", func(t *testing.T) {
-		VirtualMachineNIC := resources.VirtualMachineNIC{}
+		VirtualMachineNIC := virtual_machine.VirtualMachineNIC{}
 
-		_, state, err := VirtualMachineNIC.Create(nil, "vmdsk-test-pulumi", resources.VirtualMachineNICArgs{
+		_, state, err := VirtualMachineNIC.Create(nil, "vmdsk-test-pulumi", virtual_machine.VirtualMachineNICArgs{
 			URL:               url,
 			Token:             token,
 			CustomerID:        customer,
@@ -531,7 +537,7 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.NotEmpty(t, state.DeviceName)
 
-		deleteStatus, err := VirtualMachineNIC.Delete(nil, state, resources.VirtualMachineNICArgs{
+		deleteStatus, err := VirtualMachineNIC.Delete(nil, state, virtual_machine.VirtualMachineNICArgs{
 			URL:              url,
 			Token:            token,
 			CustomerID:       customer,
@@ -542,9 +548,9 @@ func TestProvider(t *testing.T) {
 		assert.Equal(t, true, deleteStatus)
 	})
 	t.Run("CleanUp", func(t *testing.T) {
-		serverPool := resources.ServerPool{}
+		serverPool := ingress.ServerPool{}
 
-		svDeleteStatus, err := serverPool.Delete(nil, ServerPoolState, resources.ServerPoolArgs{
+		svDeleteStatus, err := serverPool.Delete(nil, ServerPoolState, ingress.ServerPoolArgs{
 			URL:          url,
 			Token:        token,
 			CustomerID:   customer,
@@ -553,9 +559,9 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, true, svDeleteStatus)
 
-		antiAffinityGroup := resources.AntiAffinityGroup{}
+		antiAffinityGroup := cloudspace.AntiAffinityGroup{}
 
-		_, err = antiAffinityGroup.Delete(nil, AntiAffinityGroupState, resources.AntiAffinityGroupArgs{
+		_, err = antiAffinityGroup.Delete(nil, AntiAffinityGroupState, cloudspace.AntiAffinityGroupArgs{
 			URL:          url,
 			Token:        token,
 			CustomerID:   customer,
@@ -563,9 +569,9 @@ func TestProvider(t *testing.T) {
 		})
 		assert.NoError(t, err)
 
-		disk := resources.Disk{}
+		disk := base.Disk{}
 
-		dskDeleteStatus, err := disk.Delete(nil, DiskState, resources.DiskArgs{
+		dskDeleteStatus, err := disk.Delete(nil, DiskState, base.DiskArgs{
 			URL:        url,
 			Token:      token,
 			CustomerID: customer,
@@ -574,9 +580,9 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, true, dskDeleteStatus)
 
-		virtualMachine := resources.VirtualMachine{}
+		virtualMachine := cloudspace.VirtualMachine{}
 
-		vmDeleteStatus, err := virtualMachine.Delete(nil, VirtualMachineState, resources.VirtualMachineArgs{
+		vmDeleteStatus, err := virtualMachine.Delete(nil, VirtualMachineState, cloudspace.VirtualMachineArgs{
 			URL:          url,
 			Token:        token,
 			CustomerID:   customer,
@@ -585,9 +591,9 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, true, vmDeleteStatus)
 
-		cloudspace := resources.Cloudspace{}
+		cloudspace := base.Cloudspace{}
 
-		csDeleteStatus, err := cloudspace.Delete(nil, CloudSpaceState, resources.CloudspaceArgs{
+		csDeleteStatus, err := cloudspace.Delete(nil, CloudSpaceState, base.CloudspaceArgs{
 			URL:        url,
 			Token:      token,
 			CustomerID: customer,
