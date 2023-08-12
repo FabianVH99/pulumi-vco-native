@@ -2,7 +2,13 @@ package provider
 
 import (
 	"github.com/blang/semver"
+	"github.com/fabianv-cloud/pulumi-vco-native/provider/pkg/provider/anti_affinity_group"
 	"github.com/fabianv-cloud/pulumi-vco-native/provider/pkg/provider/base"
+	"github.com/fabianv-cloud/pulumi-vco-native/provider/pkg/provider/cloudspace"
+	"github.com/fabianv-cloud/pulumi-vco-native/provider/pkg/provider/disk"
+	"github.com/fabianv-cloud/pulumi-vco-native/provider/pkg/provider/ingress"
+	"github.com/fabianv-cloud/pulumi-vco-native/provider/pkg/provider/objectspace"
+	"github.com/fabianv-cloud/pulumi-vco-native/provider/pkg/provider/virtual_machine"
 	p "github.com/pulumi/pulumi-go-provider"
 	"github.com/pulumi/pulumi-go-provider/infer"
 	"github.com/pulumi/pulumi-go-provider/integration"
@@ -49,25 +55,23 @@ func NewProvider() p.Provider {
 		},
 		Resources: []infer.InferredResource{
 			infer.Resource[base.Cloudspace, base.CloudspaceArgs, base.CloudspaceState](),
-			/*
-				infer.Resource[base.Disk, base.DiskArgs, base.DiskState](),
-				infer.Resource[base.ObjectSpace, base.ObjectSpaceArgs, base.ObjectSpaceState](),
-				infer.Resource[cloudspace.AntiAffinityGroup, cloudspace.AntiAffinityGroupArgs, cloudspace.AntiAffinityGroupState](),
-				infer.Resource[cloudspace.VirtualMachine, cloudspace.VirtualMachineArgs, cloudspace.VirtualMachineState](),
-				infer.Resource[cloudspace.ConnectedCloudspace, cloudspace.ConnectedCloudspaceArgs, cloudspace.ConnectedCloudspaceState](),
-				infer.Resource[cloudspace.ExternalNetwork, cloudspace.ExternalNetworkArgs, cloudspace.ExternalNetworkState](),
-				infer.Resource[cloudspace.PortForward, cloudspace.PortForwardArgs, cloudspace.PortForwardState](),
-				infer.Resource[anti_affinity_group.AntiAffinityGroupVM, anti_affinity_group.AntiAffinityGroupVMArgs, anti_affinity_group.AntiAffinityGroupVMState](),
-				infer.Resource[disk.ExposedDisk, disk.ExposedDiskArgs, disk.ExposedDiskState](),
-				infer.Resource[ingress.Host, ingress.HostArgs, ingress.HostState](),
-				infer.Resource[ingress.LoadBalancer, ingress.LoadBalancerArgs, ingress.LoadBalancerState](),
-				infer.Resource[ingress.ReverseProxy, ingress.ReverseProxyArgs, ingress.ReverseProxyState](),
-				infer.Resource[ingress.ServerPool, ingress.ServerPoolArgs, ingress.ServerPoolState](),
-				infer.Resource[objectspace.ObjectSpaceLink, objectspace.ObjectSpaceLinkArgs, objectspace.ObjectSpaceLinkState](),
-				infer.Resource[virtual_machine.VirtualMachineCD, virtual_machine.VirtualMachineCDArgs, virtual_machine.VirtualMachineCDState](),
-				infer.Resource[virtual_machine.VirtualMachineDisk, virtual_machine.VirtualMachineDiskArgs, virtual_machine.VirtualMachineDiskState](),
-				infer.Resource[virtual_machine.VirtualMachineNIC, virtual_machine.VirtualMachineNICArgs, virtual_machine.VirtualMachineNICState](),
-			*/
+			infer.Resource[base.Disk, base.DiskArgs, base.DiskState](),
+			infer.Resource[base.ObjectSpace, base.ObjectSpaceArgs, base.ObjectSpaceState](),
+			infer.Resource[cloudspace.AntiAffinityGroup, cloudspace.AntiAffinityGroupArgs, cloudspace.AntiAffinityGroupState](),
+			infer.Resource[cloudspace.VirtualMachine, cloudspace.VirtualMachineArgs, cloudspace.VirtualMachineState](),
+			infer.Resource[cloudspace.ConnectedCloudspace, cloudspace.ConnectedCloudspaceArgs, cloudspace.ConnectedCloudspaceState](),
+			infer.Resource[cloudspace.ExternalNetwork, cloudspace.ExternalNetworkArgs, cloudspace.ExternalNetworkState](),
+			infer.Resource[cloudspace.PortForward, cloudspace.PortForwardArgs, cloudspace.PortForwardState](),
+			infer.Resource[anti_affinity_group.AntiAffinityGroupVM, anti_affinity_group.AntiAffinityGroupVMArgs, anti_affinity_group.AntiAffinityGroupVMState](),
+			infer.Resource[disk.ExposedDisk, disk.ExposedDiskArgs, disk.ExposedDiskState](),
+			infer.Resource[ingress.Host, ingress.HostArgs, ingress.HostState](),
+			infer.Resource[ingress.LoadBalancer, ingress.LoadBalancerArgs, ingress.LoadBalancerState](),
+			infer.Resource[ingress.ReverseProxy, ingress.ReverseProxyArgs, ingress.ReverseProxyState](),
+			infer.Resource[ingress.ServerPool, ingress.ServerPoolArgs, ingress.ServerPoolState](),
+			infer.Resource[objectspace.ObjectSpaceLink, objectspace.ObjectSpaceLinkArgs, objectspace.ObjectSpaceLinkState](),
+			infer.Resource[virtual_machine.VirtualMachineCD, virtual_machine.VirtualMachineCDArgs, virtual_machine.VirtualMachineCDState](),
+			infer.Resource[virtual_machine.VirtualMachineDisk, virtual_machine.VirtualMachineDiskArgs, virtual_machine.VirtualMachineDiskState](),
+			infer.Resource[virtual_machine.VirtualMachineNIC, virtual_machine.VirtualMachineNICArgs, virtual_machine.VirtualMachineNICState](),
 		},
 	})
 }

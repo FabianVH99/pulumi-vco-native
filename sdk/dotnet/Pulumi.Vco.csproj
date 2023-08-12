@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>Pulumi Corp.</Authors>
-    <Company>Pulumi Corp.</Company>
-    <Description></Description>
+    <Authors>Whitesky.cloud</Authors>
+    <Company>Whitesky.cloud</Company>
+    <Description>The Whitesky.cloud Vco Provider for Pulumi enables you to manipulate resources in the vco portal.</Description>
     <PackageLicenseExpression></PackageLicenseExpression>
-    <PackageProjectUrl></PackageProjectUrl>
-    <RepositoryUrl></RepositoryUrl>
+    <PackageProjectUrl>https://whitesky.cloud/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/fabianv-cloud/pulumi-vco-native</RepositoryUrl>
     <PackageIcon>logo.png</PackageIcon>
 
     <TargetFramework>net6.0</TargetFramework>
@@ -44,7 +44,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Pulumi" Version="[3.54.1.0,4)" />
+    <PackageReference Include="Pulumi" Version="3.*" />
   </ItemGroup>
 
   <ItemGroup>

@@ -3,7 +3,7 @@
  // how they work and what inputs they require
  using System.Collections.Generic;
  using Pulumi;
- using Pulumi.Vco.Resources;
+using Pulumi.Vco.Base;
 
    return await Deployment.RunAsync(() =>
    {
@@ -21,9 +21,8 @@
            Token = token,
            CustomerID = customerId,
            Name = "Pulumi_dotnet_cloudspace",
-           Location = location,
-           PrivateNetwork = "192.168.10.0/24",
-           ExternalNetworkID = 13,
+           Private_network = "192.168.10.0/24",
+           External_network_id = 13,
            Private = false,
        });
    });

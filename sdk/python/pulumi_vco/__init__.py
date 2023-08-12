@@ -9,36 +9,20 @@ from .provider import *
 
 # Make subpackages available:
 if typing.TYPE_CHECKING:
-    import pulumi_vco.resources as __resources
-    resources = __resources
+    import pulumi_vco.base as __base
+    base = __base
 else:
-    resources = _utilities.lazy_import('pulumi_vco.resources')
+    base = _utilities.lazy_import('pulumi_vco.base')
 
 _utilities.register(
     resource_modules="""
 [
  {
   "pkg": "vco",
-  "mod": "resources",
-  "fqn": "pulumi_vco.resources",
+  "mod": "base",
+  "fqn": "pulumi_vco.base",
   "classes": {
-   "vco:resources:AntiAffinityGroup": "AntiAffinityGroup",
-   "vco:resources:AntiAffinityGroupVM": "AntiAffinityGroupVM",
-   "vco:resources:Cloudspace": "Cloudspace",
-   "vco:resources:ConnectedCloudspace": "ConnectedCloudspace",
-   "vco:resources:Disk": "Disk",
-   "vco:resources:ExposedDisk": "ExposedDisk",
-   "vco:resources:ExternalNetwork": "ExternalNetwork",
-   "vco:resources:Host": "Host",
-   "vco:resources:LoadBalancer": "LoadBalancer",
-   "vco:resources:ObjectSpaceLink": "ObjectSpaceLink",
-   "vco:resources:PortForward": "PortForward",
-   "vco:resources:ReverseProxy": "ReverseProxy",
-   "vco:resources:ServerPool": "ServerPool",
-   "vco:resources:VirtualMachine": "VirtualMachine",
-   "vco:resources:VirtualMachineCD": "VirtualMachineCD",
-   "vco:resources:VirtualMachineDisk": "VirtualMachineDisk",
-   "vco:resources:VirtualMachineNIC": "VirtualMachineNIC"
+   "vco:base:Cloudspace": "Cloudspace"
   }
  }
 ]

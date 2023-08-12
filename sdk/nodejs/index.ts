@@ -12,12 +12,10 @@ utilities.lazyLoad(exports, ["Provider"], () => require("./provider"));
 
 
 // Export sub-modules:
-import * as resources from "./resources";
-import * as types from "./types";
+import * as base from "./base";
 
 export {
-    resources,
-    types,
+    base,
 };
 pulumi.runtime.registerResourcePackage("vco", {
     version: utilities.getVersion(),
