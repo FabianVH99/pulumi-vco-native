@@ -44,7 +44,6 @@ dotnet_sdk::
 	pulumi package gen-sdk --language dotnet $(SCHEMA_FILE)
 	cd ${PACKDIR}/dotnet/&& \
 		echo "${DOTNET_VERSION}" >version.txt && \
-		cp $(WORKING_DIR)/assets/logo.png logo.png && \
 		dotnet build /p:Version=${DOTNET_VERSION}
 
 go_sdk::
