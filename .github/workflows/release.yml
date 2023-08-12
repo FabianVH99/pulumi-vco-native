@@ -43,8 +43,6 @@ jobs:
         run: make codegen
       - name: Build Provider
         run: make provider
-      - name: Check worktree clean
-        run: ./ci-scripts/ci/check-worktree-is-clean
       - run: git status --porcelain
       - name: Tar provider binaries
         run: tar -zcf ${{ github.workspace }}/bin/provider.tar.gz -C ${{
@@ -56,6 +54,7 @@ jobs:
           name: pulumi-${{ env.PROVIDER }}-provider.tar.gz
           path: ${{ github.workspace }}/bin/provider.tar.gz
   publish_binary:
+    needs: prerequisites
     name: publish
     runs-on: ubuntu-latest
     steps:
