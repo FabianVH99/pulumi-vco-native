@@ -200,6 +200,7 @@ func (c Cloudspace) Create(ctx p.Context, name string, input CloudspaceArgs, pre
 }
 
 func (Cloudspace) Read(ctx p.Context, id string, state CloudspaceState) (CloudspaceState, error) {
+	fmt.Printf("Delete method called!!")
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s", state.URL, state.CustomerID, state.CloudSpaceID)
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
