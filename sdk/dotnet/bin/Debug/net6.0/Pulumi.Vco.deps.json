@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v6.0": {
-      "Pulumi.Vco/0.0.25+dirty": {
+      "Pulumi.Vco/0.0.26+dirty": {
         "dependencies": {
           "Microsoft.SourceLink.GitHub": "1.0.0",
           "Pulumi": "3.56.0"
@@ -211,7 +211,7 @@
     }
   },
   "libraries": {
-    "Pulumi.Vco/0.0.25+dirty": {
+    "Pulumi.Vco/0.0.26+dirty": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

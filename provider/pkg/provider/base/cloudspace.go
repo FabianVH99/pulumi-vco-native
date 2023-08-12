@@ -185,6 +185,9 @@ func (c Cloudspace) Create(ctx p.Context, name string, input CloudspaceArgs, pre
 	}
 
 	state.CloudSpaceID = result["cloudspace_id"].(string)
+	state.URL = input.URL
+	state.CustomerID = input.CustomerID
+	state.Token = input.Token
 	state.id(result["cloudspace_id"].(string))
 
 	updatedState, err := c.Read(nil, id, state)
@@ -218,7 +221,11 @@ func (Cloudspace) Read(ctx p.Context, id string, state CloudspaceState) (Cloudsp
 		return CloudspaceState{}, err
 	}
 
-	state.run(result)
+	result.run(result)
+
+	result.URL = state.URL
+	result.CustomerID = state.CustomerID
+	result.Token = state.Token
 
 	return result, nil
 }
