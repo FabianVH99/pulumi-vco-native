@@ -60,6 +60,7 @@ nodejs_sdk::
 		yarn run tsc
 	cp README.md LICENSE ${PACKDIR}/nodejs/package.json ${PACKDIR}/nodejs/yarn.lock ${PACKDIR}/nodejs/bin/
 	sed -i.bak 's/$${VERSION}/$(VERSION)/g' ${PACKDIR}/nodejs/bin/package.json
+	grep -rlZ '@pulumi/vco' $(WORKING_DIR)/${PACKDIR}/nodejs/ | xargs -0 sed -i 's/@pulumi\/vco/@fabianv-cloud\/vco/g'
 
 python_sdk:: PYPI_VERSION := $(shell pulumictl get version --language python)
 python_sdk::
