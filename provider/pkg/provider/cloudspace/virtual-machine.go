@@ -50,6 +50,10 @@ type CpuTopology struct {
 
 type VirtualMachineState struct {
 	VirtualMachineArgs
+	URL                  string             `pulumi:"url"`
+	Token                string             `pulumi:"token"`
+	CustomerID           string             `pulumi:"customerID"`
+	CloudSpaceID         string             `pulumi:"cloudspace_id"`
 	VirtualMachineID     int                `pulumi:"vm_id" json:"vm_id"`
 	Name                 string             `pulumi:"name" json:"name"`
 	Description          string             `pulumi:"description" json:"description"`
@@ -104,6 +108,10 @@ type VirtualMachineArgs struct {
 }
 
 func (vm VirtualMachine) WireDependencies(f infer.FieldSelector, args *VirtualMachineArgs, state *VirtualMachineState) {
+	f.OutputField(&state.URL).DependsOn(f.InputField(&args.URL))
+	f.OutputField(&state.Token).DependsOn(f.InputField(&args.Token))
+	f.OutputField(&state.CustomerID).DependsOn(f.InputField(&args.CustomerID))
+	f.OutputField(&state.CloudSpaceID).DependsOn(f.InputField(&args.CloudSpaceID))
 	f.OutputField(&state.CloudSpaceID).DependsOn(f.InputField(&args.CloudSpaceID))
 	f.OutputField(&state.Name).DependsOn(f.InputField(&args.Name))
 	f.OutputField(&state.Description).DependsOn(f.InputField(&args.Description))
@@ -220,11 +228,14 @@ func (vm VirtualMachine) Create(ctx p.Context, name string, input VirtualMachine
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		return "", state, err
 	}
-
+	state.URL = input.URL
+	state.CustomerID = input.CustomerID
+	state.Token = input.Token
+	state.CloudSpaceID = input.CloudSpaceID
 	virtualMachineID := result["vm_id"].(float64)
 	state.VirtualMachineID = int(virtualMachineID)
 
-	updatedState, err := vm.Read(ctx, id, state, input)
+	updatedState, err := vm.Read(ctx, id, state)
 	if err != nil {
 		return "", state, err
 	}
@@ -232,8 +243,8 @@ func (vm VirtualMachine) Create(ctx p.Context, name string, input VirtualMachine
 	return id, updatedState, nil
 }
 
-func (VirtualMachine) Read(ctx p.Context, id string, state VirtualMachineState, input VirtualMachineArgs) (VirtualMachineState, error) {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/vms/%d", input.URL, input.CustomerID, input.CloudSpaceID, state.VirtualMachineID)
+func (VirtualMachine) Read(ctx p.Context, id string, state VirtualMachineState) (VirtualMachineState, error) {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/vms/%d", state.URL, state.CustomerID, state.CloudSpaceID, state.VirtualMachineID)
 
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
@@ -242,7 +253,7 @@ func (VirtualMachine) Read(ctx p.Context, id string, state VirtualMachineState, 
 		return VirtualMachineState{}, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
@@ -256,6 +267,11 @@ func (VirtualMachine) Read(ctx p.Context, id string, state VirtualMachineState, 
 		return VirtualMachineState{}, err
 	}
 
+	result.URL = state.URL
+	result.CustomerID = state.CustomerID
+	result.Token = state.Token
+	result.CloudSpaceID = state.CloudSpaceID
+
 	return result, nil
 }
 
@@ -263,8 +279,8 @@ func (VirtualMachine) Update(ctx p.Context, id string, state VirtualMachineState
 	return VirtualMachineState{}, nil
 }
 
-func (VirtualMachine) Delete(ctx p.Context, id string, state VirtualMachineState, input VirtualMachineArgs) error {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/vms/%d", input.URL, input.CustomerID, input.CloudSpaceID, state.VirtualMachineID)
+func (VirtualMachine) Delete(ctx p.Context, id string, state VirtualMachineState) error {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/vms/%d", state.URL, state.CustomerID, state.CloudSpaceID, state.VirtualMachineID)
 	client := &http.Client{}
 	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(nil))
 	if err != nil {
@@ -272,7 +288,7 @@ func (VirtualMachine) Delete(ctx p.Context, id string, state VirtualMachineState
 		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {

@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	p "github.com/pulumi/pulumi-go-provider"
+	"github.com/pulumi/pulumi-go-provider/infer"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
 	"net/http"
 )
@@ -13,7 +14,11 @@ type LoadBalancer struct{}
 
 type LoadBalancerState struct {
 	LoadBalancerArgs
+	URL            string       `pulumi:"url"`
+	Token          string       `pulumi:"token"`
+	CustomerID     string       `pulumi:"customerID"`
 	LoadBalancerID string       `pulumi:"loadbalancer_id" json:"loadbalancer_id"`
+	CloudSpaceID   string       `pulumi:"cloudspace_id"`
 	Name           string       `pulumi:"name" json:"name"`
 	Description    string       `pulumi:"description" json:"description"`
 	Type           string       `pulumi:"type" json:"type"`
@@ -54,6 +59,16 @@ type TLS struct {
 type BackEnd struct {
 	ServerpoolID string `pulumi:"serverpool_id"`
 	TargetPort   int    `pulumi:"target_port"`
+}
+
+func (lb LoadBalancer) WireDependencies(f infer.FieldSelector, args *LoadBalancerArgs, state *LoadBalancerState) {
+	f.OutputField(&state.URL).DependsOn(f.InputField(&args.URL))
+	f.OutputField(&state.Token).DependsOn(f.InputField(&args.Token))
+	f.OutputField(&state.CustomerID).DependsOn(f.InputField(&args.CustomerID))
+	f.OutputField(&state.CloudSpaceID).DependsOn(f.InputField(&args.CloudSpaceID))
+	f.OutputField(&state.Name).DependsOn(f.InputField(&args.Name))
+	f.OutputField(&state.Type).DependsOn(f.InputField(&args.Type))
+	f.OutputField(&state.FrontEnd).DependsOn(f.InputField(&args.FrontEnd))
 }
 
 func (lb LoadBalancer) Create(ctx p.Context, name string, input LoadBalancerArgs, preview bool) (string, LoadBalancerState, error) {
@@ -128,10 +143,13 @@ func (lb LoadBalancer) Create(ctx p.Context, name string, input LoadBalancerArgs
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		return "", state, err
 	}
-
+	state.URL = input.URL
+	state.CustomerID = input.CustomerID
+	state.Token = input.Token
+	state.CloudSpaceID = input.CloudSpaceID
 	state.LoadBalancerID = result["id"].(string)
 
-	updatedState, err := lb.Read(ctx, id, state, input)
+	updatedState, err := lb.Read(ctx, id, state)
 	if err != nil {
 		return "", state, err
 	}
@@ -139,8 +157,8 @@ func (lb LoadBalancer) Create(ctx p.Context, name string, input LoadBalancerArgs
 	return id, updatedState, nil
 }
 
-func (LoadBalancer) Read(ctx p.Context, id string, state LoadBalancerState, input LoadBalancerArgs) (LoadBalancerState, error) {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/load-balancers/%s", input.URL, input.CustomerID, input.CloudSpaceID, state.LoadBalancerID)
+func (LoadBalancer) Read(ctx p.Context, id string, state LoadBalancerState) (LoadBalancerState, error) {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/load-balancers/%s", state.URL, state.CustomerID, state.CloudSpaceID, state.LoadBalancerID)
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -148,7 +166,7 @@ func (LoadBalancer) Read(ctx p.Context, id string, state LoadBalancerState, inpu
 		return LoadBalancerState{}, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
@@ -162,11 +180,17 @@ func (LoadBalancer) Read(ctx p.Context, id string, state LoadBalancerState, inpu
 		return LoadBalancerState{}, err
 	}
 
+	result.URL = state.URL
+	result.CustomerID = state.CustomerID
+	result.Token = state.Token
+	result.CloudSpaceID = state.CloudSpaceID
+	result.LoadBalancerID = state.LoadBalancerID
+
 	return result, nil
 }
 
 func (lb LoadBalancer) Update(ctx p.Context, id string, state LoadBalancerState, input LoadBalancerArgs) (LoadBalancerState, error) {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/load-balancers/%s", input.URL, input.CustomerID, input.CloudSpaceID, state.LoadBalancerID)
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/load-balancers/%s", state.URL, state.CustomerID, state.CloudSpaceID, state.LoadBalancerID)
 	payload := map[string]interface{}{
 		"name": input.Name,
 		"type": input.Type,
@@ -214,7 +238,7 @@ func (lb LoadBalancer) Update(ctx p.Context, id string, state LoadBalancerState,
 		return state, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
@@ -223,7 +247,7 @@ func (lb LoadBalancer) Update(ctx p.Context, id string, state LoadBalancerState,
 	}
 	defer resp.Body.Close()
 
-	updatedState, err := lb.Read(ctx, id, state, input)
+	updatedState, err := lb.Read(ctx, id, state)
 	if err != nil {
 		return state, err
 	}
@@ -231,8 +255,8 @@ func (lb LoadBalancer) Update(ctx p.Context, id string, state LoadBalancerState,
 	return updatedState, nil
 }
 
-func (LoadBalancer) Delete(ctx p.Context, id string, state LoadBalancerState, input LoadBalancerArgs) error {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/load-balancers/%s", input.URL, input.CustomerID, input.CloudSpaceID, state.LoadBalancerID)
+func (LoadBalancer) Delete(ctx p.Context, id string, state LoadBalancerState) error {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/load-balancers/%s", state.URL, state.CustomerID, state.CloudSpaceID, state.LoadBalancerID)
 	client := &http.Client{}
 	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(nil))
 	if err != nil {
@@ -240,7 +264,7 @@ func (LoadBalancer) Delete(ctx p.Context, id string, state LoadBalancerState, in
 		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {

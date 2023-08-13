@@ -14,9 +14,13 @@ type ExposedDisk struct{}
 
 type ExposedDiskState struct {
 	ExposedDiskArgs
-	DiskID   int      `json:"disk_id" pulumi:"disk_id"`
-	Protocol string   `json:"protocol" pulumi:"protocol"`
-	Endpoint Endpoint `json:"endpoint" pulumi:"endpoint"`
+	URL          string   `pulumi:"url"`
+	Token        string   `pulumi:"token"`
+	CustomerID   string   `pulumi:"customerID"`
+	CloudSpaceID string   `pulumi:"cloudspace_id"`
+	DiskID       int      `json:"disk_id" pulumi:"disk_id"`
+	Protocol     string   `json:"protocol" pulumi:"protocol"`
+	Endpoint     Endpoint `json:"endpoint" pulumi:"endpoint"`
 }
 
 type Endpoint struct {
@@ -40,6 +44,10 @@ type ExposedDiskArgs struct {
 }
 
 func (exd ExposedDisk) WireDependencies(f infer.FieldSelector, args *ExposedDiskArgs, state *ExposedDiskState) {
+	f.OutputField(&state.URL).DependsOn(f.InputField(&args.URL))
+	f.OutputField(&state.Token).DependsOn(f.InputField(&args.Token))
+	f.OutputField(&state.CustomerID).DependsOn(f.InputField(&args.CustomerID))
+	f.OutputField(&state.CloudSpaceID).DependsOn(f.InputField(&args.CloudSpaceID))
 	f.OutputField(&state.DiskID).DependsOn(f.InputField(&args.DiskID))
 }
 
@@ -87,6 +95,10 @@ func (ExposedDisk) Create(ctx p.Context, name string, input ExposedDiskArgs, pre
 		return "", state, err
 	}
 	defer resp.Body.Close()
+	state.URL = input.URL
+	state.CustomerID = input.CustomerID
+	state.Token = input.Token
+	state.CloudSpaceID = input.CloudSpaceID
 
 	var result ExposedDiskState
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
@@ -102,8 +114,8 @@ func (ExposedDisk) Update(ctx p.Context, id string, state ExposedDiskState, inpu
 	return ExposedDiskState{}, nil
 }
 
-func (ExposedDisk) Delete(ctx p.Context, id string, state ExposedDiskState, input ExposedDiskArgs) error {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/exposed-disks/%d", input.URL, input.CustomerID, input.CloudSpaceID, state.DiskID)
+func (ExposedDisk) Delete(ctx p.Context, id string, state ExposedDiskState) error {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/exposed-disks/%d", state.URL, state.CustomerID, state.CloudSpaceID, state.DiskID)
 
 	client := &http.Client{}
 	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(nil))
@@ -112,7 +124,7 @@ func (ExposedDisk) Delete(ctx p.Context, id string, state ExposedDiskState, inpu
 		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {

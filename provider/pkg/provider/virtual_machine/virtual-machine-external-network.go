@@ -17,14 +17,18 @@ type VirtualMachineNIC struct{}
 
 type VirtualMachineNICState struct {
 	VirtualMachineNICArgs
-	VirtualMachineID     int    `pulumi:"vm_id" json:"vm_id"`
-	DeviceName           string `pulumi:"device_name" json:"device_name"`
-	MacAddress           string `pulumi:"mac_address" json:"mac_address"`
-	IPAddress            string `pulumi:"ip_address" json:"ip_address"`
-	NetworkID            int    `pulumi:"network_id" json:"network_id"`
-	NicType              string `pulumi:"nic_type" json:"nic_type"`
-	Model                string `pulumi:"model" json:"model"`
-	ExternalCloudspaceID string `pulumi:"external_cloudspace_id" json:"external_cloudspace_id"`
+	URL                  string  `pulumi:"url"`
+	Token                string  `pulumi:"token"`
+	CustomerID           string  `pulumi:"customerID"`
+	CloudSpaceID         string  `pulumi:"cloudspace_id"`
+	VirtualMachineID     int     `pulumi:"vm_id" json:"vm_id"`
+	DeviceName           string  `pulumi:"device_name" json:"device_name"`
+	MacAddress           string  `pulumi:"mac_address" json:"mac_address"`
+	IPAddress            string  `pulumi:"ip_address" json:"ip_address"`
+	NetworkID            int     `pulumi:"network_id" json:"network_id"`
+	NicType              string  `pulumi:"nic_type" json:"nic_type"`
+	Model                string  `pulumi:"model" json:"model"`
+	ExternalCloudspaceID *string `pulumi:"external_cloudspace_id" json:"external_cloudspace_id"`
 }
 
 type VirtualMachineNICArgs struct {
@@ -41,6 +45,10 @@ type VirtualMachineNICArgs struct {
 }
 
 func (nic VirtualMachineNIC) WireDependencies(f infer.FieldSelector, args *VirtualMachineNICArgs, state *VirtualMachineNICState) {
+	f.OutputField(&state.URL).DependsOn(f.InputField(&args.URL))
+	f.OutputField(&state.Token).DependsOn(f.InputField(&args.Token))
+	f.OutputField(&state.CustomerID).DependsOn(f.InputField(&args.CustomerID))
+	f.OutputField(&state.CloudSpaceID).DependsOn(f.InputField(&args.CloudSpaceID))
 	f.OutputField(&state.VirtualMachineID).DependsOn(f.InputField(&args.VirtualMachineID))
 	f.OutputField(&state.NetworkID).DependsOn(f.InputField(&args.ExternalNetworkID))
 }
@@ -122,7 +130,10 @@ func (nic VirtualMachineNIC) Create(ctx p.Context, name string, input VirtualMac
 			}
 		}
 	}
-
+	state.URL = input.URL
+	state.CustomerID = input.CustomerID
+	state.Token = input.Token
+	state.CloudSpaceID = input.CloudSpaceID
 	state.VirtualMachineID = input.VirtualMachineID
 
 	updatedState, err := nic.Read(ctx, id, state, input)
@@ -156,13 +167,23 @@ func (VirtualMachineNIC) Read(ctx p.Context, id string, state VirtualMachineNICS
 		return VirtualMachineNICState{}, err
 	}
 
+	result.URL = state.URL
+	result.CustomerID = state.CustomerID
+	result.Token = state.Token
+	result.CloudSpaceID = state.CloudSpaceID
+	result.VirtualMachineID = state.VirtualMachineID
+
 	return result, nil
 }
 
-func (VirtualMachineNIC) Delete(ctx p.Context, id string, state VirtualMachineNICState, input VirtualMachineNICArgs) error {
+func (VirtualMachineNIC) Update(ctx p.Context, id string, state VirtualMachineNICState, input VirtualMachineNICArgs) (VirtualMachineNICState, error) {
+	return VirtualMachineNICState{}, nil
+}
+
+func (VirtualMachineNIC) Delete(ctx p.Context, id string, state VirtualMachineNICState) error {
 	ipAddress := strings.Split(state.IPAddress, "/")[0]
 
-	u, err := url.Parse(fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/vms/%d/external-nics/%s", input.URL, input.CustomerID, input.CloudSpaceID, input.VirtualMachineID, ipAddress))
+	u, err := url.Parse(fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/vms/%d/external-nics/%s", state.URL, state.CustomerID, state.CloudSpaceID, state.VirtualMachineID, ipAddress))
 	if err != nil {
 		return err
 	}
@@ -172,8 +193,8 @@ func (VirtualMachineNIC) Delete(ctx p.Context, id string, state VirtualMachineNI
 
 	q.Set("external_network_type", strings.ToLower(state.NicType))
 
-	if input.ExternalCloudspaceID != nil {
-		q.Set("external_cloudspace_id", state.ExternalCloudspaceID)
+	if state.ExternalCloudspaceID != nil {
+		q.Set("external_cloudspace_id", *state.ExternalCloudspaceID)
 	}
 
 	u.RawQuery = q.Encode()
@@ -186,7 +207,7 @@ func (VirtualMachineNIC) Delete(ctx p.Context, id string, state VirtualMachineNI
 		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {

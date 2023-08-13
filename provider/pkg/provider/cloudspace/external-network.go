@@ -13,6 +13,10 @@ type ExternalNetwork struct{}
 
 type ExternalNetworkState struct {
 	ExternalNetworkArgs
+	URL               string `pulumi:"url"`
+	Token             string `pulumi:"token"`
+	CustomerID        string `pulumi:"customerID"`
+	CloudSpaceID      string `pulumi:"cloudspace_id"`
 	ExternalNetworkID string `pulumi:"external_network_id"`
 	Metric            int    `pulumi:"metric"`
 	ExternalNetworkIP string `pulumi:"external_network_ip"`
@@ -30,6 +34,10 @@ type ExternalNetworkArgs struct {
 }
 
 func (ex ExternalNetwork) WireDependencies(f infer.FieldSelector, args *ExternalNetworkArgs, state *ExternalNetworkState) {
+	f.OutputField(&state.URL).DependsOn(f.InputField(&args.URL))
+	f.OutputField(&state.Token).DependsOn(f.InputField(&args.Token))
+	f.OutputField(&state.CustomerID).DependsOn(f.InputField(&args.CustomerID))
+	f.OutputField(&state.CloudSpaceID).DependsOn(f.InputField(&args.CloudSpaceID))
 	f.OutputField(&state.ExternalNetworkID).DependsOn(f.InputField(&args.ExternalNetworkID))
 	f.OutputField(&state.ExternalNetworkIP).DependsOn(f.InputField(&args.ExternalNetworkIP))
 	f.OutputField(&state.Metric).DependsOn(f.InputField(&args.Metric))
@@ -63,6 +71,10 @@ func (ExternalNetwork) Create(ctx p.Context, name string, input ExternalNetworkA
 	}
 	defer resp.Body.Close()
 
+	state.URL = input.URL
+	state.CustomerID = input.CustomerID
+	state.Token = input.Token
+	state.CloudSpaceID = input.CloudSpaceID
 	state.ExternalNetworkID = input.ExternalNetworkID
 	state.Metric = input.Metric
 	state.ExternalNetworkIP = input.ExternalNetworkIP
@@ -71,7 +83,7 @@ func (ExternalNetwork) Create(ctx p.Context, name string, input ExternalNetworkA
 }
 
 func (ex ExternalNetwork) Update(ctx p.Context, id string, state ExternalNetworkState, input ExternalNetworkArgs) (ExternalNetworkState, error) {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/external-networks?external_network_id=%s&external_network_type=%s&metric=%d&external_network_ip=%s", input.URL, input.CustomerID, input.CloudSpaceID, input.ExternalNetworkID, input.ExternalNetworkType, input.Metric, input.ExternalNetworkIP)
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/external-networks?external_network_id=%s&external_network_type=%s&metric=%d&external_network_ip=%s", state.URL, state.CustomerID, state.CloudSpaceID, input.ExternalNetworkID, state.ExternalNetworkType, input.Metric, input.ExternalNetworkIP)
 
 	client := &http.Client{}
 	req, err := http.NewRequest("PUT", url, bytes.NewBuffer(nil))
@@ -79,7 +91,7 @@ func (ex ExternalNetwork) Update(ctx p.Context, id string, state ExternalNetwork
 		return state, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
@@ -95,8 +107,8 @@ func (ex ExternalNetwork) Update(ctx p.Context, id string, state ExternalNetwork
 	return state, nil
 }
 
-func (ExternalNetwork) Delete(ctx p.Context, id string, input ExternalNetworkArgs) error {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/external-networks?external_network_id=%s&external_network_ip=%s", input.URL, input.CustomerID, input.CloudSpaceID, input.ExternalNetworkID, input.ExternalNetworkIP)
+func (ExternalNetwork) Delete(ctx p.Context, id string, state ExternalNetworkState) error {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/external-networks?external_network_id=%s&external_network_ip=%s", state.URL, state.CustomerID, state.CloudSpaceID, state.ExternalNetworkID, state.ExternalNetworkIP)
 
 	client := &http.Client{}
 	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(nil))
@@ -105,7 +117,7 @@ func (ExternalNetwork) Delete(ctx p.Context, id string, input ExternalNetworkArg
 		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {

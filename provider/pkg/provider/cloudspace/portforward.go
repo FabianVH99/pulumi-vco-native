@@ -16,6 +16,10 @@ type PortForward struct{}
 
 type PortForwardState struct {
 	PortForwardArgs
+	URL              string  `pulumi:"url"`
+	Token            string  `pulumi:"token"`
+	CustomerID       string  `pulumi:"customerID"`
+	CloudSpaceID     string  `pulumi:"cloudspace_id"`
 	PortForwardID    string  `json:"portforward_id" pulumi:"portforward_id"`
 	LocalPort        int     `json:"local_port" pulumi:"local_port"`
 	PublicPort       int     `json:"public_port" pulumi:"public_port"`
@@ -41,6 +45,10 @@ type PortForwardArgs struct {
 }
 
 func (pf PortForward) WireDependencies(f infer.FieldSelector, args *PortForwardArgs, state *PortForwardState) {
+	f.OutputField(&state.URL).DependsOn(f.InputField(&args.URL))
+	f.OutputField(&state.Token).DependsOn(f.InputField(&args.Token))
+	f.OutputField(&state.CustomerID).DependsOn(f.InputField(&args.CustomerID))
+	f.OutputField(&state.CloudSpaceID).DependsOn(f.InputField(&args.CloudSpaceID))
 	f.OutputField(&state.LocalPort).DependsOn(f.InputField(&args.LocalPort))
 	f.OutputField(&state.PublicPort).DependsOn(f.InputField(&args.PublicPort))
 	f.OutputField(&state.Protocol).DependsOn(f.InputField(&args.Protocol))
@@ -101,10 +109,13 @@ func (pf PortForward) Create(ctx p.Context, name string, input PortForwardArgs, 
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		return "", state, err
 	}
-
+	state.URL = input.URL
+	state.CustomerID = input.CustomerID
+	state.Token = input.Token
+	state.CloudSpaceID = input.CloudSpaceID
 	state.PortForwardID = result["portforward_id"].(string)
 
-	updatedState, err := pf.Read(ctx, id, state, input)
+	updatedState, err := pf.Read(ctx, id, state)
 	if err != nil {
 		return "", state, err
 	}
@@ -112,8 +123,8 @@ func (pf PortForward) Create(ctx p.Context, name string, input PortForwardArgs, 
 	return id, updatedState, nil
 }
 
-func (PortForward) Read(ctx p.Context, id string, state PortForwardState, input PortForwardArgs) (PortForwardState, error) {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/portforwards/%s", input.URL, input.CustomerID, input.CloudSpaceID, state.PortForwardID)
+func (PortForward) Read(ctx p.Context, id string, state PortForwardState) (PortForwardState, error) {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/portforwards/%s", state.URL, state.CustomerID, state.CloudSpaceID, state.PortForwardID)
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -121,7 +132,7 @@ func (PortForward) Read(ctx p.Context, id string, state PortForwardState, input 
 		return PortForwardState{}, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
@@ -135,11 +146,16 @@ func (PortForward) Read(ctx p.Context, id string, state PortForwardState, input 
 		return PortForwardState{}, err
 	}
 
+	result.URL = state.URL
+	result.CustomerID = state.CustomerID
+	result.Token = state.Token
+	result.CloudSpaceID = state.CloudSpaceID
+
 	return result, nil
 }
 
 func (pf PortForward) Update(ctx p.Context, id string, state PortForwardState, input PortForwardArgs) (PortForwardState, error) {
-	u, err := url.Parse(fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/portforwards/%s", input.URL, input.CustomerID, input.CloudSpaceID, state.PortForwardID))
+	u, err := url.Parse(fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/portforwards/%s", state.URL, state.CustomerID, state.CloudSpaceID, state.PortForwardID))
 	if err != nil {
 		return state, err
 	}
@@ -217,7 +233,7 @@ func (pf PortForward) Update(ctx p.Context, id string, state PortForwardState, i
 		}
 	}
 
-	updatedState, err := pf.Read(ctx, id, state, input)
+	updatedState, err := pf.Read(ctx, id, state)
 	if err != nil {
 		return state, err
 	}
@@ -225,8 +241,8 @@ func (pf PortForward) Update(ctx p.Context, id string, state PortForwardState, i
 	return updatedState, nil
 }
 
-func (PortForward) Delete(ctx p.Context, id string, state PortForwardState, input PortForwardArgs) error {
-	pfUrl := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/portforwards/%s", input.URL, input.CustomerID, input.CloudSpaceID, state.PortForwardID)
+func (PortForward) Delete(ctx p.Context, id string, state PortForwardState) error {
+	pfUrl := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/portforwards/%s", state.URL, state.CustomerID, state.CloudSpaceID, state.PortForwardID)
 
 	client := &http.Client{}
 	req, err := http.NewRequest("DELETE", pfUrl, bytes.NewBuffer(nil))
@@ -235,7 +251,7 @@ func (PortForward) Delete(ctx p.Context, id string, state PortForwardState, inpu
 		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {

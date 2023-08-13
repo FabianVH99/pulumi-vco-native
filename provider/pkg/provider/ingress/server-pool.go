@@ -14,6 +14,10 @@ type ServerPool struct{}
 
 type ServerPoolState struct {
 	ServerPoolArgs
+	URL          string           `pulumi:"url"`
+	Token        string           `pulumi:"token"`
+	CustomerID   string           `pulumi:"customerID"`
+	CloudSpaceID string           `pulumi:"cloudspace_id"`
 	ServerPoolID string           `json:"serverpool_id" pulumi:"serverpool_id"`
 	Name         string           `json:"name" pulumi:"name"`
 	Description  string           `json:"description" pulumi:"description"`
@@ -35,6 +39,10 @@ type ServerPoolArgs struct {
 }
 
 func (sv ServerPool) WireDependencies(f infer.FieldSelector, args *ServerPoolArgs, state *ServerPoolState) {
+	f.OutputField(&state.URL).DependsOn(f.InputField(&args.URL))
+	f.OutputField(&state.Token).DependsOn(f.InputField(&args.Token))
+	f.OutputField(&state.CustomerID).DependsOn(f.InputField(&args.CustomerID))
+	f.OutputField(&state.CloudSpaceID).DependsOn(f.InputField(&args.CloudSpaceID))
 	f.OutputField(&state.Name).DependsOn(f.InputField(&args.Name))
 	f.OutputField(&state.Description).DependsOn(f.InputField(&args.Description))
 }
@@ -69,10 +77,13 @@ func (sv ServerPool) Create(ctx p.Context, name string, input ServerPoolArgs, pr
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		return "", state, err
 	}
-
+	state.URL = input.URL
+	state.CustomerID = input.CustomerID
+	state.Token = input.Token
+	state.CloudSpaceID = input.CloudSpaceID
 	state.ServerPoolID = result["id"].(string)
 
-	updatedState, err := sv.Read(ctx, id, state, input)
+	updatedState, err := sv.Read(ctx, id, state)
 	if err != nil {
 		return "", state, err
 	}
@@ -80,15 +91,15 @@ func (sv ServerPool) Create(ctx p.Context, name string, input ServerPoolArgs, pr
 	return id, updatedState, nil
 }
 
-func (ServerPool) Read(ctx p.Context, id string, state ServerPoolState, input ServerPoolArgs) (ServerPoolState, error) {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/server-pools/%s", input.URL, input.CustomerID, input.CloudSpaceID, state.ServerPoolID)
+func (ServerPool) Read(ctx p.Context, id string, state ServerPoolState) (ServerPoolState, error) {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/server-pools/%s", state.URL, state.CustomerID, state.CloudSpaceID, state.ServerPoolID)
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return ServerPoolState{}, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
@@ -101,11 +112,17 @@ func (ServerPool) Read(ctx p.Context, id string, state ServerPoolState, input Se
 		return ServerPoolState{}, err
 	}
 
+	result.URL = state.URL
+	result.CustomerID = state.CustomerID
+	result.Token = state.Token
+	result.CloudSpaceID = state.CloudSpaceID
+	result.ServerPoolID = state.ServerPoolID
+
 	return result, nil
 }
 
 func (sv ServerPool) Update(ctx p.Context, id string, state ServerPoolState, input ServerPoolArgs) (ServerPoolState, error) {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/server-pools/%s?name=%s&description=%s", input.URL, input.CustomerID, input.CloudSpaceID, state.ServerPoolID, input.Name, input.Description)
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/server-pools/%s?name=%s&description=%s", state.URL, state.CustomerID, state.CloudSpaceID, state.ServerPoolID, input.Name, input.Description)
 
 	client := &http.Client{}
 	req, err := http.NewRequest("PUT", url, bytes.NewBuffer(nil))
@@ -121,7 +138,7 @@ func (sv ServerPool) Update(ctx p.Context, id string, state ServerPoolState, inp
 	}
 	defer resp.Body.Close()
 
-	updatedState, err := sv.Read(ctx, id, state, input)
+	updatedState, err := sv.Read(ctx, id, state)
 	if err != nil {
 		return state, err
 	}
@@ -129,8 +146,8 @@ func (sv ServerPool) Update(ctx p.Context, id string, state ServerPoolState, inp
 	return updatedState, nil
 }
 
-func (ServerPool) Delete(ctx p.Context, id string, state ServerPoolState, input ServerPoolArgs) error {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/server-pools/%s", input.URL, input.CustomerID, input.CloudSpaceID, state.ServerPoolID)
+func (ServerPool) Delete(ctx p.Context, id string, state ServerPoolState) error {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/server-pools/%s", state.URL, state.CustomerID, state.CloudSpaceID, state.ServerPoolID)
 
 	client := &http.Client{}
 	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(nil))
@@ -139,7 +156,7 @@ func (ServerPool) Delete(ctx p.Context, id string, state ServerPoolState, input 
 		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {

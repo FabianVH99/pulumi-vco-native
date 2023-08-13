@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	p "github.com/pulumi/pulumi-go-provider"
+	"github.com/pulumi/pulumi-go-provider/infer"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
 	"net/http"
 )
@@ -13,6 +14,10 @@ type ReverseProxy struct{}
 
 type ReverseProxyState struct {
 	ReverseProxyArgs
+	URL            string               `pulumi:"url"`
+	Token          string               `pulumi:"token"`
+	CustomerID     string               `pulumi:"customerID"`
+	CloudSpaceID   string               `pulumi:"cloudspace_id"`
 	ReverseProxyID string               `pulumi:"reverseproxy_id" json:"reverseproxy_id"`
 	Name           string               `pulumi:"name" json:"name"`
 	Description    string               `pulumi:"description" json:"description"`
@@ -71,6 +76,16 @@ type HealthCheck struct {
 	Port     *int    `pulumi:"port,optional" json:"port"`
 	Interval *int    `pulumi:"interval,optional" json:"interval"`
 	Timeout  *int    `pulumi:"timeout,optional" json:"timeout"`
+}
+
+func (lb ReverseProxy) WireDependencies(f infer.FieldSelector, args *ReverseProxyArgs, state *ReverseProxyState) {
+	f.OutputField(&state.URL).DependsOn(f.InputField(&args.URL))
+	f.OutputField(&state.Token).DependsOn(f.InputField(&args.Token))
+	f.OutputField(&state.CustomerID).DependsOn(f.InputField(&args.CustomerID))
+	f.OutputField(&state.CloudSpaceID).DependsOn(f.InputField(&args.CloudSpaceID))
+	f.OutputField(&state.Name).DependsOn(f.InputField(&args.Name))
+	f.OutputField(&state.ReverseProxyFrontEnd).DependsOn(f.InputField(&args.ReverseProxyFrontEnd))
+	f.OutputField(&state.ReverseProxyBackend).DependsOn(f.InputField(&args.ReverseProxyBackend))
 }
 
 func (rp ReverseProxy) Create(ctx p.Context, name string, input ReverseProxyArgs, preview bool) (string, ReverseProxyState, error) {
@@ -206,10 +221,13 @@ func (rp ReverseProxy) Create(ctx p.Context, name string, input ReverseProxyArgs
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		return "", state, err
 	}
-
+	state.URL = input.URL
+	state.CustomerID = input.CustomerID
+	state.Token = input.Token
+	state.CloudSpaceID = input.CloudSpaceID
 	state.ReverseProxyID = result["id"].(string)
 
-	updatedState, err := rp.Read(ctx, id, state, input)
+	updatedState, err := rp.Read(ctx, id, state)
 	if err != nil {
 		return "", state, err
 	}
@@ -217,15 +235,15 @@ func (rp ReverseProxy) Create(ctx p.Context, name string, input ReverseProxyArgs
 	return id, updatedState, nil
 }
 
-func (ReverseProxy) Read(ctx p.Context, id string, state ReverseProxyState, input ReverseProxyArgs) (ReverseProxyState, error) {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/reverse-proxies/%s", input.URL, input.CustomerID, input.CloudSpaceID, state.ReverseProxyID)
+func (ReverseProxy) Read(ctx p.Context, id string, state ReverseProxyState) (ReverseProxyState, error) {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/reverse-proxies/%s", state.URL, state.CustomerID, state.CloudSpaceID, state.ReverseProxyID)
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return ReverseProxyState{}, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
@@ -238,11 +256,17 @@ func (ReverseProxy) Read(ctx p.Context, id string, state ReverseProxyState, inpu
 		return ReverseProxyState{}, err
 	}
 
+	result.URL = state.URL
+	result.CustomerID = state.CustomerID
+	result.Token = state.Token
+	result.CloudSpaceID = state.CloudSpaceID
+	result.ReverseProxyID = state.ReverseProxyID
+
 	return result, nil
 }
 
 func (rp ReverseProxy) Update(ctx p.Context, id string, state ReverseProxyState, input ReverseProxyArgs) (ReverseProxyState, error) {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/reverse-proxies/%s", input.URL, input.CustomerID, input.CloudSpaceID, state.ReverseProxyID)
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/reverse-proxies/%s", state.URL, state.CustomerID, state.CloudSpaceID, state.ReverseProxyID)
 	payload := map[string]interface{}{
 		"name": input.Name,
 		"front_end": map[string]interface{}{
@@ -353,7 +377,7 @@ func (rp ReverseProxy) Update(ctx p.Context, id string, state ReverseProxyState,
 		return state, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
@@ -361,7 +385,7 @@ func (rp ReverseProxy) Update(ctx p.Context, id string, state ReverseProxyState,
 	}
 	defer resp.Body.Close()
 
-	updatedState, err := rp.Read(ctx, id, state, input)
+	updatedState, err := rp.Read(ctx, id, state)
 	if err != nil {
 		return state, err
 	}
@@ -369,8 +393,8 @@ func (rp ReverseProxy) Update(ctx p.Context, id string, state ReverseProxyState,
 	return updatedState, nil
 }
 
-func (ReverseProxy) Delete(ctx p.Context, id string, state ReverseProxyState, input ReverseProxyArgs) error {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/reverse-proxies/%s", input.URL, input.CustomerID, input.CloudSpaceID, state.ReverseProxyID)
+func (ReverseProxy) Delete(ctx p.Context, id string, state ReverseProxyState) error {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/reverse-proxies/%s", state.URL, state.CustomerID, state.CloudSpaceID, state.ReverseProxyID)
 	client := &http.Client{}
 	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(nil))
 	if err != nil {
@@ -378,7 +402,7 @@ func (ReverseProxy) Delete(ctx p.Context, id string, state ReverseProxyState, in
 		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {

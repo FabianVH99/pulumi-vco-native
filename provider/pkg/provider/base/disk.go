@@ -14,6 +14,9 @@ type Disk struct{}
 
 type DiskState struct {
 	DiskArgs
+	URL             string `pulumi:"url"`
+	Token           string `pulumi:"token"`
+	CustomerID      string `pulumi:"customerID"`
 	Status          string `pulumi:"status" json:"status"`
 	DiskSize        int    `pulumi:"disk_size" json:"disk_size"`
 	DiskName        string `pulumi:"disk_name" json:"disk_name"`
@@ -44,6 +47,9 @@ type DiskArgs struct {
 }
 
 func (d Disk) WireDependencies(f infer.FieldSelector, args *DiskArgs, state *DiskState) {
+	f.OutputField(&state.URL).DependsOn(f.InputField(&args.URL))
+	f.OutputField(&state.Token).DependsOn(f.InputField(&args.Token))
+	f.OutputField(&state.CustomerID).DependsOn(f.InputField(&args.CustomerID))
 	f.OutputField(&state.DiskName).DependsOn(f.InputField(&args.DiskName))
 	f.OutputField(&state.DiskDescription).DependsOn(f.InputField(&args.DiskDescription))
 	f.OutputField(&state.DiskSize).DependsOn(f.InputField(&args.DiskSize))
@@ -81,11 +87,14 @@ func (d Disk) Create(ctx p.Context, name string, input DiskArgs, preview bool) (
 		fmt.Printf("Error decoding response body for %s: %v\n", id, err)
 		return "", state, err
 	}
-
+	state.URL = input.URL
+	state.CustomerID = input.CustomerID
+	state.Token = input.Token
+	state.Location = input.Location
 	diskID := result["disk_id"].(float64)
 	state.DiskID = int(diskID)
 
-	updatedState, err := d.Read(ctx, id, state, input)
+	updatedState, err := d.Read(ctx, id, state)
 	if err != nil {
 		return "", state, err
 	}
@@ -93,8 +102,8 @@ func (d Disk) Create(ctx p.Context, name string, input DiskArgs, preview bool) (
 	return id, updatedState, nil
 }
 
-func (Disk) Read(ctx p.Context, id string, state DiskState, input DiskArgs) (DiskState, error) {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/locations/%s/disks/%d", input.URL, input.CustomerID, input.Location, state.DiskID)
+func (Disk) Read(ctx p.Context, id string, state DiskState) (DiskState, error) {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/locations/%s/disks/%d", state.URL, state.CustomerID, state.Location, state.DiskID)
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -102,7 +111,7 @@ func (Disk) Read(ctx p.Context, id string, state DiskState, input DiskArgs) (Dis
 		return DiskState{}, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
@@ -117,6 +126,11 @@ func (Disk) Read(ctx p.Context, id string, state DiskState, input DiskArgs) (Dis
 		return DiskState{}, err
 	}
 
+	result.URL = state.URL
+	result.CustomerID = state.CustomerID
+	result.Token = state.Token
+	result.Location = state.Location
+
 	return result, nil
 }
 
@@ -124,8 +138,8 @@ func (Disk) Update(ctx p.Context, id string, state DiskState, input DiskArgs) (D
 	return DiskState{}, nil
 }
 
-func (Disk) Delete(ctx p.Context, id string, state DiskState, input DiskArgs) error {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/locations/%s/disks/%d", input.URL, input.CustomerID, input.Location, state.DiskID)
+func (Disk) Delete(ctx p.Context, id string, state DiskState) error {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/locations/%s/disks/%d", state.URL, state.CustomerID, state.Location, state.DiskID)
 
 	client := &http.Client{}
 	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(nil))
@@ -134,7 +148,7 @@ func (Disk) Delete(ctx p.Context, id string, state DiskState, input DiskArgs) er
 		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {

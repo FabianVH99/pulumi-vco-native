@@ -13,6 +13,10 @@ type ConnectedCloudspace struct{}
 
 type ConnectedCloudspaceState struct {
 	ConnectedCloudspaceArgs
+	URL                   string `pulumi:"url"`
+	Token                 string `pulumi:"token"`
+	CustomerID            string `pulumi:"customerID"`
+	CloudSpaceID          string `pulumi:"cloudspace_id"`
 	ConnectedCloudSpaceID string `json:"connected_cloudspace_id" pulumi:"connected_cloudspace_id"`
 	RemoteCloudSpaceIP    string `json:"remote_cloudspace_ip" pulumi:"remote_cloudspace_ip"`
 	LocalCloudSpaceIP     string `json:"local_cloudspace_ip" pulumi:"local_cloudspace_ip"`
@@ -30,6 +34,10 @@ type ConnectedCloudspaceArgs struct {
 }
 
 func (cs ConnectedCloudspace) WireDependencies(f infer.FieldSelector, args *ConnectedCloudspaceArgs, state *ConnectedCloudspaceState) {
+	f.OutputField(&state.URL).DependsOn(f.InputField(&args.URL))
+	f.OutputField(&state.Token).DependsOn(f.InputField(&args.Token))
+	f.OutputField(&state.CustomerID).DependsOn(f.InputField(&args.CustomerID))
+	f.OutputField(&state.CloudSpaceID).DependsOn(f.InputField(&args.CloudSpaceID))
 	f.OutputField(&state.ConnectedCloudSpaceID).DependsOn(f.InputField(&args.ConnectedCloudSpaceID))
 	f.OutputField(&state.RemoteCloudSpaceIP).DependsOn(f.InputField(&args.RemoteCloudSpaceIP))
 	f.OutputField(&state.LocalCloudSpaceIP).DependsOn(f.InputField(&args.LocalCloudSpaceIP))
@@ -44,10 +52,6 @@ func (cs ConnectedCloudspace) Create(ctx p.Context, name string, input Connected
 	if preview {
 		return name, state, nil
 	}
-
-	state.ConnectedCloudSpaceID = input.ConnectedCloudSpaceID
-	state.RemoteCloudSpaceIP = input.RemoteCloudSpaceIP
-	state.LocalCloudSpaceIP = input.LocalCloudSpaceIP
 
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/connected-cloudspaces?connected_cloudspace_id=%s&remote_cloudspace_ip=%s&local_cloudspace_ip=%s", input.URL, input.CustomerID, input.CloudSpaceID, input.ConnectedCloudSpaceID, input.RemoteCloudSpaceIP, input.LocalCloudSpaceIP)
 
@@ -67,6 +71,14 @@ func (cs ConnectedCloudspace) Create(ctx p.Context, name string, input Connected
 	}
 	defer resp.Body.Close()
 
+	state.URL = input.URL
+	state.CustomerID = input.CustomerID
+	state.Token = input.Token
+	state.CloudSpaceID = input.CloudSpaceID
+	state.ConnectedCloudSpaceID = input.ConnectedCloudSpaceID
+	state.RemoteCloudSpaceIP = input.RemoteCloudSpaceIP
+	state.LocalCloudSpaceIP = input.LocalCloudSpaceIP
+
 	return id, state, nil
 }
 
@@ -74,8 +86,8 @@ func (ConnectedCloudspace) Update(ctx p.Context, id string, state ConnectedCloud
 	return ConnectedCloudspaceState{}, nil
 }
 
-func (ConnectedCloudspace) Delete(ctx p.Context, id string, input ConnectedCloudspaceArgs) error {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/connected-cloudspaces/%s?remote_cloudspace_ip=%s&local_cloudspace_ip=%s", input.URL, input.CustomerID, input.CloudSpaceID, input.ConnectedCloudSpaceID, input.RemoteCloudSpaceIP, input.LocalCloudSpaceIP)
+func (ConnectedCloudspace) Delete(ctx p.Context, id string, state ConnectedCloudspaceState) error {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/connected-cloudspaces/%s?remote_cloudspace_ip=%s&local_cloudspace_ip=%s", state.URL, state.CustomerID, state.CloudSpaceID, state.ConnectedCloudSpaceID, state.RemoteCloudSpaceIP, state.LocalCloudSpaceIP)
 
 	client := &http.Client{}
 	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(nil))
@@ -84,7 +96,7 @@ func (ConnectedCloudspace) Delete(ctx p.Context, id string, input ConnectedCloud
 		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {

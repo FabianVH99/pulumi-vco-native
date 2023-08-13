@@ -14,6 +14,9 @@ type ObjectSpace struct{}
 
 type ObjectSpaceState struct {
 	ObjectSpaceArgs
+	URL             string `pulumi:"url"`
+	Token           string `pulumi:"token"`
+	CustomerID      string `pulumi:"customerID"`
 	ObjectSpaceID   string `pulumi:"objectspace_id" json:"objectspace_id"`
 	ObjectSpaceName string `pulumi:"objectspace_name" json:"objectspace_name"`
 	Status          string `pulumi:"status" json:"status"`
@@ -40,6 +43,9 @@ type ObjectSpaceArgs struct {
 }
 
 func (c ObjectSpace) WireDependencies(f infer.FieldSelector, args *ObjectSpaceArgs, state *ObjectSpaceState) {
+	f.OutputField(&state.URL).DependsOn(f.InputField(&args.URL))
+	f.OutputField(&state.Token).DependsOn(f.InputField(&args.Token))
+	f.OutputField(&state.CustomerID).DependsOn(f.InputField(&args.CustomerID))
 	f.OutputField(&state.ObjectSpaceName).DependsOn(f.InputField(&args.ObjectSpaceName))
 	f.OutputField(&state.Location).DependsOn(f.InputField(&args.Location))
 	f.OutputField(&state.Location).DependsOn(f.InputField(&args.Location))
@@ -110,8 +116,11 @@ func (obj ObjectSpace) Create(ctx p.Context, name string, input ObjectSpaceArgs,
 
 	ObjectSpaceID := result["objectspace_id"].(string)
 	state.ObjectSpaceID = ObjectSpaceID
+	state.URL = input.URL
+	state.CustomerID = input.CustomerID
+	state.Token = input.Token
 
-	updatedState, err := obj.Read(ctx, id, state, input)
+	updatedState, err := obj.Read(ctx, id, state)
 	if err != nil {
 		return "", state, err
 	}
@@ -119,8 +128,8 @@ func (obj ObjectSpace) Create(ctx p.Context, name string, input ObjectSpaceArgs,
 	return id, updatedState, nil
 }
 
-func (ObjectSpace) Read(ctx p.Context, id string, state ObjectSpaceState, input ObjectSpaceArgs) (ObjectSpaceState, error) {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/objectspaces/%s", input.URL, input.CustomerID, state.ObjectSpaceID)
+func (ObjectSpace) Read(ctx p.Context, id string, state ObjectSpaceState) (ObjectSpaceState, error) {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/objectspaces/%s", state.URL, state.CustomerID, state.ObjectSpaceID)
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -128,7 +137,7 @@ func (ObjectSpace) Read(ctx p.Context, id string, state ObjectSpaceState, input 
 		return ObjectSpaceState{}, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
@@ -143,6 +152,11 @@ func (ObjectSpace) Read(ctx p.Context, id string, state ObjectSpaceState, input 
 		return ObjectSpaceState{}, err
 	}
 
+	result.URL = state.URL
+	result.CustomerID = state.CustomerID
+	result.Token = state.Token
+	result.ObjectSpaceID = state.ObjectSpaceID
+
 	return result, nil
 }
 
@@ -150,8 +164,8 @@ func (ObjectSpace) Update(ctx p.Context, id string, state ObjectSpaceState, inpu
 	return ObjectSpaceState{}, nil
 }
 
-func (ObjectSpace) Delete(ctx p.Context, id string, state ObjectSpaceState, input ObjectSpaceArgs) error {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/objectspaces/%s", input.URL, input.CustomerID, state.ObjectSpaceID)
+func (ObjectSpace) Delete(ctx p.Context, id string, state ObjectSpaceState) error {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/objectspaces/%s", state.URL, state.CustomerID, state.ObjectSpaceID)
 
 	client := &http.Client{}
 	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(nil))
@@ -160,7 +174,7 @@ func (ObjectSpace) Delete(ctx p.Context, id string, state ObjectSpaceState, inpu
 		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {

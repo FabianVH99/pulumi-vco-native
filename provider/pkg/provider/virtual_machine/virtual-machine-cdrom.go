@@ -14,6 +14,10 @@ type VirtualMachineCD struct{}
 
 type VirtualMachineCDState struct {
 	VirtualMachineCDArgs
+	URL              string `pulumi:"url"`
+	Token            string `pulumi:"token"`
+	CustomerID       string `pulumi:"customerID"`
+	CloudSpaceID     string `pulumi:"cloudspace_id"`
 	CdRomID          int    `pulumi:"cdrom_id" json:"cdrom_id"`
 	VirtualMachineID int    `pulumi:"vm_id" json:"vm_id"`
 	Name             string `pulumi:"name" json:"name"`
@@ -32,6 +36,10 @@ type VirtualMachineCDArgs struct {
 }
 
 func (cd VirtualMachineCD) WireDependencies(f infer.FieldSelector, args *VirtualMachineCDArgs, state *VirtualMachineCDState) {
+	f.OutputField(&state.URL).DependsOn(f.InputField(&args.URL))
+	f.OutputField(&state.Token).DependsOn(f.InputField(&args.Token))
+	f.OutputField(&state.CustomerID).DependsOn(f.InputField(&args.CustomerID))
+	f.OutputField(&state.CloudSpaceID).DependsOn(f.InputField(&args.CloudSpaceID))
 	f.OutputField(&state.VirtualMachineID).DependsOn(f.InputField(&args.VirtualMachineID))
 	f.OutputField(&state.CdRomID).DependsOn(f.InputField(&args.CdRomID))
 }
@@ -66,11 +74,14 @@ func (cd VirtualMachineCD) Create(ctx p.Context, name string, input VirtualMachi
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		return "", state, err
 	}
-
+	state.URL = input.URL
+	state.CustomerID = input.CustomerID
+	state.Token = input.Token
+	state.CloudSpaceID = input.CloudSpaceID
 	state.CdRomID = input.CdRomID
 	state.VirtualMachineID = input.VirtualMachineID
 
-	updatedState, err := cd.Read(ctx, id, state, input)
+	updatedState, err := cd.Read(ctx, id, state)
 	if err != nil {
 		return "", state, err
 	}
@@ -78,15 +89,15 @@ func (cd VirtualMachineCD) Create(ctx p.Context, name string, input VirtualMachi
 	return id, updatedState, nil
 }
 
-func (VirtualMachineCD) Read(ctx p.Context, id string, state VirtualMachineCDState, input VirtualMachineCDArgs) (VirtualMachineCDState, error) {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/vms/%d/cdrom-images/%d", input.URL, input.CustomerID, input.CloudSpaceID, input.VirtualMachineID, state.CdRomID)
+func (VirtualMachineCD) Read(ctx p.Context, id string, state VirtualMachineCDState) (VirtualMachineCDState, error) {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/vms/%d/cdrom-images/%d", state.URL, state.CustomerID, state.CloudSpaceID, state.VirtualMachineID, state.CdRomID)
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return VirtualMachineCDState{}, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
@@ -99,11 +110,21 @@ func (VirtualMachineCD) Read(ctx p.Context, id string, state VirtualMachineCDSta
 		return VirtualMachineCDState{}, err
 	}
 
+	result.URL = state.URL
+	result.CustomerID = state.CustomerID
+	result.Token = state.Token
+	result.CloudSpaceID = state.CloudSpaceID
+	result.VirtualMachineID = state.VirtualMachineID
+
 	return result, nil
 }
 
-func (VirtualMachineCD) Delete(ctx p.Context, id string, state VirtualMachineCDState, input VirtualMachineCDArgs) error {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/vms/%d/cdrom-images/%d", input.URL, input.CustomerID, input.CloudSpaceID, input.VirtualMachineID, state.CdRomID)
+func (VirtualMachineCD) Update(ctx p.Context, id string, state VirtualMachineCDState, input VirtualMachineCDArgs) (VirtualMachineCDState, error) {
+	return VirtualMachineCDState{}, nil
+}
+
+func (VirtualMachineCD) Delete(ctx p.Context, id string, state VirtualMachineCDState) error {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/vms/%d/cdrom-images/%d", state.URL, state.CustomerID, state.CloudSpaceID, state.VirtualMachineID, state.CdRomID)
 	client := &http.Client{}
 	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(nil))
 	if err != nil {
@@ -111,7 +132,7 @@ func (VirtualMachineCD) Delete(ctx p.Context, id string, state VirtualMachineCDS
 		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {

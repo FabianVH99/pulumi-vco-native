@@ -14,6 +14,9 @@ type Cloudspace struct{}
 
 type CloudspaceState struct {
 	CloudspaceArgs
+	URL               string `pulumi:"url"`
+	Token             string `pulumi:"token"`
+	CustomerID        string `pulumi:"customerID"`
 	CloudSpaceID      string `pulumi:"cloudspace_id" json:"cloudspace_id"`
 	Name              string `pulumi:"name" json:"name"`
 	Status            string `pulumi:"status" json:"status"`
@@ -53,6 +56,9 @@ type CloudspaceArgs struct {
 }
 
 func (c Cloudspace) WireDependencies(f infer.FieldSelector, args *CloudspaceArgs, state *CloudspaceState) {
+	f.OutputField(&state.URL).DependsOn(f.InputField(&args.URL))
+	f.OutputField(&state.Token).DependsOn(f.InputField(&args.Token))
+	f.OutputField(&state.CustomerID).DependsOn(f.InputField(&args.CustomerID))
 	f.OutputField(&state.Name).DependsOn(f.InputField(&args.Name))
 	f.OutputField(&state.ExternalNetworkID).DependsOn(f.InputField(&args.ExternalNetworkID))
 	f.OutputField(&state.Location).DependsOn(f.InputField(&args.Location))
@@ -152,10 +158,12 @@ func (c Cloudspace) Create(ctx p.Context, name string, input CloudspaceArgs, pre
 		fmt.Printf("Error decoding response body for %s: %v\n", id, err)
 		return "", state, err
 	}
-
+	state.URL = input.URL
+	state.CustomerID = input.CustomerID
+	state.Token = input.Token
 	state.CloudSpaceID = result["cloudspace_id"].(string)
 
-	updatedState, err := c.Read(nil, id, input, state)
+	updatedState, err := c.Read(nil, id, state)
 	if err != nil {
 		return "", state, err
 	}
@@ -163,8 +171,8 @@ func (c Cloudspace) Create(ctx p.Context, name string, input CloudspaceArgs, pre
 	return id, updatedState, nil
 }
 
-func (Cloudspace) Read(ctx p.Context, id string, input CloudspaceArgs, state CloudspaceState) (CloudspaceState, error) {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s", input.URL, input.CustomerID, state.CloudSpaceID)
+func (Cloudspace) Read(ctx p.Context, id string, state CloudspaceState) (CloudspaceState, error) {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s", state.URL, state.CustomerID, state.CloudSpaceID)
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -172,7 +180,7 @@ func (Cloudspace) Read(ctx p.Context, id string, input CloudspaceArgs, state Clo
 		return CloudspaceState{}, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
@@ -187,6 +195,10 @@ func (Cloudspace) Read(ctx p.Context, id string, input CloudspaceArgs, state Clo
 		return CloudspaceState{}, err
 	}
 
+	result.URL = state.URL
+	result.CustomerID = state.CustomerID
+	result.Token = state.Token
+
 	return result, nil
 }
 
@@ -194,8 +206,8 @@ func (Cloudspace) Update(ctx p.Context, id string, state CloudspaceState, input 
 	return CloudspaceState{}, nil
 }
 
-func (Cloudspace) Delete(ctx p.Context, id string, input CloudspaceArgs, state CloudspaceState) error {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s", input.URL, input.CustomerID, state.CloudSpaceID)
+func (Cloudspace) Delete(ctx p.Context, id string, state CloudspaceState) error {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s", state.URL, state.CustomerID, state.CloudSpaceID)
 	client := &http.Client{}
 	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(nil))
 	if err != nil {
@@ -203,7 +215,7 @@ func (Cloudspace) Delete(ctx p.Context, id string, input CloudspaceArgs, state C
 		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {

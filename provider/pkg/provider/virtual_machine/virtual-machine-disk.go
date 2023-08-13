@@ -13,8 +13,12 @@ type VirtualMachineDisk struct{}
 
 type VirtualMachineDiskState struct {
 	VirtualMachineDiskArgs
-	VirtualMachineID int `pulumi:"vm_id" json:"vm_id"`
-	DiskID           int `pulumi:"disk_id" json:"disk_id"`
+	URL              string `pulumi:"url"`
+	Token            string `pulumi:"token"`
+	CustomerID       string `pulumi:"customerID"`
+	CloudSpaceID     string `pulumi:"cloudspace_id"`
+	VirtualMachineID int    `pulumi:"vm_id" json:"vm_id"`
+	DiskID           int    `pulumi:"disk_id" json:"disk_id"`
 }
 
 type VirtualMachineDiskArgs struct {
@@ -27,6 +31,10 @@ type VirtualMachineDiskArgs struct {
 }
 
 func (vmdsk VirtualMachineDisk) WireDependencies(f infer.FieldSelector, args *VirtualMachineDiskArgs, state *VirtualMachineDiskState) {
+	f.OutputField(&state.URL).DependsOn(f.InputField(&args.URL))
+	f.OutputField(&state.Token).DependsOn(f.InputField(&args.Token))
+	f.OutputField(&state.CustomerID).DependsOn(f.InputField(&args.CustomerID))
+	f.OutputField(&state.CloudSpaceID).DependsOn(f.InputField(&args.CloudSpaceID))
 	f.OutputField(&state.VirtualMachineID).DependsOn(f.InputField(&args.VirtualMachineID))
 	f.OutputField(&state.DiskID).DependsOn(f.InputField(&args.DiskID))
 }
@@ -56,15 +64,22 @@ func (VirtualMachineDisk) Create(ctx p.Context, name string, input VirtualMachin
 		return "", state, err
 	}
 	defer resp.Body.Close()
-
+	state.URL = input.URL
+	state.CustomerID = input.CustomerID
+	state.Token = input.Token
+	state.CloudSpaceID = input.CloudSpaceID
 	state.DiskID = input.DiskID
 	state.VirtualMachineID = input.VirtualMachineID
 
 	return id, state, nil
 }
 
-func (VirtualMachineDisk) Delete(ctx p.Context, id string, state VirtualMachineDiskState, input VirtualMachineDiskArgs) error {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/vms/%d/disks/%d", input.URL, input.CustomerID, input.CloudSpaceID, input.VirtualMachineID, state.DiskID)
+func (VirtualMachineDisk) Update(ctx p.Context, id string, state VirtualMachineDiskState, input VirtualMachineDiskArgs) (VirtualMachineDiskState, error) {
+	return VirtualMachineDiskState{}, nil
+}
+
+func (VirtualMachineDisk) Delete(ctx p.Context, id string, state VirtualMachineDiskState) error {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/vms/%d/disks/%d", state.URL, state.CustomerID, state.CloudSpaceID, state.VirtualMachineID, state.DiskID)
 
 	client := &http.Client{}
 	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(nil))
@@ -73,7 +88,7 @@ func (VirtualMachineDisk) Delete(ctx p.Context, id string, state VirtualMachineD
 		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {

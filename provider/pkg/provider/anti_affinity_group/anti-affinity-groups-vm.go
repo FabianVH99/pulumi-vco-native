@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	p "github.com/pulumi/pulumi-go-provider"
+	"github.com/pulumi/pulumi-go-provider/infer"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
 	"net/http"
 )
@@ -13,6 +14,10 @@ type AntiAffinityGroupVM struct{}
 
 type AntiAffinityGroupVMState struct {
 	AntiAffinityGroupVMArgs
+	URL              string `pulumi:"url"`
+	Token            string `pulumi:"token"`
+	CustomerID       string `pulumi:"customerID"`
+	CloudSpaceID     string `pulumi:"cloudspace_id"`
 	VirtualMachineID int    `pulumi:"vm_id" json:"vm_id"`
 	Status           string `pulumi:"status" json:"status"`
 }
@@ -24,6 +29,13 @@ type AntiAffinityGroupVMArgs struct {
 	CloudSpaceID     string `pulumi:"cloudspace_id"`
 	GroupID          string `pulumi:"group_id"`
 	VirtualMachineID int    `pulumi:"vm_id"`
+}
+
+func (c AntiAffinityGroupVM) WireDependencies(f infer.FieldSelector, args *AntiAffinityGroupVMArgs, state *AntiAffinityGroupVMState) {
+	f.OutputField(&state.URL).DependsOn(f.InputField(&args.URL))
+	f.OutputField(&state.Token).DependsOn(f.InputField(&args.Token))
+	f.OutputField(&state.CustomerID).DependsOn(f.InputField(&args.CustomerID))
+	f.OutputField(&state.CloudSpaceID).DependsOn(f.InputField(&args.CloudSpaceID))
 }
 
 func (agvm AntiAffinityGroupVM) Create(ctx p.Context, name string, input AntiAffinityGroupVMArgs, preview bool) (string, AntiAffinityGroupVMState, error) {
@@ -59,8 +71,14 @@ func (agvm AntiAffinityGroupVM) Create(ctx p.Context, name string, input AntiAff
 		fmt.Printf("Error decoding response body for %s: %v\n", id, err)
 		return "", state, err
 	}
+	state.URL = input.URL
+	state.CustomerID = input.CustomerID
+	state.Token = input.Token
+	state.CloudSpaceID = input.CloudSpaceID
+	state.GroupID = input.GroupID
+	state.VirtualMachineID = input.VirtualMachineID
 
-	updatedState, err := agvm.Read(ctx, id, input)
+	updatedState, err := agvm.Read(ctx, id, state)
 	if err != nil {
 		return "", state, err
 	}
@@ -68,8 +86,8 @@ func (agvm AntiAffinityGroupVM) Create(ctx p.Context, name string, input AntiAff
 	return id, updatedState, nil
 }
 
-func (AntiAffinityGroupVM) Read(ctx p.Context, id string, input AntiAffinityGroupVMArgs) (AntiAffinityGroupVMState, error) {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/anti-affinity-groups/%s/vms", input.URL, input.CustomerID, input.CloudSpaceID, input.GroupID)
+func (AntiAffinityGroupVM) Read(ctx p.Context, id string, state AntiAffinityGroupVMState) (AntiAffinityGroupVMState, error) {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/anti-affinity-groups/%s/vms", state.URL, state.CustomerID, state.CloudSpaceID, state.GroupID)
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -77,7 +95,7 @@ func (AntiAffinityGroupVM) Read(ctx p.Context, id string, input AntiAffinityGrou
 		return AntiAffinityGroupVMState{}, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
@@ -98,24 +116,24 @@ func (AntiAffinityGroupVM) Read(ctx p.Context, id string, input AntiAffinityGrou
 		return AntiAffinityGroupVMState{}, err
 	}
 
-	var state AntiAffinityGroupVMState
+	var newState AntiAffinityGroupVMState
 	for _, v := range result.VMS {
-		if v.VirtualMachineID == input.VirtualMachineID {
+		if v.VirtualMachineID == state.VirtualMachineID {
 			state.VirtualMachineID = v.VirtualMachineID
 			state.Status = v.Status
 			break
 		}
 	}
 
-	return state, nil
+	return newState, nil
 }
 
 func (AntiAffinityGroupVM) Update(ctx p.Context, id string, state AntiAffinityGroupVMState, input AntiAffinityGroupVMArgs) (AntiAffinityGroupVMState, error) {
 	return AntiAffinityGroupVMState{}, nil
 }
 
-func (AntiAffinityGroupVM) Delete(ctx p.Context, id string, state AntiAffinityGroupVMState, input AntiAffinityGroupVMArgs) error {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/anti-affinity-groups/%s/vms/%d", input.URL, input.CustomerID, input.CloudSpaceID, input.GroupID, state.VirtualMachineID)
+func (AntiAffinityGroupVM) Delete(ctx p.Context, id string, state AntiAffinityGroupVMState) error {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/anti-affinity-groups/%s/vms/%d", state.URL, state.CustomerID, state.CloudSpaceID, state.GroupID, state.VirtualMachineID)
 	client := &http.Client{}
 	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(nil))
 	if err != nil {
@@ -123,7 +141,7 @@ func (AntiAffinityGroupVM) Delete(ctx p.Context, id string, state AntiAffinityGr
 		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
