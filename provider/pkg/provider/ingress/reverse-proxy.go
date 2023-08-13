@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	p "github.com/pulumi/pulumi-go-provider"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
 	"net/http"
 )
 
@@ -21,9 +22,9 @@ type ReverseProxyState struct {
 }
 
 type ReverseProxyArgs struct {
-	URL                  string               `pulumi:"url"`
-	Token                string               `pulumi:"token"`
-	CustomerID           string               `pulumi:"customerID"`
+	URL                  string               `pulumi:"url" provider:"secret"`
+	Token                string               `pulumi:"token" provider:"secret"`
+	CustomerID           string               `pulumi:"customerID" provider:"secret"`
 	CloudSpaceID         string               `pulumi:"cloudspace_id"`
 	Name                 string               `pulumi:"name"`
 	Description          *string              `pulumi:"description,optional"`
@@ -74,7 +75,10 @@ type HealthCheck struct {
 
 func (rp ReverseProxy) Create(ctx p.Context, name string, input ReverseProxyArgs, preview bool) (string, ReverseProxyState, error) {
 	state := ReverseProxyState{ReverseProxyArgs: input}
-
+	id, err := resource.NewUniqueHex(name, 8, 0)
+	if err != nil {
+		return "", state, err
+	}
 	if preview {
 		return name, state, nil
 	}
@@ -205,15 +209,15 @@ func (rp ReverseProxy) Create(ctx p.Context, name string, input ReverseProxyArgs
 
 	state.ReverseProxyID = result["id"].(string)
 
-	updatedState, err := rp.Read(ctx, state, input)
+	updatedState, err := rp.Read(ctx, id, state, input)
 	if err != nil {
 		return "", state, err
 	}
 
-	return name, updatedState, nil
+	return id, updatedState, nil
 }
 
-func (ReverseProxy) Read(ctx p.Context, state ReverseProxyState, input ReverseProxyArgs) (ReverseProxyState, error) {
+func (ReverseProxy) Read(ctx p.Context, id string, state ReverseProxyState, input ReverseProxyArgs) (ReverseProxyState, error) {
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/reverse-proxies/%s", input.URL, input.CustomerID, input.CloudSpaceID, state.ReverseProxyID)
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
@@ -237,7 +241,7 @@ func (ReverseProxy) Read(ctx p.Context, state ReverseProxyState, input ReversePr
 	return result, nil
 }
 
-func (rp ReverseProxy) Update(ctx p.Context, state ReverseProxyState, input ReverseProxyArgs) (bool, ReverseProxyState, error) {
+func (rp ReverseProxy) Update(ctx p.Context, id string, state ReverseProxyState, input ReverseProxyArgs) (ReverseProxyState, error) {
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/reverse-proxies/%s", input.URL, input.CustomerID, input.CloudSpaceID, state.ReverseProxyID)
 	payload := map[string]interface{}{
 		"name": input.Name,
@@ -340,60 +344,48 @@ func (rp ReverseProxy) Update(ctx p.Context, state ReverseProxyState, input Reve
 
 	jsonPayload, err := json.Marshal(payload)
 	if err != nil {
-		return false, state, err
+		return state, err
 	}
 
 	client := &http.Client{}
 	req, err := http.NewRequest("PUT", url, bytes.NewBuffer(jsonPayload))
 	if err != nil {
-		return false, state, err
+		return state, err
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
-		return false, state, err
+		return state, err
 	}
 	defer resp.Body.Close()
 
-	var status map[string]interface{}
-	if err := json.NewDecoder(resp.Body).Decode(&status); err != nil {
-		return false, state, err
-	}
-
-	success := status["success"].(bool)
-
-	updatedState, err := rp.Read(ctx, state, input)
+	updatedState, err := rp.Read(ctx, id, state, input)
 	if err != nil {
-		return false, state, err
+		return state, err
 	}
 
-	return success, updatedState, nil
+	return updatedState, nil
 }
 
-func (ReverseProxy) Delete(ctx p.Context, state ReverseProxyState, input ReverseProxyArgs) (bool, error) {
+func (ReverseProxy) Delete(ctx p.Context, id string, state ReverseProxyState, input ReverseProxyArgs) error {
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/reverse-proxies/%s", input.URL, input.CustomerID, input.CloudSpaceID, state.ReverseProxyID)
 	client := &http.Client{}
 	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(nil))
 	if err != nil {
-		return false, err
+		fmt.Printf("Error making API request for %s: %v", id, err)
+		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
-		return false, err
+		fmt.Printf("Error deleting resource %s: %v\n", id, err)
+		return err
 	}
 	defer resp.Body.Close()
 
-	var result map[string]interface{}
-	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
-		return false, err
-	}
-
-	status := result["success"].(bool)
-
-	return status, nil
+	return nil
 }

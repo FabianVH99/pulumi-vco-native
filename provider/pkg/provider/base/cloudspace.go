@@ -12,49 +12,20 @@ import (
 
 type Cloudspace struct{}
 
-func (c *CloudspaceState) run(state CloudspaceState) error {
-
-	c.CloudSpaceID = state.CloudSpaceID
-	c.Name = state.Name
-	c.CloudSpaceID = state.CloudSpaceID
-	c.Status = state.Status
-	c.ExternalNetworkIP = state.ExternalNetworkIP
-	c.ExternalNetworkID = state.ExternalNetworkID
-	c.PrivateNetwork = state.PrivateNetwork
-	c.LocalDomain = state.LocalDomain
-	c.UpdateTime = state.UpdateTime
-	c.CreationTime = state.CreationTime
-	c.RouterType = state.RouterType
-	c.Location = state.Location
-	c.CloudspaceMode = state.CloudspaceMode
-
-	return nil
-}
-
-func (c *CloudspaceState) id(id string) error {
-
-	c.CloudSpaceID = id
-
-	return nil
-}
-
 type CloudspaceState struct {
 	CloudspaceArgs
-	URL               string `json:"url" pulumi:"url"`
-	Token             string `json:"token" pulumi:"token"`
-	CustomerID        string `json:"customerID" pulumi:"customerID"`
-	CloudSpaceID      string `json:"cloudspace_id" pulumi:"cloudspace_id"`
-	Name              string `json:"name" pulumi:"name"`
-	Status            string `json:"status" pulumi:"status"`
-	ExternalNetworkIP string `json:"external_network_ip" pulumi:"external_network_ip"`
-	ExternalNetworkID string `json:"external_network_id" pulumi:"external_network_id"`
-	PrivateNetwork    string `json:"private_network" pulumi:"private_network"`
-	LocalDomain       string `json:"local_domain" pulumi:"local_domain"`
-	UpdateTime        int64  `json:"update_time" pulumi:"update_time"`
-	CreationTime      int64  `json:"creation_time" pulumi:"creation_time"`
-	RouterType        string `json:"router_type" pulumi:"router_type"`
-	Location          string `json:"location" pulumi:"location"`
-	CloudspaceMode    string `json:"cloudspace_mode" pulumi:"cloudspace_mode"`
+	CloudSpaceID      string `pulumi:"cloudspace_id" json:"cloudspace_id"`
+	Name              string `pulumi:"name" json:"name"`
+	Status            string `pulumi:"status" json:"status"`
+	ExternalNetworkIP string `pulumi:"external_network_ip" json:"external_network_ip"`
+	ExternalNetworkID string `pulumi:"external_network_id" json:"external_network_id"`
+	PrivateNetwork    string `pulumi:"private_network" json:"private_network"`
+	LocalDomain       string `pulumi:"local_domain" json:"local_domain"`
+	UpdateTime        int64  `pulumi:"update_time" json:"update_time"`
+	CreationTime      int64  `pulumi:"creation_time" json:"creation_time"`
+	RouterType        string `pulumi:"router_type" json:"router_type"`
+	Location          string `pulumi:"location" json:"location"`
+	CloudspaceMode    string `pulumi:"cloudspace_mode" json:"cloudspace_mode"`
 }
 
 type CloudspaceArgs struct {
@@ -82,9 +53,6 @@ type CloudspaceArgs struct {
 }
 
 func (c Cloudspace) WireDependencies(f infer.FieldSelector, args *CloudspaceArgs, state *CloudspaceState) {
-	f.OutputField(&state.URL).DependsOn(f.InputField(&args.URL))
-	f.OutputField(&state.Token).DependsOn(f.InputField(&args.Token))
-	f.OutputField(&state.CustomerID).DependsOn(f.InputField(&args.CustomerID))
 	f.OutputField(&state.Name).DependsOn(f.InputField(&args.Name))
 	f.OutputField(&state.ExternalNetworkID).DependsOn(f.InputField(&args.ExternalNetworkID))
 	f.OutputField(&state.Location).DependsOn(f.InputField(&args.Location))
@@ -186,12 +154,8 @@ func (c Cloudspace) Create(ctx p.Context, name string, input CloudspaceArgs, pre
 	}
 
 	state.CloudSpaceID = result["cloudspace_id"].(string)
-	state.URL = input.URL
-	state.CustomerID = input.CustomerID
-	state.Token = input.Token
-	state.id(result["cloudspace_id"].(string))
 
-	updatedState, err := c.Read(nil, id, state)
+	updatedState, err := c.Read(nil, id, input, state)
 	if err != nil {
 		return "", state, err
 	}
@@ -199,8 +163,8 @@ func (c Cloudspace) Create(ctx p.Context, name string, input CloudspaceArgs, pre
 	return id, updatedState, nil
 }
 
-func (Cloudspace) Read(ctx p.Context, id string, state CloudspaceState) (CloudspaceState, error) {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s", state.URL, state.CustomerID, state.CloudSpaceID)
+func (Cloudspace) Read(ctx p.Context, id string, input CloudspaceArgs, state CloudspaceState) (CloudspaceState, error) {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s", input.URL, input.CustomerID, state.CloudSpaceID)
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -208,7 +172,7 @@ func (Cloudspace) Read(ctx p.Context, id string, state CloudspaceState) (Cloudsp
 		return CloudspaceState{}, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
@@ -223,17 +187,15 @@ func (Cloudspace) Read(ctx p.Context, id string, state CloudspaceState) (Cloudsp
 		return CloudspaceState{}, err
 	}
 
-	result.run(result)
-
-	result.URL = state.URL
-	result.CustomerID = state.CustomerID
-	result.Token = state.Token
-
 	return result, nil
 }
 
-func (Cloudspace) Delete(ctx p.Context, id string, state CloudspaceState) error {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s", state.URL, state.CustomerID, state.CloudSpaceID)
+func (Cloudspace) Update(ctx p.Context, id string, state CloudspaceState, input CloudspaceArgs) (CloudspaceState, error) {
+	return CloudspaceState{}, nil
+}
+
+func (Cloudspace) Delete(ctx p.Context, id string, input CloudspaceArgs, state CloudspaceState) error {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s", input.URL, input.CustomerID, state.CloudSpaceID)
 	client := &http.Client{}
 	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(nil))
 	if err != nil {
@@ -241,7 +203,7 @@ func (Cloudspace) Delete(ctx p.Context, id string, state CloudspaceState) error 
 		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
@@ -249,12 +211,6 @@ func (Cloudspace) Delete(ctx p.Context, id string, state CloudspaceState) error 
 		return err
 	}
 	defer resp.Body.Close()
-
-	var result map[string]interface{}
-	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
-		fmt.Printf("Error decoding response body for %s: %v\n", id, err)
-		return err
-	}
 
 	return nil
 }

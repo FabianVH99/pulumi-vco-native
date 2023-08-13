@@ -360,9 +360,9 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.NotEmpty(t, state.ObjectSpaceID)
 
-		objectSpaceLink := objectspace.ObjectSpaceLink{}
+		objectSpaceLink := objectspace.Link{}
 
-		_, linkState, err := objectSpaceLink.Create(nil, "objlink-test-pulumi", objectspace.ObjectSpaceLinkArgs{
+		_, linkState, err := objectSpaceLink.Create(nil, "objlink-test-pulumi", objectspace.LinkArgs{
 			URL:           url,
 			Token:         token,
 			CustomerID:    customer,
@@ -372,7 +372,7 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, true, linkState.Status)
 
-		status, err := objectSpaceLink.Delete(nil, linkState, objectspace.ObjectSpaceLinkArgs{
+		status, err := objectSpaceLink.Delete(nil, linkState, objectspace.LinkArgs{
 			URL:          url,
 			Token:        token,
 			CustomerID:   customer,

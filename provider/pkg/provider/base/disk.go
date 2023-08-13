@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	p "github.com/pulumi/pulumi-go-provider"
+	"github.com/pulumi/pulumi-go-provider/infer"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
 	"net/http"
 )
 
@@ -12,23 +14,18 @@ type Disk struct{}
 
 type DiskState struct {
 	DiskArgs
-	Status       string `json:"status" pulumi:"status"`
-	DiskSize     int    `json:"disk_size" pulumi:"disk_size"`
-	DiskName     string `json:"disk_name" pulumi:"disk_name"`
-	Description  string `json:"description" pulumi:"description"`
-	Exposed      bool   `json:"exposed" pulumi:"exposed"`
-	DiskID       int    `json:"disk_id" pulumi:"disk_id"`
-	DiskType     string `json:"disk_type" pulumi:"disk_type"`
-	Order        string `json:"order" pulumi:"order"`
-	VMID         int    `json:"vm_id" pulumi:"vm_id"`
-	Port         int    `json:"port" pulumi:"port"`
-	Model        string `json:"model" pulumi:"model"`
-	IOTune       IOTune `json:"iotune" pulumi:"iotune"`
-	CloudspaceID string `json:"cloudspace_id" pulumi:"cloudspace_id"`
-}
-
-type IOTune struct {
-	IOPS float64 `json:"iops" pulumi:"iops"`
+	Status          string `pulumi:"status" json:"status"`
+	DiskSize        int    `pulumi:"disk_size" json:"disk_size"`
+	DiskName        string `pulumi:"disk_name" json:"disk_name"`
+	DiskDescription string `pulumi:"description" json:"description"`
+	Exposed         bool   `pulumi:"exposed" json:"exposed"`
+	DiskID          int    `pulumi:"disk_id" json:"disk_id"`
+	DiskType        string `pulumi:"disk_type" json:"disk_type"`
+	Order           string `pulumi:"order" json:"order"`
+	VMID            int    `pulumi:"vm_id" json:"vm_id"`
+	Port            int    `pulumi:"port" json:"port"`
+	Model           string `pulumi:"model" json:"model"`
+	CloudspaceID    string `pulumi:"cloudspace_id" json:"cloudspace_id"`
 }
 
 type DiskArgs struct {
@@ -46,17 +43,27 @@ type DiskArgs struct {
 	Permanently     *bool   `pulumi:"permanently,optional"`
 }
 
+func (d Disk) WireDependencies(f infer.FieldSelector, args *DiskArgs, state *DiskState) {
+	f.OutputField(&state.DiskName).DependsOn(f.InputField(&args.DiskName))
+	f.OutputField(&state.DiskDescription).DependsOn(f.InputField(&args.DiskDescription))
+	f.OutputField(&state.DiskSize).DependsOn(f.InputField(&args.DiskSize))
+}
+
 func (d Disk) Create(ctx p.Context, name string, input DiskArgs, preview bool) (string, DiskState, error) {
 	state := DiskState{DiskArgs: input}
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/locations/%s/disks?disk_name=%s&description=%s&disk_size=%d", input.URL, input.CustomerID, input.Location, input.DiskName, input.DiskDescription, input.DiskSize)
-
+	id, err := resource.NewUniqueHex(name, 8, 0)
+	if err != nil {
+		return "", state, err
+	}
 	if preview {
 		return name, state, nil
 	}
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/locations/%s/disks?disk_name=%s&description=%s&disk_size=%d", input.URL, input.CustomerID, input.Location, input.DiskName, input.DiskDescription, input.DiskSize)
 
 	client := &http.Client{}
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(nil))
+	req, err := http.NewRequest("POST", url, nil)
 	if err != nil {
+		fmt.Printf("Error making API request for %s: %v", id, err)
 		return "", state, err
 	}
 	req.Header.Set("Content-Type", "application/json")
@@ -64,31 +71,34 @@ func (d Disk) Create(ctx p.Context, name string, input DiskArgs, preview bool) (
 
 	resp, err := client.Do(req)
 	if err != nil {
+		fmt.Printf("Error creating resource %s: %v\n", id, err)
 		return "", state, err
 	}
 	defer resp.Body.Close()
 
 	var result map[string]interface{}
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+		fmt.Printf("Error decoding response body for %s: %v\n", id, err)
 		return "", state, err
 	}
 
 	diskID := result["disk_id"].(float64)
 	state.DiskID = int(diskID)
 
-	updatedState, err := d.Read(ctx, state, input)
+	updatedState, err := d.Read(ctx, id, state, input)
 	if err != nil {
 		return "", state, err
 	}
 
-	return name, updatedState, nil
+	return id, updatedState, nil
 }
 
-func (Disk) Read(ctx p.Context, state DiskState, input DiskArgs) (DiskState, error) {
+func (Disk) Read(ctx p.Context, id string, state DiskState, input DiskArgs) (DiskState, error) {
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/locations/%s/disks/%d", input.URL, input.CustomerID, input.Location, state.DiskID)
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
+		fmt.Printf("Error making API request for %s: %v", id, err)
 		return DiskState{}, err
 	}
 	req.Header.Set("Content-Type", "application/json")
@@ -96,41 +106,42 @@ func (Disk) Read(ctx p.Context, state DiskState, input DiskArgs) (DiskState, err
 
 	resp, err := client.Do(req)
 	if err != nil {
+		fmt.Printf("Error retrieving resource %s: %v\n", id, err)
 		return DiskState{}, err
 	}
 	defer resp.Body.Close()
 
 	var result DiskState
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+		fmt.Printf("Error decoding response body for %s: %v\n", id, err)
 		return DiskState{}, err
 	}
 
 	return result, nil
 }
 
-func (Disk) Delete(ctx p.Context, state DiskState, input DiskArgs) (bool, error) {
+func (Disk) Update(ctx p.Context, id string, state DiskState, input DiskArgs) (DiskState, error) {
+	return DiskState{}, nil
+}
+
+func (Disk) Delete(ctx p.Context, id string, state DiskState, input DiskArgs) error {
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/locations/%s/disks/%d", input.URL, input.CustomerID, input.Location, state.DiskID)
 
 	client := &http.Client{}
 	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(nil))
 	if err != nil {
-		return false, err
+		fmt.Printf("Error making API request for %s: %v", id, err)
+		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
-		return false, err
+		fmt.Printf("Error deleting resource %s: %v\n", id, err)
+		return err
 	}
 	defer resp.Body.Close()
 
-	var result map[string]interface{}
-	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
-		return false, err
-	}
-
-	status := result["success"].(bool)
-
-	return status, nil
+	return nil
 }

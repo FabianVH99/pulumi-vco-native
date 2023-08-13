@@ -67,7 +67,7 @@ func NewProvider() p.Provider {
 			infer.Resource[ingress.LoadBalancer, ingress.LoadBalancerArgs, ingress.LoadBalancerState](),
 			infer.Resource[ingress.ReverseProxy, ingress.ReverseProxyArgs, ingress.ReverseProxyState](),
 			infer.Resource[ingress.ServerPool, ingress.ServerPoolArgs, ingress.ServerPoolState](),
-			infer.Resource[objectspace.ObjectSpaceLink, objectspace.ObjectSpaceLinkArgs, objectspace.ObjectSpaceLinkState](),
+			infer.Resource[objectspace.Link, objectspace.LinkArgs, objectspace.LinkState](),
 			infer.Resource[virtual_machine.VirtualMachineCD, virtual_machine.VirtualMachineCDArgs, virtual_machine.VirtualMachineCDState](),
 			infer.Resource[virtual_machine.VirtualMachineDisk, virtual_machine.VirtualMachineDiskArgs, virtual_machine.VirtualMachineDiskState](),
 			infer.Resource[virtual_machine.VirtualMachineNIC, virtual_machine.VirtualMachineNICArgs, virtual_machine.VirtualMachineNICState](),

@@ -14,9 +14,6 @@ type AntiAffinityGroup struct{}
 
 type AntiAffinityGroupState struct {
 	AntiAffinityGroupArgs
-	URL          string `json:"url" pulumi:"url"`
-	Token        string `json:"token" pulumi:"token"`
-	CustomerID   string `json:"customerID" pulumi:"customerID"`
 	CloudSpaceID string `json:"cloudspace_id" pulumi:"cloudspace_id"`
 	GroupID      string `json:"group_id" pulumi:"group_id"`
 	Spread       int    `json:"spread" pulumi:"spread"`
@@ -33,9 +30,6 @@ type AntiAffinityGroupArgs struct {
 }
 
 func (ag AntiAffinityGroup) WireDependencies(f infer.FieldSelector, args *AntiAffinityGroupArgs, state *AntiAffinityGroupState) {
-	f.OutputField(&state.URL).DependsOn(f.InputField(&args.URL))
-	f.OutputField(&state.Token).DependsOn(f.InputField(&args.Token))
-	f.OutputField(&state.CustomerID).DependsOn(f.InputField(&args.CustomerID))
 	f.OutputField(&state.CloudSpaceID).DependsOn(f.InputField(&args.CloudSpaceID))
 	f.OutputField(&state.GroupID).DependsOn(f.InputField(&args.GroupID))
 	f.OutputField(&state.Spread).DependsOn(f.InputField(&args.Spread))
@@ -157,12 +151,6 @@ func (AntiAffinityGroup) Delete(ctx p.Context, id string, input AntiAffinityGrou
 		return err
 	}
 	defer resp.Body.Close()
-
-	var result map[string]interface{}
-	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
-		fmt.Printf("Error decoding response body for %s: %v\n", id, err)
-		return err
-	}
 
 	return nil
 }

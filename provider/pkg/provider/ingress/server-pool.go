@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	p "github.com/pulumi/pulumi-go-provider"
+	"github.com/pulumi/pulumi-go-provider/infer"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
 	"net/http"
 )
 
@@ -24,17 +26,25 @@ type ServerPoolHost struct {
 }
 
 type ServerPoolArgs struct {
-	URL          string `pulumi:"url"`
-	Token        string `pulumi:"token"`
-	CustomerID   string `pulumi:"customerID"`
+	URL          string `pulumi:"url" provider:"secret"`
+	Token        string `pulumi:"token" provider:"secret"`
+	CustomerID   string `pulumi:"customerID" provider:"secret"`
 	CloudSpaceID string `pulumi:"cloudspace_id"`
 	Name         string `pulumi:"name"`
 	Description  string `pulumi:"description"`
 }
 
+func (sv ServerPool) WireDependencies(f infer.FieldSelector, args *ServerPoolArgs, state *ServerPoolState) {
+	f.OutputField(&state.Name).DependsOn(f.InputField(&args.Name))
+	f.OutputField(&state.Description).DependsOn(f.InputField(&args.Description))
+}
+
 func (sv ServerPool) Create(ctx p.Context, name string, input ServerPoolArgs, preview bool) (string, ServerPoolState, error) {
 	state := ServerPoolState{ServerPoolArgs: input}
-
+	id, err := resource.NewUniqueHex(name, 8, 0)
+	if err != nil {
+		return "", state, err
+	}
 	if preview {
 		return name, state, nil
 	}
@@ -62,15 +72,15 @@ func (sv ServerPool) Create(ctx p.Context, name string, input ServerPoolArgs, pr
 
 	state.ServerPoolID = result["id"].(string)
 
-	updatedState, err := sv.Read(ctx, state, input)
+	updatedState, err := sv.Read(ctx, id, state, input)
 	if err != nil {
 		return "", state, err
 	}
 
-	return name, updatedState, nil
+	return id, updatedState, nil
 }
 
-func (ServerPool) Read(ctx p.Context, state ServerPoolState, input ServerPoolArgs) (ServerPoolState, error) {
+func (ServerPool) Read(ctx p.Context, id string, state ServerPoolState, input ServerPoolArgs) (ServerPoolState, error) {
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/server-pools/%s", input.URL, input.CustomerID, input.CloudSpaceID, state.ServerPoolID)
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
@@ -94,61 +104,49 @@ func (ServerPool) Read(ctx p.Context, state ServerPoolState, input ServerPoolArg
 	return result, nil
 }
 
-func (sv ServerPool) Update(ctx p.Context, state ServerPoolState, input ServerPoolArgs) (bool, ServerPoolState, error) {
+func (sv ServerPool) Update(ctx p.Context, id string, state ServerPoolState, input ServerPoolArgs) (ServerPoolState, error) {
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/server-pools/%s?name=%s&description=%s", input.URL, input.CustomerID, input.CloudSpaceID, state.ServerPoolID, input.Name, input.Description)
 
 	client := &http.Client{}
 	req, err := http.NewRequest("PUT", url, bytes.NewBuffer(nil))
 	if err != nil {
-		return false, state, err
+		return state, err
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
-		return false, state, err
+		return state, err
 	}
 	defer resp.Body.Close()
 
-	var status map[string]interface{}
-	if err := json.NewDecoder(resp.Body).Decode(&status); err != nil {
-		return false, state, err
-	}
-
-	success := status["success"].(bool)
-
-	updatedState, err := sv.Read(ctx, state, input)
+	updatedState, err := sv.Read(ctx, id, state, input)
 	if err != nil {
-		return false, state, err
+		return state, err
 	}
 
-	return success, updatedState, nil
+	return updatedState, nil
 }
 
-func (ServerPool) Delete(ctx p.Context, state ServerPoolState, input ServerPoolArgs) (bool, error) {
+func (ServerPool) Delete(ctx p.Context, id string, state ServerPoolState, input ServerPoolArgs) error {
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/server-pools/%s", input.URL, input.CustomerID, input.CloudSpaceID, state.ServerPoolID)
 
 	client := &http.Client{}
 	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(nil))
 	if err != nil {
-		return false, err
+		fmt.Printf("Error making API request for %s: %v", id, err)
+		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
-		return false, err
+		fmt.Printf("Error deleting resource %s: %v\n", id, err)
+		return err
 	}
 	defer resp.Body.Close()
 
-	var response map[string]interface{}
-	if err := json.NewDecoder(resp.Body).Decode(&response); err != nil {
-		return false, err
-	}
-
-	status := response["success"].(bool)
-
-	return status, nil
+	return nil
 }

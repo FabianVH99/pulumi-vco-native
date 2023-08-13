@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	p "github.com/pulumi/pulumi-go-provider"
+	"github.com/pulumi/pulumi-go-provider/infer"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -77,9 +79,9 @@ type VirtualMachineState struct {
 }
 
 type VirtualMachineArgs struct {
-	URL           string  `pulumi:"url"`
-	Token         string  `pulumi:"token"`
-	CustomerID    string  `pulumi:"customerID"`
+	URL           string  `pulumi:"url" provider:"secret"`
+	Token         string  `pulumi:"token" provider:"secret"`
+	CustomerID    string  `pulumi:"customerID" provider:"secret"`
 	CloudSpaceID  string  `pulumi:"cloudspace_id"`
 	Name          string  `pulumi:"name"`
 	Description   string  `pulumi:"description"`
@@ -101,15 +103,27 @@ type VirtualMachineArgs struct {
 	BootType      *string `pulumi:"boot_type,optional"`
 }
 
+func (vm VirtualMachine) WireDependencies(f infer.FieldSelector, args *VirtualMachineArgs, state *VirtualMachineState) {
+	f.OutputField(&state.CloudSpaceID).DependsOn(f.InputField(&args.CloudSpaceID))
+	f.OutputField(&state.Name).DependsOn(f.InputField(&args.Name))
+	f.OutputField(&state.Description).DependsOn(f.InputField(&args.Description))
+	f.OutputField(&state.Vcpus).DependsOn(f.InputField(&args.Vcpus))
+	f.OutputField(&state.Memory).DependsOn(f.InputField(&args.Memory))
+}
+
 func (vm VirtualMachine) Create(ctx p.Context, name string, input VirtualMachineArgs, preview bool) (string, VirtualMachineState, error) {
 	state := VirtualMachineState{VirtualMachineArgs: input}
-
+	id, err := resource.NewUniqueHex(name, 8, 0)
+	if err != nil {
+		return "", state, err
+	}
 	if preview {
 		return name, state, nil
 	}
 
 	u, err := url.Parse(fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/vms", input.URL, input.CustomerID, input.CloudSpaceID))
 	if err != nil {
+		fmt.Printf("Error making API request for %s: %v", id, err)
 		return "", state, err
 	}
 
@@ -183,6 +197,7 @@ func (vm VirtualMachine) Create(ctx p.Context, name string, input VirtualMachine
 
 	jsonPayload, err := json.Marshal(payload)
 	if err != nil {
+		fmt.Printf("Error constructing JSON payload %s: %v", id, err)
 		return "", state, err
 	}
 
@@ -196,6 +211,7 @@ func (vm VirtualMachine) Create(ctx p.Context, name string, input VirtualMachine
 
 	resp, err := client.Do(req)
 	if err != nil {
+		fmt.Printf("Error creating resource %s: %v", id, err)
 		return "", state, err
 	}
 	defer resp.Body.Close()
@@ -208,20 +224,21 @@ func (vm VirtualMachine) Create(ctx p.Context, name string, input VirtualMachine
 	virtualMachineID := result["vm_id"].(float64)
 	state.VirtualMachineID = int(virtualMachineID)
 
-	updatedState, err := vm.Read(ctx, state, input)
+	updatedState, err := vm.Read(ctx, id, state, input)
 	if err != nil {
 		return "", state, err
 	}
 
-	return name, updatedState, nil
+	return id, updatedState, nil
 }
 
-func (VirtualMachine) Read(ctx p.Context, state VirtualMachineState, input VirtualMachineArgs) (VirtualMachineState, error) {
+func (VirtualMachine) Read(ctx p.Context, id string, state VirtualMachineState, input VirtualMachineArgs) (VirtualMachineState, error) {
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/vms/%d", input.URL, input.CustomerID, input.CloudSpaceID, state.VirtualMachineID)
 
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
+		fmt.Printf("Error making API request for %s: %v", id, err)
 		return VirtualMachineState{}, err
 	}
 	req.Header.Set("Content-Type", "application/json")
@@ -229,6 +246,7 @@ func (VirtualMachine) Read(ctx p.Context, state VirtualMachineState, input Virtu
 
 	resp, err := client.Do(req)
 	if err != nil {
+		fmt.Printf("Error updating resource %s: %v\n", id, err)
 		return VirtualMachineState{}, err
 	}
 	defer resp.Body.Close()
@@ -241,28 +259,27 @@ func (VirtualMachine) Read(ctx p.Context, state VirtualMachineState, input Virtu
 	return result, nil
 }
 
-func (VirtualMachine) Delete(ctx p.Context, state VirtualMachineState, input VirtualMachineArgs) (bool, error) {
+func (VirtualMachine) Update(ctx p.Context, id string, state VirtualMachineState, input VirtualMachineArgs) (VirtualMachineState, error) {
+	return VirtualMachineState{}, nil
+}
+
+func (VirtualMachine) Delete(ctx p.Context, id string, state VirtualMachineState, input VirtualMachineArgs) error {
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/vms/%d", input.URL, input.CustomerID, input.CloudSpaceID, state.VirtualMachineID)
 	client := &http.Client{}
 	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(nil))
 	if err != nil {
-		return false, err
+		fmt.Printf("Error making API request for %s: %v", id, err)
+		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
-		return false, err
+		fmt.Printf("Error deleting resource %s: %v\n", id, err)
+		return err
 	}
 	defer resp.Body.Close()
 
-	var result map[string]interface{}
-	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
-		return false, err
-	}
-
-	status := result["success"].(bool)
-
-	return status, nil
+	return nil
 }

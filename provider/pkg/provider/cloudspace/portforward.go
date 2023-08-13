@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	p "github.com/pulumi/pulumi-go-provider"
+	"github.com/pulumi/pulumi-go-provider/infer"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -25,9 +27,9 @@ type PortForwardState struct {
 }
 
 type PortForwardArgs struct {
-	URL              string  `pulumi:"url"`
-	Token            string  `pulumi:"token"`
-	CustomerID       string  `pulumi:"customerID"`
+	URL              string  `pulumi:"url" provider:"secret"`
+	Token            string  `pulumi:"token" provider:"secret"`
+	CustomerID       string  `pulumi:"customerID" provider:"secret"`
 	CloudSpaceID     string  `pulumi:"cloudspace_id"`
 	LocalPort        int     `pulumi:"local_port"`
 	PublicPort       int     `pulumi:"public_port"`
@@ -38,15 +40,27 @@ type PortForwardArgs struct {
 	NestedCSID       *string `pulumi:"nested_cs_id,optional"`
 }
 
+func (pf PortForward) WireDependencies(f infer.FieldSelector, args *PortForwardArgs, state *PortForwardState) {
+	f.OutputField(&state.LocalPort).DependsOn(f.InputField(&args.LocalPort))
+	f.OutputField(&state.PublicPort).DependsOn(f.InputField(&args.PublicPort))
+	f.OutputField(&state.Protocol).DependsOn(f.InputField(&args.Protocol))
+	f.OutputField(&state.VirtualMachineID).DependsOn(f.InputField(&args.VirtualMachineID))
+	f.OutputField(&state.PublicIP).DependsOn(f.InputField(&args.PublicIP))
+}
+
 func (pf PortForward) Create(ctx p.Context, name string, input PortForwardArgs, preview bool) (string, PortForwardState, error) {
 	state := PortForwardState{PortForwardArgs: input}
-
+	id, err := resource.NewUniqueHex(name, 8, 0)
+	if err != nil {
+		return "", state, err
+	}
 	if preview {
 		return name, state, nil
 	}
 
 	u, err := url.Parse(fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/portforwards", input.URL, input.CustomerID, input.CloudSpaceID))
 	if err != nil {
+		fmt.Printf("Error making API request for %s: %v", id, err)
 		return "", state, err
 	}
 
@@ -78,6 +92,7 @@ func (pf PortForward) Create(ctx p.Context, name string, input PortForwardArgs, 
 
 	resp, err := client.Do(req)
 	if err != nil {
+		fmt.Printf("Error creating resource %s: %v\n", id, err)
 		return "", state, err
 	}
 	defer resp.Body.Close()
@@ -89,19 +104,20 @@ func (pf PortForward) Create(ctx p.Context, name string, input PortForwardArgs, 
 
 	state.PortForwardID = result["portforward_id"].(string)
 
-	updatedState, err := pf.Read(ctx, state, input)
+	updatedState, err := pf.Read(ctx, id, state, input)
 	if err != nil {
 		return "", state, err
 	}
 
-	return name, updatedState, nil
+	return id, updatedState, nil
 }
 
-func (PortForward) Read(ctx p.Context, state PortForwardState, input PortForwardArgs) (PortForwardState, error) {
+func (PortForward) Read(ctx p.Context, id string, state PortForwardState, input PortForwardArgs) (PortForwardState, error) {
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/portforwards/%s", input.URL, input.CustomerID, input.CloudSpaceID, state.PortForwardID)
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
+		fmt.Printf("Error making API request for %s: %v", id, err)
 		return PortForwardState{}, err
 	}
 	req.Header.Set("Content-Type", "application/json")
@@ -109,6 +125,7 @@ func (PortForward) Read(ctx p.Context, state PortForwardState, input PortForward
 
 	resp, err := client.Do(req)
 	if err != nil {
+		fmt.Printf("Error updating resource %s: %v\n", id, err)
 		return PortForwardState{}, err
 	}
 	defer resp.Body.Close()
@@ -121,7 +138,7 @@ func (PortForward) Read(ctx p.Context, state PortForwardState, input PortForward
 	return result, nil
 }
 
-func (pf PortForward) Update(ctx p.Context, state PortForwardState, input PortForwardArgs) (PortForwardState, error) {
+func (pf PortForward) Update(ctx p.Context, id string, state PortForwardState, input PortForwardArgs) (PortForwardState, error) {
 	u, err := url.Parse(fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/portforwards/%s", input.URL, input.CustomerID, input.CloudSpaceID, state.PortForwardID))
 	if err != nil {
 		return state, err
@@ -148,6 +165,7 @@ func (pf PortForward) Update(ctx p.Context, state PortForwardState, input PortFo
 	client := &http.Client{}
 	req, err := http.NewRequest("PUT", url, bytes.NewBuffer(nil))
 	if err != nil {
+		fmt.Printf("Error making API request for %s: %v", id, err)
 		return PortForwardState{}, err
 	}
 	req.Header.Set("Content-Type", "application/json")
@@ -155,6 +173,7 @@ func (pf PortForward) Update(ctx p.Context, state PortForwardState, input PortFo
 
 	resp, err := client.Do(req)
 	if err != nil {
+		fmt.Printf("Error updating resource %s: %v\n", id, err)
 		return PortForwardState{}, err
 	}
 	defer resp.Body.Close()
@@ -162,6 +181,7 @@ func (pf PortForward) Update(ctx p.Context, state PortForwardState, input PortFo
 	getURL := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/portforwards", input.URL, input.CustomerID, input.CloudSpaceID)
 	getReq, err := http.NewRequest("GET", getURL, nil)
 	if err != nil {
+		fmt.Printf("Error making API request for %s: %v", id, err)
 		return PortForwardState{}, err
 	}
 	getReq.Header.Set("Content-Type", "application/json")
@@ -169,6 +189,7 @@ func (pf PortForward) Update(ctx p.Context, state PortForwardState, input PortFo
 
 	getResp, err := client.Do(getReq)
 	if err != nil {
+		fmt.Printf("Error retrieving resource %s: %v\n", id, err)
 		return PortForwardState{}, err
 	}
 	defer getResp.Body.Close()
@@ -196,7 +217,7 @@ func (pf PortForward) Update(ctx p.Context, state PortForwardState, input PortFo
 		}
 	}
 
-	updatedState, err := pf.Read(ctx, state, input)
+	updatedState, err := pf.Read(ctx, id, state, input)
 	if err != nil {
 		return state, err
 	}
@@ -204,22 +225,24 @@ func (pf PortForward) Update(ctx p.Context, state PortForwardState, input PortFo
 	return updatedState, nil
 }
 
-func (PortForward) Delete(ctx p.Context, state PortForwardState, input PortForwardArgs) (int, error) {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/portforwards/%s", input.URL, input.CustomerID, input.CloudSpaceID, state.PortForwardID)
+func (PortForward) Delete(ctx p.Context, id string, state PortForwardState, input PortForwardArgs) error {
+	pfUrl := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/portforwards/%s", input.URL, input.CustomerID, input.CloudSpaceID, state.PortForwardID)
 
 	client := &http.Client{}
-	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(nil))
+	req, err := http.NewRequest("DELETE", pfUrl, bytes.NewBuffer(nil))
 	if err != nil {
-		return 0, err
+		fmt.Printf("Error making API request for %s: %v", id, err)
+		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
-		return 0, err
+		fmt.Printf("Error deleting resource %s: %v\n", id, err)
+		return err
 	}
 	defer resp.Body.Close()
 
-	return resp.StatusCode, nil
+	return nil
 }

@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	p "github.com/pulumi/pulumi-go-provider"
+	"github.com/pulumi/pulumi-go-provider/infer"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
 	"net/http"
 )
 
@@ -28,18 +30,25 @@ type Endpoint struct {
 }
 
 type ExposedDiskArgs struct {
-	URL            string `pulumi:"url"`
-	Token          string `pulumi:"token"`
-	CustomerID     string `pulumi:"customerID"`
+	URL            string `pulumi:"url" provider:"secret"`
+	Token          string `pulumi:"token" provider:"secret"`
+	CustomerID     string `pulumi:"customerID" provider:"secret"`
 	CloudSpaceID   string `pulumi:"cloudspace_id"`
 	DiskID         int    `pulumi:"disk_id"`
 	IOPS           *int   `pulumi:"iops,optional"`
 	MaxConnections *int   `pulumi:"max_connections,optional"`
 }
 
+func (exd ExposedDisk) WireDependencies(f infer.FieldSelector, args *ExposedDiskArgs, state *ExposedDiskState) {
+	f.OutputField(&state.DiskID).DependsOn(f.InputField(&args.DiskID))
+}
+
 func (ExposedDisk) Create(ctx p.Context, name string, input ExposedDiskArgs, preview bool) (string, ExposedDiskState, error) {
 	state := ExposedDiskState{ExposedDiskArgs: input}
-
+	id, err := resource.NewUniqueHex(name, 8, 0)
+	if err != nil {
+		return "", state, err
+	}
 	if preview {
 		return name, state, nil
 	}
@@ -59,12 +68,14 @@ func (ExposedDisk) Create(ctx p.Context, name string, input ExposedDiskArgs, pre
 
 	jsonPayload, err := json.Marshal(payload)
 	if err != nil {
+		fmt.Printf("Error constructing JSON payload %s: %v", id, err)
 		return "", state, err
 	}
 
 	client := &http.Client{}
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonPayload))
 	if err != nil {
+		fmt.Printf("Error making API request for %s: %v", id, err)
 		return "", state, err
 	}
 	req.Header.Set("Content-Type", "application/json")
@@ -72,6 +83,7 @@ func (ExposedDisk) Create(ctx p.Context, name string, input ExposedDiskArgs, pre
 
 	resp, err := client.Do(req)
 	if err != nil {
+		fmt.Printf("Error creating resource %s: %v", id, err)
 		return "", state, err
 	}
 	defer resp.Body.Close()
@@ -83,32 +95,31 @@ func (ExposedDisk) Create(ctx p.Context, name string, input ExposedDiskArgs, pre
 
 	result.DiskID = input.DiskID
 
-	return name, result, nil
+	return id, result, nil
 }
 
-func (ExposedDisk) Delete(ctx p.Context, state ExposedDiskState, input ExposedDiskArgs) (bool, error) {
+func (ExposedDisk) Update(ctx p.Context, id string, state ExposedDiskState, input ExposedDiskArgs) (ExposedDiskState, error) {
+	return ExposedDiskState{}, nil
+}
+
+func (ExposedDisk) Delete(ctx p.Context, id string, state ExposedDiskState, input ExposedDiskArgs) error {
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/exposed-disks/%d", input.URL, input.CustomerID, input.CloudSpaceID, state.DiskID)
 
 	client := &http.Client{}
 	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(nil))
 	if err != nil {
-		return false, err
+		fmt.Printf("Error making API request for %s: %v", id, err)
+		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
-		return false, err
+		fmt.Printf("Error deleting resource %s: %v\n", id, err)
+		return err
 	}
 	defer resp.Body.Close()
 
-	var result map[string]interface{}
-	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
-		return false, err
-	}
-
-	status := result["success"].(bool)
-
-	return status, nil
+	return nil
 }
