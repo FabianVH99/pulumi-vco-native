@@ -74,7 +74,7 @@ func (Link) Update(ctx p.Context, id string, state LinkState, input LinkArgs, pr
 	if preview {
 		return state, nil
 	}
-	return LinkState{}, nil
+	return state, nil
 }
 
 func (Link) Delete(ctx p.Context, id string, state LinkState) error {

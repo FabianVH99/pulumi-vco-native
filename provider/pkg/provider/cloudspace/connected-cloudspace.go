@@ -86,7 +86,7 @@ func (ConnectedCloudspace) Update(ctx p.Context, id string, state ConnectedCloud
 	if preview {
 		return state, nil
 	}
-	return ConnectedCloudspaceState{}, nil
+	return state, nil
 }
 
 func (ConnectedCloudspace) Delete(ctx p.Context, id string, state ConnectedCloudspaceState) error {

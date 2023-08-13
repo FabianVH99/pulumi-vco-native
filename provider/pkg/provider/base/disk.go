@@ -138,7 +138,7 @@ func (Disk) Update(ctx p.Context, id string, state DiskState, input DiskArgs, pr
 	if preview {
 		return state, nil
 	}
-	return DiskState{}, nil
+	return state, nil
 }
 
 func (Disk) Delete(ctx p.Context, id string, state DiskState) error {

@@ -114,7 +114,7 @@ func (ExposedDisk) Update(ctx p.Context, id string, state ExposedDiskState, inpu
 	if preview {
 		return state, nil
 	}
-	return ExposedDiskState{}, nil
+	return state, nil
 }
 
 func (ExposedDisk) Delete(ctx p.Context, id string, state ExposedDiskState) error {

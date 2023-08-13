@@ -180,7 +180,7 @@ func (VirtualMachineNIC) Update(ctx p.Context, id string, state VirtualMachineNI
 	if preview {
 		return state, nil
 	}
-	return VirtualMachineNICState{}, nil
+	return state, nil
 }
 
 func (VirtualMachineNIC) Delete(ctx p.Context, id string, state VirtualMachineNICState) error {

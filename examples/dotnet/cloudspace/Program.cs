@@ -6,6 +6,7 @@ using System.Runtime.Intrinsics.Arm;
 using Pulumi;
 using Pulumi.Vco.Base;
 using Pulumi.Vco.Cloudspace;
+using Pulumi.Vco.Anti_affinity_group;
 
 return await Deployment.RunAsync(() =>
    {
@@ -17,7 +18,7 @@ return await Deployment.RunAsync(() =>
        var location = config.Require("location");
 
        //Create a new cloudspace resource using all required values
-       var cloudspace = new Cloudspace("my-cloudspace", new CloudspaceArgs
+       var cloudspace = new Cloudspace("pulumi-cloudspace", new CloudspaceArgs
        {
            Url = url,
            Token = token,
@@ -27,7 +28,7 @@ return await Deployment.RunAsync(() =>
            Location = location,
            External_network_id = 13,
            Private = false,
-           Local_domain = "Pulumidotnetcloudspace",
+           Local_domain = "pulumi-domain",
        });
 
        var aag = new AntiAffinityGroup("my-aag", new AntiAffinityGroupArgs

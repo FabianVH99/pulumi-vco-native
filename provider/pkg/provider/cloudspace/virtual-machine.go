@@ -279,7 +279,7 @@ func (VirtualMachine) Update(ctx p.Context, id string, state VirtualMachineState
 	if preview {
 		return state, nil
 	}
-	return VirtualMachineState{}, nil
+	return state, nil
 }
 
 func (VirtualMachine) Delete(ctx p.Context, id string, state VirtualMachineState) error {

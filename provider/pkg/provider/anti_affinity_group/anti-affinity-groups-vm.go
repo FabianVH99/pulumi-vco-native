@@ -132,7 +132,7 @@ func (AntiAffinityGroupVM) Update(ctx p.Context, id string, state AntiAffinityGr
 	if preview {
 		return state, nil
 	}
-	return AntiAffinityGroupVMState{}, nil
+	return state, nil
 }
 
 func (AntiAffinityGroupVM) Delete(ctx p.Context, id string, state AntiAffinityGroupVMState) error {

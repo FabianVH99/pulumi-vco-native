@@ -86,7 +86,7 @@ func (Host) Update(ctx p.Context, id string, state HostState, input HostArgs, pr
 	if preview {
 		return state, nil
 	}
-	return HostState{}, nil
+	return state, nil
 }
 
 func (Host) Delete(ctx p.Context, id string, state HostState) error {

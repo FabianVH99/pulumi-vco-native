@@ -123,7 +123,7 @@ func (VirtualMachineCD) Update(ctx p.Context, id string, state VirtualMachineCDS
 	if preview {
 		return state, nil
 	}
-	return VirtualMachineCDState{}, nil
+	return state, nil
 }
 
 func (VirtualMachineCD) Delete(ctx p.Context, id string, state VirtualMachineCDState) error {

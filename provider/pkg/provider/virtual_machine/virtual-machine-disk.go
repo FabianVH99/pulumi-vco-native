@@ -78,7 +78,7 @@ func (VirtualMachineDisk) Update(ctx p.Context, id string, state VirtualMachineD
 	if preview {
 		return state, nil
 	}
-	return VirtualMachineDiskState{}, nil
+	return state, nil
 }
 
 func (VirtualMachineDisk) Delete(ctx p.Context, id string, state VirtualMachineDiskState) error {

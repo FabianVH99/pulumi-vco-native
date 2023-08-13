@@ -164,7 +164,7 @@ func (ObjectSpace) Update(ctx p.Context, id string, state ObjectSpaceState, inpu
 	if preview {
 		return state, nil
 	}
-	return ObjectSpaceState{}, nil
+	return state, nil
 }
 
 func (ObjectSpace) Delete(ctx p.Context, id string, state ObjectSpaceState) error {
