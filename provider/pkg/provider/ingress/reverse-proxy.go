@@ -265,7 +265,10 @@ func (ReverseProxy) Read(ctx p.Context, id string, state ReverseProxyState) (Rev
 	return result, nil
 }
 
-func (rp ReverseProxy) Update(ctx p.Context, id string, state ReverseProxyState, input ReverseProxyArgs) (ReverseProxyState, error) {
+func (rp ReverseProxy) Update(ctx p.Context, id string, state ReverseProxyState, input ReverseProxyArgs, preview bool) (ReverseProxyState, error) {
+	if preview {
+		return state, nil
+	}
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/reverse-proxies/%s", state.URL, state.CustomerID, state.CloudSpaceID, state.ReverseProxyID)
 	payload := map[string]interface{}{
 		"name": input.Name,

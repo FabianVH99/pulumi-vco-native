@@ -121,7 +121,10 @@ func (ServerPool) Read(ctx p.Context, id string, state ServerPoolState) (ServerP
 	return result, nil
 }
 
-func (sv ServerPool) Update(ctx p.Context, id string, state ServerPoolState, input ServerPoolArgs) (ServerPoolState, error) {
+func (sv ServerPool) Update(ctx p.Context, id string, state ServerPoolState, input ServerPoolArgs, preview bool) (ServerPoolState, error) {
+	if preview {
+		return state, nil
+	}
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/server-pools/%s?name=%s&description=%s", state.URL, state.CustomerID, state.CloudSpaceID, state.ServerPoolID, input.Name, input.Description)
 
 	client := &http.Client{}

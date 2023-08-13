@@ -154,7 +154,10 @@ func (PortForward) Read(ctx p.Context, id string, state PortForwardState) (PortF
 	return result, nil
 }
 
-func (pf PortForward) Update(ctx p.Context, id string, state PortForwardState, input PortForwardArgs) (PortForwardState, error) {
+func (pf PortForward) Update(ctx p.Context, id string, state PortForwardState, input PortForwardArgs, preview bool) (PortForwardState, error) {
+	if preview {
+		return state, nil
+	}
 	u, err := url.Parse(fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/portforwards/%s", state.URL, state.CustomerID, state.CloudSpaceID, state.PortForwardID))
 	if err != nil {
 		return state, err

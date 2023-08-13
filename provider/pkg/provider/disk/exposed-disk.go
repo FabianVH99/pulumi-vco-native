@@ -110,7 +110,10 @@ func (ExposedDisk) Create(ctx p.Context, name string, input ExposedDiskArgs, pre
 	return id, result, nil
 }
 
-func (ExposedDisk) Update(ctx p.Context, id string, state ExposedDiskState, input ExposedDiskArgs) (ExposedDiskState, error) {
+func (ExposedDisk) Update(ctx p.Context, id string, state ExposedDiskState, input ExposedDiskArgs, preview bool) (ExposedDiskState, error) {
+	if preview {
+		return state, nil
+	}
 	return ExposedDiskState{}, nil
 }
 

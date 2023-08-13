@@ -275,7 +275,10 @@ func (VirtualMachine) Read(ctx p.Context, id string, state VirtualMachineState) 
 	return result, nil
 }
 
-func (VirtualMachine) Update(ctx p.Context, id string, state VirtualMachineState, input VirtualMachineArgs) (VirtualMachineState, error) {
+func (VirtualMachine) Update(ctx p.Context, id string, state VirtualMachineState, input VirtualMachineArgs, preview bool) (VirtualMachineState, error) {
+	if preview {
+		return state, nil
+	}
 	return VirtualMachineState{}, nil
 }
 

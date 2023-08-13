@@ -160,7 +160,10 @@ func (ObjectSpace) Read(ctx p.Context, id string, state ObjectSpaceState) (Objec
 	return result, nil
 }
 
-func (ObjectSpace) Update(ctx p.Context, id string, state ObjectSpaceState, input ObjectSpaceArgs) (ObjectSpaceState, error) {
+func (ObjectSpace) Update(ctx p.Context, id string, state ObjectSpaceState, input ObjectSpaceArgs, preview bool) (ObjectSpaceState, error) {
+	if preview {
+		return state, nil
+	}
 	return ObjectSpaceState{}, nil
 }
 

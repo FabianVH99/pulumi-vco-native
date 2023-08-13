@@ -21,7 +21,7 @@ type CloudspaceState struct {
 	Name              string `pulumi:"name" json:"name"`
 	Status            string `pulumi:"status" json:"status"`
 	ExternalNetworkIP string `pulumi:"external_network_ip" json:"external_network_ip"`
-	ExternalNetworkID string `pulumi:"external_network_id" json:"external_network_id"`
+	ExternalNetworkID int    `pulumi:"external_network_id"`
 	PrivateNetwork    string `pulumi:"private_network" json:"private_network"`
 	LocalDomain       string `pulumi:"local_domain" json:"local_domain"`
 	UpdateTime        int64  `pulumi:"update_time" json:"update_time"`
@@ -161,6 +161,7 @@ func (c Cloudspace) Create(ctx p.Context, name string, input CloudspaceArgs, pre
 	state.URL = input.URL
 	state.CustomerID = input.CustomerID
 	state.Token = input.Token
+	state.ExternalNetworkID = input.ExternalNetworkID
 	state.CloudSpaceID = result["cloudspace_id"].(string)
 
 	updatedState, err := c.Read(nil, id, state)
@@ -198,11 +199,15 @@ func (Cloudspace) Read(ctx p.Context, id string, state CloudspaceState) (Cloudsp
 	result.URL = state.URL
 	result.CustomerID = state.CustomerID
 	result.Token = state.Token
+	result.ExternalNetworkID = state.ExternalNetworkID
 
 	return result, nil
 }
 
-func (Cloudspace) Update(ctx p.Context, id string, state CloudspaceState, input CloudspaceArgs) (CloudspaceState, error) {
+func (Cloudspace) Update(ctx p.Context, id string, state CloudspaceState, input CloudspaceArgs, preview bool) (CloudspaceState, error) {
+	if preview {
+		return state, nil
+	}
 	return CloudspaceState{}, nil
 }
 

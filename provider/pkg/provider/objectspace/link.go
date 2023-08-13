@@ -70,7 +70,10 @@ func (Link) Create(ctx p.Context, name string, input LinkArgs, preview bool) (st
 	return id, state, nil
 }
 
-func (Link) Update(ctx p.Context, id string, state LinkState, input LinkArgs) (LinkState, error) {
+func (Link) Update(ctx p.Context, id string, state LinkState, input LinkArgs, preview bool) (LinkState, error) {
+	if preview {
+		return state, nil
+	}
 	return LinkState{}, nil
 }
 

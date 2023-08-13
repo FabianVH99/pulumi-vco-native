@@ -82,7 +82,10 @@ func (cs ConnectedCloudspace) Create(ctx p.Context, name string, input Connected
 	return id, state, nil
 }
 
-func (ConnectedCloudspace) Update(ctx p.Context, id string, state ConnectedCloudspaceArgs, input ConnectedCloudspaceState) (ConnectedCloudspaceState, error) {
+func (ConnectedCloudspace) Update(ctx p.Context, id string, state ConnectedCloudspaceState, input ConnectedCloudspaceArgs, preview bool) (ConnectedCloudspaceState, error) {
+	if preview {
+		return state, nil
+	}
 	return ConnectedCloudspaceState{}, nil
 }
 

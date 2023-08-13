@@ -82,7 +82,10 @@ func (Host) Create(ctx p.Context, name string, input HostArgs, preview bool) (st
 	return id, state, nil
 }
 
-func (Host) Update(ctx p.Context, id string, state HostState, input HostArgs) (HostState, error) {
+func (Host) Update(ctx p.Context, id string, state HostState, input HostArgs, preview bool) (HostState, error) {
+	if preview {
+		return state, nil
+	}
 	return HostState{}, nil
 }
 

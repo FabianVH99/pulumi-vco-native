@@ -119,7 +119,10 @@ func (VirtualMachineCD) Read(ctx p.Context, id string, state VirtualMachineCDSta
 	return result, nil
 }
 
-func (VirtualMachineCD) Update(ctx p.Context, id string, state VirtualMachineCDState, input VirtualMachineCDArgs) (VirtualMachineCDState, error) {
+func (VirtualMachineCD) Update(ctx p.Context, id string, state VirtualMachineCDState, input VirtualMachineCDArgs, preview bool) (VirtualMachineCDState, error) {
+	if preview {
+		return state, nil
+	}
 	return VirtualMachineCDState{}, nil
 }
 

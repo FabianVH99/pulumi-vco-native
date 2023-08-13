@@ -189,7 +189,10 @@ func (LoadBalancer) Read(ctx p.Context, id string, state LoadBalancerState) (Loa
 	return result, nil
 }
 
-func (lb LoadBalancer) Update(ctx p.Context, id string, state LoadBalancerState, input LoadBalancerArgs) (LoadBalancerState, error) {
+func (lb LoadBalancer) Update(ctx p.Context, id string, state LoadBalancerState, input LoadBalancerArgs, preview bool) (LoadBalancerState, error) {
+	if preview {
+		return state, nil
+	}
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/load-balancers/%s", state.URL, state.CustomerID, state.CloudSpaceID, state.LoadBalancerID)
 	payload := map[string]interface{}{
 		"name": input.Name,

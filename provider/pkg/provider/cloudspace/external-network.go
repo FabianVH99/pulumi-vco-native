@@ -82,7 +82,10 @@ func (ExternalNetwork) Create(ctx p.Context, name string, input ExternalNetworkA
 	return id, state, nil
 }
 
-func (ex ExternalNetwork) Update(ctx p.Context, id string, state ExternalNetworkState, input ExternalNetworkArgs) (ExternalNetworkState, error) {
+func (ex ExternalNetwork) Update(ctx p.Context, id string, state ExternalNetworkState, input ExternalNetworkArgs, preview bool) (ExternalNetworkState, error) {
+	if preview {
+		return state, nil
+	}
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/external-networks?external_network_id=%s&external_network_type=%s&metric=%d&external_network_ip=%s", state.URL, state.CustomerID, state.CloudSpaceID, input.ExternalNetworkID, state.ExternalNetworkType, input.Metric, input.ExternalNetworkIP)
 
 	client := &http.Client{}

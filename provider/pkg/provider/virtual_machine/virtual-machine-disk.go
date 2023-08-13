@@ -74,7 +74,10 @@ func (VirtualMachineDisk) Create(ctx p.Context, name string, input VirtualMachin
 	return id, state, nil
 }
 
-func (VirtualMachineDisk) Update(ctx p.Context, id string, state VirtualMachineDiskState, input VirtualMachineDiskArgs) (VirtualMachineDiskState, error) {
+func (VirtualMachineDisk) Update(ctx p.Context, id string, state VirtualMachineDiskState, input VirtualMachineDiskArgs, preview bool) (VirtualMachineDiskState, error) {
+	if preview {
+		return state, nil
+	}
 	return VirtualMachineDiskState{}, nil
 }
 

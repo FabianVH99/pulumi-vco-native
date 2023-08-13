@@ -17,5 +17,26 @@ return await Deployment.RunAsync(() =>
        var location = config.Require("location");
 
        //Create a new cloudspace resource using all required values
-       
+       var cloudspace = new Cloudspace("my-cloudspace", new CloudspaceArgs
+       {
+           Url = url,
+           Token = token,
+           CustomerID = customerId,
+           Name = "Pulumi_dotnet_cloudspace",
+           Private_network = "192.168.10.0/24",
+           Location = location,
+           External_network_id = 13,
+           Private = false,
+           Local_domain = "Pulumidotnetcloudspace",
+       });
+
+       var aag = new AntiAffinityGroup("my-aag", new AntiAffinityGroupArgs
+       {
+           Url = url,
+           Token = token,
+           CustomerID = customerId,
+           Cloudspace_id = cloudspace.Cloudspace_id,
+           Group_id = "Pulumi_AAG_group",
+           Spread = 3,
+       });
    });

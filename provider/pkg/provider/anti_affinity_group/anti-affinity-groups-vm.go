@@ -128,7 +128,10 @@ func (AntiAffinityGroupVM) Read(ctx p.Context, id string, state AntiAffinityGrou
 	return newState, nil
 }
 
-func (AntiAffinityGroupVM) Update(ctx p.Context, id string, state AntiAffinityGroupVMState, input AntiAffinityGroupVMArgs) (AntiAffinityGroupVMState, error) {
+func (AntiAffinityGroupVM) Update(ctx p.Context, id string, state AntiAffinityGroupVMState, input AntiAffinityGroupVMArgs, preview bool) (AntiAffinityGroupVMState, error) {
+	if preview {
+		return state, nil
+	}
 	return AntiAffinityGroupVMState{}, nil
 }
 

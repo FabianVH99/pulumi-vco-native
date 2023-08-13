@@ -134,7 +134,10 @@ func (Disk) Read(ctx p.Context, id string, state DiskState) (DiskState, error) {
 	return result, nil
 }
 
-func (Disk) Update(ctx p.Context, id string, state DiskState, input DiskArgs) (DiskState, error) {
+func (Disk) Update(ctx p.Context, id string, state DiskState, input DiskArgs, preview bool) (DiskState, error) {
+	if preview {
+		return state, nil
+	}
 	return DiskState{}, nil
 }
 

@@ -176,7 +176,10 @@ func (VirtualMachineNIC) Read(ctx p.Context, id string, state VirtualMachineNICS
 	return result, nil
 }
 
-func (VirtualMachineNIC) Update(ctx p.Context, id string, state VirtualMachineNICState, input VirtualMachineNICArgs) (VirtualMachineNICState, error) {
+func (VirtualMachineNIC) Update(ctx p.Context, id string, state VirtualMachineNICState, input VirtualMachineNICArgs, preview bool) (VirtualMachineNICState, error) {
+	if preview {
+		return state, nil
+	}
 	return VirtualMachineNICState{}, nil
 }
 
