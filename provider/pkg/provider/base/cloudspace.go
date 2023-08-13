@@ -166,7 +166,7 @@ func (c Cloudspace) Create(ctx p.Context, name string, input CloudspaceArgs, pre
 	client := &http.Client{}
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonPayload))
 	if err != nil {
-		fmt.Printf("Error making API request: %v", err)
+		fmt.Printf("Error making API request for %s: %v", id, err)
 		return "", state, err
 	}
 	req.Header.Set("Content-Type", "application/json")
@@ -174,13 +174,14 @@ func (c Cloudspace) Create(ctx p.Context, name string, input CloudspaceArgs, pre
 
 	resp, err := client.Do(req)
 	if err != nil {
-		fmt.Printf("Error making API request: %v", err)
+		fmt.Printf("Error creating resource %s: %v\n", id, err)
 		return "", state, err
 	}
 	defer resp.Body.Close()
 
 	var result map[string]interface{}
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+		fmt.Printf("Error decoding response body for %s: %v\n", id, err)
 		return "", state, err
 	}
 
@@ -192,7 +193,6 @@ func (c Cloudspace) Create(ctx p.Context, name string, input CloudspaceArgs, pre
 
 	updatedState, err := c.Read(nil, id, state)
 	if err != nil {
-		fmt.Printf("Error retrieving resource: %v", err)
 		return "", state, err
 	}
 
@@ -200,11 +200,11 @@ func (c Cloudspace) Create(ctx p.Context, name string, input CloudspaceArgs, pre
 }
 
 func (Cloudspace) Read(ctx p.Context, id string, state CloudspaceState) (CloudspaceState, error) {
-	fmt.Printf("Delete method called!!")
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s", state.URL, state.CustomerID, state.CloudSpaceID)
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
+		fmt.Printf("Error making API request for %s: %v", id, err)
 		return CloudspaceState{}, err
 	}
 	req.Header.Set("Content-Type", "application/json")
@@ -212,13 +212,14 @@ func (Cloudspace) Read(ctx p.Context, id string, state CloudspaceState) (Cloudsp
 
 	resp, err := client.Do(req)
 	if err != nil {
-		fmt.Printf("Error making API request: %v", err)
+		fmt.Printf("Error retrieving resource %s: %v\n", id, err)
 		return CloudspaceState{}, err
 	}
 	defer resp.Body.Close()
 
 	var result CloudspaceState
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+		fmt.Printf("Error decoding response body for %s: %v\n", id, err)
 		return CloudspaceState{}, err
 	}
 
@@ -231,25 +232,27 @@ func (Cloudspace) Read(ctx p.Context, id string, state CloudspaceState) (Cloudsp
 	return result, nil
 }
 
-func (Cloudspace) Delete(ctx p.Context, id string, props CloudspaceState) error {
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s", props.URL, props.CustomerID, props.CloudSpaceID)
+func (Cloudspace) Delete(ctx p.Context, id string, state CloudspaceState) error {
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s", state.URL, state.CustomerID, state.CloudSpaceID)
 	client := &http.Client{}
 	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(nil))
 	if err != nil {
+		fmt.Printf("Error making API request for %s: %v", id, err)
 		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", props.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
 
 	resp, err := client.Do(req)
 	if err != nil {
-		fmt.Printf("Error making API request: %v\n", err)
+		fmt.Printf("Error deleting resource %s: %v\n", id, err)
 		return err
 	}
 	defer resp.Body.Close()
 
 	var result map[string]interface{}
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+		fmt.Printf("Error decoding response body for %s: %v\n", id, err)
 		return err
 	}
 

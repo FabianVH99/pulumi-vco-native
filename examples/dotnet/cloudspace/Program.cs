@@ -2,6 +2,7 @@
  // It is recommended to read the resource docs in order to understand
  // how they work and what inputs they require
  using System.Collections.Generic;
+using System.Runtime.Intrinsics.Arm;
 using Pulumi;
 using Pulumi.Vco.Base;
 
@@ -15,15 +16,5 @@ return await Deployment.RunAsync(() =>
        var location = config.Require("location");
 
        //Create a new cloudspace resource using all required values
-       var cloudspace = new Cloudspace("my-cloudspace", new CloudspaceArgs
-       {
-           Url = url,
-           Token = token,
-           CustomerID = customerId,
-           Name = "Pulumi_dotnet_cloudspace",
-           Location = location,
-           Private_network = "192.168.10.0/24",
-           External_network_id = 13,
-           Private = false,
-       });
+   
    });
