@@ -6,10 +6,10 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v6.0": {
-      "Pulumi.Vco/0.0.1-alpha.1691700317+dfae1fa9.dirty": {
+      "Pulumi.Vco/0.0.1-alpha.1691961733+01cf1897.dirty": {
         "dependencies": {
           "Microsoft.SourceLink.GitHub": "1.0.0",
-          "Pulumi": "3.54.1"
+          "Pulumi": "3.56.0"
         },
         "runtime": {
           "Pulumi.Vco.dll": {}
@@ -26,12 +26,31 @@
           }
         }
       },
+      "Google.Protobuf/3.15.5": {
+        "dependencies": {
+          "System.Memory": "4.5.3",
+          "System.Runtime.CompilerServices.Unsafe": "4.5.2"
+        }
+      },
       "Grpc.AspNetCore.Server/2.37.0": {
         "dependencies": {
           "Grpc.Net.Common": "2.43.0"
         },
         "runtime": {
           "lib/net5.0/Grpc.AspNetCore.Server.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.37.0.0"
+          }
+        }
+      },
+      "Grpc.AspNetCore.Server.Reflection/2.37.0": {
+        "dependencies": {
+          "Google.Protobuf": "3.15.5",
+          "Grpc.AspNetCore.Server": "2.37.0",
+          "Grpc.Reflection": "2.37.0"
+        },
+        "runtime": {
+          "lib/net5.0/Grpc.AspNetCore.Server.Reflection.dll": {
             "assemblyVersion": "2.0.0.0",
             "fileVersion": "2.37.0.0"
           }
@@ -71,6 +90,18 @@
           }
         }
       },
+      "Grpc.Reflection/2.37.0": {
+        "dependencies": {
+          "Google.Protobuf": "3.15.5",
+          "Grpc.Core.Api": "2.43.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Grpc.Reflection.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.37.0.0"
+          }
+        }
+      },
       "Microsoft.Build.Tasks.Git/1.0.0": {},
       "Microsoft.Extensions.DependencyInjection.Abstractions/2.0.0": {},
       "Microsoft.Extensions.Logging/2.0.0": {
@@ -89,7 +120,7 @@
       },
       "Microsoft.Extensions.Primitives/2.0.0": {
         "dependencies": {
-          "System.Runtime.CompilerServices.Unsafe": "4.4.0"
+          "System.Runtime.CompilerServices.Unsafe": "4.5.2"
         }
       },
       "Microsoft.SourceLink.Common/1.0.0": {},
@@ -107,10 +138,11 @@
           }
         }
       },
-      "Pulumi/3.54.1": {
+      "Pulumi/3.56.0": {
         "dependencies": {
           "Ben.Demystifier": "0.4.1",
           "Grpc.AspNetCore.Server": "2.37.0",
+          "Grpc.AspNetCore.Server.Reflection": "2.37.0",
           "Grpc.Net.Client": "2.43.0",
           "Microsoft.Extensions.Logging.Abstractions": "3.1.16",
           "OneOf": "3.0.216",
@@ -121,8 +153,8 @@
         },
         "runtime": {
           "lib/net6.0/Pulumi.dll": {
-            "assemblyVersion": "3.54.1.0",
-            "fileVersion": "3.54.1.0"
+            "assemblyVersion": "3.56.0.0",
+            "fileVersion": "3.56.0.0"
           }
         }
       },
@@ -175,11 +207,11 @@
       },
       "System.Memory/4.5.3": {},
       "System.Reflection.Metadata/5.0.0": {},
-      "System.Runtime.CompilerServices.Unsafe/4.4.0": {}
+      "System.Runtime.CompilerServices.Unsafe/4.5.2": {}
     }
   },
   "libraries": {
-    "Pulumi.Vco/0.0.1-alpha.1691700317+dfae1fa9.dirty": {
+    "Pulumi.Vco/0.0.1-alpha.1691961733+01cf1897.dirty": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -191,12 +223,26 @@
       "path": "ben.demystifier/0.4.1",
       "hashPath": "ben.demystifier.0.4.1.nupkg.sha512"
     },
+    "Google.Protobuf/3.15.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-yAftejvqFAMAgjkCwycz5kssadl3nV78zP7AONaxjgj8XTOZX0kTAxTPiQd++OSvh4jQT5m/xd/FmGkOPzQLPA==",
+      "path": "google.protobuf/3.15.5",
+      "hashPath": "google.protobuf.3.15.5.nupkg.sha512"
+    },
     "Grpc.AspNetCore.Server/2.37.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-CYwIdTx3Ev83jdk0yHUugn4HOac0N5m6KwmU9r5ct4xMJQgO3uH+aVqt8HRIbl3/vg2Vy1YoAu+PDHFGc6CNMw==",
       "path": "grpc.aspnetcore.server/2.37.0",
       "hashPath": "grpc.aspnetcore.server.2.37.0.nupkg.sha512"
+    },
+    "Grpc.AspNetCore.Server.Reflection/2.37.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-N9n74Yu5Gwv5iDxQcN5H9lM6QGl8+TUyHMVTrJ1CcKL/PnjaaeoQ9DRrQOjbKbHuMlMYY20dmvVbnRu3aiNPFQ==",
+      "path": "grpc.aspnetcore.server.reflection/2.37.0",
+      "hashPath": "grpc.aspnetcore.server.reflection.2.37.0.nupkg.sha512"
     },
     "Grpc.Core.Api/2.43.0": {
       "type": "package",
@@ -218,6 +264,13 @@
       "sha512": "sha512-kt0Hb1N1tlb5UdN17bTHEPNbKP3LUHEZQSKD47etAVI5KLDtmVGO4YsUGM/krrNMwHRjhUCy0EhUU8uVMc3upA==",
       "path": "grpc.net.common/2.43.0",
       "hashPath": "grpc.net.common.2.43.0.nupkg.sha512"
+    },
+    "Grpc.Reflection/2.37.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Z13vkGs44/2dJ573M1FTVXglXgEz26fAPRpWqncuCFOBwpK3F/AfO6HvwUKL1iWsZC/petdY7sNpJhli69SjoQ==",
+      "path": "grpc.reflection/2.37.0",
+      "hashPath": "grpc.reflection.2.37.0.nupkg.sha512"
     },
     "Microsoft.Build.Tasks.Git/1.0.0": {
       "type": "package",
@@ -282,12 +335,12 @@
       "path": "oneof/3.0.216",
       "hashPath": "oneof.3.0.216.nupkg.sha512"
     },
-    "Pulumi/3.54.1": {
+    "Pulumi/3.56.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-5IfjuelGFZB7xJZwB9C4o1HZHmoAqZmv4Ssxd1OnHKurtWpewipP/xgtVecWRsD8r4mrjA3RLt2kmB1UIYU3hQ==",
-      "path": "pulumi/3.54.1",
-      "hashPath": "pulumi.3.54.1.nupkg.sha512"
+      "sha512": "sha512-7tofugmQ2f1vXtnKupyd2lMbiJU/sz5GUctVV14UVZ9Z57uItATW/y9+le8Gy9DGmExW+krwzdjXyvnVyd1ziQ==",
+      "path": "pulumi/3.56.0",
+      "hashPath": "pulumi.3.56.0.nupkg.sha512"
     },
     "Pulumi.Protobuf/3.20.1": {
       "type": "package",
@@ -338,12 +391,12 @@
       "path": "system.reflection.metadata/5.0.0",
       "hashPath": "system.reflection.metadata.5.0.0.nupkg.sha512"
     },
-    "System.Runtime.CompilerServices.Unsafe/4.4.0": {
+    "System.Runtime.CompilerServices.Unsafe/4.5.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-9dLLuBxr5GNmOfl2jSMcsHuteEg32BEfUotmmUkmZjpR3RpVHE8YQwt0ow3p6prwA1ME8WqDVZqrr8z6H8G+Kw==",
-      "path": "system.runtime.compilerservices.unsafe/4.4.0",
-      "hashPath": "system.runtime.compilerservices.unsafe.4.4.0.nupkg.sha512"
+      "sha512": "sha512-wprSFgext8cwqymChhrBLu62LMg/1u92bU+VOwyfBimSPVFXtsNqEWC92Pf9ofzJFlk4IHmJA75EDJn1b2goAQ==",
+      "path": "system.runtime.compilerservices.unsafe/4.5.2",
+      "hashPath": "system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512"
     }
   }
 }

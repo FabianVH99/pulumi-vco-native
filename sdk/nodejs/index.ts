@@ -12,12 +12,24 @@ utilities.lazyLoad(exports, ["Provider"], () => require("./provider"));
 
 
 // Export sub-modules:
-import * as resources from "./resources";
+import * as anti_affinity_group from "./anti_affinity_group";
+import * as base from "./base";
+import * as cloudspace from "./cloudspace";
+import * as disk from "./disk";
+import * as ingress from "./ingress";
+import * as objectspace from "./objectspace";
 import * as types from "./types";
+import * as virtual_machine from "./virtual_machine";
 
 export {
-    resources,
+    anti_affinity_group,
+    base,
+    cloudspace,
+    disk,
+    ingress,
+    objectspace,
     types,
+    virtual_machine,
 };
 pulumi.runtime.registerResourcePackage("vco", {
     version: utilities.getVersion(),

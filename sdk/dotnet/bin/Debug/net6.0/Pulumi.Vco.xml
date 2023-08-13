@@ -4,35 +4,7 @@
         <name>Pulumi.Vco</name>
     </assembly>
     <members>
-        <member name="M:Pulumi.Vco.Provider.#ctor(System.String,Pulumi.Vco.ProviderArgs,Pulumi.CustomResourceOptions)">
-             <summary>
-             Create a Provider resource with the given unique name, arguments, and options.
-             </summary>
-            
-             <param name="name">The unique name of the resource</param>
-             <param name="args">The arguments used to populate this resource's properties</param>
-             <param name="options">A bag of options that control this resource's behavior</param>
-        </member>
-        <member name="M:Pulumi.Vco.Resources.AntiAffinityGroup.#ctor(System.String,Pulumi.Vco.Resources.AntiAffinityGroupArgs,Pulumi.CustomResourceOptions)">
-             <summary>
-             Create a AntiAffinityGroup resource with the given unique name, arguments, and options.
-             </summary>
-            
-             <param name="name">The unique name of the resource</param>
-             <param name="args">The arguments used to populate this resource's properties</param>
-             <param name="options">A bag of options that control this resource's behavior</param>
-        </member>
-        <member name="M:Pulumi.Vco.Resources.AntiAffinityGroup.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
-             <summary>
-             Get an existing AntiAffinityGroup resource's state with the given name, ID, and optional extra
-             properties used to qualify the lookup.
-             </summary>
-            
-             <param name="name">The unique name of the resulting resource.</param>
-             <param name="id">The unique provider ID of the resource to lookup.</param>
-             <param name="options">A bag of options that control this resource's behavior</param>
-        </member>
-        <member name="M:Pulumi.Vco.Resources.AntiAffinityGroupVM.#ctor(System.String,Pulumi.Vco.Resources.AntiAffinityGroupVMArgs,Pulumi.CustomResourceOptions)">
+        <member name="M:Pulumi.Vco.Anti_affinity_group.AntiAffinityGroupVM.#ctor(System.String,Pulumi.Vco.Anti_affinity_group.AntiAffinityGroupVMArgs,Pulumi.CustomResourceOptions)">
              <summary>
              Create a AntiAffinityGroupVM resource with the given unique name, arguments, and options.
              </summary>
@@ -41,7 +13,7 @@
              <param name="args">The arguments used to populate this resource's properties</param>
              <param name="options">A bag of options that control this resource's behavior</param>
         </member>
-        <member name="M:Pulumi.Vco.Resources.AntiAffinityGroupVM.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
+        <member name="M:Pulumi.Vco.Anti_affinity_group.AntiAffinityGroupVM.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
              <summary>
              Get an existing AntiAffinityGroupVM resource's state with the given name, ID, and optional extra
              properties used to qualify the lookup.
@@ -51,7 +23,7 @@
              <param name="id">The unique provider ID of the resource to lookup.</param>
              <param name="options">A bag of options that control this resource's behavior</param>
         </member>
-        <member name="M:Pulumi.Vco.Resources.Cloudspace.#ctor(System.String,Pulumi.Vco.Resources.CloudspaceArgs,Pulumi.CustomResourceOptions)">
+        <member name="M:Pulumi.Vco.Base.Cloudspace.#ctor(System.String,Pulumi.Vco.Base.CloudspaceArgs,Pulumi.CustomResourceOptions)">
              <summary>
              Create a Cloudspace resource with the given unique name, arguments, and options.
              </summary>
@@ -60,7 +32,7 @@
              <param name="args">The arguments used to populate this resource's properties</param>
              <param name="options">A bag of options that control this resource's behavior</param>
         </member>
-        <member name="M:Pulumi.Vco.Resources.Cloudspace.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
+        <member name="M:Pulumi.Vco.Base.Cloudspace.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
              <summary>
              Get an existing Cloudspace resource's state with the given name, ID, and optional extra
              properties used to qualify the lookup.
@@ -70,26 +42,7 @@
              <param name="id">The unique provider ID of the resource to lookup.</param>
              <param name="options">A bag of options that control this resource's behavior</param>
         </member>
-        <member name="M:Pulumi.Vco.Resources.ConnectedCloudspace.#ctor(System.String,Pulumi.Vco.Resources.ConnectedCloudspaceArgs,Pulumi.CustomResourceOptions)">
-             <summary>
-             Create a ConnectedCloudspace resource with the given unique name, arguments, and options.
-             </summary>
-            
-             <param name="name">The unique name of the resource</param>
-             <param name="args">The arguments used to populate this resource's properties</param>
-             <param name="options">A bag of options that control this resource's behavior</param>
-        </member>
-        <member name="M:Pulumi.Vco.Resources.ConnectedCloudspace.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
-             <summary>
-             Get an existing ConnectedCloudspace resource's state with the given name, ID, and optional extra
-             properties used to qualify the lookup.
-             </summary>
-            
-             <param name="name">The unique name of the resulting resource.</param>
-             <param name="id">The unique provider ID of the resource to lookup.</param>
-             <param name="options">A bag of options that control this resource's behavior</param>
-        </member>
-        <member name="M:Pulumi.Vco.Resources.Disk.#ctor(System.String,Pulumi.Vco.Resources.DiskArgs,Pulumi.CustomResourceOptions)">
+        <member name="M:Pulumi.Vco.Base.Disk.#ctor(System.String,Pulumi.Vco.Base.DiskArgs,Pulumi.CustomResourceOptions)">
              <summary>
              Create a Disk resource with the given unique name, arguments, and options.
              </summary>
@@ -98,7 +51,7 @@
              <param name="args">The arguments used to populate this resource's properties</param>
              <param name="options">A bag of options that control this resource's behavior</param>
         </member>
-        <member name="M:Pulumi.Vco.Resources.Disk.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
+        <member name="M:Pulumi.Vco.Base.Disk.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
              <summary>
              Get an existing Disk resource's state with the given name, ID, and optional extra
              properties used to qualify the lookup.
@@ -108,18 +61,18 @@
              <param name="id">The unique provider ID of the resource to lookup.</param>
              <param name="options">A bag of options that control this resource's behavior</param>
         </member>
-        <member name="M:Pulumi.Vco.Resources.ExposedDisk.#ctor(System.String,Pulumi.Vco.Resources.ExposedDiskArgs,Pulumi.CustomResourceOptions)">
+        <member name="M:Pulumi.Vco.Cloudspace.AntiAffinityGroup.#ctor(System.String,Pulumi.Vco.Cloudspace.AntiAffinityGroupArgs,Pulumi.CustomResourceOptions)">
              <summary>
-             Create a ExposedDisk resource with the given unique name, arguments, and options.
+             Create a AntiAffinityGroup resource with the given unique name, arguments, and options.
              </summary>
             
              <param name="name">The unique name of the resource</param>
              <param name="args">The arguments used to populate this resource's properties</param>
              <param name="options">A bag of options that control this resource's behavior</param>
         </member>
-        <member name="M:Pulumi.Vco.Resources.ExposedDisk.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
+        <member name="M:Pulumi.Vco.Cloudspace.AntiAffinityGroup.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
              <summary>
-             Get an existing ExposedDisk resource's state with the given name, ID, and optional extra
+             Get an existing AntiAffinityGroup resource's state with the given name, ID, and optional extra
              properties used to qualify the lookup.
              </summary>
             
@@ -127,7 +80,26 @@
              <param name="id">The unique provider ID of the resource to lookup.</param>
              <param name="options">A bag of options that control this resource's behavior</param>
         </member>
-        <member name="M:Pulumi.Vco.Resources.ExternalNetwork.#ctor(System.String,Pulumi.Vco.Resources.ExternalNetworkArgs,Pulumi.CustomResourceOptions)">
+        <member name="M:Pulumi.Vco.Cloudspace.ConnectedCloudspace.#ctor(System.String,Pulumi.Vco.Cloudspace.ConnectedCloudspaceArgs,Pulumi.CustomResourceOptions)">
+             <summary>
+             Create a ConnectedCloudspace resource with the given unique name, arguments, and options.
+             </summary>
+            
+             <param name="name">The unique name of the resource</param>
+             <param name="args">The arguments used to populate this resource's properties</param>
+             <param name="options">A bag of options that control this resource's behavior</param>
+        </member>
+        <member name="M:Pulumi.Vco.Cloudspace.ConnectedCloudspace.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
+             <summary>
+             Get an existing ConnectedCloudspace resource's state with the given name, ID, and optional extra
+             properties used to qualify the lookup.
+             </summary>
+            
+             <param name="name">The unique name of the resulting resource.</param>
+             <param name="id">The unique provider ID of the resource to lookup.</param>
+             <param name="options">A bag of options that control this resource's behavior</param>
+        </member>
+        <member name="M:Pulumi.Vco.Cloudspace.ExternalNetwork.#ctor(System.String,Pulumi.Vco.Cloudspace.ExternalNetworkArgs,Pulumi.CustomResourceOptions)">
              <summary>
              Create a ExternalNetwork resource with the given unique name, arguments, and options.
              </summary>
@@ -136,7 +108,7 @@
              <param name="args">The arguments used to populate this resource's properties</param>
              <param name="options">A bag of options that control this resource's behavior</param>
         </member>
-        <member name="M:Pulumi.Vco.Resources.ExternalNetwork.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
+        <member name="M:Pulumi.Vco.Cloudspace.ExternalNetwork.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
              <summary>
              Get an existing ExternalNetwork resource's state with the given name, ID, and optional extra
              properties used to qualify the lookup.
@@ -146,64 +118,7 @@
              <param name="id">The unique provider ID of the resource to lookup.</param>
              <param name="options">A bag of options that control this resource's behavior</param>
         </member>
-        <member name="M:Pulumi.Vco.Resources.Host.#ctor(System.String,Pulumi.Vco.Resources.HostArgs,Pulumi.CustomResourceOptions)">
-             <summary>
-             Create a Host resource with the given unique name, arguments, and options.
-             </summary>
-            
-             <param name="name">The unique name of the resource</param>
-             <param name="args">The arguments used to populate this resource's properties</param>
-             <param name="options">A bag of options that control this resource's behavior</param>
-        </member>
-        <member name="M:Pulumi.Vco.Resources.Host.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
-             <summary>
-             Get an existing Host resource's state with the given name, ID, and optional extra
-             properties used to qualify the lookup.
-             </summary>
-            
-             <param name="name">The unique name of the resulting resource.</param>
-             <param name="id">The unique provider ID of the resource to lookup.</param>
-             <param name="options">A bag of options that control this resource's behavior</param>
-        </member>
-        <member name="M:Pulumi.Vco.Resources.LoadBalancer.#ctor(System.String,Pulumi.Vco.Resources.LoadBalancerArgs,Pulumi.CustomResourceOptions)">
-             <summary>
-             Create a LoadBalancer resource with the given unique name, arguments, and options.
-             </summary>
-            
-             <param name="name">The unique name of the resource</param>
-             <param name="args">The arguments used to populate this resource's properties</param>
-             <param name="options">A bag of options that control this resource's behavior</param>
-        </member>
-        <member name="M:Pulumi.Vco.Resources.LoadBalancer.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
-             <summary>
-             Get an existing LoadBalancer resource's state with the given name, ID, and optional extra
-             properties used to qualify the lookup.
-             </summary>
-            
-             <param name="name">The unique name of the resulting resource.</param>
-             <param name="id">The unique provider ID of the resource to lookup.</param>
-             <param name="options">A bag of options that control this resource's behavior</param>
-        </member>
-        <member name="M:Pulumi.Vco.Resources.ObjectSpaceLink.#ctor(System.String,Pulumi.Vco.Resources.ObjectSpaceLinkArgs,Pulumi.CustomResourceOptions)">
-             <summary>
-             Create a ObjectSpaceLink resource with the given unique name, arguments, and options.
-             </summary>
-            
-             <param name="name">The unique name of the resource</param>
-             <param name="args">The arguments used to populate this resource's properties</param>
-             <param name="options">A bag of options that control this resource's behavior</param>
-        </member>
-        <member name="M:Pulumi.Vco.Resources.ObjectSpaceLink.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
-             <summary>
-             Get an existing ObjectSpaceLink resource's state with the given name, ID, and optional extra
-             properties used to qualify the lookup.
-             </summary>
-            
-             <param name="name">The unique name of the resulting resource.</param>
-             <param name="id">The unique provider ID of the resource to lookup.</param>
-             <param name="options">A bag of options that control this resource's behavior</param>
-        </member>
-        <member name="M:Pulumi.Vco.Resources.PortForward.#ctor(System.String,Pulumi.Vco.Resources.PortForwardArgs,Pulumi.CustomResourceOptions)">
+        <member name="M:Pulumi.Vco.Cloudspace.PortForward.#ctor(System.String,Pulumi.Vco.Cloudspace.PortForwardArgs,Pulumi.CustomResourceOptions)">
              <summary>
              Create a PortForward resource with the given unique name, arguments, and options.
              </summary>
@@ -212,7 +127,7 @@
              <param name="args">The arguments used to populate this resource's properties</param>
              <param name="options">A bag of options that control this resource's behavior</param>
         </member>
-        <member name="M:Pulumi.Vco.Resources.PortForward.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
+        <member name="M:Pulumi.Vco.Cloudspace.PortForward.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
              <summary>
              Get an existing PortForward resource's state with the given name, ID, and optional extra
              properties used to qualify the lookup.
@@ -222,45 +137,7 @@
              <param name="id">The unique provider ID of the resource to lookup.</param>
              <param name="options">A bag of options that control this resource's behavior</param>
         </member>
-        <member name="M:Pulumi.Vco.Resources.ReverseProxy.#ctor(System.String,Pulumi.Vco.Resources.ReverseProxyArgs,Pulumi.CustomResourceOptions)">
-             <summary>
-             Create a ReverseProxy resource with the given unique name, arguments, and options.
-             </summary>
-            
-             <param name="name">The unique name of the resource</param>
-             <param name="args">The arguments used to populate this resource's properties</param>
-             <param name="options">A bag of options that control this resource's behavior</param>
-        </member>
-        <member name="M:Pulumi.Vco.Resources.ReverseProxy.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
-             <summary>
-             Get an existing ReverseProxy resource's state with the given name, ID, and optional extra
-             properties used to qualify the lookup.
-             </summary>
-            
-             <param name="name">The unique name of the resulting resource.</param>
-             <param name="id">The unique provider ID of the resource to lookup.</param>
-             <param name="options">A bag of options that control this resource's behavior</param>
-        </member>
-        <member name="M:Pulumi.Vco.Resources.ServerPool.#ctor(System.String,Pulumi.Vco.Resources.ServerPoolArgs,Pulumi.CustomResourceOptions)">
-             <summary>
-             Create a ServerPool resource with the given unique name, arguments, and options.
-             </summary>
-            
-             <param name="name">The unique name of the resource</param>
-             <param name="args">The arguments used to populate this resource's properties</param>
-             <param name="options">A bag of options that control this resource's behavior</param>
-        </member>
-        <member name="M:Pulumi.Vco.Resources.ServerPool.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
-             <summary>
-             Get an existing ServerPool resource's state with the given name, ID, and optional extra
-             properties used to qualify the lookup.
-             </summary>
-            
-             <param name="name">The unique name of the resulting resource.</param>
-             <param name="id">The unique provider ID of the resource to lookup.</param>
-             <param name="options">A bag of options that control this resource's behavior</param>
-        </member>
-        <member name="M:Pulumi.Vco.Resources.VirtualMachine.#ctor(System.String,Pulumi.Vco.Resources.VirtualMachineArgs,Pulumi.CustomResourceOptions)">
+        <member name="M:Pulumi.Vco.Cloudspace.VirtualMachine.#ctor(System.String,Pulumi.Vco.Cloudspace.VirtualMachineArgs,Pulumi.CustomResourceOptions)">
              <summary>
              Create a VirtualMachine resource with the given unique name, arguments, and options.
              </summary>
@@ -269,7 +146,7 @@
              <param name="args">The arguments used to populate this resource's properties</param>
              <param name="options">A bag of options that control this resource's behavior</param>
         </member>
-        <member name="M:Pulumi.Vco.Resources.VirtualMachine.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
+        <member name="M:Pulumi.Vco.Cloudspace.VirtualMachine.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
              <summary>
              Get an existing VirtualMachine resource's state with the given name, ID, and optional extra
              properties used to qualify the lookup.
@@ -279,7 +156,130 @@
              <param name="id">The unique provider ID of the resource to lookup.</param>
              <param name="options">A bag of options that control this resource's behavior</param>
         </member>
-        <member name="M:Pulumi.Vco.Resources.VirtualMachineCD.#ctor(System.String,Pulumi.Vco.Resources.VirtualMachineCDArgs,Pulumi.CustomResourceOptions)">
+        <member name="M:Pulumi.Vco.Disk.ExposedDisk.#ctor(System.String,Pulumi.Vco.Disk.ExposedDiskArgs,Pulumi.CustomResourceOptions)">
+             <summary>
+             Create a ExposedDisk resource with the given unique name, arguments, and options.
+             </summary>
+            
+             <param name="name">The unique name of the resource</param>
+             <param name="args">The arguments used to populate this resource's properties</param>
+             <param name="options">A bag of options that control this resource's behavior</param>
+        </member>
+        <member name="M:Pulumi.Vco.Disk.ExposedDisk.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
+             <summary>
+             Get an existing ExposedDisk resource's state with the given name, ID, and optional extra
+             properties used to qualify the lookup.
+             </summary>
+            
+             <param name="name">The unique name of the resulting resource.</param>
+             <param name="id">The unique provider ID of the resource to lookup.</param>
+             <param name="options">A bag of options that control this resource's behavior</param>
+        </member>
+        <member name="M:Pulumi.Vco.Ingress.Host.#ctor(System.String,Pulumi.Vco.Ingress.HostArgs,Pulumi.CustomResourceOptions)">
+             <summary>
+             Create a Host resource with the given unique name, arguments, and options.
+             </summary>
+            
+             <param name="name">The unique name of the resource</param>
+             <param name="args">The arguments used to populate this resource's properties</param>
+             <param name="options">A bag of options that control this resource's behavior</param>
+        </member>
+        <member name="M:Pulumi.Vco.Ingress.Host.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
+             <summary>
+             Get an existing Host resource's state with the given name, ID, and optional extra
+             properties used to qualify the lookup.
+             </summary>
+            
+             <param name="name">The unique name of the resulting resource.</param>
+             <param name="id">The unique provider ID of the resource to lookup.</param>
+             <param name="options">A bag of options that control this resource's behavior</param>
+        </member>
+        <member name="M:Pulumi.Vco.Ingress.LoadBalancer.#ctor(System.String,Pulumi.Vco.Ingress.LoadBalancerArgs,Pulumi.CustomResourceOptions)">
+             <summary>
+             Create a LoadBalancer resource with the given unique name, arguments, and options.
+             </summary>
+            
+             <param name="name">The unique name of the resource</param>
+             <param name="args">The arguments used to populate this resource's properties</param>
+             <param name="options">A bag of options that control this resource's behavior</param>
+        </member>
+        <member name="M:Pulumi.Vco.Ingress.LoadBalancer.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
+             <summary>
+             Get an existing LoadBalancer resource's state with the given name, ID, and optional extra
+             properties used to qualify the lookup.
+             </summary>
+            
+             <param name="name">The unique name of the resulting resource.</param>
+             <param name="id">The unique provider ID of the resource to lookup.</param>
+             <param name="options">A bag of options that control this resource's behavior</param>
+        </member>
+        <member name="M:Pulumi.Vco.Ingress.ReverseProxy.#ctor(System.String,Pulumi.Vco.Ingress.ReverseProxyArgs,Pulumi.CustomResourceOptions)">
+             <summary>
+             Create a ReverseProxy resource with the given unique name, arguments, and options.
+             </summary>
+            
+             <param name="name">The unique name of the resource</param>
+             <param name="args">The arguments used to populate this resource's properties</param>
+             <param name="options">A bag of options that control this resource's behavior</param>
+        </member>
+        <member name="M:Pulumi.Vco.Ingress.ReverseProxy.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
+             <summary>
+             Get an existing ReverseProxy resource's state with the given name, ID, and optional extra
+             properties used to qualify the lookup.
+             </summary>
+            
+             <param name="name">The unique name of the resulting resource.</param>
+             <param name="id">The unique provider ID of the resource to lookup.</param>
+             <param name="options">A bag of options that control this resource's behavior</param>
+        </member>
+        <member name="M:Pulumi.Vco.Ingress.ServerPool.#ctor(System.String,Pulumi.Vco.Ingress.ServerPoolArgs,Pulumi.CustomResourceOptions)">
+             <summary>
+             Create a ServerPool resource with the given unique name, arguments, and options.
+             </summary>
+            
+             <param name="name">The unique name of the resource</param>
+             <param name="args">The arguments used to populate this resource's properties</param>
+             <param name="options">A bag of options that control this resource's behavior</param>
+        </member>
+        <member name="M:Pulumi.Vco.Ingress.ServerPool.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
+             <summary>
+             Get an existing ServerPool resource's state with the given name, ID, and optional extra
+             properties used to qualify the lookup.
+             </summary>
+            
+             <param name="name">The unique name of the resulting resource.</param>
+             <param name="id">The unique provider ID of the resource to lookup.</param>
+             <param name="options">A bag of options that control this resource's behavior</param>
+        </member>
+        <member name="M:Pulumi.Vco.Objectspace.Link.#ctor(System.String,Pulumi.Vco.Objectspace.LinkArgs,Pulumi.CustomResourceOptions)">
+             <summary>
+             Create a Link resource with the given unique name, arguments, and options.
+             </summary>
+            
+             <param name="name">The unique name of the resource</param>
+             <param name="args">The arguments used to populate this resource's properties</param>
+             <param name="options">A bag of options that control this resource's behavior</param>
+        </member>
+        <member name="M:Pulumi.Vco.Objectspace.Link.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
+             <summary>
+             Get an existing Link resource's state with the given name, ID, and optional extra
+             properties used to qualify the lookup.
+             </summary>
+            
+             <param name="name">The unique name of the resulting resource.</param>
+             <param name="id">The unique provider ID of the resource to lookup.</param>
+             <param name="options">A bag of options that control this resource's behavior</param>
+        </member>
+        <member name="M:Pulumi.Vco.Provider.#ctor(System.String,Pulumi.Vco.ProviderArgs,Pulumi.CustomResourceOptions)">
+             <summary>
+             Create a Provider resource with the given unique name, arguments, and options.
+             </summary>
+            
+             <param name="name">The unique name of the resource</param>
+             <param name="args">The arguments used to populate this resource's properties</param>
+             <param name="options">A bag of options that control this resource's behavior</param>
+        </member>
+        <member name="M:Pulumi.Vco.Virtual_machine.VirtualMachineCD.#ctor(System.String,Pulumi.Vco.Virtual_machine.VirtualMachineCDArgs,Pulumi.CustomResourceOptions)">
              <summary>
              Create a VirtualMachineCD resource with the given unique name, arguments, and options.
              </summary>
@@ -288,7 +288,7 @@
              <param name="args">The arguments used to populate this resource's properties</param>
              <param name="options">A bag of options that control this resource's behavior</param>
         </member>
-        <member name="M:Pulumi.Vco.Resources.VirtualMachineCD.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
+        <member name="M:Pulumi.Vco.Virtual_machine.VirtualMachineCD.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
              <summary>
              Get an existing VirtualMachineCD resource's state with the given name, ID, and optional extra
              properties used to qualify the lookup.
@@ -298,7 +298,7 @@
              <param name="id">The unique provider ID of the resource to lookup.</param>
              <param name="options">A bag of options that control this resource's behavior</param>
         </member>
-        <member name="M:Pulumi.Vco.Resources.VirtualMachineDisk.#ctor(System.String,Pulumi.Vco.Resources.VirtualMachineDiskArgs,Pulumi.CustomResourceOptions)">
+        <member name="M:Pulumi.Vco.Virtual_machine.VirtualMachineDisk.#ctor(System.String,Pulumi.Vco.Virtual_machine.VirtualMachineDiskArgs,Pulumi.CustomResourceOptions)">
              <summary>
              Create a VirtualMachineDisk resource with the given unique name, arguments, and options.
              </summary>
@@ -307,7 +307,7 @@
              <param name="args">The arguments used to populate this resource's properties</param>
              <param name="options">A bag of options that control this resource's behavior</param>
         </member>
-        <member name="M:Pulumi.Vco.Resources.VirtualMachineDisk.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
+        <member name="M:Pulumi.Vco.Virtual_machine.VirtualMachineDisk.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
              <summary>
              Get an existing VirtualMachineDisk resource's state with the given name, ID, and optional extra
              properties used to qualify the lookup.
@@ -317,7 +317,7 @@
              <param name="id">The unique provider ID of the resource to lookup.</param>
              <param name="options">A bag of options that control this resource's behavior</param>
         </member>
-        <member name="M:Pulumi.Vco.Resources.VirtualMachineNIC.#ctor(System.String,Pulumi.Vco.Resources.VirtualMachineNICArgs,Pulumi.CustomResourceOptions)">
+        <member name="M:Pulumi.Vco.Virtual_machine.VirtualMachineNIC.#ctor(System.String,Pulumi.Vco.Virtual_machine.VirtualMachineNICArgs,Pulumi.CustomResourceOptions)">
              <summary>
              Create a VirtualMachineNIC resource with the given unique name, arguments, and options.
              </summary>
@@ -326,7 +326,7 @@
              <param name="args">The arguments used to populate this resource's properties</param>
              <param name="options">A bag of options that control this resource's behavior</param>
         </member>
-        <member name="M:Pulumi.Vco.Resources.VirtualMachineNIC.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
+        <member name="M:Pulumi.Vco.Virtual_machine.VirtualMachineNIC.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
              <summary>
              Get an existing VirtualMachineNIC resource's state with the given name, ID, and optional extra
              properties used to qualify the lookup.

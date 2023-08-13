@@ -1,0 +1,15 @@
+export { AntiAffinityGroupArgs } from "./antiAffinityGroup";
+export type AntiAffinityGroup = import("./antiAffinityGroup").AntiAffinityGroup;
+export declare const AntiAffinityGroup: typeof import("./antiAffinityGroup").AntiAffinityGroup;
+export { ConnectedCloudspaceArgs } from "./connectedCloudspace";
+export type ConnectedCloudspace = import("./connectedCloudspace").ConnectedCloudspace;
+export declare const ConnectedCloudspace: typeof import("./connectedCloudspace").ConnectedCloudspace;
+export { ExternalNetworkArgs } from "./externalNetwork";
+export type ExternalNetwork = import("./externalNetwork").ExternalNetwork;
+export declare const ExternalNetwork: typeof import("./externalNetwork").ExternalNetwork;
+export { PortForwardArgs } from "./portForward";
+export type PortForward = import("./portForward").PortForward;
+export declare const PortForward: typeof import("./portForward").PortForward;
+export { VirtualMachineArgs } from "./virtualMachine";
+export type VirtualMachine = import("./virtualMachine").VirtualMachine;
+export declare const VirtualMachine: typeof import("./virtualMachine").VirtualMachine;

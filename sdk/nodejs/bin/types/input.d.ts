@@ -1,14 +1,10 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as inputs from "../types/input";
-export declare namespace resources {
-    interface FirewallCustomArgs {
-        cdrom_id?: pulumi.Input<number>;
-        disk_size?: pulumi.Input<number>;
-        image_id?: pulumi.Input<number>;
-        memory?: pulumi.Input<number>;
-        type?: pulumi.Input<string>;
-        vcpus?: pulumi.Input<number>;
-    }
+export declare namespace cloudspace {
+}
+export declare namespace disk {
+}
+export declare namespace ingress {
     interface HealthCheckArgs {
         interval?: pulumi.Input<number>;
         path?: pulumi.Input<string>;
@@ -21,11 +17,11 @@ export declare namespace resources {
         enabled: pulumi.Input<boolean>;
     }
     interface OptionsArgs {
-        health_check?: pulumi.Input<inputs.resources.HealthCheckArgs>;
-        sticky_session_cookie?: pulumi.Input<inputs.resources.StickySessionCookieArgs>;
+        health_check?: pulumi.Input<inputs.ingress.HealthCheckArgs>;
+        sticky_session_cookie?: pulumi.Input<inputs.ingress.StickySessionCookieArgs>;
     }
     interface ReverseProxyBackendArgs {
-        options?: pulumi.Input<inputs.resources.OptionsArgs>;
+        options?: pulumi.Input<inputs.ingress.OptionsArgs>;
         scheme: pulumi.Input<string>;
         serverpool_id: pulumi.Input<string>;
         target_port: pulumi.Input<number>;
@@ -35,7 +31,7 @@ export declare namespace resources {
         http_port?: pulumi.Input<number>;
         https_port?: pulumi.Input<number>;
         ip_address?: pulumi.Input<string>;
-        letsencrypt: pulumi.Input<inputs.resources.LetsEncryptArgs>;
+        letsencrypt: pulumi.Input<inputs.ingress.LetsEncryptArgs>;
         scheme: pulumi.Input<string>;
     }
     interface StickySessionCookieArgs {
