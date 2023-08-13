@@ -30,9 +30,6 @@ namespace Pulumi.Vco.Cloudspace
         [Output("metric")]
         public Output<int> Metric { get; private set; } = null!;
 
-        [Output("success")]
-        public Output<bool> Success { get; private set; } = null!;
-
         [Output("token")]
         public Output<string> Token { get; private set; } = null!;
 
@@ -88,7 +85,16 @@ namespace Pulumi.Vco.Cloudspace
         public Input<string> Cloudspace_id { get; set; } = null!;
 
         [Input("customerID", required: true)]
-        public Input<string> CustomerID { get; set; } = null!;
+        private Input<string>? _customerID;
+        public Input<string>? CustomerID
+        {
+            get => _customerID;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _customerID = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         [Input("external_network_id", required: true)]
         public Input<string> External_network_id { get; set; } = null!;
@@ -103,10 +109,28 @@ namespace Pulumi.Vco.Cloudspace
         public Input<int> Metric { get; set; } = null!;
 
         [Input("token", required: true)]
-        public Input<string> Token { get; set; } = null!;
+        private Input<string>? _token;
+        public Input<string>? Token
+        {
+            get => _token;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _token = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         [Input("url", required: true)]
-        public Input<string> Url { get; set; } = null!;
+        private Input<string>? _url;
+        public Input<string>? Url
+        {
+            get => _url;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _url = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         public ExternalNetworkArgs()
         {

@@ -74,12 +74,12 @@ export class LoadBalancer extends pulumi.CustomResource {
                 throw new Error("Missing required property 'url'");
             }
             resourceInputs["cloudspace_id"] = args ? args.cloudspace_id : undefined;
-            resourceInputs["customerID"] = args ? args.customerID : undefined;
+            resourceInputs["customerID"] = args?.customerID ? pulumi.secret(args.customerID) : undefined;
             resourceInputs["description"] = args ? args.description : undefined;
             resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["token"] = args ? args.token : undefined;
+            resourceInputs["token"] = args?.token ? pulumi.secret(args.token) : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
-            resourceInputs["url"] = args ? args.url : undefined;
+            resourceInputs["url"] = args?.url ? pulumi.secret(args.url) : undefined;
             resourceInputs["back_end"] = undefined /*out*/;
             resourceInputs["front_end"] = undefined /*out*/;
             resourceInputs["loadbalancer_id"] = undefined /*out*/;

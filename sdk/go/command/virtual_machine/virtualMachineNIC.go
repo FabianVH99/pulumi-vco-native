@@ -57,6 +57,15 @@ func NewVirtualMachineNIC(ctx *pulumi.Context,
 	if args.Vm_id == nil {
 		return nil, errors.New("invalid value for required argument 'Vm_id'")
 	}
+	if args.CustomerID != nil {
+		args.CustomerID = pulumi.ToSecret(args.CustomerID).(pulumi.StringInput)
+	}
+	if args.Token != nil {
+		args.Token = pulumi.ToSecret(args.Token).(pulumi.StringInput)
+	}
+	if args.Url != nil {
+		args.Url = pulumi.ToSecret(args.Url).(pulumi.StringInput)
+	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource VirtualMachineNIC
 	err := ctx.RegisterResource("vco:virtual_machine:VirtualMachineNIC", name, args, &resource, opts...)

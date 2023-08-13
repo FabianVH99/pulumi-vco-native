@@ -1,9 +1,4 @@
 import * as outputs from "../types/output";
-export declare namespace base {
-    interface IOTune {
-        iops: number;
-    }
-}
 export declare namespace cloudspace {
     interface CpuTopology {
         cores: number;

@@ -18,7 +18,6 @@ type VirtualMachineDisk struct {
 	Cloudspace_id pulumi.StringOutput `pulumi:"cloudspace_id"`
 	CustomerID    pulumi.StringOutput `pulumi:"customerID"`
 	Disk_id       pulumi.IntOutput    `pulumi:"disk_id"`
-	Success       pulumi.BoolOutput   `pulumi:"success"`
 	Token         pulumi.StringOutput `pulumi:"token"`
 	Url           pulumi.StringOutput `pulumi:"url"`
 	Vm_id         pulumi.IntOutput    `pulumi:"vm_id"`
@@ -48,6 +47,15 @@ func NewVirtualMachineDisk(ctx *pulumi.Context,
 	}
 	if args.Vm_id == nil {
 		return nil, errors.New("invalid value for required argument 'Vm_id'")
+	}
+	if args.CustomerID != nil {
+		args.CustomerID = pulumi.ToSecret(args.CustomerID).(pulumi.StringInput)
+	}
+	if args.Token != nil {
+		args.Token = pulumi.ToSecret(args.Token).(pulumi.StringInput)
+	}
+	if args.Url != nil {
+		args.Url = pulumi.ToSecret(args.Url).(pulumi.StringInput)
 	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource VirtualMachineDisk
@@ -197,10 +205,6 @@ func (o VirtualMachineDiskOutput) CustomerID() pulumi.StringOutput {
 
 func (o VirtualMachineDiskOutput) Disk_id() pulumi.IntOutput {
 	return o.ApplyT(func(v *VirtualMachineDisk) pulumi.IntOutput { return v.Disk_id }).(pulumi.IntOutput)
-}
-
-func (o VirtualMachineDiskOutput) Success() pulumi.BoolOutput {
-	return o.ApplyT(func(v *VirtualMachineDisk) pulumi.BoolOutput { return v.Success }).(pulumi.BoolOutput)
 }
 
 func (o VirtualMachineDiskOutput) Token() pulumi.StringOutput {

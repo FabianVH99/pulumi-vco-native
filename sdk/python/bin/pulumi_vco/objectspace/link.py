@@ -9,10 +9,10 @@ import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 
-__all__ = ['ObjectSpaceLinkArgs', 'ObjectSpaceLink']
+__all__ = ['LinkArgs', 'Link']
 
 @pulumi.input_type
-class ObjectSpaceLinkArgs:
+class LinkArgs:
     def __init__(__self__, *,
                  cloudspace_id: pulumi.Input[str],
                  customer_id: pulumi.Input[str],
@@ -20,7 +20,7 @@ class ObjectSpaceLinkArgs:
                  token: pulumi.Input[str],
                  url: pulumi.Input[str]):
         """
-        The set of arguments for constructing a ObjectSpaceLink resource.
+        The set of arguments for constructing a Link resource.
         """
         pulumi.set(__self__, "cloudspace_id", cloudspace_id)
         pulumi.set(__self__, "customer_id", customer_id)
@@ -74,7 +74,7 @@ class ObjectSpaceLinkArgs:
         pulumi.set(self, "url", value)
 
 
-class ObjectSpaceLink(pulumi.CustomResource):
+class Link(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
@@ -86,7 +86,7 @@ class ObjectSpaceLink(pulumi.CustomResource):
                  url: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Create a ObjectSpaceLink resource with the given unique name, props, and options.
+        Create a Link resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         """
@@ -94,17 +94,17 @@ class ObjectSpaceLink(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: ObjectSpaceLinkArgs,
+                 args: LinkArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a ObjectSpaceLink resource with the given unique name, props, and options.
+        Create a Link resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
-        :param ObjectSpaceLinkArgs args: The arguments to use to populate this resource's properties.
+        :param LinkArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
         """
         ...
     def __init__(__self__, resource_name: str, *args, **kwargs):
-        resource_args, opts = _utilities.get_resource_args_opts(ObjectSpaceLinkArgs, pulumi.ResourceOptions, *args, **kwargs)
+        resource_args, opts = _utilities.get_resource_args_opts(LinkArgs, pulumi.ResourceOptions, *args, **kwargs)
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
@@ -125,26 +125,25 @@ class ObjectSpaceLink(pulumi.CustomResource):
         if opts.id is None:
             if __props__ is not None:
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
-            __props__ = ObjectSpaceLinkArgs.__new__(ObjectSpaceLinkArgs)
+            __props__ = LinkArgs.__new__(LinkArgs)
 
             if cloudspace_id is None and not opts.urn:
                 raise TypeError("Missing required property 'cloudspace_id'")
             __props__.__dict__["cloudspace_id"] = cloudspace_id
             if customer_id is None and not opts.urn:
                 raise TypeError("Missing required property 'customer_id'")
-            __props__.__dict__["customer_id"] = customer_id
+            __props__.__dict__["customer_id"] = None if customer_id is None else pulumi.Output.secret(customer_id)
             if objectspace_id is None and not opts.urn:
                 raise TypeError("Missing required property 'objectspace_id'")
             __props__.__dict__["objectspace_id"] = objectspace_id
             if token is None and not opts.urn:
                 raise TypeError("Missing required property 'token'")
-            __props__.__dict__["token"] = token
+            __props__.__dict__["token"] = None if token is None else pulumi.Output.secret(token)
             if url is None and not opts.urn:
                 raise TypeError("Missing required property 'url'")
-            __props__.__dict__["url"] = url
-            __props__.__dict__["success"] = None
-        super(ObjectSpaceLink, __self__).__init__(
-            'vco:objectspace:ObjectSpaceLink',
+            __props__.__dict__["url"] = None if url is None else pulumi.Output.secret(url)
+        super(Link, __self__).__init__(
+            'vco:objectspace:Link',
             resource_name,
             __props__,
             opts)
@@ -152,9 +151,9 @@ class ObjectSpaceLink(pulumi.CustomResource):
     @staticmethod
     def get(resource_name: str,
             id: pulumi.Input[str],
-            opts: Optional[pulumi.ResourceOptions] = None) -> 'ObjectSpaceLink':
+            opts: Optional[pulumi.ResourceOptions] = None) -> 'Link':
         """
-        Get an existing ObjectSpaceLink resource's state with the given name, id, and optional extra
+        Get an existing Link resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
 
         :param str resource_name: The unique name of the resulting resource.
@@ -163,15 +162,14 @@ class ObjectSpaceLink(pulumi.CustomResource):
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
-        __props__ = ObjectSpaceLinkArgs.__new__(ObjectSpaceLinkArgs)
+        __props__ = LinkArgs.__new__(LinkArgs)
 
         __props__.__dict__["cloudspace_id"] = None
         __props__.__dict__["customer_id"] = None
         __props__.__dict__["objectspace_id"] = None
-        __props__.__dict__["success"] = None
         __props__.__dict__["token"] = None
         __props__.__dict__["url"] = None
-        return ObjectSpaceLink(resource_name, opts=opts, __props__=__props__)
+        return Link(resource_name, opts=opts, __props__=__props__)
 
     @property
     @pulumi.getter
@@ -187,11 +185,6 @@ class ObjectSpaceLink(pulumi.CustomResource):
     @pulumi.getter
     def objectspace_id(self) -> pulumi.Output[str]:
         return pulumi.get(self, "objectspace_id")
-
-    @property
-    @pulumi.getter
-    def success(self) -> pulumi.Output[bool]:
-        return pulumi.get(self, "success")
 
     @property
     @pulumi.getter

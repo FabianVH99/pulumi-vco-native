@@ -2,8 +2,6 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
-import * as inputs from "../types/input";
-import * as outputs from "../types/output";
 import * as utilities from "../utilities";
 
 export class Disk extends pulumi.CustomResource {
@@ -43,7 +41,6 @@ export class Disk extends pulumi.CustomResource {
     public readonly disk_type!: pulumi.Output<string>;
     public /*out*/ readonly exposed!: pulumi.Output<boolean>;
     public readonly iops!: pulumi.Output<number | undefined>;
-    public /*out*/ readonly iotune!: pulumi.Output<outputs.base.IOTune>;
     public readonly location!: pulumi.Output<string>;
     public /*out*/ readonly model!: pulumi.Output<string>;
     public /*out*/ readonly order!: pulumi.Output<string>;
@@ -101,7 +98,6 @@ export class Disk extends pulumi.CustomResource {
             resourceInputs["cloudspace_id"] = undefined /*out*/;
             resourceInputs["disk_id"] = undefined /*out*/;
             resourceInputs["exposed"] = undefined /*out*/;
-            resourceInputs["iotune"] = undefined /*out*/;
             resourceInputs["model"] = undefined /*out*/;
             resourceInputs["order"] = undefined /*out*/;
             resourceInputs["port"] = undefined /*out*/;
@@ -117,7 +113,6 @@ export class Disk extends pulumi.CustomResource {
             resourceInputs["disk_type"] = undefined /*out*/;
             resourceInputs["exposed"] = undefined /*out*/;
             resourceInputs["iops"] = undefined /*out*/;
-            resourceInputs["iotune"] = undefined /*out*/;
             resourceInputs["location"] = undefined /*out*/;
             resourceInputs["model"] = undefined /*out*/;
             resourceInputs["order"] = undefined /*out*/;

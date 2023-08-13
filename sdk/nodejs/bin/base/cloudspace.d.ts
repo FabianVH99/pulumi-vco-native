@@ -20,7 +20,7 @@ export declare class Cloudspace extends pulumi.CustomResource {
     readonly creation_time: pulumi.Output<number>;
     readonly customerID: pulumi.Output<string>;
     readonly disk_size: pulumi.Output<number | undefined>;
-    readonly external_network_id: pulumi.Output<string>;
+    readonly external_network_id: pulumi.Output<number>;
     readonly external_network_ip: pulumi.Output<string>;
     readonly host: pulumi.Output<string | undefined>;
     readonly image_id: pulumi.Output<number | undefined>;

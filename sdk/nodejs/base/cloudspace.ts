@@ -37,7 +37,7 @@ export class Cloudspace extends pulumi.CustomResource {
     public /*out*/ readonly creation_time!: pulumi.Output<number>;
     public readonly customerID!: pulumi.Output<string>;
     public readonly disk_size!: pulumi.Output<number | undefined>;
-    public readonly external_network_id!: pulumi.Output<string>;
+    public readonly external_network_id!: pulumi.Output<number>;
     public /*out*/ readonly external_network_ip!: pulumi.Output<string>;
     public readonly host!: pulumi.Output<string | undefined>;
     public readonly image_id!: pulumi.Output<number | undefined>;

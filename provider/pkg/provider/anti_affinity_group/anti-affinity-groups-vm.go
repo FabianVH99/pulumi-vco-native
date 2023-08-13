@@ -31,7 +31,7 @@ type AntiAffinityGroupVMArgs struct {
 	VirtualMachineID int    `pulumi:"vm_id"`
 }
 
-func (c AntiAffinityGroupVM) WireDependencies(f infer.FieldSelector, args *AntiAffinityGroupVMArgs, state *AntiAffinityGroupVMState) {
+func (agvm AntiAffinityGroupVM) WireDependencies(f infer.FieldSelector, args *AntiAffinityGroupVMArgs, state *AntiAffinityGroupVMState) {
 	f.OutputField(&state.URL).DependsOn(f.InputField(&args.URL))
 	f.OutputField(&state.Token).DependsOn(f.InputField(&args.Token))
 	f.OutputField(&state.CustomerID).DependsOn(f.InputField(&args.CustomerID))
@@ -65,6 +65,10 @@ func (agvm AntiAffinityGroupVM) Create(ctx p.Context, name string, input AntiAff
 		return "", state, err
 	}
 	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		fmt.Printf("Error creating resource %s: received status code %d", id, resp.StatusCode)
+		return "", state, fmt.Errorf("received status code %d", resp.StatusCode)
+	}
 
 	var result map[string]interface{}
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {

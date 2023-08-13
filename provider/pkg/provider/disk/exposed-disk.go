@@ -95,6 +95,10 @@ func (ExposedDisk) Create(ctx p.Context, name string, input ExposedDiskArgs, pre
 		return "", state, err
 	}
 	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		fmt.Printf("Error creating resource %s: received status code %d", id, resp.StatusCode)
+		return "", state, fmt.Errorf("received status code %d", resp.StatusCode)
+	}
 	state.URL = input.URL
 	state.CustomerID = input.CustomerID
 	state.Token = input.Token

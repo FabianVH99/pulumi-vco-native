@@ -69,11 +69,11 @@ export class AntiAffinityGroup extends pulumi.CustomResource {
                 throw new Error("Missing required property 'url'");
             }
             resourceInputs["cloudspace_id"] = args ? args.cloudspace_id : undefined;
-            resourceInputs["customerID"] = args ? args.customerID : undefined;
+            resourceInputs["customerID"] = args?.customerID ? pulumi.secret(args.customerID) : undefined;
             resourceInputs["group_id"] = args ? args.group_id : undefined;
             resourceInputs["spread"] = args ? args.spread : undefined;
-            resourceInputs["token"] = args ? args.token : undefined;
-            resourceInputs["url"] = args ? args.url : undefined;
+            resourceInputs["token"] = args?.token ? pulumi.secret(args.token) : undefined;
+            resourceInputs["url"] = args?.url ? pulumi.secret(args.url) : undefined;
             resourceInputs["status"] = undefined /*out*/;
         } else {
             resourceInputs["cloudspace_id"] = undefined /*out*/;

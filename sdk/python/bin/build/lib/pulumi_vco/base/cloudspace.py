@@ -476,7 +476,7 @@ class Cloudspace(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def external_network_id(self) -> pulumi.Output[str]:
+    def external_network_id(self) -> pulumi.Output[int]:
         return pulumi.get(self, "external_network_id")
 
     @property

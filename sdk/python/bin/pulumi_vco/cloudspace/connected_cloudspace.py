@@ -161,7 +161,7 @@ class ConnectedCloudspace(pulumi.CustomResource):
             __props__.__dict__["connected_cloudspace_id"] = connected_cloudspace_id
             if customer_id is None and not opts.urn:
                 raise TypeError("Missing required property 'customer_id'")
-            __props__.__dict__["customer_id"] = customer_id
+            __props__.__dict__["customer_id"] = None if customer_id is None else pulumi.Output.secret(customer_id)
             if local_cloudspace_ip_ is None and not opts.urn:
                 raise TypeError("Missing required property 'local_cloudspace_ip_'")
             __props__.__dict__["local_cloudspace_ip_"] = local_cloudspace_ip_
@@ -170,10 +170,10 @@ class ConnectedCloudspace(pulumi.CustomResource):
             __props__.__dict__["remote_cloudspace_ip_"] = remote_cloudspace_ip_
             if token is None and not opts.urn:
                 raise TypeError("Missing required property 'token'")
-            __props__.__dict__["token"] = token
+            __props__.__dict__["token"] = None if token is None else pulumi.Output.secret(token)
             if url is None and not opts.urn:
                 raise TypeError("Missing required property 'url'")
-            __props__.__dict__["url"] = url
+            __props__.__dict__["url"] = None if url is None else pulumi.Output.secret(url)
             __props__.__dict__["local_cloudspace_ip"] = None
             __props__.__dict__["remote_cloudspace_ip"] = None
             __props__.__dict__["status"] = None

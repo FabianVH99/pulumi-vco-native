@@ -160,20 +160,20 @@ class LoadBalancer(pulumi.CustomResource):
             __props__.__dict__["cloudspace_id"] = cloudspace_id
             if customer_id is None and not opts.urn:
                 raise TypeError("Missing required property 'customer_id'")
-            __props__.__dict__["customer_id"] = customer_id
+            __props__.__dict__["customer_id"] = None if customer_id is None else pulumi.Output.secret(customer_id)
             __props__.__dict__["description"] = description
             if name is None and not opts.urn:
                 raise TypeError("Missing required property 'name'")
             __props__.__dict__["name"] = name
             if token is None and not opts.urn:
                 raise TypeError("Missing required property 'token'")
-            __props__.__dict__["token"] = token
+            __props__.__dict__["token"] = None if token is None else pulumi.Output.secret(token)
             if type is None and not opts.urn:
                 raise TypeError("Missing required property 'type'")
             __props__.__dict__["type"] = type
             if url is None and not opts.urn:
                 raise TypeError("Missing required property 'url'")
-            __props__.__dict__["url"] = url
+            __props__.__dict__["url"] = None if url is None else pulumi.Output.secret(url)
             __props__.__dict__["back_end"] = None
             __props__.__dict__["front_end"] = None
             __props__.__dict__["loadbalancer_id"] = None

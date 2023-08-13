@@ -373,7 +373,7 @@ class VirtualMachine(pulumi.CustomResource):
             __props__.__dict__["cloudspace_id"] = cloudspace_id
             if customer_id is None and not opts.urn:
                 raise TypeError("Missing required property 'customer_id'")
-            __props__.__dict__["customer_id"] = customer_id
+            __props__.__dict__["customer_id"] = None if customer_id is None else pulumi.Output.secret(customer_id)
             __props__.__dict__["data_disks"] = data_disks
             if description is None and not opts.urn:
                 raise TypeError("Missing required property 'description'")
@@ -393,10 +393,10 @@ class VirtualMachine(pulumi.CustomResource):
             __props__.__dict__["snapshot_id"] = snapshot_id
             if token is None and not opts.urn:
                 raise TypeError("Missing required property 'token'")
-            __props__.__dict__["token"] = token
+            __props__.__dict__["token"] = None if token is None else pulumi.Output.secret(token)
             if url is None and not opts.urn:
                 raise TypeError("Missing required property 'url'")
-            __props__.__dict__["url"] = url
+            __props__.__dict__["url"] = None if url is None else pulumi.Output.secret(url)
             __props__.__dict__["user_data"] = user_data
             if vcpus is None and not opts.urn:
                 raise TypeError("Missing required property 'vcpus'")

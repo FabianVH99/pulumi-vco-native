@@ -251,18 +251,18 @@
              <param name="id">The unique provider ID of the resource to lookup.</param>
              <param name="options">A bag of options that control this resource's behavior</param>
         </member>
-        <member name="M:Pulumi.Vco.Objectspace.ObjectSpaceLink.#ctor(System.String,Pulumi.Vco.Objectspace.ObjectSpaceLinkArgs,Pulumi.CustomResourceOptions)">
+        <member name="M:Pulumi.Vco.Objectspace.Link.#ctor(System.String,Pulumi.Vco.Objectspace.LinkArgs,Pulumi.CustomResourceOptions)">
              <summary>
-             Create a ObjectSpaceLink resource with the given unique name, arguments, and options.
+             Create a Link resource with the given unique name, arguments, and options.
              </summary>
             
              <param name="name">The unique name of the resource</param>
              <param name="args">The arguments used to populate this resource's properties</param>
              <param name="options">A bag of options that control this resource's behavior</param>
         </member>
-        <member name="M:Pulumi.Vco.Objectspace.ObjectSpaceLink.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
+        <member name="M:Pulumi.Vco.Objectspace.Link.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
              <summary>
-             Get an existing ObjectSpaceLink resource's state with the given name, ID, and optional extra
+             Get an existing Link resource's state with the given name, ID, and optional extra
              properties used to qualify the lookup.
              </summary>
             

@@ -57,14 +57,14 @@ class VirtualMachineNIC extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vm_id'");
             }
             resourceInputs["cloudspace_id"] = args ? args.cloudspace_id : undefined;
-            resourceInputs["customerID"] = args ? args.customerID : undefined;
+            resourceInputs["customerID"] = (args === null || args === void 0 ? void 0 : args.customerID) ? pulumi.secret(args.customerID) : undefined;
             resourceInputs["external_cloudspace_id"] = args ? args.external_cloudspace_id : undefined;
             resourceInputs["external_network_id"] = args ? args.external_network_id : undefined;
             resourceInputs["external_network_ip"] = args ? args.external_network_ip : undefined;
             resourceInputs["external_network_type"] = args ? args.external_network_type : undefined;
             resourceInputs["model"] = args ? args.model : undefined;
-            resourceInputs["token"] = args ? args.token : undefined;
-            resourceInputs["url"] = args ? args.url : undefined;
+            resourceInputs["token"] = (args === null || args === void 0 ? void 0 : args.token) ? pulumi.secret(args.token) : undefined;
+            resourceInputs["url"] = (args === null || args === void 0 ? void 0 : args.url) ? pulumi.secret(args.url) : undefined;
             resourceInputs["vm_id"] = args ? args.vm_id : undefined;
             resourceInputs["device_name"] = undefined /*out*/;
             resourceInputs["ip_address"] = undefined /*out*/;

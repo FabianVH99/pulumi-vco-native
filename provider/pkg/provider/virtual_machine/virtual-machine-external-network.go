@@ -103,6 +103,10 @@ func (nic VirtualMachineNIC) Create(ctx p.Context, name string, input VirtualMac
 		return "", state, err
 	}
 	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		fmt.Printf("Error creating resource %s: received status code %d", id, resp.StatusCode)
+		return "", state, fmt.Errorf("received status code %d", resp.StatusCode)
+	}
 
 	url = fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/vms/%d/external-nics", input.URL, input.CustomerID, input.CloudSpaceID, input.VirtualMachineID)
 	req, err = http.NewRequest("GET", url, nil)
@@ -117,6 +121,10 @@ func (nic VirtualMachineNIC) Create(ctx p.Context, name string, input VirtualMac
 		return "", state, err
 	}
 	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		fmt.Printf("Error retrieving list of external networks %s: received status code %d", id, resp.StatusCode)
+		return "", state, fmt.Errorf("received status code %d", resp.StatusCode)
+	}
 
 	var result map[string]interface{}
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {

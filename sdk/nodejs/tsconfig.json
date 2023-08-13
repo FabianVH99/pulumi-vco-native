@@ -33,7 +33,7 @@
         "ingress/reverseProxy.ts",
         "ingress/serverPool.ts",
         "objectspace/index.ts",
-        "objectspace/objectSpaceLink.ts",
+        "objectspace/link.ts",
         "provider.ts",
         "types/index.ts",
         "types/input.ts",

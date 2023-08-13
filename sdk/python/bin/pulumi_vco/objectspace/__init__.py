@@ -5,4 +5,4 @@
 from .. import _utilities
 import typing
 # Export this package's modules as members:
-from .object_space_link import *
+from .link import *

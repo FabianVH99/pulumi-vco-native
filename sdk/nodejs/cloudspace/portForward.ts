@@ -83,15 +83,15 @@ export class PortForward extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vm_id'");
             }
             resourceInputs["cloudspace_id"] = args ? args.cloudspace_id : undefined;
-            resourceInputs["customerID"] = args ? args.customerID : undefined;
+            resourceInputs["customerID"] = args?.customerID ? pulumi.secret(args.customerID) : undefined;
             resourceInputs["local_port"] = args ? args.local_port : undefined;
             resourceInputs["nested_cs_id"] = args ? args.nested_cs_id : undefined;
             resourceInputs["protocol"] = args ? args.protocol : undefined;
             resourceInputs["public_ip"] = args ? args.public_ip : undefined;
             resourceInputs["public_port"] = args ? args.public_port : undefined;
             resourceInputs["till_public_port"] = args ? args.till_public_port : undefined;
-            resourceInputs["token"] = args ? args.token : undefined;
-            resourceInputs["url"] = args ? args.url : undefined;
+            resourceInputs["token"] = args?.token ? pulumi.secret(args.token) : undefined;
+            resourceInputs["url"] = args?.url ? pulumi.secret(args.url) : undefined;
             resourceInputs["vm_id"] = args ? args.vm_id : undefined;
             resourceInputs["portforward_id"] = undefined /*out*/;
         } else {

@@ -161,7 +161,7 @@ class ExposedDisk(pulumi.CustomResource):
             __props__.__dict__["cloudspace_id"] = cloudspace_id
             if customer_id is None and not opts.urn:
                 raise TypeError("Missing required property 'customer_id'")
-            __props__.__dict__["customer_id"] = customer_id
+            __props__.__dict__["customer_id"] = None if customer_id is None else pulumi.Output.secret(customer_id)
             if disk_id is None and not opts.urn:
                 raise TypeError("Missing required property 'disk_id'")
             __props__.__dict__["disk_id"] = disk_id
@@ -169,10 +169,10 @@ class ExposedDisk(pulumi.CustomResource):
             __props__.__dict__["max_connections"] = max_connections
             if token is None and not opts.urn:
                 raise TypeError("Missing required property 'token'")
-            __props__.__dict__["token"] = token
+            __props__.__dict__["token"] = None if token is None else pulumi.Output.secret(token)
             if url is None and not opts.urn:
                 raise TypeError("Missing required property 'url'")
-            __props__.__dict__["url"] = url
+            __props__.__dict__["url"] = None if url is None else pulumi.Output.secret(url)
             __props__.__dict__["endpoint"] = None
             __props__.__dict__["protocol"] = None
         super(ExposedDisk, __self__).__init__(

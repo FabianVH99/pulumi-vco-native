@@ -57,24 +57,23 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, "INCOMPLETE", state.Status)
 
-		status, updatedState, err := antiAffinityGroup.Update(nil, state, cloudspace.AntiAffinityGroupArgs{
+		updatedState, err := antiAffinityGroup.Update(nil, "ag-test-pulumi", state, cloudspace.AntiAffinityGroupArgs{
 			URL:          url,
 			Token:        token,
 			CustomerID:   customer,
 			CloudSpaceID: CloudSpaceState.CloudSpaceID,
 			GroupID:      state.GroupID,
 			Spread:       2,
-		})
+		}, false)
 		assert.NoError(t, err)
-		assert.Equal(t, true, status)
-
+		assert.Equal(t, 2, state.Spread)
 		AntiAffinityGroupState = updatedState
 	})
 
 	t.Run("TestConnectedCloudspace", func(t *testing.T) {
-		new_cloudspace := base.Cloudspace{}
+		newCloudspace := base.Cloudspace{}
 
-		_, csState, err := new_cloudspace.Create(nil, "cs-test-pulumi-2", base.CloudspaceArgs{
+		_, csState, err := newCloudspace.Create(nil, "cs-test-pulumi-2", base.CloudspaceArgs{
 			URL:               url,
 			Token:             token,
 			CustomerID:        customer,
@@ -101,31 +100,17 @@ func TestProvider(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, CloudSpaceState.CloudSpaceID, cCsState.ConnectedCloudSpaceID)
 
-		statusCode, err := connectedCloudspace.Delete(nil, cloudspace.ConnectedCloudspaceArgs{
-			URL:                   url,
-			Token:                 token,
-			CustomerID:            customer,
-			CloudSpaceID:          csState.CloudSpaceID,
-			ConnectedCloudSpaceID: CloudSpaceState.CloudSpaceID,
-			RemoteCloudSpaceIP:    CloudSpaceState.ExternalNetworkIP,
-			LocalCloudSpaceIP:     csState.ExternalNetworkIP,
-		})
+		err = connectedCloudspace.Delete(nil, "cCs-test-pulumi", cCsState)
 		assert.NoError(t, err)
-		assert.Equal(t, 204, statusCode)
 
-		csDeleteStatus, err := new_cloudspace.Delete(nil, csState, base.CloudspaceArgs{
-			URL:        url,
-			Token:      token,
-			CustomerID: customer,
-		})
+		err = newCloudspace.Delete(nil, "cs-test-pulumi-2", csState)
 		assert.NoError(t, err)
-		assert.Equal(t, true, csDeleteStatus)
 	})
 
 	t.Run("TestDisk", func(t *testing.T) {
-		new_disk := base.Disk{}
+		newDisk := base.Disk{}
 
-		_, state, err := new_disk.Create(nil, "disk-test-pulumi", base.DiskArgs{
+		_, state, err := newDisk.Create(nil, "disk-test-pulumi", base.DiskArgs{
 			URL:             url,
 			Token:           token,
 			CustomerID:      customer,

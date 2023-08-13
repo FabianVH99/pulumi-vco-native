@@ -58,9 +58,9 @@ class VirtualMachineCD extends pulumi.CustomResource {
             }
             resourceInputs["cdrom_id"] = args ? args.cdrom_id : undefined;
             resourceInputs["cloudspace_id"] = args ? args.cloudspace_id : undefined;
-            resourceInputs["customerID"] = args ? args.customerID : undefined;
-            resourceInputs["token"] = args ? args.token : undefined;
-            resourceInputs["url"] = args ? args.url : undefined;
+            resourceInputs["customerID"] = (args === null || args === void 0 ? void 0 : args.customerID) ? pulumi.secret(args.customerID) : undefined;
+            resourceInputs["token"] = (args === null || args === void 0 ? void 0 : args.token) ? pulumi.secret(args.token) : undefined;
+            resourceInputs["url"] = (args === null || args === void 0 ? void 0 : args.url) ? pulumi.secret(args.url) : undefined;
             resourceInputs["vm_id"] = args ? args.vm_id : undefined;
             resourceInputs["description"] = undefined /*out*/;
             resourceInputs["disk_size"] = undefined /*out*/;

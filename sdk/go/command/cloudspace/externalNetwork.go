@@ -21,7 +21,6 @@ type ExternalNetwork struct {
 	External_network_ip   pulumi.StringOutput `pulumi:"external_network_ip"`
 	External_network_type pulumi.StringOutput `pulumi:"external_network_type"`
 	Metric                pulumi.IntOutput    `pulumi:"metric"`
-	Success               pulumi.BoolOutput   `pulumi:"success"`
 	Token                 pulumi.StringOutput `pulumi:"token"`
 	Url                   pulumi.StringOutput `pulumi:"url"`
 }
@@ -56,6 +55,15 @@ func NewExternalNetwork(ctx *pulumi.Context,
 	}
 	if args.Url == nil {
 		return nil, errors.New("invalid value for required argument 'Url'")
+	}
+	if args.CustomerID != nil {
+		args.CustomerID = pulumi.ToSecret(args.CustomerID).(pulumi.StringInput)
+	}
+	if args.Token != nil {
+		args.Token = pulumi.ToSecret(args.Token).(pulumi.StringInput)
+	}
+	if args.Url != nil {
+		args.Url = pulumi.ToSecret(args.Url).(pulumi.StringInput)
 	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource ExternalNetwork
@@ -221,10 +229,6 @@ func (o ExternalNetworkOutput) External_network_type() pulumi.StringOutput {
 
 func (o ExternalNetworkOutput) Metric() pulumi.IntOutput {
 	return o.ApplyT(func(v *ExternalNetwork) pulumi.IntOutput { return v.Metric }).(pulumi.IntOutput)
-}
-
-func (o ExternalNetworkOutput) Success() pulumi.BoolOutput {
-	return o.ApplyT(func(v *ExternalNetwork) pulumi.BoolOutput { return v.Success }).(pulumi.BoolOutput)
 }
 
 func (o ExternalNetworkOutput) Token() pulumi.StringOutput {

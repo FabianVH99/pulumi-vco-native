@@ -171,7 +171,7 @@ class ExternalNetwork(pulumi.CustomResource):
             __props__.__dict__["cloudspace_id"] = cloudspace_id
             if customer_id is None and not opts.urn:
                 raise TypeError("Missing required property 'customer_id'")
-            __props__.__dict__["customer_id"] = customer_id
+            __props__.__dict__["customer_id"] = None if customer_id is None else pulumi.Output.secret(customer_id)
             if external_network_id is None and not opts.urn:
                 raise TypeError("Missing required property 'external_network_id'")
             __props__.__dict__["external_network_id"] = external_network_id
@@ -186,11 +186,10 @@ class ExternalNetwork(pulumi.CustomResource):
             __props__.__dict__["metric"] = metric
             if token is None and not opts.urn:
                 raise TypeError("Missing required property 'token'")
-            __props__.__dict__["token"] = token
+            __props__.__dict__["token"] = None if token is None else pulumi.Output.secret(token)
             if url is None and not opts.urn:
                 raise TypeError("Missing required property 'url'")
-            __props__.__dict__["url"] = url
-            __props__.__dict__["success"] = None
+            __props__.__dict__["url"] = None if url is None else pulumi.Output.secret(url)
         super(ExternalNetwork, __self__).__init__(
             'vco:cloudspace:ExternalNetwork',
             resource_name,
@@ -219,7 +218,6 @@ class ExternalNetwork(pulumi.CustomResource):
         __props__.__dict__["external_network_ip"] = None
         __props__.__dict__["external_network_type"] = None
         __props__.__dict__["metric"] = None
-        __props__.__dict__["success"] = None
         __props__.__dict__["token"] = None
         __props__.__dict__["url"] = None
         return ExternalNetwork(resource_name, opts=opts, __props__=__props__)
@@ -253,11 +251,6 @@ class ExternalNetwork(pulumi.CustomResource):
     @pulumi.getter
     def metric(self) -> pulumi.Output[int]:
         return pulumi.get(self, "metric")
-
-    @property
-    @pulumi.getter
-    def success(self) -> pulumi.Output[bool]:
-        return pulumi.get(self, "success")
 
     @property
     @pulumi.getter

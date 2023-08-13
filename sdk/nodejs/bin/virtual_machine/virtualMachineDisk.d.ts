@@ -17,7 +17,6 @@ export declare class VirtualMachineDisk extends pulumi.CustomResource {
     readonly cloudspace_id: pulumi.Output<string>;
     readonly customerID: pulumi.Output<string>;
     readonly disk_id: pulumi.Output<number>;
-    readonly success: pulumi.Output<boolean>;
     readonly token: pulumi.Output<string>;
     readonly url: pulumi.Output<string>;
     readonly vm_id: pulumi.Output<number>;

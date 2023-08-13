@@ -57,10 +57,10 @@ class AntiAffinityGroupVM extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vm_id'");
             }
             resourceInputs["cloudspace_id"] = args ? args.cloudspace_id : undefined;
-            resourceInputs["customerID"] = args ? args.customerID : undefined;
+            resourceInputs["customerID"] = (args === null || args === void 0 ? void 0 : args.customerID) ? pulumi.secret(args.customerID) : undefined;
             resourceInputs["group_id"] = args ? args.group_id : undefined;
-            resourceInputs["token"] = args ? args.token : undefined;
-            resourceInputs["url"] = args ? args.url : undefined;
+            resourceInputs["token"] = (args === null || args === void 0 ? void 0 : args.token) ? pulumi.secret(args.token) : undefined;
+            resourceInputs["url"] = (args === null || args === void 0 ? void 0 : args.url) ? pulumi.secret(args.url) : undefined;
             resourceInputs["vm_id"] = args ? args.vm_id : undefined;
             resourceInputs["status"] = undefined /*out*/;
         }

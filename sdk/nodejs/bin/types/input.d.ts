@@ -1,7 +1,5 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as inputs from "../types/input";
-export declare namespace base {
-}
 export declare namespace cloudspace {
 }
 export declare namespace disk {

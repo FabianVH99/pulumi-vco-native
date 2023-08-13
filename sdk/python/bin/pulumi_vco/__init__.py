@@ -88,7 +88,7 @@ _utilities.register(
   "mod": "objectspace",
   "fqn": "pulumi_vco.objectspace",
   "classes": {
-   "vco:objectspace:ObjectSpaceLink": "ObjectSpaceLink"
+   "vco:objectspace:Link": "Link"
   }
  },
  {

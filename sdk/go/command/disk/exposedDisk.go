@@ -48,6 +48,15 @@ func NewExposedDisk(ctx *pulumi.Context,
 	if args.Url == nil {
 		return nil, errors.New("invalid value for required argument 'Url'")
 	}
+	if args.CustomerID != nil {
+		args.CustomerID = pulumi.ToSecret(args.CustomerID).(pulumi.StringInput)
+	}
+	if args.Token != nil {
+		args.Token = pulumi.ToSecret(args.Token).(pulumi.StringInput)
+	}
+	if args.Url != nil {
+		args.Url = pulumi.ToSecret(args.Url).(pulumi.StringInput)
+	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource ExposedDisk
 	err := ctx.RegisterResource("vco:disk:ExposedDisk", name, args, &resource, opts...)

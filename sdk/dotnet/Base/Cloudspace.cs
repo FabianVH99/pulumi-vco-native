@@ -31,7 +31,7 @@ namespace Pulumi.Vco.Base
         public Output<int?> Disk_size { get; private set; } = null!;
 
         [Output("external_network_id")]
-        public Output<string> External_network_id { get; private set; } = null!;
+        public Output<int> External_network_id { get; private set; } = null!;
 
         [Output("external_network_ip")]
         public Output<string> External_network_ip { get; private set; } = null!;

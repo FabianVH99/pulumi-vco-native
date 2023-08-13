@@ -1,3 +1,3 @@
-export { ObjectSpaceLinkArgs } from "./objectSpaceLink";
-export type ObjectSpaceLink = import("./objectSpaceLink").ObjectSpaceLink;
-export declare const ObjectSpaceLink: typeof import("./objectSpaceLink").ObjectSpaceLink;
+export { LinkArgs } from "./link";
+export type Link = import("./link").Link;
+export declare const Link: typeof import("./link").Link;

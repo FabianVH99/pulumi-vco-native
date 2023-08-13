@@ -5,18 +5,18 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
 // Export members:
-export { ObjectSpaceLinkArgs } from "./objectSpaceLink";
-export type ObjectSpaceLink = import("./objectSpaceLink").ObjectSpaceLink;
-export const ObjectSpaceLink: typeof import("./objectSpaceLink").ObjectSpaceLink = null as any;
-utilities.lazyLoad(exports, ["ObjectSpaceLink"], () => require("./objectSpaceLink"));
+export { LinkArgs } from "./link";
+export type Link = import("./link").Link;
+export const Link: typeof import("./link").Link = null as any;
+utilities.lazyLoad(exports, ["Link"], () => require("./link"));
 
 
 const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
-            case "vco:objectspace:ObjectSpaceLink":
-                return new ObjectSpaceLink(name, <any>undefined, { urn })
+            case "vco:objectspace:Link":
+                return new Link(name, <any>undefined, { urn })
             default:
                 throw new Error(`unknown resource type ${type}`);
         }

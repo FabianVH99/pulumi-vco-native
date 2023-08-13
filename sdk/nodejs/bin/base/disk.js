@@ -74,7 +74,6 @@ class Disk extends pulumi.CustomResource {
             resourceInputs["cloudspace_id"] = undefined /*out*/;
             resourceInputs["disk_id"] = undefined /*out*/;
             resourceInputs["exposed"] = undefined /*out*/;
-            resourceInputs["iotune"] = undefined /*out*/;
             resourceInputs["model"] = undefined /*out*/;
             resourceInputs["order"] = undefined /*out*/;
             resourceInputs["port"] = undefined /*out*/;
@@ -91,7 +90,6 @@ class Disk extends pulumi.CustomResource {
             resourceInputs["disk_type"] = undefined /*out*/;
             resourceInputs["exposed"] = undefined /*out*/;
             resourceInputs["iops"] = undefined /*out*/;
-            resourceInputs["iotune"] = undefined /*out*/;
             resourceInputs["location"] = undefined /*out*/;
             resourceInputs["model"] = undefined /*out*/;
             resourceInputs["order"] = undefined /*out*/;

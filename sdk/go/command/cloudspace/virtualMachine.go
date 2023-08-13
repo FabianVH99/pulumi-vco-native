@@ -88,6 +88,15 @@ func NewVirtualMachine(ctx *pulumi.Context,
 	if args.Vcpus == nil {
 		return nil, errors.New("invalid value for required argument 'Vcpus'")
 	}
+	if args.CustomerID != nil {
+		args.CustomerID = pulumi.ToSecret(args.CustomerID).(pulumi.StringInput)
+	}
+	if args.Token != nil {
+		args.Token = pulumi.ToSecret(args.Token).(pulumi.StringInput)
+	}
+	if args.Url != nil {
+		args.Url = pulumi.ToSecret(args.Url).(pulumi.StringInput)
+	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource VirtualMachine
 	err := ctx.RegisterResource("vco:cloudspace:VirtualMachine", name, args, &resource, opts...)

@@ -212,7 +212,7 @@ class PortForward(pulumi.CustomResource):
             __props__.__dict__["cloudspace_id"] = cloudspace_id
             if customer_id is None and not opts.urn:
                 raise TypeError("Missing required property 'customer_id'")
-            __props__.__dict__["customer_id"] = customer_id
+            __props__.__dict__["customer_id"] = None if customer_id is None else pulumi.Output.secret(customer_id)
             if local_port is None and not opts.urn:
                 raise TypeError("Missing required property 'local_port'")
             __props__.__dict__["local_port"] = local_port
@@ -229,10 +229,10 @@ class PortForward(pulumi.CustomResource):
             __props__.__dict__["till_public_port"] = till_public_port
             if token is None and not opts.urn:
                 raise TypeError("Missing required property 'token'")
-            __props__.__dict__["token"] = token
+            __props__.__dict__["token"] = None if token is None else pulumi.Output.secret(token)
             if url is None and not opts.urn:
                 raise TypeError("Missing required property 'url'")
-            __props__.__dict__["url"] = url
+            __props__.__dict__["url"] = None if url is None else pulumi.Output.secret(url)
             if vm_id is None and not opts.urn:
                 raise TypeError("Missing required property 'vm_id'")
             __props__.__dict__["vm_id"] = vm_id

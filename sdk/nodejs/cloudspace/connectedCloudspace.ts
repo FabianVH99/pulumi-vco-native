@@ -74,11 +74,11 @@ export class ConnectedCloudspace extends pulumi.CustomResource {
             }
             resourceInputs["cloudspace_id"] = args ? args.cloudspace_id : undefined;
             resourceInputs["connected_cloudspace_id"] = args ? args.connected_cloudspace_id : undefined;
-            resourceInputs["customerID"] = args ? args.customerID : undefined;
+            resourceInputs["customerID"] = args?.customerID ? pulumi.secret(args.customerID) : undefined;
             resourceInputs["local_cloudspace_ip "] = args ? args.local_cloudspace_ip  : undefined;
             resourceInputs["remote_cloudspace_ip "] = args ? args.remote_cloudspace_ip  : undefined;
-            resourceInputs["token"] = args ? args.token : undefined;
-            resourceInputs["url"] = args ? args.url : undefined;
+            resourceInputs["token"] = args?.token ? pulumi.secret(args.token) : undefined;
+            resourceInputs["url"] = args?.url ? pulumi.secret(args.url) : undefined;
             resourceInputs["local_cloudspace_ip"] = undefined /*out*/;
             resourceInputs["remote_cloudspace_ip"] = undefined /*out*/;
             resourceInputs["status"] = undefined /*out*/;

@@ -9,8 +9,8 @@ using Pulumi.Serialization;
 
 namespace Pulumi.Vco.Objectspace
 {
-    [VcoResourceType("vco:objectspace:ObjectSpaceLink")]
-    public partial class ObjectSpaceLink : global::Pulumi.CustomResource
+    [VcoResourceType("vco:objectspace:Link")]
+    public partial class Link : global::Pulumi.CustomResource
     {
         [Output("cloudspace_id")]
         public Output<string> Cloudspace_id { get; private set; } = null!;
@@ -21,9 +21,6 @@ namespace Pulumi.Vco.Objectspace
         [Output("objectspace_id")]
         public Output<string> Objectspace_id { get; private set; } = null!;
 
-        [Output("success")]
-        public Output<bool> Success { get; private set; } = null!;
-
         [Output("token")]
         public Output<string> Token { get; private set; } = null!;
 
@@ -32,19 +29,19 @@ namespace Pulumi.Vco.Objectspace
 
 
         /// <summary>
-        /// Create a ObjectSpaceLink resource with the given unique name, arguments, and options.
+        /// Create a Link resource with the given unique name, arguments, and options.
         /// </summary>
         ///
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public ObjectSpaceLink(string name, ObjectSpaceLinkArgs args, CustomResourceOptions? options = null)
-            : base("vco:objectspace:ObjectSpaceLink", name, args ?? new ObjectSpaceLinkArgs(), MakeResourceOptions(options, ""))
+        public Link(string name, LinkArgs args, CustomResourceOptions? options = null)
+            : base("vco:objectspace:Link", name, args ?? new LinkArgs(), MakeResourceOptions(options, ""))
         {
         }
 
-        private ObjectSpaceLink(string name, Input<string> id, CustomResourceOptions? options = null)
-            : base("vco:objectspace:ObjectSpaceLink", name, null, MakeResourceOptions(options, id))
+        private Link(string name, Input<string> id, CustomResourceOptions? options = null)
+            : base("vco:objectspace:Link", name, null, MakeResourceOptions(options, id))
         {
         }
 
@@ -60,39 +57,66 @@ namespace Pulumi.Vco.Objectspace
             return merged;
         }
         /// <summary>
-        /// Get an existing ObjectSpaceLink resource's state with the given name, ID, and optional extra
+        /// Get an existing Link resource's state with the given name, ID, and optional extra
         /// properties used to qualify the lookup.
         /// </summary>
         ///
         /// <param name="name">The unique name of the resulting resource.</param>
         /// <param name="id">The unique provider ID of the resource to lookup.</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public static ObjectSpaceLink Get(string name, Input<string> id, CustomResourceOptions? options = null)
+        public static Link Get(string name, Input<string> id, CustomResourceOptions? options = null)
         {
-            return new ObjectSpaceLink(name, id, options);
+            return new Link(name, id, options);
         }
     }
 
-    public sealed class ObjectSpaceLinkArgs : global::Pulumi.ResourceArgs
+    public sealed class LinkArgs : global::Pulumi.ResourceArgs
     {
         [Input("cloudspace_id", required: true)]
         public Input<string> Cloudspace_id { get; set; } = null!;
 
         [Input("customerID", required: true)]
-        public Input<string> CustomerID { get; set; } = null!;
+        private Input<string>? _customerID;
+        public Input<string>? CustomerID
+        {
+            get => _customerID;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _customerID = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         [Input("objectspace_id", required: true)]
         public Input<string> Objectspace_id { get; set; } = null!;
 
         [Input("token", required: true)]
-        public Input<string> Token { get; set; } = null!;
+        private Input<string>? _token;
+        public Input<string>? Token
+        {
+            get => _token;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _token = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         [Input("url", required: true)]
-        public Input<string> Url { get; set; } = null!;
+        private Input<string>? _url;
+        public Input<string>? Url
+        {
+            get => _url;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _url = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
-        public ObjectSpaceLinkArgs()
+        public LinkArgs()
         {
         }
-        public static new ObjectSpaceLinkArgs Empty => new ObjectSpaceLinkArgs();
+        public static new LinkArgs Empty => new LinkArgs();
     }
 }

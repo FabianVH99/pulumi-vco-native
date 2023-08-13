@@ -20,7 +20,6 @@ export declare class ExternalNetwork extends pulumi.CustomResource {
     readonly external_network_ip: pulumi.Output<string>;
     readonly external_network_type: pulumi.Output<string>;
     readonly metric: pulumi.Output<number>;
-    readonly success: pulumi.Output<boolean>;
     readonly token: pulumi.Output<string>;
     readonly url: pulumi.Output<string>;
     /**

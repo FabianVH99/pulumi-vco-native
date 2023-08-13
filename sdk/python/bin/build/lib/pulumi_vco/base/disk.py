@@ -8,7 +8,6 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
-from . import outputs
 
 __all__ = ['DiskArgs', 'Disk']
 
@@ -253,7 +252,6 @@ class Disk(pulumi.CustomResource):
             __props__.__dict__["cloudspace_id"] = None
             __props__.__dict__["disk_id"] = None
             __props__.__dict__["exposed"] = None
-            __props__.__dict__["iotune"] = None
             __props__.__dict__["model"] = None
             __props__.__dict__["order"] = None
             __props__.__dict__["port"] = None
@@ -290,7 +288,6 @@ class Disk(pulumi.CustomResource):
         __props__.__dict__["disk_type"] = None
         __props__.__dict__["exposed"] = None
         __props__.__dict__["iops"] = None
-        __props__.__dict__["iotune"] = None
         __props__.__dict__["location"] = None
         __props__.__dict__["model"] = None
         __props__.__dict__["order"] = None
@@ -351,11 +348,6 @@ class Disk(pulumi.CustomResource):
     @pulumi.getter
     def iops(self) -> pulumi.Output[Optional[int]]:
         return pulumi.get(self, "iops")
-
-    @property
-    @pulumi.getter
-    def iotune(self) -> pulumi.Output['outputs.IOTune']:
-        return pulumi.get(self, "iotune")
 
     @property
     @pulumi.getter

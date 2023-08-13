@@ -72,6 +72,10 @@ func (sv ServerPool) Create(ctx p.Context, name string, input ServerPoolArgs, pr
 		return "", state, err
 	}
 	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		fmt.Printf("Error creating resource %s: received status code %d", id, resp.StatusCode)
+		return "", state, fmt.Errorf("received status code %d", resp.StatusCode)
+	}
 
 	var result map[string]interface{}
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {

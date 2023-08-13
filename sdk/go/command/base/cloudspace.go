@@ -21,7 +21,7 @@ type Cloudspace struct {
 	Creation_time        pulumi.IntOutput       `pulumi:"creation_time"`
 	CustomerID           pulumi.StringOutput    `pulumi:"customerID"`
 	Disk_size            pulumi.IntPtrOutput    `pulumi:"disk_size"`
-	External_network_id  pulumi.StringOutput    `pulumi:"external_network_id"`
+	External_network_id  pulumi.IntOutput       `pulumi:"external_network_id"`
 	External_network_ip  pulumi.StringOutput    `pulumi:"external_network_ip"`
 	Host                 pulumi.StringPtrOutput `pulumi:"host"`
 	Image_id             pulumi.IntPtrOutput    `pulumi:"image_id"`
@@ -277,8 +277,8 @@ func (o CloudspaceOutput) Disk_size() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *Cloudspace) pulumi.IntPtrOutput { return v.Disk_size }).(pulumi.IntPtrOutput)
 }
 
-func (o CloudspaceOutput) External_network_id() pulumi.StringOutput {
-	return o.ApplyT(func(v *Cloudspace) pulumi.StringOutput { return v.External_network_id }).(pulumi.StringOutput)
+func (o CloudspaceOutput) External_network_id() pulumi.IntOutput {
+	return o.ApplyT(func(v *Cloudspace) pulumi.IntOutput { return v.External_network_id }).(pulumi.IntOutput)
 }
 
 func (o CloudspaceOutput) External_network_ip() pulumi.StringOutput {

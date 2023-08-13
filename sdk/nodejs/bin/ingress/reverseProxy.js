@@ -61,12 +61,12 @@ class ReverseProxy extends pulumi.CustomResource {
             }
             resourceInputs["back_end"] = args ? args.back_end : undefined;
             resourceInputs["cloudspace_id"] = args ? args.cloudspace_id : undefined;
-            resourceInputs["customerID"] = args ? args.customerID : undefined;
+            resourceInputs["customerID"] = (args === null || args === void 0 ? void 0 : args.customerID) ? pulumi.secret(args.customerID) : undefined;
             resourceInputs["description"] = args ? args.description : undefined;
             resourceInputs["front_end"] = args ? args.front_end : undefined;
             resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["token"] = args ? args.token : undefined;
-            resourceInputs["url"] = args ? args.url : undefined;
+            resourceInputs["token"] = (args === null || args === void 0 ? void 0 : args.token) ? pulumi.secret(args.token) : undefined;
+            resourceInputs["url"] = (args === null || args === void 0 ? void 0 : args.url) ? pulumi.secret(args.url) : undefined;
             resourceInputs["reverseproxy_id"] = undefined /*out*/;
             resourceInputs["type"] = undefined /*out*/;
         }

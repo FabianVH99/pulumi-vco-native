@@ -85,7 +85,16 @@ namespace Pulumi.Vco.Ingress
         public Input<string> Cloudspace_id { get; set; } = null!;
 
         [Input("customerID", required: true)]
-        public Input<string> CustomerID { get; set; } = null!;
+        private Input<string>? _customerID;
+        public Input<string>? CustomerID
+        {
+            get => _customerID;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _customerID = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         [Input("description", required: true)]
         public Input<string> Description { get; set; } = null!;
@@ -94,10 +103,28 @@ namespace Pulumi.Vco.Ingress
         public Input<string> Name { get; set; } = null!;
 
         [Input("token", required: true)]
-        public Input<string> Token { get; set; } = null!;
+        private Input<string>? _token;
+        public Input<string>? Token
+        {
+            get => _token;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _token = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         [Input("url", required: true)]
-        public Input<string> Url { get; set; } = null!;
+        private Input<string>? _url;
+        public Input<string>? Url
+        {
+            get => _url;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _url = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         public ServerPoolArgs()
         {

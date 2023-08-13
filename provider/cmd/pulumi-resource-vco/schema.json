@@ -42,15 +42,18 @@
                     "type": "string"
                 },
                 "customerID": {
+                    "secret": true,
                     "type": "string"
                 },
                 "group_id": {
                     "type": "string"
                 },
                 "token": {
+                    "secret": true,
                     "type": "string"
                 },
                 "url": {
+                    "secret": true,
                     "type": "string"
                 },
                 "vm_id": {
@@ -81,11 +84,11 @@
                 }
             },
             "required": [
+                "group_id",
                 "url",
                 "token",
                 "customerID",
                 "cloudspace_id",
-                "group_id",
                 "vm_id",
                 "status"
             ],
@@ -352,9 +355,6 @@
                 "iops": {
                     "type": "integer"
                 },
-                "iotune": {
-                    "$ref": "#/types/vco:base:IOTune"
-                },
                 "location": {
                     "type": "string"
                 },
@@ -384,11 +384,10 @@
                 }
             },
             "required": [
+                "location",
                 "url",
                 "token",
                 "customerID",
-                "location",
-                "description",
                 "status",
                 "disk_size",
                 "disk_name",
@@ -400,7 +399,6 @@
                 "vm_id",
                 "port",
                 "model",
-                "iotune",
                 "cloudspace_id"
             ],
             "requiredInputs": [
@@ -419,6 +417,7 @@
                     "type": "string"
                 },
                 "customerID": {
+                    "secret": true,
                     "type": "string"
                 },
                 "group_id": {
@@ -428,9 +427,11 @@
                     "type": "integer"
                 },
                 "token": {
+                    "secret": true,
                     "type": "string"
                 },
                 "url": {
+                    "secret": true,
                     "type": "string"
                 }
             },
@@ -484,6 +485,7 @@
                     "type": "string"
                 },
                 "customerID": {
+                    "secret": true,
                     "type": "string"
                 },
                 "local_cloudspace_ip ": {
@@ -493,9 +495,11 @@
                     "type": "string"
                 },
                 "token": {
+                    "secret": true,
                     "type": "string"
                 },
                 "url": {
+                    "secret": true,
                     "type": "string"
                 }
             },
@@ -551,6 +555,7 @@
                     "type": "string"
                 },
                 "customerID": {
+                    "secret": true,
                     "type": "string"
                 },
                 "external_network_id": {
@@ -566,9 +571,11 @@
                     "type": "integer"
                 },
                 "token": {
+                    "secret": true,
                     "type": "string"
                 },
                 "url": {
+                    "secret": true,
                     "type": "string"
                 }
             },
@@ -591,9 +598,6 @@
                 "metric": {
                     "type": "integer"
                 },
-                "success": {
-                    "type": "boolean"
-                },
                 "token": {
                     "type": "string"
                 },
@@ -602,15 +606,14 @@
                 }
             },
             "required": [
+                "external_network_type",
                 "url",
                 "token",
                 "customerID",
                 "cloudspace_id",
-                "external_network_type",
                 "external_network_id",
                 "metric",
-                "external_network_ip",
-                "success"
+                "external_network_ip"
             ],
             "requiredInputs": [
                 "url",
@@ -629,6 +632,7 @@
                     "type": "string"
                 },
                 "customerID": {
+                    "secret": true,
                     "type": "string"
                 },
                 "local_port": {
@@ -650,9 +654,11 @@
                     "type": "integer"
                 },
                 "token": {
+                    "secret": true,
                     "type": "string"
                 },
                 "url": {
+                    "secret": true,
                     "type": "string"
                 },
                 "vm_id": {
@@ -744,6 +750,7 @@
                     "type": "string"
                 },
                 "customerID": {
+                    "secret": true,
                     "type": "string"
                 },
                 "data_disks": {
@@ -783,9 +790,11 @@
                     "type": "string"
                 },
                 "token": {
+                    "secret": true,
                     "type": "string"
                 },
                 "url": {
+                    "secret": true,
                     "type": "string"
                 },
                 "user_data": {
@@ -981,6 +990,7 @@
                     "type": "string"
                 },
                 "customerID": {
+                    "secret": true,
                     "type": "string"
                 },
                 "disk_id": {
@@ -993,9 +1003,11 @@
                     "type": "integer"
                 },
                 "token": {
+                    "secret": true,
                     "type": "string"
                 },
                 "url": {
+                    "secret": true,
                     "type": "string"
                 }
             },
@@ -1054,15 +1066,18 @@
                     "type": "string"
                 },
                 "customerID": {
+                    "secret": true,
                     "type": "string"
                 },
                 "serverpool_id": {
                     "type": "string"
                 },
                 "token": {
+                    "secret": true,
                     "type": "string"
                 },
                 "url": {
+                    "secret": true,
                     "type": "string"
                 }
             },
@@ -1090,11 +1105,11 @@
                 }
             },
             "required": [
+                "serverpool_id",
                 "url",
                 "token",
                 "customerID",
                 "cloudspace_id",
-                "serverpool_id",
                 "host_id",
                 "address"
             ],
@@ -1113,6 +1128,7 @@
                     "type": "string"
                 },
                 "customerID": {
+                    "secret": true,
                     "type": "string"
                 },
                 "description": {
@@ -1122,12 +1138,14 @@
                     "type": "string"
                 },
                 "token": {
+                    "secret": true,
                     "type": "string"
                 },
                 "type": {
                     "type": "string"
                 },
                 "url": {
+                    "secret": true,
                     "type": "string"
                 }
             },
@@ -1167,8 +1185,8 @@
                 "url",
                 "token",
                 "customerID",
-                "cloudspace_id",
                 "loadbalancer_id",
+                "cloudspace_id",
                 "name",
                 "description",
                 "type",
@@ -1193,6 +1211,7 @@
                     "type": "string"
                 },
                 "customerID": {
+                    "secret": true,
                     "type": "string"
                 },
                 "description": {
@@ -1205,9 +1224,11 @@
                     "type": "string"
                 },
                 "token": {
+                    "secret": true,
                     "type": "string"
                 },
                 "url": {
+                    "secret": true,
                     "type": "string"
                 }
             },
@@ -1244,12 +1265,12 @@
                 }
             },
             "required": [
+                "front_end",
+                "back_end",
                 "url",
                 "token",
                 "customerID",
                 "cloudspace_id",
-                "front_end",
-                "back_end",
                 "reverseproxy_id",
                 "name",
                 "description",
@@ -1273,6 +1294,7 @@
                     "type": "string"
                 },
                 "customerID": {
+                    "secret": true,
                     "type": "string"
                 },
                 "description": {
@@ -1282,9 +1304,11 @@
                     "type": "string"
                 },
                 "token": {
+                    "secret": true,
                     "type": "string"
                 },
                 "url": {
+                    "secret": true,
                     "type": "string"
                 }
             },
@@ -1336,21 +1360,24 @@
                 "description"
             ]
         },
-        "vco:objectspace:ObjectSpaceLink": {
+        "vco:objectspace:Link": {
             "inputProperties": {
                 "cloudspace_id": {
                     "type": "string"
                 },
                 "customerID": {
+                    "secret": true,
                     "type": "string"
                 },
                 "objectspace_id": {
                     "type": "string"
                 },
                 "token": {
+                    "secret": true,
                     "type": "string"
                 },
                 "url": {
+                    "secret": true,
                     "type": "string"
                 }
             },
@@ -1364,9 +1391,6 @@
                 "objectspace_id": {
                     "type": "string"
                 },
-                "success": {
-                    "type": "boolean"
-                },
                 "token": {
                     "type": "string"
                 },
@@ -1379,8 +1403,7 @@
                 "token",
                 "customerID",
                 "cloudspace_id",
-                "objectspace_id",
-                "success"
+                "objectspace_id"
             ],
             "requiredInputs": [
                 "url",
@@ -1399,12 +1422,15 @@
                     "type": "string"
                 },
                 "customerID": {
+                    "secret": true,
                     "type": "string"
                 },
                 "token": {
+                    "secret": true,
                     "type": "string"
                 },
                 "url": {
+                    "secret": true,
                     "type": "string"
                 },
                 "vm_id": {
@@ -1470,15 +1496,18 @@
                     "type": "string"
                 },
                 "customerID": {
+                    "secret": true,
                     "type": "string"
                 },
                 "disk_id": {
                     "type": "integer"
                 },
                 "token": {
+                    "secret": true,
                     "type": "string"
                 },
                 "url": {
+                    "secret": true,
                     "type": "string"
                 },
                 "vm_id": {
@@ -1494,9 +1523,6 @@
                 },
                 "disk_id": {
                     "type": "integer"
-                },
-                "success": {
-                    "type": "boolean"
                 },
                 "token": {
                     "type": "string"
@@ -1514,8 +1540,7 @@
                 "customerID",
                 "cloudspace_id",
                 "vm_id",
-                "disk_id",
-                "success"
+                "disk_id"
             ],
             "requiredInputs": [
                 "url",
@@ -1532,6 +1557,7 @@
                     "type": "string"
                 },
                 "customerID": {
+                    "secret": true,
                     "type": "string"
                 },
                 "external_cloudspace_id": {
@@ -1550,9 +1576,11 @@
                     "type": "string"
                 },
                 "token": {
+                    "secret": true,
                     "type": "string"
                 },
                 "url": {
+                    "secret": true,
                     "type": "string"
                 },
                 "vm_id": {
@@ -1607,11 +1635,11 @@
                 }
             },
             "required": [
+                "external_network_id",
                 "url",
                 "token",
                 "customerID",
                 "cloudspace_id",
-                "external_network_id",
                 "vm_id",
                 "device_name",
                 "mac_address",
@@ -1632,17 +1660,6 @@
         }
     },
     "types": {
-        "vco:base:IOTune": {
-            "properties": {
-                "iops": {
-                    "type": "number"
-                }
-            },
-            "required": [
-                "iops"
-            ],
-            "type": "object"
-        },
         "vco:cloudspace:CpuTopology": {
             "properties": {
                 "cores": {

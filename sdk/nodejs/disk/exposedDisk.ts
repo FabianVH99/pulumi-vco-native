@@ -70,12 +70,12 @@ export class ExposedDisk extends pulumi.CustomResource {
                 throw new Error("Missing required property 'url'");
             }
             resourceInputs["cloudspace_id"] = args ? args.cloudspace_id : undefined;
-            resourceInputs["customerID"] = args ? args.customerID : undefined;
+            resourceInputs["customerID"] = args?.customerID ? pulumi.secret(args.customerID) : undefined;
             resourceInputs["disk_id"] = args ? args.disk_id : undefined;
             resourceInputs["iops"] = args ? args.iops : undefined;
             resourceInputs["max_connections"] = args ? args.max_connections : undefined;
-            resourceInputs["token"] = args ? args.token : undefined;
-            resourceInputs["url"] = args ? args.url : undefined;
+            resourceInputs["token"] = args?.token ? pulumi.secret(args.token) : undefined;
+            resourceInputs["url"] = args?.url ? pulumi.secret(args.url) : undefined;
             resourceInputs["endpoint"] = undefined /*out*/;
             resourceInputs["protocol"] = undefined /*out*/;
         } else {

@@ -34,7 +34,6 @@ export class VirtualMachineDisk extends pulumi.CustomResource {
     public readonly cloudspace_id!: pulumi.Output<string>;
     public readonly customerID!: pulumi.Output<string>;
     public readonly disk_id!: pulumi.Output<number>;
-    public /*out*/ readonly success!: pulumi.Output<boolean>;
     public readonly token!: pulumi.Output<string>;
     public readonly url!: pulumi.Output<string>;
     public readonly vm_id!: pulumi.Output<number>;
@@ -69,17 +68,15 @@ export class VirtualMachineDisk extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vm_id'");
             }
             resourceInputs["cloudspace_id"] = args ? args.cloudspace_id : undefined;
-            resourceInputs["customerID"] = args ? args.customerID : undefined;
+            resourceInputs["customerID"] = args?.customerID ? pulumi.secret(args.customerID) : undefined;
             resourceInputs["disk_id"] = args ? args.disk_id : undefined;
-            resourceInputs["token"] = args ? args.token : undefined;
-            resourceInputs["url"] = args ? args.url : undefined;
+            resourceInputs["token"] = args?.token ? pulumi.secret(args.token) : undefined;
+            resourceInputs["url"] = args?.url ? pulumi.secret(args.url) : undefined;
             resourceInputs["vm_id"] = args ? args.vm_id : undefined;
-            resourceInputs["success"] = undefined /*out*/;
         } else {
             resourceInputs["cloudspace_id"] = undefined /*out*/;
             resourceInputs["customerID"] = undefined /*out*/;
             resourceInputs["disk_id"] = undefined /*out*/;
-            resourceInputs["success"] = undefined /*out*/;
             resourceInputs["token"] = undefined /*out*/;
             resourceInputs["url"] = undefined /*out*/;
             resourceInputs["vm_id"] = undefined /*out*/;

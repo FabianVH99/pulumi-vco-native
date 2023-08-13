@@ -37,7 +37,6 @@ export class ExternalNetwork extends pulumi.CustomResource {
     public readonly external_network_ip!: pulumi.Output<string>;
     public readonly external_network_type!: pulumi.Output<string>;
     public readonly metric!: pulumi.Output<number>;
-    public /*out*/ readonly success!: pulumi.Output<boolean>;
     public readonly token!: pulumi.Output<string>;
     public readonly url!: pulumi.Output<string>;
 
@@ -77,14 +76,13 @@ export class ExternalNetwork extends pulumi.CustomResource {
                 throw new Error("Missing required property 'url'");
             }
             resourceInputs["cloudspace_id"] = args ? args.cloudspace_id : undefined;
-            resourceInputs["customerID"] = args ? args.customerID : undefined;
+            resourceInputs["customerID"] = args?.customerID ? pulumi.secret(args.customerID) : undefined;
             resourceInputs["external_network_id"] = args ? args.external_network_id : undefined;
             resourceInputs["external_network_ip"] = args ? args.external_network_ip : undefined;
             resourceInputs["external_network_type"] = args ? args.external_network_type : undefined;
             resourceInputs["metric"] = args ? args.metric : undefined;
-            resourceInputs["token"] = args ? args.token : undefined;
-            resourceInputs["url"] = args ? args.url : undefined;
-            resourceInputs["success"] = undefined /*out*/;
+            resourceInputs["token"] = args?.token ? pulumi.secret(args.token) : undefined;
+            resourceInputs["url"] = args?.url ? pulumi.secret(args.url) : undefined;
         } else {
             resourceInputs["cloudspace_id"] = undefined /*out*/;
             resourceInputs["customerID"] = undefined /*out*/;
@@ -92,7 +90,6 @@ export class ExternalNetwork extends pulumi.CustomResource {
             resourceInputs["external_network_ip"] = undefined /*out*/;
             resourceInputs["external_network_type"] = undefined /*out*/;
             resourceInputs["metric"] = undefined /*out*/;
-            resourceInputs["success"] = undefined /*out*/;
             resourceInputs["token"] = undefined /*out*/;
             resourceInputs["url"] = undefined /*out*/;
         }

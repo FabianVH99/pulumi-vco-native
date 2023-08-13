@@ -42,9 +42,6 @@ namespace Pulumi.Vco.Base
         [Output("iops")]
         public Output<int?> Iops { get; private set; } = null!;
 
-        [Output("iotune")]
-        public Output<Outputs.IOTune> Iotune { get; private set; } = null!;
-
         [Output("location")]
         public Output<string> Location { get; private set; } = null!;
 

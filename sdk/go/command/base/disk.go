@@ -25,7 +25,6 @@ type Disk struct {
 	Disk_type     pulumi.StringOutput  `pulumi:"disk_type"`
 	Exposed       pulumi.BoolOutput    `pulumi:"exposed"`
 	Iops          pulumi.IntPtrOutput  `pulumi:"iops"`
-	Iotune        IOTuneOutput         `pulumi:"iotune"`
 	Location      pulumi.StringOutput  `pulumi:"location"`
 	Model         pulumi.StringOutput  `pulumi:"model"`
 	Order         pulumi.StringOutput  `pulumi:"order"`
@@ -253,10 +252,6 @@ func (o DiskOutput) Exposed() pulumi.BoolOutput {
 
 func (o DiskOutput) Iops() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *Disk) pulumi.IntPtrOutput { return v.Iops }).(pulumi.IntPtrOutput)
-}
-
-func (o DiskOutput) Iotune() IOTuneOutput {
-	return o.ApplyT(func(v *Disk) IOTuneOutput { return v.Iotune }).(IOTuneOutput)
 }
 
 func (o DiskOutput) Location() pulumi.StringOutput {

@@ -1,5 +1,4 @@
 import * as pulumi from "@pulumi/pulumi";
-import * as outputs from "../types/output";
 export declare class Disk extends pulumi.CustomResource {
     /**
      * Get an existing Disk resource's state with the given name, ID, and optional extra
@@ -25,7 +24,6 @@ export declare class Disk extends pulumi.CustomResource {
     readonly disk_type: pulumi.Output<string>;
     readonly exposed: pulumi.Output<boolean>;
     readonly iops: pulumi.Output<number | undefined>;
-    readonly iotune: pulumi.Output<outputs.base.IOTune>;
     readonly location: pulumi.Output<string>;
     readonly model: pulumi.Output<string>;
     readonly order: pulumi.Output<string>;

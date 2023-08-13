@@ -115,7 +115,7 @@ export class VirtualMachine extends pulumi.CustomResource {
             resourceInputs["boot_type"] = args ? args.boot_type : undefined;
             resourceInputs["cdrom_id"] = args ? args.cdrom_id : undefined;
             resourceInputs["cloudspace_id"] = args ? args.cloudspace_id : undefined;
-            resourceInputs["customerID"] = args ? args.customerID : undefined;
+            resourceInputs["customerID"] = args?.customerID ? pulumi.secret(args.customerID) : undefined;
             resourceInputs["data_disks"] = args ? args.data_disks : undefined;
             resourceInputs["description"] = args ? args.description : undefined;
             resourceInputs["disk_size"] = args ? args.disk_size : undefined;
@@ -127,8 +127,8 @@ export class VirtualMachine extends pulumi.CustomResource {
             resourceInputs["os_type"] = args ? args.os_type : undefined;
             resourceInputs["private_ip"] = args ? args.private_ip : undefined;
             resourceInputs["snapshot_id"] = args ? args.snapshot_id : undefined;
-            resourceInputs["token"] = args ? args.token : undefined;
-            resourceInputs["url"] = args ? args.url : undefined;
+            resourceInputs["token"] = args?.token ? pulumi.secret(args.token) : undefined;
+            resourceInputs["url"] = args?.url ? pulumi.secret(args.url) : undefined;
             resourceInputs["user_data"] = args ? args.user_data : undefined;
             resourceInputs["vcpus"] = args ? args.vcpus : undefined;
             resourceInputs["agent_status"] = undefined /*out*/;
