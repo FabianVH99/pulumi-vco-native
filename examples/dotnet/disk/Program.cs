@@ -29,22 +29,22 @@ return await Deployment.RunAsync(() =>
     });
 
     var disk = new Disk("pulumi-disk", new DiskArgs
-   {
-       Url = url,
-       Token = token,
-       CustomerID = customerId,
-       Location = location,
-       Disk_name = "pulumi_disk",
-   	   Description = "test",
-   	   Disk_size = 100,
-   });
+    {
+        Url = url,
+        Token = token,
+        CustomerID = customerId,
+        Location = location,
+        Disk_name = "pulumi_disk",
+        Description = "test",
+        Disk_size = 100,
+    });
 
    var exposedDisk = new ExposedDisk("pulumi-exposed-disk", new ExposedDiskArgs
    {
        Url = url,
        Token = token,
        CustomerID = customerId,
-       Cloudspace_id = cloudspace.Id,
+       Cloudspace_id = cloudspace.Cloudspace_id,
        Disk_id = disk.Disk_id,
    });
 

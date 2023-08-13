@@ -42,7 +42,7 @@ type DiskArgs struct {
 	DiskSize        int     `pulumi:"disk_size"`
 	Iops            *int    `pulumi:"iops,optional"`
 	DiskType        *string `pulumi:"disk_type,optional"`
-	VmID            *string `pulumi:"vm_id,optional"`
+	VmID            *int    `pulumi:"vm_id,optional"`
 	Detach          *bool   `pulumi:"detach,optional"`
 	Permanently     *bool   `pulumi:"permanently,optional"`
 }

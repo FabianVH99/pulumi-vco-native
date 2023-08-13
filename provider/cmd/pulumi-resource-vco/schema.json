@@ -321,7 +321,7 @@
                     "type": "string"
                 },
                 "vm_id": {
-                    "type": "string"
+                    "type": "integer"
                 }
             },
             "properties": {
