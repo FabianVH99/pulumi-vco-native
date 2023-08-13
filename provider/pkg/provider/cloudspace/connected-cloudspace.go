@@ -6,6 +6,7 @@ import (
 	p "github.com/pulumi/pulumi-go-provider"
 	"github.com/pulumi/pulumi-go-provider/infer"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -71,8 +72,13 @@ func (cs ConnectedCloudspace) Create(ctx p.Context, name string, input Connected
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
-		fmt.Printf("Error creating resource %s: received status code %d", id, resp.StatusCode)
-		return "", state, fmt.Errorf("received status code %d", resp.StatusCode)
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			fmt.Printf("Error reading response body for %s: %v\n", id, err)
+			return "", state, err
+		}
+		fmt.Printf("Error creating resource %s: received status code %d\n: %s\n", id, resp.StatusCode, string(body))
+		return "", state, fmt.Errorf("received status code %d\n: %s\n", resp.StatusCode, string(body))
 	}
 
 	state.URL = input.URL
@@ -111,6 +117,15 @@ func (ConnectedCloudspace) Delete(ctx p.Context, id string, state ConnectedCloud
 		return err
 	}
 	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			fmt.Printf("Error reading response body for %s: %v\n", id, err)
+			return err
+		}
+		fmt.Printf("Error creating resource %s: received status code %d\n: %s\n", id, resp.StatusCode, string(body))
+		return fmt.Errorf("received status code %d\n: %s\n", resp.StatusCode, string(body))
+	}
 
 	return nil
 }

@@ -7,6 +7,7 @@ import (
 	p "github.com/pulumi/pulumi-go-provider"
 	"github.com/pulumi/pulumi-go-provider/infer"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -122,8 +123,13 @@ func (nic VirtualMachineNIC) Create(ctx p.Context, name string, input VirtualMac
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
-		fmt.Printf("Error retrieving list of external networks %s: received status code %d", id, resp.StatusCode)
-		return "", state, fmt.Errorf("received status code %d", resp.StatusCode)
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			fmt.Printf("Error reading response body for %s: %v\n", id, err)
+			return "", state, err
+		}
+		fmt.Printf("Error creating resource %s: received status code %d\n: %s\n", id, resp.StatusCode, string(body))
+		return "", state, fmt.Errorf("received status code %d\n: %s\n", resp.StatusCode, string(body))
 	}
 
 	var result map[string]interface{}
@@ -169,6 +175,15 @@ func (VirtualMachineNIC) Read(ctx p.Context, id string, state VirtualMachineNICS
 		return VirtualMachineNICState{}, err
 	}
 	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			fmt.Printf("Error reading response body for %s: %v\n", id, err)
+			return state, err
+		}
+		fmt.Printf("Error creating resource %s: received status code %d\n: %s\n", id, resp.StatusCode, string(body))
+		return state, fmt.Errorf("received status code %d\n: %s\n", resp.StatusCode, string(body))
+	}
 
 	var result VirtualMachineNICState
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
@@ -226,6 +241,15 @@ func (VirtualMachineNIC) Delete(ctx p.Context, id string, state VirtualMachineNI
 		return err
 	}
 	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			fmt.Printf("Error reading response body for %s: %v\n", id, err)
+			return err
+		}
+		fmt.Printf("Error creating resource %s: received status code %d\n: %s\n", id, resp.StatusCode, string(body))
+		return fmt.Errorf("received status code %d\n: %s\n", resp.StatusCode, string(body))
+	}
 
 	return nil
 }

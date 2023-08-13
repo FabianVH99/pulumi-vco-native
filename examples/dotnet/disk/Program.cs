@@ -44,7 +44,7 @@ return await Deployment.RunAsync(() =>
        Url = url,
        Token = token,
        CustomerID = customerId,
-       Cloudspace_id = cloudspace.Cloudspace_id,
+       Cloudspace_id = cloudspace.Id,
        Disk_id = disk.Disk_id,
    });
 
