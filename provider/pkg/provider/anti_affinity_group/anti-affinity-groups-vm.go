@@ -135,7 +135,6 @@ func (AntiAffinityGroupVM) Read(ctx p.Context, id string, state AntiAffinityGrou
 		return AntiAffinityGroupVMState{}, err
 	}
 
-	var newState AntiAffinityGroupVMState
 	for _, v := range result.VMS {
 		if v.VirtualMachineID == state.VirtualMachineID {
 			state.VirtualMachineID = v.VirtualMachineID
@@ -144,7 +143,7 @@ func (AntiAffinityGroupVM) Read(ctx p.Context, id string, state AntiAffinityGrou
 		}
 	}
 
-	return newState, nil
+	return state, nil
 }
 
 func (AntiAffinityGroupVM) Update(ctx p.Context, id string, state AntiAffinityGroupVMState, input AntiAffinityGroupVMArgs, preview bool) (AntiAffinityGroupVMState, error) {
