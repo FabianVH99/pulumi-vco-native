@@ -32,7 +32,7 @@ func TestProvider(t *testing.T) {
 			URL:               url,
 			Token:             token,
 			CustomerID:        customer,
-			Name:              "Pulumi",
+			Name:              "Pulumi_cloudspace",
 			Location:          "nl-rmd-dc01-001",
 			PrivateNetwork:    "192.168.10.0/24",
 			ExternalNetworkID: 13,

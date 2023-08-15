@@ -30,4 +30,5 @@ jobs:
           LAB_TOKEN: ${{ secrets.LAB_TOKEN }}
         run: |
           cd provider/pkg/testdata
-          go test helper_functions.go main_test.go -v
+          go test helper_functions.go main_test.go -v -timeout 20m
+
