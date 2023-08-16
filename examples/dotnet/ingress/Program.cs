@@ -53,6 +53,7 @@ return await Deployment.RunAsync(() =>
         Cloudspace_id = cloudspace.Cloudspace_id,
         Name = "Pulumi_dotnet_lb",
         Type = "tcp",
+        Port = 
     });
 
     return new Dictionary<string, object?>
