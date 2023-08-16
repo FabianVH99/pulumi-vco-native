@@ -24,7 +24,7 @@ type CloudspaceState struct {
 	ExternalNetworkIP string `pulumi:"external_network_ip" json:"external_network_ip"`
 	ExternalNetworkID int    `pulumi:"external_network_id"`
 	PrivateNetwork    string `pulumi:"private_network" json:"private_network"`
-	LocalDomain       string `pulumi:"local_domain" json:"local_domain"`
+	LocalDomain       string `pulumi:"local_domain,optional" json:"local_domain"`
 	UpdateTime        int64  `pulumi:"update_time" json:"update_time"`
 	CreationTime      int64  `pulumi:"creation_time" json:"creation_time"`
 	RouterType        string `pulumi:"router_type" json:"router_type"`

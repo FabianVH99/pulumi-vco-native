@@ -22,12 +22,12 @@ type ServerPoolState struct {
 	ServerPoolID string           `json:"serverpool_id" pulumi:"serverpool_id"`
 	Name         string           `json:"name" pulumi:"name"`
 	Description  string           `json:"description" pulumi:"description"`
-	Hosts        []ServerPoolHost `json:"hosts" pulumi:"hosts"`
+	Hosts        []ServerPoolHost `json:"hosts" pulumi:"hosts,optional"`
 }
 
 type ServerPoolHost struct {
-	HostID  string `json:"host_id" pulumi:"host_id"`
-	Address string `json:"address" pulumi:"address"`
+	HostID  string `json:"host_id" pulumi:"host_id,optional"`
+	Address string `json:"address" pulumi:"address,optional"`
 }
 
 type ServerPoolArgs struct {

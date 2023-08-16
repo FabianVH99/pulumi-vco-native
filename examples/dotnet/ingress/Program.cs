@@ -1,0 +1,63 @@
+﻿using System.Collections.Generic;
+using System.Net;
+using Pulumi;
+using Pulumi.Vco.Base;
+using Pulumi.Vco.Ingress;
+
+return await Deployment.RunAsync(() =>
+{
+    var config = new Config();
+    var url = config.Require("url");
+    var token = config.Require("token");
+    var customerId = config.Require("customerId");
+    var location = config.Require("location");
+
+    var cloudspace = new Cloudspace("pulumi-cloudspace", new CloudspaceArgs
+    {
+        Url = url,
+        Token = token,
+        CustomerID = customerId,
+        Name = "Pulumi_dotnet_cloudspace_sv",
+        Private_network = "192.168.10.0/24",
+        Location = location,
+        External_network_id = 13,
+        Private = false,
+        Local_domain = "pulumi-domain",
+    });
+
+    var serverPool = new ServerPool("pulumi-sv_pool", new ServerPoolArgs
+    {
+        Url = url,
+        Token = token,
+        CustomerID = customerId,
+        Cloudspace_id = cloudspace.Cloudspace_id,
+        Name = "Pulumi_dotnet_sv",
+        Description = "sv_pool_test",
+    });
+
+    var host = new Host("pulumi-host", new HostArgs
+    {
+        Url = url,
+        Token = token,
+        CustomerID = customerId,
+        Cloudspace_id = cloudspace.Cloudspace_id,
+        Serverpool_id = serverPool.Serverpool_id,
+        Address = "192.168.10.10",
+    });
+
+    var loadBalancer = new LoadBalancer("pulumi-lb", new LoadBalancerArgs
+    {
+        Url = url,
+        Token = token,
+        CustomerID = customerId,
+        Cloudspace_id = cloudspace.Cloudspace_id,
+        Name = "Pulumi_dotnet_lb",
+        Type = "tcp",
+    });
+
+    return new Dictionary<string, object?>
+   {
+      ["cs_id"] =cloudspace.Cloudspace_id,
+      ["sv_id"] = serverPool.Serverpool_id,
+    };
+});

@@ -40,7 +40,7 @@ type NetworkInterface struct {
 	NetworkID            int    `pulumi:"network_id" json:"network_id"`
 	NicType              string `pulumi:"nic_type" json:"nic_type"`
 	Model                string `pulumi:"model" json:"model"`
-	ExternalCloudspaceID string `pulumi:"external_cloudspace_id" json:"external_cloudspace_id"`
+	ExternalCloudspaceID string `pulumi:"external_cloudspace_id,optional" json:"external_cloudspace_id"`
 }
 
 type CpuTopology struct {
@@ -70,10 +70,10 @@ type VirtualMachineState struct {
 	ImageID              int                `pulumi:"image_id" json:"image_id"`
 	Locked               bool               `pulumi:"locked" json:"locked"`
 	StackID              int                `pulumi:"stack_id" json:"stack_id"`
-	ImpactAlertHook      string             `pulumi:"impact_alert_hook" json:"impact_alert_hook"`
+	ImpactAlertHook      string             `pulumi:"impact_alert_hook,optional" json:"impact_alert_hook"`
 	OsImageName          string             `pulumi:"os_image_name" json:"os_image_name"`
 	Hostname             string             `pulumi:"hostname" json:"hostname"`
-	AntiAffinityGroupIDs []string           `pulumi:"anti_affinity_group_ids" json:"anti_affinity_group_ids"`
+	AntiAffinityGroupIDs []string           `pulumi:"anti_affinity_group_ids,optional" json:"anti_affinity_group_ids"`
 	Disks                []VmDisk           `pulumi:"disks" json:"disks"`
 	OsAccounts           []OsAccount        `pulumi:"os_accounts" json:"os_accounts"`
 	NetworkInterfaces    []NetworkInterface `pulumi:"network_interfaces" json:"network_interfaces"`

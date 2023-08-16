@@ -29,7 +29,7 @@ type VirtualMachineNICState struct {
 	NetworkID            int     `pulumi:"network_id" json:"network_id"`
 	NicType              string  `pulumi:"nic_type" json:"nic_type"`
 	Model                string  `pulumi:"model" json:"model"`
-	ExternalCloudspaceID *string `pulumi:"external_cloudspace_id" json:"external_cloudspace_id"`
+	ExternalCloudspaceID *string `pulumi:"external_cloudspace_id,optional" json:"external_cloudspace_id"`
 }
 
 type VirtualMachineNICArgs struct {

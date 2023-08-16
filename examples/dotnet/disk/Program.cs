@@ -8,7 +8,6 @@ using Pulumi.Vco.Disk;
 
 return await Deployment.RunAsync(() =>
 {
-    // Load sensitive information from pulumi configuration variables
     var config = new Config();
     var url = config.Require("url");
     var token = config.Require("token");

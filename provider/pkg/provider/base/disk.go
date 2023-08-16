@@ -33,9 +33,9 @@ type DiskState struct {
 }
 
 type DiskArgs struct {
-	URL             string  `pulumi:"url"`
-	Token           string  `pulumi:"token"`
-	CustomerID      string  `pulumi:"customerID"`
+	URL             string  `pulumi:"url" provider:"secret"`
+	Token           string  `pulumi:"token" provider:"secret"`
+	CustomerID      string  `pulumi:"customerID" provider:"secret"`
 	Location        string  `pulumi:"location"`
 	DiskName        string  `pulumi:"disk_name"`
 	DiskDescription string  `pulumi:"description"`

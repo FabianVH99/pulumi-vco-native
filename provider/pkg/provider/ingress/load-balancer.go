@@ -15,34 +15,16 @@ type LoadBalancer struct{}
 
 type LoadBalancerState struct {
 	LoadBalancerArgs
-	URL            string       `pulumi:"url"`
-	Token          string       `pulumi:"token"`
-	CustomerID     string       `pulumi:"customerID"`
-	LoadBalancerID string       `pulumi:"loadbalancer_id" json:"loadbalancer_id"`
-	CloudSpaceID   string       `pulumi:"cloudspace_id"`
-	Name           string       `pulumi:"name" json:"name"`
-	Description    string       `pulumi:"description" json:"description"`
-	Type           string       `pulumi:"type" json:"type"`
-	FrontEnd       FrontEnd     `pulumi:"front_end" json:"front_end"`
-	BackEnd        BackEndState `pulumi:"back_end" json:"back_end"`
-}
-
-type BackEndState struct {
-	ServerpoolID   string `pulumi:"serverpool_id" json:"serverpool_id"`
-	ServerpoolName string `pulumi:"serverpool_name" json:"serverpool_name"`
-	TargetPort     int    `pulumi:"target_port" json:"target_port"`
-}
-
-type LoadBalancerArgs struct {
-	URL          string  `pulumi:"url" provider:"secret"`
-	Token        string  `pulumi:"token" provider:"secret"`
-	CustomerID   string  `pulumi:"customerID" provider:"secret"`
-	CloudSpaceID string  `pulumi:"cloudspace_id"`
-	Name         string  `pulumi:"name"`
-	Description  *string `pulumi:"description,optional"`
-	Type         string  `pulumi:"type"`
-	FrontEnd     FrontEnd
-	BackEnd      BackEnd
+	URL            string   `pulumi:"url"`
+	Token          string   `pulumi:"token"`
+	CustomerID     string   `pulumi:"customerID"`
+	LoadBalancerID string   `pulumi:"loadbalancer_id" json:"loadbalancer_id"`
+	CloudSpaceID   string   `pulumi:"cloudspace_id"`
+	Name           string   `pulumi:"name" json:"name"`
+	Description    string   `pulumi:"description,optional" json:"description"`
+	Type           string   `pulumi:"type" json:"type"`
+	FrontEnd       FrontEnd `pulumi:"front_end" json:"front_end"`
+	BackEnd        BackEnd  `pulumi:"back_end" json:"back_end"`
 }
 
 type FrontEnd struct {
@@ -58,8 +40,26 @@ type TLS struct {
 }
 
 type BackEnd struct {
-	ServerpoolID string `pulumi:"serverpool_id"`
-	TargetPort   int    `pulumi:"target_port"`
+	ServerpoolID   string `pulumi:"serverpool_id" json:"serverpool_id"`
+	ServerpoolName string `pulumi:"serverpool_name,optional" json:"serverpool_name"`
+	TargetPort     int    `pulumi:"target_port" json:"target_port"`
+}
+
+type LoadBalancerArgs struct {
+	URL            string  `pulumi:"url" provider:"secret"`
+	Token          string  `pulumi:"token" provider:"secret"`
+	CustomerID     string  `pulumi:"customerID" provider:"secret"`
+	CloudSpaceID   string  `pulumi:"cloudspace_id"`
+	Name           string  `pulumi:"name"`
+	Description    *string `pulumi:"description,optional"`
+	Type           string  `pulumi:"type"`
+	Port           int     `pulumi:"port" json:"port"`
+	IPAddress      *string `pulumi:"ip_address,optional" json:"ip_address"`
+	ServerpoolID   string  `pulumi:"serverpool_id"`
+	TargetPort     int     `pulumi:"target_port"`
+	IsEnabled      *bool   `pulumi:"is_enabled,optional" json:"is_enabled"`
+	Domain         *string `pulumi:"domain,optional" json:"domain"`
+	TLSTermination *bool   `pulumi:"tls_termination,optional" json:"tls_termination"`
 }
 
 func (lb LoadBalancer) WireDependencies(f infer.FieldSelector, args *LoadBalancerArgs, state *LoadBalancerState) {
@@ -69,7 +69,6 @@ func (lb LoadBalancer) WireDependencies(f infer.FieldSelector, args *LoadBalance
 	f.OutputField(&state.CloudSpaceID).DependsOn(f.InputField(&args.CloudSpaceID))
 	f.OutputField(&state.Name).DependsOn(f.InputField(&args.Name))
 	f.OutputField(&state.Type).DependsOn(f.InputField(&args.Type))
-	f.OutputField(&state.FrontEnd).DependsOn(f.InputField(&args.FrontEnd))
 }
 
 func (lb LoadBalancer) Create(ctx p.Context, name string, input LoadBalancerArgs, preview bool) (string, LoadBalancerState, error) {
@@ -87,11 +86,11 @@ func (lb LoadBalancer) Create(ctx p.Context, name string, input LoadBalancerArgs
 		"name": input.Name,
 		"type": input.Type,
 		"front_end": map[string]interface{}{
-			"port": input.FrontEnd.Port,
+			"port": input.Port,
 		},
 		"back_end": map[string]interface{}{
-			"serverpool_id": input.BackEnd.ServerpoolID,
-			"target_port":   input.BackEnd.TargetPort,
+			"serverpool_id": input.ServerpoolID,
+			"target_port":   input.TargetPort,
 		},
 	}
 
@@ -99,24 +98,22 @@ func (lb LoadBalancer) Create(ctx p.Context, name string, input LoadBalancerArgs
 		payload["description"] = *input.Description
 	}
 
-	if input.FrontEnd.IPAddress != nil {
-		payload["front_end"].(map[string]interface{})["ip_address"] = *input.FrontEnd.IPAddress
+	if input.IPAddress != nil {
+		payload["front_end"].(map[string]interface{})["ip_address"] = *input.IPAddress
 	}
 
-	if input.FrontEnd.TLS != nil {
-		if input.FrontEnd.TLS.IsEnabled != nil || input.FrontEnd.TLS.Domain != nil || input.FrontEnd.TLS.TLSTermination != nil {
-			tls := map[string]interface{}{}
-			if input.FrontEnd.TLS.IsEnabled != nil {
-				tls["is_enabled"] = *input.FrontEnd.TLS.IsEnabled
-			}
-			if input.FrontEnd.TLS.Domain != nil {
-				tls["domain"] = *input.FrontEnd.TLS.Domain
-			}
-			if input.FrontEnd.TLS.TLSTermination != nil {
-				tls["tls_termination"] = *input.FrontEnd.TLS.TLSTermination
-			}
-			payload["front_end"].(map[string]interface{})["tls"] = tls
+	if input.IsEnabled != nil || input.Domain != nil || input.TLSTermination != nil {
+		tls := map[string]interface{}{}
+		if input.IsEnabled != nil {
+			tls["is_enabled"] = *input.IsEnabled
 		}
+		if input.Domain != nil {
+			tls["domain"] = *input.Domain
+		}
+		if input.TLSTermination != nil {
+			tls["tls_termination"] = *input.TLSTermination
+		}
+		payload["front_end"].(map[string]interface{})["tls"] = tls
 	}
 
 	jsonPayload, err := json.Marshal(payload)
@@ -217,11 +214,11 @@ func (lb LoadBalancer) Update(ctx p.Context, id string, state LoadBalancerState,
 		"name": input.Name,
 		"type": input.Type,
 		"front_end": map[string]interface{}{
-			"port": input.FrontEnd.Port,
+			"port": input.Port,
 		},
 		"back_end": map[string]interface{}{
-			"serverpool_id": input.BackEnd.ServerpoolID,
-			"target_port":   input.BackEnd.TargetPort,
+			"serverpool_id": input.ServerpoolID,
+			"target_port":   input.TargetPort,
 		},
 	}
 
@@ -229,25 +226,24 @@ func (lb LoadBalancer) Update(ctx p.Context, id string, state LoadBalancerState,
 		payload["description"] = *input.Description
 	}
 
-	if input.FrontEnd.IPAddress != nil {
-		payload["front_end"].(map[string]interface{})["ip_address"] = *input.FrontEnd.IPAddress
+	if input.IPAddress != nil {
+		payload["front_end"].(map[string]interface{})["ip_address"] = *input.IPAddress
 	}
 
-	if input.FrontEnd.TLS != nil {
-		if input.FrontEnd.TLS.IsEnabled != nil || input.FrontEnd.TLS.Domain != nil || input.FrontEnd.TLS.TLSTermination != nil {
-			tls := map[string]interface{}{}
-			if input.FrontEnd.TLS.IsEnabled != nil {
-				tls["is_enabled"] = *input.FrontEnd.TLS.IsEnabled
-			}
-			if input.FrontEnd.TLS.Domain != nil {
-				tls["domain"] = *input.FrontEnd.TLS.Domain
-			}
-			if input.FrontEnd.TLS.TLSTermination != nil {
-				tls["tls_termination"] = *input.FrontEnd.TLS.TLSTermination
-			}
-			payload["front_end"].(map[string]interface{})["tls"] = tls
+	if input.IsEnabled != nil || input.Domain != nil || input.TLSTermination != nil {
+		tls := map[string]interface{}{}
+		if input.IsEnabled != nil {
+			tls["is_enabled"] = *input.IsEnabled
 		}
+		if input.Domain != nil {
+			tls["domain"] = *input.Domain
+		}
+		if input.TLSTermination != nil {
+			tls["tls_termination"] = *input.TLSTermination
+		}
+		payload["front_end"].(map[string]interface{})["tls"] = tls
 	}
+
 	jsonPayload, err := json.Marshal(payload)
 	if err != nil {
 		return LoadBalancerState{}, err

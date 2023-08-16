@@ -21,21 +21,10 @@ type ReverseProxyState struct {
 	CloudSpaceID   string               `pulumi:"cloudspace_id"`
 	ReverseProxyID string               `pulumi:"reverseproxy_id" json:"reverseproxy_id"`
 	Name           string               `pulumi:"name" json:"name"`
-	Description    string               `pulumi:"description" json:"description"`
+	Description    string               `pulumi:"description,optional" json:"description"`
 	Type           string               `pulumi:"type" json:"type"`
 	FrontEnd       ReverseProxyFrontEnd `pulumi:"front_end" json:"front_end"`
 	BackEnd        ReverseProxyBackend  `pulumi:"back_end" json:"back_end"`
-}
-
-type ReverseProxyArgs struct {
-	URL                  string               `pulumi:"url" provider:"secret"`
-	Token                string               `pulumi:"token" provider:"secret"`
-	CustomerID           string               `pulumi:"customerID" provider:"secret"`
-	CloudSpaceID         string               `pulumi:"cloudspace_id"`
-	Name                 string               `pulumi:"name"`
-	Description          *string              `pulumi:"description,optional"`
-	ReverseProxyFrontEnd ReverseProxyFrontEnd `pulumi:"front_end"`
-	ReverseProxyBackend  ReverseProxyBackend  `pulumi:"back_end"`
 }
 
 type ReverseProxyFrontEnd struct {
@@ -79,14 +68,40 @@ type HealthCheck struct {
 	Timeout  *int    `pulumi:"timeout,optional" json:"timeout"`
 }
 
+type ReverseProxyArgs struct {
+	URL               string  `pulumi:"url" provider:"secret"`
+	Token             string  `pulumi:"token" provider:"secret"`
+	CustomerID        string  `pulumi:"customerID" provider:"secret"`
+	CloudSpaceID      string  `pulumi:"cloudspace_id"`
+	Name              string  `pulumi:"name"`
+	Description       *string `pulumi:"description,optional"`
+	Domain            string  `pulumi:"domain"`
+	HTTPPort          *int    `pulumi:"http_port,optional"`
+	HTTPSPort         *int    `pulumi:"https_port,optional"`
+	IPAddress         *string `pulumi:"ip_address,optional"`
+	FrontEndScheme    string  `pulumi:"scheme"`
+	Enabled           bool    `pulumi:"enabled" json:"enabled"`
+	Email             *string `pulumi:"email" json:"email"`
+	BackendScheme     string  `pulumi:"scheme"`
+	ServerpoolID      string  `pulumi:"serverpool_id"`
+	TargetPort        int     `pulumi:"target_port"`
+	StickySessionName *string `pulumi:"stickySession_name,optional"`
+	Secure            *bool   `pulumi:"secure,optional"`
+	HttpOnly          *bool   `pulumi:"http_only,optional"`
+	SameSite          *string `pulumi:"same_site,optional"`
+	Path              *string `pulumi:"path,optional"`
+	HealthCheckScheme *string `pulumi:"health_check_scheme,optional"`
+	Port              *int    `pulumi:"port,optional"`
+	Interval          *int    `pulumi:"interval,optional"`
+	Timeout           *int    `pulumi:"timeout,optional"`
+}
+
 func (lb ReverseProxy) WireDependencies(f infer.FieldSelector, args *ReverseProxyArgs, state *ReverseProxyState) {
 	f.OutputField(&state.URL).DependsOn(f.InputField(&args.URL))
 	f.OutputField(&state.Token).DependsOn(f.InputField(&args.Token))
 	f.OutputField(&state.CustomerID).DependsOn(f.InputField(&args.CustomerID))
 	f.OutputField(&state.CloudSpaceID).DependsOn(f.InputField(&args.CloudSpaceID))
 	f.OutputField(&state.Name).DependsOn(f.InputField(&args.Name))
-	f.OutputField(&state.ReverseProxyFrontEnd).DependsOn(f.InputField(&args.ReverseProxyFrontEnd))
-	f.OutputField(&state.ReverseProxyBackend).DependsOn(f.InputField(&args.ReverseProxyBackend))
 }
 
 func (rp ReverseProxy) Create(ctx p.Context, name string, input ReverseProxyArgs, preview bool) (string, ReverseProxyState, error) {
@@ -103,13 +118,13 @@ func (rp ReverseProxy) Create(ctx p.Context, name string, input ReverseProxyArgs
 	payload := map[string]interface{}{
 		"name": input.Name,
 		"front_end": map[string]interface{}{
-			"domain": input.ReverseProxyFrontEnd.Domain,
-			"scheme": input.ReverseProxyFrontEnd.Scheme,
+			"domain": input.Domain,
+			"scheme": input.FrontEndScheme,
 		},
 		"back_end": map[string]interface{}{
-			"scheme":        input.ReverseProxyBackend.Scheme,
-			"serverpool_id": input.ReverseProxyBackend.ServerpoolID,
-			"target_port":   input.ReverseProxyBackend.TargetPort,
+			"scheme":        input.BackendScheme,
+			"serverpool_id": input.ServerpoolID,
+			"target_port":   input.TargetPort,
 		},
 	}
 
@@ -117,86 +132,84 @@ func (rp ReverseProxy) Create(ctx p.Context, name string, input ReverseProxyArgs
 		payload["description"] = *input.Description
 	}
 
-	if input.ReverseProxyFrontEnd.HTTPPort != nil {
-		payload["front_end"].(map[string]interface{})["http_port"] = *input.ReverseProxyFrontEnd.HTTPPort
+	if input.HTTPPort != nil {
+		payload["front_end"].(map[string]interface{})["http_port"] = *input.HTTPPort
 	}
 
-	if input.ReverseProxyFrontEnd.HTTPSPort != nil {
-		payload["front_end"].(map[string]interface{})["https_port"] = *input.ReverseProxyFrontEnd.HTTPSPort
+	if input.HTTPSPort != nil {
+		payload["front_end"].(map[string]interface{})["https_port"] = *input.HTTPSPort
 	}
 
-	if input.ReverseProxyFrontEnd.IPAddress != nil {
-		payload["front_end"].(map[string]interface{})["ip_address"] = *input.ReverseProxyFrontEnd.IPAddress
+	if input.IPAddress != nil {
+		payload["front_end"].(map[string]interface{})["ip_address"] = *input.IPAddress
 	} else {
 		payload["front_end"].(map[string]interface{})["ip_address"] = ""
 	}
 
 	letsecrypt := map[string]interface{}{
-		"enabled": input.ReverseProxyFrontEnd.LetsEncrypt.Enabled,
+		"enabled": input.Enabled,
 	}
-	if input.ReverseProxyFrontEnd.LetsEncrypt.Email != nil {
-		letsecrypt["email"] = *input.ReverseProxyFrontEnd.LetsEncrypt.Email
+	if input.Email != nil {
+		letsecrypt["email"] = *input.Email
 	}
 	payload["front_end"].(map[string]interface{})["letsencrypt"] = letsecrypt
 
-	if input.ReverseProxyBackend.Options != nil {
-		if input.ReverseProxyBackend.Options.StickySessionCookie.Name != nil || input.ReverseProxyBackend.Options.StickySessionCookie.Secure != nil || input.ReverseProxyBackend.Options.StickySessionCookie.HttpOnly != nil || input.ReverseProxyBackend.Options.StickySessionCookie.SameSite != nil {
-			stickySessionCookie := map[string]interface{}{}
-			if input.ReverseProxyBackend.Options.StickySessionCookie.Name != nil {
-				stickySessionCookie["name"] = *input.ReverseProxyBackend.Options.StickySessionCookie.Name
-			}
-			if input.ReverseProxyBackend.Options.StickySessionCookie.Secure != nil {
-				stickySessionCookie["secure"] = *input.ReverseProxyBackend.Options.StickySessionCookie.Secure
-			}
-			if input.ReverseProxyBackend.Options.StickySessionCookie.HttpOnly != nil {
-				stickySessionCookie["http_only"] = *input.ReverseProxyBackend.Options.StickySessionCookie.HttpOnly
-			}
-			if input.ReverseProxyBackend.Options.StickySessionCookie.SameSite != nil {
-				stickySessionCookie["same_site"] = *input.ReverseProxyBackend.Options.StickySessionCookie.SameSite
-			}
-
-			if len(stickySessionCookie) > 0 {
-				options := map[string]interface{}{}
-				options["sticky_session_cookie"] = stickySessionCookie
-				payload["back_end"].(map[string]interface{})["options"] = options
-			}
+	if input.StickySessionName != nil || input.Secure != nil || input.HttpOnly != nil || input.SameSite != nil {
+		stickySessionCookie := map[string]interface{}{}
+		if input.StickySessionName != nil {
+			stickySessionCookie["name"] = *input.StickySessionName
+		}
+		if input.Secure != nil {
+			stickySessionCookie["secure"] = *input.Secure
+		}
+		if input.HttpOnly != nil {
+			stickySessionCookie["http_only"] = *input.HttpOnly
+		}
+		if input.SameSite != nil {
+			stickySessionCookie["same_site"] = *input.SameSite
 		}
 
-		if payload["back_end"].(map[string]interface{})["options"] == nil && (input.ReverseProxyBackend.Options.HealthCheck.Path != nil ||
-			input.ReverseProxyBackend.Options.HealthCheck.Scheme != nil ||
-			input.ReverseProxyBackend.Options.HealthCheck.Port != nil ||
-			input.ReverseProxyBackend.Options.HealthCheck.Interval != nil ||
-			input.ReverseProxyBackend.Options.HealthCheck.Timeout != nil) {
-
+		if len(stickySessionCookie) > 0 {
 			options := map[string]interface{}{}
+			options["sticky_session_cookie"] = stickySessionCookie
 			payload["back_end"].(map[string]interface{})["options"] = options
 		}
+	}
 
-		if payload["back_end"].(map[string]interface{})["options"] != nil && (input.ReverseProxyBackend.Options.HealthCheck.Path != nil ||
-			input.ReverseProxyBackend.Options.HealthCheck.Scheme != nil ||
-			input.ReverseProxyBackend.Options.HealthCheck.Port != nil ||
-			input.ReverseProxyBackend.Options.HealthCheck.Interval != nil ||
-			input.ReverseProxyBackend.Options.HealthCheck.Timeout != nil) {
+	if payload["back_end"].(map[string]interface{})["options"] == nil && (input.Path != nil ||
+		input.HealthCheckScheme != nil ||
+		input.Port != nil ||
+		input.Interval != nil ||
+		input.Timeout != nil) {
 
-			healthCheck := map[string]interface{}{}
-			if input.ReverseProxyBackend.Options.HealthCheck.Path != nil {
-				healthCheck["path"] = *input.ReverseProxyBackend.Options.HealthCheck.Path
-			}
-			if input.ReverseProxyBackend.Options.HealthCheck.Scheme != nil {
-				healthCheck["scheme"] = *input.ReverseProxyBackend.Options.HealthCheck.Scheme
-			}
-			if input.ReverseProxyBackend.Options.HealthCheck.Port != nil {
-				healthCheck["port"] = *input.ReverseProxyBackend.Options.HealthCheck.Port
-			}
-			if input.ReverseProxyBackend.Options.HealthCheck.Interval != nil {
-				healthCheck["interval"] = *input.ReverseProxyBackend.Options.HealthCheck.Interval
-			}
-			if input.ReverseProxyBackend.Options.HealthCheck.Timeout != nil {
-				healthCheck["timeout"] = *input.ReverseProxyBackend.Options.HealthCheck.Timeout
-			}
+		options := map[string]interface{}{}
+		payload["back_end"].(map[string]interface{})["options"] = options
+	}
 
-			payload["back_end"].(map[string]interface{})["options"].(map[string]interface{})["health_check"] = healthCheck
+	if payload["back_end"].(map[string]interface{})["options"] != nil && (input.Path != nil ||
+		input.HealthCheckScheme != nil ||
+		input.Port != nil ||
+		input.Interval != nil ||
+		input.Timeout != nil) {
+
+		healthCheck := map[string]interface{}{}
+		if input.Path != nil {
+			healthCheck["path"] = *input.Path
 		}
+		if input.HealthCheckScheme != nil {
+			healthCheck["scheme"] = *input.HealthCheckScheme
+		}
+		if input.Port != nil {
+			healthCheck["port"] = *input.Port
+		}
+		if input.Interval != nil {
+			healthCheck["interval"] = *input.Interval
+		}
+		if input.Timeout != nil {
+			healthCheck["timeout"] = *input.Timeout
+		}
+
+		payload["back_end"].(map[string]interface{})["options"].(map[string]interface{})["health_check"] = healthCheck
 	}
 
 	jsonPayload, err := json.Marshal(payload)
@@ -292,13 +305,13 @@ func (rp ReverseProxy) Update(ctx p.Context, id string, state ReverseProxyState,
 	payload := map[string]interface{}{
 		"name": input.Name,
 		"front_end": map[string]interface{}{
-			"domain": input.ReverseProxyFrontEnd.Domain,
-			"scheme": input.ReverseProxyFrontEnd.Scheme,
+			"domain": input.Domain,
+			"scheme": input.FrontEndScheme,
 		},
 		"back_end": map[string]interface{}{
-			"scheme":        input.ReverseProxyBackend.Scheme,
-			"serverpool_id": input.ReverseProxyBackend.ServerpoolID,
-			"target_port":   input.ReverseProxyBackend.TargetPort,
+			"scheme":        input.BackendScheme,
+			"serverpool_id": input.ServerpoolID,
+			"target_port":   input.TargetPort,
 		},
 	}
 
@@ -306,86 +319,84 @@ func (rp ReverseProxy) Update(ctx p.Context, id string, state ReverseProxyState,
 		payload["description"] = *input.Description
 	}
 
-	if input.ReverseProxyFrontEnd.HTTPPort != nil {
-		payload["front_end"].(map[string]interface{})["http_port"] = *input.ReverseProxyFrontEnd.HTTPPort
+	if input.HTTPPort != nil {
+		payload["front_end"].(map[string]interface{})["http_port"] = *input.HTTPPort
 	}
 
-	if input.ReverseProxyFrontEnd.HTTPSPort != nil {
-		payload["front_end"].(map[string]interface{})["https_port"] = *input.ReverseProxyFrontEnd.HTTPSPort
+	if input.HTTPSPort != nil {
+		payload["front_end"].(map[string]interface{})["https_port"] = *input.HTTPSPort
 	}
 
-	if input.ReverseProxyFrontEnd.IPAddress != nil {
-		payload["front_end"].(map[string]interface{})["ip_address"] = *input.ReverseProxyFrontEnd.IPAddress
+	if input.IPAddress != nil {
+		payload["front_end"].(map[string]interface{})["ip_address"] = *input.IPAddress
 	} else {
 		payload["front_end"].(map[string]interface{})["ip_address"] = ""
 	}
 
 	letsecrypt := map[string]interface{}{
-		"enabled": input.ReverseProxyFrontEnd.LetsEncrypt.Enabled,
+		"enabled": input.Enabled,
 	}
-	if input.ReverseProxyFrontEnd.LetsEncrypt.Email != nil {
-		letsecrypt["email"] = *input.ReverseProxyFrontEnd.LetsEncrypt.Email
+	if input.Email != nil {
+		letsecrypt["email"] = *input.Email
 	}
 	payload["front_end"].(map[string]interface{})["letsencrypt"] = letsecrypt
 
-	if input.ReverseProxyBackend.Options != nil {
-		if input.ReverseProxyBackend.Options.StickySessionCookie.Name != nil || input.ReverseProxyBackend.Options.StickySessionCookie.Secure != nil || input.ReverseProxyBackend.Options.StickySessionCookie.HttpOnly != nil || input.ReverseProxyBackend.Options.StickySessionCookie.SameSite != nil {
-			stickySessionCookie := map[string]interface{}{}
-			if input.ReverseProxyBackend.Options.StickySessionCookie.Name != nil {
-				stickySessionCookie["name"] = *input.ReverseProxyBackend.Options.StickySessionCookie.Name
-			}
-			if input.ReverseProxyBackend.Options.StickySessionCookie.Secure != nil {
-				stickySessionCookie["secure"] = *input.ReverseProxyBackend.Options.StickySessionCookie.Secure
-			}
-			if input.ReverseProxyBackend.Options.StickySessionCookie.HttpOnly != nil {
-				stickySessionCookie["http_only"] = *input.ReverseProxyBackend.Options.StickySessionCookie.HttpOnly
-			}
-			if input.ReverseProxyBackend.Options.StickySessionCookie.SameSite != nil {
-				stickySessionCookie["same_site"] = *input.ReverseProxyBackend.Options.StickySessionCookie.SameSite
-			}
-
-			if len(stickySessionCookie) > 0 {
-				options := map[string]interface{}{}
-				options["sticky_session_cookie"] = stickySessionCookie
-				payload["back_end"].(map[string]interface{})["options"] = options
-			}
+	if input.StickySessionName != nil || input.Secure != nil || input.HttpOnly != nil || input.SameSite != nil {
+		stickySessionCookie := map[string]interface{}{}
+		if input.StickySessionName != nil {
+			stickySessionCookie["name"] = *input.StickySessionName
+		}
+		if input.Secure != nil {
+			stickySessionCookie["secure"] = *input.Secure
+		}
+		if input.HttpOnly != nil {
+			stickySessionCookie["http_only"] = *input.HttpOnly
+		}
+		if input.SameSite != nil {
+			stickySessionCookie["same_site"] = *input.SameSite
 		}
 
-		if payload["back_end"].(map[string]interface{})["options"] == nil && (input.ReverseProxyBackend.Options.HealthCheck.Path != nil ||
-			input.ReverseProxyBackend.Options.HealthCheck.Scheme != nil ||
-			input.ReverseProxyBackend.Options.HealthCheck.Port != nil ||
-			input.ReverseProxyBackend.Options.HealthCheck.Interval != nil ||
-			input.ReverseProxyBackend.Options.HealthCheck.Timeout != nil) {
-
+		if len(stickySessionCookie) > 0 {
 			options := map[string]interface{}{}
+			options["sticky_session_cookie"] = stickySessionCookie
 			payload["back_end"].(map[string]interface{})["options"] = options
 		}
+	}
 
-		if payload["back_end"].(map[string]interface{})["options"] != nil && (input.ReverseProxyBackend.Options.HealthCheck.Path != nil ||
-			input.ReverseProxyBackend.Options.HealthCheck.Scheme != nil ||
-			input.ReverseProxyBackend.Options.HealthCheck.Port != nil ||
-			input.ReverseProxyBackend.Options.HealthCheck.Interval != nil ||
-			input.ReverseProxyBackend.Options.HealthCheck.Timeout != nil) {
+	if payload["back_end"].(map[string]interface{})["options"] == nil && (input.Path != nil ||
+		input.HealthCheckScheme != nil ||
+		input.Port != nil ||
+		input.Interval != nil ||
+		input.Timeout != nil) {
 
-			healthCheck := map[string]interface{}{}
-			if input.ReverseProxyBackend.Options.HealthCheck.Path != nil {
-				healthCheck["path"] = *input.ReverseProxyBackend.Options.HealthCheck.Path
-			}
-			if input.ReverseProxyBackend.Options.HealthCheck.Scheme != nil {
-				healthCheck["scheme"] = *input.ReverseProxyBackend.Options.HealthCheck.Scheme
-			}
-			if input.ReverseProxyBackend.Options.HealthCheck.Port != nil {
-				healthCheck["port"] = *input.ReverseProxyBackend.Options.HealthCheck.Port
-			}
-			if input.ReverseProxyBackend.Options.HealthCheck.Interval != nil {
-				healthCheck["interval"] = *input.ReverseProxyBackend.Options.HealthCheck.Interval
-			}
-			if input.ReverseProxyBackend.Options.HealthCheck.Timeout != nil {
-				healthCheck["timeout"] = *input.ReverseProxyBackend.Options.HealthCheck.Timeout
-			}
+		options := map[string]interface{}{}
+		payload["back_end"].(map[string]interface{})["options"] = options
+	}
 
-			payload["back_end"].(map[string]interface{})["options"].(map[string]interface{})["health_check"] = healthCheck
+	if payload["back_end"].(map[string]interface{})["options"] != nil && (input.Path != nil ||
+		input.HealthCheckScheme != nil ||
+		input.Port != nil ||
+		input.Interval != nil ||
+		input.Timeout != nil) {
+
+		healthCheck := map[string]interface{}{}
+		if input.Path != nil {
+			healthCheck["path"] = *input.Path
 		}
+		if input.HealthCheckScheme != nil {
+			healthCheck["scheme"] = *input.HealthCheckScheme
+		}
+		if input.Port != nil {
+			healthCheck["port"] = *input.Port
+		}
+		if input.Interval != nil {
+			healthCheck["interval"] = *input.Interval
+		}
+		if input.Timeout != nil {
+			healthCheck["timeout"] = *input.Timeout
+		}
+
+		payload["back_end"].(map[string]interface{})["options"].(map[string]interface{})["health_check"] = healthCheck
 	}
 
 	jsonPayload, err := json.Marshal(payload)

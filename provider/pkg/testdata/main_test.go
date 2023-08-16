@@ -225,17 +225,13 @@ func TestProvider(t *testing.T) {
 		_, state, err := loadBalancer.Create(nil, "lb-test-pulumi", ingress.LoadBalancerArgs{
 			URL:          url,
 			Token:        token,
-			CustomerID:   customer,
+			CustomerID:   url,
 			CloudSpaceID: CloudSpaceState.CloudSpaceID,
 			Name:         "Pulumi_lb_test",
 			Type:         "tcp",
-			FrontEnd: ingress.FrontEnd{
-				Port: 23,
-			},
-			BackEnd: ingress.BackEnd{
-				ServerpoolID: ServerPoolState.ServerPoolID,
-				TargetPort:   23,
-			},
+			Port:         23,
+			ServerpoolID: ServerPoolState.ServerPoolID,
+			TargetPort:   23,
 		}, false)
 		assert.NoError(t, err)
 		assert.NotEmpty(t, state.LoadBalancerID)
@@ -243,17 +239,13 @@ func TestProvider(t *testing.T) {
 		updatedState, err := loadBalancer.Update(nil, "lb-test-pulumi", state, ingress.LoadBalancerArgs{
 			URL:          url,
 			Token:        token,
-			CustomerID:   customer,
+			CustomerID:   url,
 			CloudSpaceID: CloudSpaceState.CloudSpaceID,
 			Name:         "Pulumi_lb_test",
 			Type:         "udp",
-			FrontEnd: ingress.FrontEnd{
-				Port: 23,
-			},
-			BackEnd: ingress.BackEnd{
-				ServerpoolID: ServerPoolState.ServerPoolID,
-				TargetPort:   23,
-			},
+			Port:         23,
+			ServerpoolID: ServerPoolState.ServerPoolID,
+			TargetPort:   23,
 		}, false)
 		assert.NoError(t, err)
 		assert.Equal(t, "udp", updatedState.Type)
@@ -266,47 +258,35 @@ func TestProvider(t *testing.T) {
 		reverseProxy := ingress.ReverseProxy{}
 
 		_, state, err := reverseProxy.Create(nil, "rp-test-pulumi", ingress.ReverseProxyArgs{
-			URL:          url,
-			Token:        token,
-			CustomerID:   customer,
-			CloudSpaceID: CloudSpaceState.CloudSpaceID,
-			Name:         "Reverse_Proxy_Pulumi",
-			ReverseProxyFrontEnd: ingress.ReverseProxyFrontEnd{
-				Domain:   "Pulumi",
-				Scheme:   "http",
-				HTTPPort: intPtr(25),
-				LetsEncrypt: ingress.LetsEncrypt{
-					Enabled: false,
-				},
-			},
-			ReverseProxyBackend: ingress.ReverseProxyBackend{
-				Scheme:       "http",
-				ServerpoolID: ServerPoolState.ServerPoolID,
-				TargetPort:   25,
-			},
+			URL:            url,
+			Token:          token,
+			CustomerID:     url,
+			CloudSpaceID:   CloudSpaceState.CloudSpaceID,
+			Name:           "Reverse_Proxy_Pulumi",
+			Domain:         "Pulumi",
+			FrontEndScheme: "http",
+			HTTPPort:       intPtr(25),
+			Enabled:        false,
+			BackendScheme:  "http",
+			ServerpoolID:   ServerPoolState.ServerPoolID,
+			TargetPort:     25,
 		}, false)
 		assert.NoError(t, err)
 		assert.NotEmpty(t, state.ReverseProxyID)
 
 		updatedState, err := reverseProxy.Update(nil, "rp-test-pulumi", state, ingress.ReverseProxyArgs{
-			URL:          url,
-			Token:        token,
-			CustomerID:   customer,
-			CloudSpaceID: CloudSpaceState.CloudSpaceID,
-			Name:         "Reverse_Proxy_Pulumi",
-			ReverseProxyFrontEnd: ingress.ReverseProxyFrontEnd{
-				Domain:   "Pulumi",
-				Scheme:   "http",
-				HTTPPort: intPtr(25),
-				LetsEncrypt: ingress.LetsEncrypt{
-					Enabled: false,
-				},
-			},
-			ReverseProxyBackend: ingress.ReverseProxyBackend{
-				Scheme:       "http",
-				ServerpoolID: ServerPoolState.ServerPoolID,
-				TargetPort:   26,
-			},
+			URL:            url,
+			Token:          token,
+			CustomerID:     url,
+			CloudSpaceID:   CloudSpaceState.CloudSpaceID,
+			Name:           "Reverse_Proxy_Pulumi",
+			Domain:         "Pulumi",
+			FrontEndScheme: "http",
+			HTTPPort:       intPtr(25),
+			Enabled:        false,
+			BackendScheme:  "http",
+			ServerpoolID:   ServerPoolState.ServerPoolID,
+			TargetPort:     26,
 		}, false)
 		assert.NoError(t, err)
 		assert.Equal(t, 26, updatedState.BackEnd.TargetPort)

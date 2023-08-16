@@ -28,6 +28,21 @@ return await Deployment.RunAsync(() =>
        Local_domain = "pulumi-domain",
    });
 
+   var virtualMachine = new VirtualMachine("pulumi-vm", new VirtualMachineArgs
+   {
+       Url = url,
+       Token = token,
+       CustomerID = customerId,
+       Cloudspace_id = cloudspace.Cloudspace_id,
+       Name = "Pulumi_dotnet_vm",
+       Description = "vm_test",
+       Vcpus = 4,
+       Memory = 2048,
+       Image_id = 258,
+       Disk_size = 250,
+       Boot_type = "bios",
+   });
+
    var antiAffinityGroup = new AntiAffinityGroup("pulumi-antiAffinityGroup", new AntiAffinityGroupArgs
    {
        Url = url,
