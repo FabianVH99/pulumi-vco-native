@@ -8,8 +8,8 @@ from setuptools.command.install import install
 from subprocess import check_call
 
 
-VERSION = "0.0.1a1691961733+dirty"
-PLUGIN_VERSION = "0.0.1-alpha.1691961733+01cf1897.dirty"
+VERSION = "0.0.38+dirty"
+PLUGIN_VERSION = "0.0.38+dirty"
 
 class InstallPluginCommand(install):
     def run(self):
@@ -40,7 +40,7 @@ def readme():
 setup(name='pulumi_vco',
       python_requires='>=3.7',
       version=VERSION,
-      description="The Whitesky.cloud Vco Provider for Pulumi enables you to manipulate resources in the vco portal.",
+      description="The Whitesky.Cloud Vco Provider for Pulumi enables you to manipulate resources in the vco portal.",
       long_description=readme(),
       long_description_content_type='text/markdown',
       cmdclass={

@@ -36,7 +36,7 @@ export class ServerPool extends pulumi.CustomResource {
     public readonly cloudspace_id!: pulumi.Output<string>;
     public readonly customerID!: pulumi.Output<string>;
     public readonly description!: pulumi.Output<string>;
-    public /*out*/ readonly hosts!: pulumi.Output<outputs.ingress.ServerPoolHost[]>;
+    public /*out*/ readonly hosts!: pulumi.Output<outputs.ingress.ServerPoolHost[] | undefined>;
     public readonly name!: pulumi.Output<string>;
     public /*out*/ readonly serverpool_id!: pulumi.Output<string>;
     public readonly token!: pulumi.Output<string>;

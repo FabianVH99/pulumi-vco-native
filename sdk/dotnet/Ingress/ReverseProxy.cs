@@ -22,16 +22,70 @@ namespace Pulumi.Vco.Ingress
         public Output<string> CustomerID { get; private set; } = null!;
 
         [Output("description")]
-        public Output<string> Description { get; private set; } = null!;
+        public Output<string?> Description { get; private set; } = null!;
+
+        [Output("domain")]
+        public Output<string> Domain { get; private set; } = null!;
+
+        [Output("email")]
+        public Output<string> Email { get; private set; } = null!;
+
+        [Output("enabled")]
+        public Output<bool> Enabled { get; private set; } = null!;
 
         [Output("front_end")]
         public Output<Outputs.ReverseProxyFrontEnd> Front_end { get; private set; } = null!;
 
+        [Output("health_check_scheme")]
+        public Output<string?> Health_check_scheme { get; private set; } = null!;
+
+        [Output("http_only")]
+        public Output<bool?> Http_only { get; private set; } = null!;
+
+        [Output("http_port")]
+        public Output<int?> Http_port { get; private set; } = null!;
+
+        [Output("https_port")]
+        public Output<int?> Https_port { get; private set; } = null!;
+
+        [Output("interval")]
+        public Output<int?> Interval { get; private set; } = null!;
+
+        [Output("ip_address")]
+        public Output<string?> Ip_address { get; private set; } = null!;
+
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        [Output("path")]
+        public Output<string?> Path { get; private set; } = null!;
+
+        [Output("port")]
+        public Output<int?> Port { get; private set; } = null!;
+
         [Output("reverseproxy_id")]
         public Output<string> Reverseproxy_id { get; private set; } = null!;
+
+        [Output("same_site")]
+        public Output<string?> Same_site { get; private set; } = null!;
+
+        [Output("scheme")]
+        public Output<string> Scheme { get; private set; } = null!;
+
+        [Output("secure")]
+        public Output<bool?> Secure { get; private set; } = null!;
+
+        [Output("serverpool_id")]
+        public Output<string> Serverpool_id { get; private set; } = null!;
+
+        [Output("stickySession_name")]
+        public Output<string?> StickySession_name { get; private set; } = null!;
+
+        [Output("target_port")]
+        public Output<int> Target_port { get; private set; } = null!;
+
+        [Output("timeout")]
+        public Output<int?> Timeout { get; private set; } = null!;
 
         [Output("token")]
         public Output<string> Token { get; private set; } = null!;
@@ -87,9 +141,6 @@ namespace Pulumi.Vco.Ingress
 
     public sealed class ReverseProxyArgs : global::Pulumi.ResourceArgs
     {
-        [Input("back_end", required: true)]
-        public Input<Inputs.ReverseProxyBackendArgs> Back_end { get; set; } = null!;
-
         [Input("cloudspace_id", required: true)]
         public Input<string> Cloudspace_id { get; set; } = null!;
 
@@ -108,11 +159,62 @@ namespace Pulumi.Vco.Ingress
         [Input("description")]
         public Input<string>? Description { get; set; }
 
-        [Input("front_end", required: true)]
-        public Input<Inputs.ReverseProxyFrontEndArgs> Front_end { get; set; } = null!;
+        [Input("domain", required: true)]
+        public Input<string> Domain { get; set; } = null!;
+
+        [Input("email", required: true)]
+        public Input<string> Email { get; set; } = null!;
+
+        [Input("enabled", required: true)]
+        public Input<bool> Enabled { get; set; } = null!;
+
+        [Input("health_check_scheme")]
+        public Input<string>? Health_check_scheme { get; set; }
+
+        [Input("http_only")]
+        public Input<bool>? Http_only { get; set; }
+
+        [Input("http_port")]
+        public Input<int>? Http_port { get; set; }
+
+        [Input("https_port")]
+        public Input<int>? Https_port { get; set; }
+
+        [Input("interval")]
+        public Input<int>? Interval { get; set; }
+
+        [Input("ip_address")]
+        public Input<string>? Ip_address { get; set; }
 
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
+
+        [Input("path")]
+        public Input<string>? Path { get; set; }
+
+        [Input("port")]
+        public Input<int>? Port { get; set; }
+
+        [Input("same_site")]
+        public Input<string>? Same_site { get; set; }
+
+        [Input("scheme", required: true)]
+        public Input<string> Scheme { get; set; } = null!;
+
+        [Input("secure")]
+        public Input<bool>? Secure { get; set; }
+
+        [Input("serverpool_id", required: true)]
+        public Input<string> Serverpool_id { get; set; } = null!;
+
+        [Input("stickySession_name")]
+        public Input<string>? StickySession_name { get; set; }
+
+        [Input("target_port", required: true)]
+        public Input<int> Target_port { get; set; } = null!;
+
+        [Input("timeout")]
+        public Input<int>? Timeout { get; set; }
 
         [Input("token", required: true)]
         private Input<string>? _token;

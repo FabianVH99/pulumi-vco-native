@@ -11,7 +11,7 @@ from .. import _utilities
 from . import outputs
 
 __all__ = [
-    'BackEndState',
+    'BackEnd',
     'FrontEnd',
     'HealthCheck',
     'LetsEncrypt',
@@ -24,14 +24,15 @@ __all__ = [
 ]
 
 @pulumi.output_type
-class BackEndState(dict):
+class BackEnd(dict):
     def __init__(__self__, *,
                  serverpool_id: str,
-                 serverpool_name: str,
-                 target_port: int):
+                 target_port: int,
+                 serverpool_name: Optional[str] = None):
         pulumi.set(__self__, "serverpool_id", serverpool_id)
-        pulumi.set(__self__, "serverpool_name", serverpool_name)
         pulumi.set(__self__, "target_port", target_port)
+        if serverpool_name is not None:
+            pulumi.set(__self__, "serverpool_name", serverpool_name)
 
     @property
     @pulumi.getter
@@ -40,13 +41,13 @@ class BackEndState(dict):
 
     @property
     @pulumi.getter
-    def serverpool_name(self) -> str:
-        return pulumi.get(self, "serverpool_name")
+    def target_port(self) -> int:
+        return pulumi.get(self, "target_port")
 
     @property
     @pulumi.getter
-    def target_port(self) -> int:
-        return pulumi.get(self, "target_port")
+    def serverpool_name(self) -> Optional[str]:
+        return pulumi.get(self, "serverpool_name")
 
 
 @pulumi.output_type
@@ -249,19 +250,21 @@ class ReverseProxyFrontEnd(dict):
 @pulumi.output_type
 class ServerPoolHost(dict):
     def __init__(__self__, *,
-                 address: str,
-                 host_id: str):
-        pulumi.set(__self__, "address", address)
-        pulumi.set(__self__, "host_id", host_id)
+                 address: Optional[str] = None,
+                 host_id: Optional[str] = None):
+        if address is not None:
+            pulumi.set(__self__, "address", address)
+        if host_id is not None:
+            pulumi.set(__self__, "host_id", host_id)
 
     @property
     @pulumi.getter
-    def address(self) -> str:
+    def address(self) -> Optional[str]:
         return pulumi.get(self, "address")
 
     @property
     @pulumi.getter
-    def host_id(self) -> str:
+    def host_id(self) -> Optional[str]:
         return pulumi.get(self, "host_id")
 
 

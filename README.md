@@ -13,7 +13,7 @@ Please read the documentation or consult the API docs in your vco portal in orde
 Before using this package you need to install the resource-vco plugin. The latest release of which can be found [here](https://github.com/fabianv-cloud/pulumi-vco-native).
 You then have to install the plugin on your system by storing the contents of the zipped file in: <br>
 * Windows: %USERPROFILE%\.pulumi\plugins\resource-vco-{VERSION}
-* Linux & Max: ~/.pulumi/plugins/resource-vco-{VERSION}
+* Linux and MacOS: ~/.pulumi/plugins/resource-vco-{VERSION}
 <br>
 
 When you have moved the plugin to the appropriate directory you can install it using: 
@@ -23,5 +23,5 @@ pulumi plugin install resource vco {VERSION}
 
 ## Install package
 You can find links to the various packages at the top of the Readme. Once you have installed the desired package
-you can import it into your program. Please consult the [examples](https://github.com/fabianv-cloud/pulumi-vco-native/tree/main/examples/simple)
+you can import it into your program. Please consult the [examples](https://github.com/fabianv-cloud/pulumi-vco-native/tree/main/examples)
 to figure out how to get started.

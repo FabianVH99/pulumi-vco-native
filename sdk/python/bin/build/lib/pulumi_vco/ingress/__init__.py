@@ -9,5 +9,4 @@ from .host import *
 from .load_balancer import *
 from .reverse_proxy import *
 from .server_pool import *
-from ._inputs import *
 from . import outputs

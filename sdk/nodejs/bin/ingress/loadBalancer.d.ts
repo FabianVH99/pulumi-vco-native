@@ -15,13 +15,20 @@ export declare class LoadBalancer extends pulumi.CustomResource {
      * when multiple copies of the Pulumi SDK have been loaded into the same process.
      */
     static isInstance(obj: any): obj is LoadBalancer;
-    readonly back_end: pulumi.Output<outputs.ingress.BackEndState>;
+    readonly back_end: pulumi.Output<outputs.ingress.BackEnd>;
     readonly cloudspace_id: pulumi.Output<string>;
     readonly customerID: pulumi.Output<string>;
-    readonly description: pulumi.Output<string>;
+    readonly description: pulumi.Output<string | undefined>;
+    readonly domain: pulumi.Output<string | undefined>;
     readonly front_end: pulumi.Output<outputs.ingress.FrontEnd>;
+    readonly ip_address: pulumi.Output<string | undefined>;
+    readonly is_enabled: pulumi.Output<boolean | undefined>;
     readonly loadbalancer_id: pulumi.Output<string>;
     readonly name: pulumi.Output<string>;
+    readonly port: pulumi.Output<number>;
+    readonly serverpool_id: pulumi.Output<string>;
+    readonly target_port: pulumi.Output<number>;
+    readonly tls_termination: pulumi.Output<boolean | undefined>;
     readonly token: pulumi.Output<string>;
     readonly type: pulumi.Output<string>;
     readonly url: pulumi.Output<string>;
@@ -41,7 +48,14 @@ export interface LoadBalancerArgs {
     cloudspace_id: pulumi.Input<string>;
     customerID: pulumi.Input<string>;
     description?: pulumi.Input<string>;
+    domain?: pulumi.Input<string>;
+    ip_address?: pulumi.Input<string>;
+    is_enabled?: pulumi.Input<boolean>;
     name: pulumi.Input<string>;
+    port: pulumi.Input<number>;
+    serverpool_id: pulumi.Input<string>;
+    target_port: pulumi.Input<number>;
+    tls_termination?: pulumi.Input<boolean>;
     token: pulumi.Input<string>;
     type: pulumi.Input<string>;
     url: pulumi.Input<string>;

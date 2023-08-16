@@ -18,6 +18,7 @@
         "base/cloudspace.ts",
         "base/disk.ts",
         "base/index.ts",
+        "base/objectSpace.ts",
         "cloudspace/antiAffinityGroup.ts",
         "cloudspace/connectedCloudspace.ts",
         "cloudspace/externalNetwork.ts",

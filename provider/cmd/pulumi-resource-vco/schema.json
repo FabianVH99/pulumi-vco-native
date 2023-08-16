@@ -1,6 +1,6 @@
 {
     "config": {},
-    "description": "The Whitesky.cloud Vco Provider for Pulumi enables you to manipulate resources in the vco portal.",
+    "description": "The Whitesky.Cloud Vco Provider for Pulumi enables you to manipulate resources in the vco portal.\nPlease read the documentation or consult the API docs in your vco portal in order to properly understand how the resources work.\nBefore using this package you need to install the resource-vco plugin. The latest release of which can be found in the repository.\nYou then have to install the plugin on your system by storing the contents of the zipped file in: \nWindows: %USERPROFILE%\\\\.pulumi\\\\plugins\\resource-vco-v0.0.38.\nLinux and MacOS: ~/.pulumi/plugins/resource-vco-v0.0.38.\nWhen you have moved the plugin to the appropriate directory you can in stall it using: pulumi plugin install resource vcov0.0.38.\n",
     "displayName": "vco",
     "homepage": "https://whitesky.cloud/",
     "keywords": [
@@ -18,7 +18,7 @@
         },
         "go": {
             "generateResourceContainerTypes": true,
-            "importBasePath": "github.com/fabianv-cloud/pulumi-vco-native/sdk/go/command"
+            "importBasePath": "github.com/fabianv-cloud/pulumi-vco-native/sdk/go/vco"
         },
         "nodejs": {
             "dependencies": {
@@ -267,7 +267,6 @@
                 "external_network_ip",
                 "external_network_id",
                 "private_network",
-                "local_domain",
                 "update_time",
                 "creation_time",
                 "router_type",
@@ -288,6 +287,7 @@
         "vco:base:Disk": {
             "inputProperties": {
                 "customerID": {
+                    "secret": true,
                     "type": "string"
                 },
                 "description": {
@@ -315,9 +315,11 @@
                     "type": "boolean"
                 },
                 "token": {
+                    "secret": true,
                     "type": "string"
                 },
                 "url": {
+                    "secret": true,
                     "type": "string"
                 },
                 "vm_id": {
@@ -409,6 +411,117 @@
                 "disk_name",
                 "description",
                 "disk_size"
+            ]
+        },
+        "vco:base:ObjectSpace": {
+            "inputProperties": {
+                "cloudspaceID": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "secret": true,
+                    "type": "string"
+                },
+                "domain": {
+                    "type": "string"
+                },
+                "externalNetwork": {
+                    "type": "integer"
+                },
+                "letsencrypt": {
+                    "type": "boolean"
+                },
+                "letsencryptEmail": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "objectspace_name": {
+                    "type": "string"
+                },
+                "subnet": {
+                    "type": "string"
+                },
+                "token": {
+                    "secret": true,
+                    "type": "string"
+                },
+                "url": {
+                    "secret": true,
+                    "type": "string"
+                }
+            },
+            "properties": {
+                "access_key": {
+                    "type": "string"
+                },
+                "cloudspaceID": {
+                    "type": "string"
+                },
+                "creation_time": {
+                    "type": "string"
+                },
+                "customerID": {
+                    "type": "string"
+                },
+                "domain": {
+                    "type": "string"
+                },
+                "externalNetwork": {
+                    "type": "integer"
+                },
+                "letsencrypt": {
+                    "type": "boolean"
+                },
+                "letsencryptEmail": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "objectspace_id": {
+                    "type": "string"
+                },
+                "objectspace_name": {
+                    "type": "string"
+                },
+                "secret": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "subnet": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "update_time": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "url",
+                "token",
+                "customerID",
+                "objectspace_id",
+                "objectspace_name",
+                "status",
+                "creation_time",
+                "update_time",
+                "location"
+            ],
+            "requiredInputs": [
+                "url",
+                "token",
+                "customerID",
+                "location",
+                "objectspace_name"
             ]
         },
         "vco:cloudspace:AntiAffinityGroup": {
@@ -961,10 +1074,8 @@
                 "image_id",
                 "locked",
                 "stack_id",
-                "impact_alert_hook",
                 "os_image_name",
                 "hostname",
-                "anti_affinity_group_ids",
                 "disks",
                 "os_accounts",
                 "network_interfaces",
@@ -1134,8 +1245,29 @@
                 "description": {
                     "type": "string"
                 },
+                "domain": {
+                    "type": "string"
+                },
+                "ip_address": {
+                    "type": "string"
+                },
+                "is_enabled": {
+                    "type": "boolean"
+                },
                 "name": {
                     "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                },
+                "serverpool_id": {
+                    "type": "string"
+                },
+                "target_port": {
+                    "type": "integer"
+                },
+                "tls_termination": {
+                    "type": "boolean"
                 },
                 "token": {
                     "secret": true,
@@ -1151,7 +1283,7 @@
             },
             "properties": {
                 "back_end": {
-                    "$ref": "#/types/vco:ingress:BackEndState"
+                    "$ref": "#/types/vco:ingress:BackEnd"
                 },
                 "cloudspace_id": {
                     "type": "string"
@@ -1162,8 +1294,17 @@
                 "description": {
                     "type": "string"
                 },
+                "domain": {
+                    "type": "string"
+                },
                 "front_end": {
                     "$ref": "#/types/vco:ingress:FrontEnd"
+                },
+                "ip_address": {
+                    "type": "string"
+                },
+                "is_enabled": {
+                    "type": "boolean"
                 },
                 "loadbalancer_id": {
                     "type": "string"
@@ -1171,6 +1312,18 @@
                 "name": {
                     "type": "string"
                 },
+                "port": {
+                    "type": "integer"
+                },
+                "serverpool_id": {
+                    "type": "string"
+                },
+                "target_port": {
+                    "type": "integer"
+                },
+                "tls_termination": {
+                    "type": "boolean"
+                },
                 "token": {
                     "type": "string"
                 },
@@ -1182,13 +1335,15 @@
                 }
             },
             "required": [
+                "port",
+                "serverpool_id",
+                "target_port",
                 "url",
                 "token",
                 "customerID",
                 "loadbalancer_id",
                 "cloudspace_id",
                 "name",
-                "description",
                 "type",
                 "front_end",
                 "back_end"
@@ -1199,14 +1354,14 @@
                 "customerID",
                 "cloudspace_id",
                 "name",
-                "type"
+                "type",
+                "port",
+                "serverpool_id",
+                "target_port"
             ]
         },
         "vco:ingress:ReverseProxy": {
             "inputProperties": {
-                "back_end": {
-                    "$ref": "#/types/vco:ingress:ReverseProxyBackend"
-                },
                 "cloudspace_id": {
                     "type": "string"
                 },
@@ -1217,11 +1372,62 @@
                 "description": {
                     "type": "string"
                 },
-                "front_end": {
-                    "$ref": "#/types/vco:ingress:ReverseProxyFrontEnd"
+                "domain": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "health_check_scheme": {
+                    "type": "string"
+                },
+                "http_only": {
+                    "type": "boolean"
+                },
+                "http_port": {
+                    "type": "integer"
+                },
+                "https_port": {
+                    "type": "integer"
+                },
+                "interval": {
+                    "type": "integer"
+                },
+                "ip_address": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                },
+                "same_site": {
+                    "type": "string"
+                },
+                "scheme": {
+                    "type": "string"
+                },
+                "secure": {
+                    "type": "boolean"
+                },
+                "serverpool_id": {
+                    "type": "string"
+                },
+                "stickySession_name": {
+                    "type": "string"
+                },
+                "target_port": {
+                    "type": "integer"
+                },
+                "timeout": {
+                    "type": "integer"
                 },
                 "token": {
                     "secret": true,
@@ -1245,14 +1451,68 @@
                 "description": {
                     "type": "string"
                 },
+                "domain": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
                 "front_end": {
                     "$ref": "#/types/vco:ingress:ReverseProxyFrontEnd"
+                },
+                "health_check_scheme": {
+                    "type": "string"
+                },
+                "http_only": {
+                    "type": "boolean"
+                },
+                "http_port": {
+                    "type": "integer"
+                },
+                "https_port": {
+                    "type": "integer"
+                },
+                "interval": {
+                    "type": "integer"
+                },
+                "ip_address": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
                 },
+                "path": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                },
                 "reverseproxy_id": {
                     "type": "string"
+                },
+                "same_site": {
+                    "type": "string"
+                },
+                "scheme": {
+                    "type": "string"
+                },
+                "secure": {
+                    "type": "boolean"
+                },
+                "serverpool_id": {
+                    "type": "string"
+                },
+                "stickySession_name": {
+                    "type": "string"
+                },
+                "target_port": {
+                    "type": "integer"
+                },
+                "timeout": {
+                    "type": "integer"
                 },
                 "token": {
                     "type": "string"
@@ -1265,15 +1525,19 @@
                 }
             },
             "required": [
-                "front_end",
-                "back_end",
+                "domain",
+                "scheme",
+                "enabled",
+                "email",
+                "scheme",
+                "serverpool_id",
+                "target_port",
                 "url",
                 "token",
                 "customerID",
                 "cloudspace_id",
                 "reverseproxy_id",
                 "name",
-                "description",
                 "type",
                 "front_end",
                 "back_end"
@@ -1284,8 +1548,13 @@
                 "customerID",
                 "cloudspace_id",
                 "name",
-                "front_end",
-                "back_end"
+                "domain",
+                "scheme",
+                "enabled",
+                "email",
+                "scheme",
+                "serverpool_id",
+                "target_port"
             ]
         },
         "vco:ingress:ServerPool": {
@@ -1348,8 +1617,7 @@
                 "cloudspace_id",
                 "serverpool_id",
                 "name",
-                "description",
-                "hosts"
+                "description"
             ],
             "requiredInputs": [
                 "url",
@@ -1646,8 +1914,7 @@
                 "ip_address",
                 "network_id",
                 "nic_type",
-                "model",
-                "external_cloudspace_id"
+                "model"
             ],
             "requiredInputs": [
                 "url",
@@ -1709,8 +1976,7 @@
                 "ip_address",
                 "network_id",
                 "nic_type",
-                "model",
-                "external_cloudspace_id"
+                "model"
             ],
             "type": "object"
         },
@@ -1811,7 +2077,7 @@
             ],
             "type": "object"
         },
-        "vco:ingress:BackEndState": {
+        "vco:ingress:BackEnd": {
             "properties": {
                 "serverpool_id": {
                     "type": "string"
@@ -1825,7 +2091,6 @@
             },
             "required": [
                 "serverpool_id",
-                "serverpool_name",
                 "target_port"
             ],
             "type": "object"
@@ -1952,10 +2217,6 @@
                     "type": "string"
                 }
             },
-            "required": [
-                "host_id",
-                "address"
-            ],
             "type": "object"
         },
         "vco:ingress:StickySessionCookie": {

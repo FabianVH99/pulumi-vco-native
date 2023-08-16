@@ -16,6 +16,7 @@ pulumi_vco/anti_affinity_group/anti_affinity_group_vm.py
 pulumi_vco/base/__init__.py
 pulumi_vco/base/cloudspace.py
 pulumi_vco/base/disk.py
+pulumi_vco/base/object_space.py
 pulumi_vco/cloudspace/__init__.py
 pulumi_vco/cloudspace/anti_affinity_group.py
 pulumi_vco/cloudspace/connected_cloudspace.py
@@ -27,7 +28,6 @@ pulumi_vco/disk/__init__.py
 pulumi_vco/disk/exposed_disk.py
 pulumi_vco/disk/outputs.py
 pulumi_vco/ingress/__init__.py
-pulumi_vco/ingress/_inputs.py
 pulumi_vco/ingress/host.py
 pulumi_vco/ingress/load_balancer.py
 pulumi_vco/ingress/outputs.py

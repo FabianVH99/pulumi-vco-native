@@ -47,6 +47,15 @@ class LoadBalancer extends pulumi.CustomResource {
             if ((!args || args.name === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'name'");
             }
+            if ((!args || args.port === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'port'");
+            }
+            if ((!args || args.serverpool_id === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'serverpool_id'");
+            }
+            if ((!args || args.target_port === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'target_port'");
+            }
             if ((!args || args.token === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'token'");
             }
@@ -59,7 +68,14 @@ class LoadBalancer extends pulumi.CustomResource {
             resourceInputs["cloudspace_id"] = args ? args.cloudspace_id : undefined;
             resourceInputs["customerID"] = (args === null || args === void 0 ? void 0 : args.customerID) ? pulumi.secret(args.customerID) : undefined;
             resourceInputs["description"] = args ? args.description : undefined;
+            resourceInputs["domain"] = args ? args.domain : undefined;
+            resourceInputs["ip_address"] = args ? args.ip_address : undefined;
+            resourceInputs["is_enabled"] = args ? args.is_enabled : undefined;
             resourceInputs["name"] = args ? args.name : undefined;
+            resourceInputs["port"] = args ? args.port : undefined;
+            resourceInputs["serverpool_id"] = args ? args.serverpool_id : undefined;
+            resourceInputs["target_port"] = args ? args.target_port : undefined;
+            resourceInputs["tls_termination"] = args ? args.tls_termination : undefined;
             resourceInputs["token"] = (args === null || args === void 0 ? void 0 : args.token) ? pulumi.secret(args.token) : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
             resourceInputs["url"] = (args === null || args === void 0 ? void 0 : args.url) ? pulumi.secret(args.url) : undefined;
@@ -72,9 +88,16 @@ class LoadBalancer extends pulumi.CustomResource {
             resourceInputs["cloudspace_id"] = undefined /*out*/;
             resourceInputs["customerID"] = undefined /*out*/;
             resourceInputs["description"] = undefined /*out*/;
+            resourceInputs["domain"] = undefined /*out*/;
             resourceInputs["front_end"] = undefined /*out*/;
+            resourceInputs["ip_address"] = undefined /*out*/;
+            resourceInputs["is_enabled"] = undefined /*out*/;
             resourceInputs["loadbalancer_id"] = undefined /*out*/;
             resourceInputs["name"] = undefined /*out*/;
+            resourceInputs["port"] = undefined /*out*/;
+            resourceInputs["serverpool_id"] = undefined /*out*/;
+            resourceInputs["target_port"] = undefined /*out*/;
+            resourceInputs["tls_termination"] = undefined /*out*/;
             resourceInputs["token"] = undefined /*out*/;
             resourceInputs["type"] = undefined /*out*/;
             resourceInputs["url"] = undefined /*out*/;

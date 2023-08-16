@@ -22,7 +22,7 @@ namespace Pulumi.Vco.Virtual_machine
         public Output<string> Device_name { get; private set; } = null!;
 
         [Output("external_cloudspace_id")]
-        public Output<string> External_cloudspace_id { get; private set; } = null!;
+        public Output<string?> External_cloudspace_id { get; private set; } = null!;
 
         [Output("external_network_id")]
         public Output<int> External_network_id { get; private set; } = null!;

@@ -73,7 +73,7 @@ namespace Pulumi.Vco.Cloudspace
         public Output<int> Image_id { get; private set; } = null!;
 
         [Output("impact_alert_hook")]
-        public Output<string> Impact_alert_hook { get; private set; } = null!;
+        public Output<string?> Impact_alert_hook { get; private set; } = null!;
 
         [Output("locked")]
         public Output<bool> Locked { get; private set; } = null!;

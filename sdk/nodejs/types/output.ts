@@ -14,7 +14,7 @@ export namespace cloudspace {
 
     export interface NetworkInterface {
         device_name: string;
-        external_cloudspace_id: string;
+        external_cloudspace_id?: string;
         ip_address: string;
         mac_address: string;
         model: string;
@@ -56,9 +56,9 @@ export namespace disk {
 }
 
 export namespace ingress {
-    export interface BackEndState {
+    export interface BackEnd {
         serverpool_id: string;
-        serverpool_name: string;
+        serverpool_name?: string;
         target_port: number;
     }
 
@@ -103,8 +103,8 @@ export namespace ingress {
     }
 
     export interface ServerPoolHost {
-        address: string;
-        host_id: string;
+        address?: string;
+        host_id?: string;
     }
 
     export interface StickySessionCookie {

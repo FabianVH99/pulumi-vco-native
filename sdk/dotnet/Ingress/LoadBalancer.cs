@@ -13,7 +13,7 @@ namespace Pulumi.Vco.Ingress
     public partial class LoadBalancer : global::Pulumi.CustomResource
     {
         [Output("back_end")]
-        public Output<Outputs.BackEndState> Back_end { get; private set; } = null!;
+        public Output<Outputs.BackEnd> Back_end { get; private set; } = null!;
 
         [Output("cloudspace_id")]
         public Output<string> Cloudspace_id { get; private set; } = null!;
@@ -22,16 +22,37 @@ namespace Pulumi.Vco.Ingress
         public Output<string> CustomerID { get; private set; } = null!;
 
         [Output("description")]
-        public Output<string> Description { get; private set; } = null!;
+        public Output<string?> Description { get; private set; } = null!;
+
+        [Output("domain")]
+        public Output<string?> Domain { get; private set; } = null!;
 
         [Output("front_end")]
         public Output<Outputs.FrontEnd> Front_end { get; private set; } = null!;
+
+        [Output("ip_address")]
+        public Output<string?> Ip_address { get; private set; } = null!;
+
+        [Output("is_enabled")]
+        public Output<bool?> Is_enabled { get; private set; } = null!;
 
         [Output("loadbalancer_id")]
         public Output<string> Loadbalancer_id { get; private set; } = null!;
 
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
+
+        [Output("port")]
+        public Output<int> Port { get; private set; } = null!;
+
+        [Output("serverpool_id")]
+        public Output<string> Serverpool_id { get; private set; } = null!;
+
+        [Output("target_port")]
+        public Output<int> Target_port { get; private set; } = null!;
+
+        [Output("tls_termination")]
+        public Output<bool?> Tls_termination { get; private set; } = null!;
 
         [Output("token")]
         public Output<string> Token { get; private set; } = null!;
@@ -105,8 +126,29 @@ namespace Pulumi.Vco.Ingress
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        [Input("domain")]
+        public Input<string>? Domain { get; set; }
+
+        [Input("ip_address")]
+        public Input<string>? Ip_address { get; set; }
+
+        [Input("is_enabled")]
+        public Input<bool>? Is_enabled { get; set; }
+
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
+
+        [Input("port", required: true)]
+        public Input<int> Port { get; set; } = null!;
+
+        [Input("serverpool_id", required: true)]
+        public Input<string> Serverpool_id { get; set; } = null!;
+
+        [Input("target_port", required: true)]
+        public Input<int> Target_port { get; set; } = null!;
+
+        [Input("tls_termination")]
+        public Input<bool>? Tls_termination { get; set; }
 
         [Input("token", required: true)]
         private Input<string>? _token;

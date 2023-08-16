@@ -279,7 +279,7 @@ class VirtualMachineNIC(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def external_cloudspace_id(self) -> pulumi.Output[str]:
+    def external_cloudspace_id(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "external_cloudspace_id")
 
     @property

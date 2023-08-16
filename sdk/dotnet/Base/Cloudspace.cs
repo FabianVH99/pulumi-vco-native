@@ -43,7 +43,7 @@ namespace Pulumi.Vco.Base
         public Output<int?> Image_id { get; private set; } = null!;
 
         [Output("local_domain")]
-        public Output<string> Local_domain { get; private set; } = null!;
+        public Output<string?> Local_domain { get; private set; } = null!;
 
         [Output("location")]
         public Output<string> Location { get; private set; } = null!;

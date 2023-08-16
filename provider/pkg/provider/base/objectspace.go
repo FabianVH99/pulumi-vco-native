@@ -21,12 +21,12 @@ type ObjectSpaceState struct {
 	ObjectSpaceID string `pulumi:"objectspace_id" json:"objectspace_id"`
 	Name          string `pulumi:"objectspace_name" json:"objectspace_name"`
 	Status        string `pulumi:"status" json:"status"`
-	AccessKey     string `pulumi:"access_key" json:"access_key"`
-	Secret        string `pulumi:"secret" json:"secret"`
+	AccessKey     string `pulumi:"access_key,optional" json:"access_key"`
+	Secret        string `pulumi:"secret,optional" json:"secret"`
 	CreationTime  string `pulumi:"creation_time" json:"creation_time"`
 	UpdateTime    string `pulumi:"update_time" json:"update_time"`
 	Location      string `pulumi:"location" json:"location"`
-	Domain        string `pulumi:"domain" json:"domain"`
+	Domain        string `pulumi:"domain,optional" json:"domain"`
 }
 
 type ObjectSpaceArgs struct {

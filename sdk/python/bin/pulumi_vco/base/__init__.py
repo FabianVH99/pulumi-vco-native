@@ -7,3 +7,4 @@ import typing
 # Export this package's modules as members:
 from .cloudspace import *
 from .disk import *
+from .object_space import *

@@ -25,7 +25,7 @@ class DiskArgs:
                  disk_type: Optional[pulumi.Input[str]] = None,
                  iops: Optional[pulumi.Input[int]] = None,
                  permanently: Optional[pulumi.Input[bool]] = None,
-                 vm_id: Optional[pulumi.Input[str]] = None):
+                 vm_id: Optional[pulumi.Input[int]] = None):
         """
         The set of arguments for constructing a Disk resource.
         """
@@ -148,11 +148,11 @@ class DiskArgs:
 
     @property
     @pulumi.getter
-    def vm_id(self) -> Optional[pulumi.Input[str]]:
+    def vm_id(self) -> Optional[pulumi.Input[int]]:
         return pulumi.get(self, "vm_id")
 
     @vm_id.setter
-    def vm_id(self, value: Optional[pulumi.Input[str]]):
+    def vm_id(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "vm_id", value)
 
 
@@ -172,7 +172,7 @@ class Disk(pulumi.CustomResource):
                  permanently: Optional[pulumi.Input[bool]] = None,
                  token: Optional[pulumi.Input[str]] = None,
                  url: Optional[pulumi.Input[str]] = None,
-                 vm_id: Optional[pulumi.Input[str]] = None,
+                 vm_id: Optional[pulumi.Input[int]] = None,
                  __props__=None):
         """
         Create a Disk resource with the given unique name, props, and options.
@@ -213,7 +213,7 @@ class Disk(pulumi.CustomResource):
                  permanently: Optional[pulumi.Input[bool]] = None,
                  token: Optional[pulumi.Input[str]] = None,
                  url: Optional[pulumi.Input[str]] = None,
-                 vm_id: Optional[pulumi.Input[str]] = None,
+                 vm_id: Optional[pulumi.Input[int]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -225,7 +225,7 @@ class Disk(pulumi.CustomResource):
 
             if customer_id is None and not opts.urn:
                 raise TypeError("Missing required property 'customer_id'")
-            __props__.__dict__["customer_id"] = customer_id
+            __props__.__dict__["customer_id"] = None if customer_id is None else pulumi.Output.secret(customer_id)
             if description is None and not opts.urn:
                 raise TypeError("Missing required property 'description'")
             __props__.__dict__["description"] = description
@@ -244,10 +244,10 @@ class Disk(pulumi.CustomResource):
             __props__.__dict__["permanently"] = permanently
             if token is None and not opts.urn:
                 raise TypeError("Missing required property 'token'")
-            __props__.__dict__["token"] = token
+            __props__.__dict__["token"] = None if token is None else pulumi.Output.secret(token)
             if url is None and not opts.urn:
                 raise TypeError("Missing required property 'url'")
-            __props__.__dict__["url"] = url
+            __props__.__dict__["url"] = None if url is None else pulumi.Output.secret(url)
             __props__.__dict__["vm_id"] = vm_id
             __props__.__dict__["cloudspace_id"] = None
             __props__.__dict__["disk_id"] = None

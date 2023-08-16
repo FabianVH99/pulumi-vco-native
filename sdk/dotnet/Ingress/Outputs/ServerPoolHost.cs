@@ -13,14 +13,14 @@ namespace Pulumi.Vco.Ingress.Outputs
     [OutputType]
     public sealed class ServerPoolHost
     {
-        public readonly string Address;
-        public readonly string Host_id;
+        public readonly string? Address;
+        public readonly string? Host_id;
 
         [OutputConstructor]
         private ServerPoolHost(
-            string address,
+            string? address,
 
-            string host_id)
+            string? host_id)
         {
             Address = address;
             Host_id = host_id;

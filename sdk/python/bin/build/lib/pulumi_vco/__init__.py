@@ -49,7 +49,8 @@ _utilities.register(
   "fqn": "pulumi_vco.base",
   "classes": {
    "vco:base:Cloudspace": "Cloudspace",
-   "vco:base:Disk": "Disk"
+   "vco:base:Disk": "Disk",
+   "vco:base:ObjectSpace": "ObjectSpace"
   }
  },
  {

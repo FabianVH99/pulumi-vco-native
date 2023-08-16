@@ -115,7 +115,16 @@ namespace Pulumi.Vco.Base
     public sealed class DiskArgs : global::Pulumi.ResourceArgs
     {
         [Input("customerID", required: true)]
-        public Input<string> CustomerID { get; set; } = null!;
+        private Input<string>? _customerID;
+        public Input<string>? CustomerID
+        {
+            get => _customerID;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _customerID = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         [Input("description", required: true)]
         public Input<string> Description { get; set; } = null!;
@@ -142,13 +151,31 @@ namespace Pulumi.Vco.Base
         public Input<bool>? Permanently { get; set; }
 
         [Input("token", required: true)]
-        public Input<string> Token { get; set; } = null!;
+        private Input<string>? _token;
+        public Input<string>? Token
+        {
+            get => _token;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _token = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         [Input("url", required: true)]
-        public Input<string> Url { get; set; } = null!;
+        private Input<string>? _url;
+        public Input<string>? Url
+        {
+            get => _url;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _url = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         [Input("vm_id")]
-        public Input<string>? Vm_id { get; set; }
+        public Input<int>? Vm_id { get; set; }
 
         public DiskArgs()
         {

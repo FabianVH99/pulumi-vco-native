@@ -26,7 +26,7 @@ func NewProvider() p.Provider {
 				"Before using this package you need to install the resource-vco plugin. The latest release of which can be found in the repository.\n" +
 				"You then have to install the plugin on your system by storing the contents of the zipped file in: \n" +
 				"Windows: %USERPROFILE%\\\\.pulumi\\\\plugins\\resource-vco-" + version.Version + ".\n" +
-				"Linux & Max: ~/.pulumi/plugins/resource-vco-" + version.Version + ".\n" +
+				"Linux and MacOS: ~/.pulumi/plugins/resource-vco-" + version.Version + ".\n" +
 				"When you have moved the plugin to the appropriate directory you can in stall it using: pulumi plugin install resource vco" + version.Version + ".\n",
 			Keywords: []string{
 				"whitesky.cloud",
@@ -46,7 +46,7 @@ func NewProvider() p.Provider {
 				},
 				"go": map[string]any{
 					"generateResourceContainerTypes": true,
-					"importBasePath":                 "github.com/fabianv-cloud/pulumi-vco-native/sdk/go/command",
+					"importBasePath":                 "github.com/fabianv-cloud/pulumi-vco-native/sdk/go/vco",
 				},
 				"nodejs": map[string]any{
 					"dependencies": map[string]string{

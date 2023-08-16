@@ -33,13 +33,20 @@ export class LoadBalancer extends pulumi.CustomResource {
         return obj['__pulumiType'] === LoadBalancer.__pulumiType;
     }
 
-    public /*out*/ readonly back_end!: pulumi.Output<outputs.ingress.BackEndState>;
+    public /*out*/ readonly back_end!: pulumi.Output<outputs.ingress.BackEnd>;
     public readonly cloudspace_id!: pulumi.Output<string>;
     public readonly customerID!: pulumi.Output<string>;
-    public readonly description!: pulumi.Output<string>;
+    public readonly description!: pulumi.Output<string | undefined>;
+    public readonly domain!: pulumi.Output<string | undefined>;
     public /*out*/ readonly front_end!: pulumi.Output<outputs.ingress.FrontEnd>;
+    public readonly ip_address!: pulumi.Output<string | undefined>;
+    public readonly is_enabled!: pulumi.Output<boolean | undefined>;
     public /*out*/ readonly loadbalancer_id!: pulumi.Output<string>;
     public readonly name!: pulumi.Output<string>;
+    public readonly port!: pulumi.Output<number>;
+    public readonly serverpool_id!: pulumi.Output<string>;
+    public readonly target_port!: pulumi.Output<number>;
+    public readonly tls_termination!: pulumi.Output<boolean | undefined>;
     public readonly token!: pulumi.Output<string>;
     public readonly type!: pulumi.Output<string>;
     public readonly url!: pulumi.Output<string>;
@@ -64,6 +71,15 @@ export class LoadBalancer extends pulumi.CustomResource {
             if ((!args || args.name === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'name'");
             }
+            if ((!args || args.port === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'port'");
+            }
+            if ((!args || args.serverpool_id === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'serverpool_id'");
+            }
+            if ((!args || args.target_port === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'target_port'");
+            }
             if ((!args || args.token === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'token'");
             }
@@ -76,7 +92,14 @@ export class LoadBalancer extends pulumi.CustomResource {
             resourceInputs["cloudspace_id"] = args ? args.cloudspace_id : undefined;
             resourceInputs["customerID"] = args?.customerID ? pulumi.secret(args.customerID) : undefined;
             resourceInputs["description"] = args ? args.description : undefined;
+            resourceInputs["domain"] = args ? args.domain : undefined;
+            resourceInputs["ip_address"] = args ? args.ip_address : undefined;
+            resourceInputs["is_enabled"] = args ? args.is_enabled : undefined;
             resourceInputs["name"] = args ? args.name : undefined;
+            resourceInputs["port"] = args ? args.port : undefined;
+            resourceInputs["serverpool_id"] = args ? args.serverpool_id : undefined;
+            resourceInputs["target_port"] = args ? args.target_port : undefined;
+            resourceInputs["tls_termination"] = args ? args.tls_termination : undefined;
             resourceInputs["token"] = args?.token ? pulumi.secret(args.token) : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
             resourceInputs["url"] = args?.url ? pulumi.secret(args.url) : undefined;
@@ -88,9 +111,16 @@ export class LoadBalancer extends pulumi.CustomResource {
             resourceInputs["cloudspace_id"] = undefined /*out*/;
             resourceInputs["customerID"] = undefined /*out*/;
             resourceInputs["description"] = undefined /*out*/;
+            resourceInputs["domain"] = undefined /*out*/;
             resourceInputs["front_end"] = undefined /*out*/;
+            resourceInputs["ip_address"] = undefined /*out*/;
+            resourceInputs["is_enabled"] = undefined /*out*/;
             resourceInputs["loadbalancer_id"] = undefined /*out*/;
             resourceInputs["name"] = undefined /*out*/;
+            resourceInputs["port"] = undefined /*out*/;
+            resourceInputs["serverpool_id"] = undefined /*out*/;
+            resourceInputs["target_port"] = undefined /*out*/;
+            resourceInputs["tls_termination"] = undefined /*out*/;
             resourceInputs["token"] = undefined /*out*/;
             resourceInputs["type"] = undefined /*out*/;
             resourceInputs["url"] = undefined /*out*/;
@@ -107,7 +137,14 @@ export interface LoadBalancerArgs {
     cloudspace_id: pulumi.Input<string>;
     customerID: pulumi.Input<string>;
     description?: pulumi.Input<string>;
+    domain?: pulumi.Input<string>;
+    ip_address?: pulumi.Input<string>;
+    is_enabled?: pulumi.Input<boolean>;
     name: pulumi.Input<string>;
+    port: pulumi.Input<number>;
+    serverpool_id: pulumi.Input<string>;
+    target_port: pulumi.Input<number>;
+    tls_termination?: pulumi.Input<boolean>;
     token: pulumi.Input<string>;
     type: pulumi.Input<string>;
     url: pulumi.Input<string>;

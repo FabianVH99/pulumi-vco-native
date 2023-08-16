@@ -17,7 +17,7 @@ export declare class VirtualMachineNIC extends pulumi.CustomResource {
     readonly cloudspace_id: pulumi.Output<string>;
     readonly customerID: pulumi.Output<string>;
     readonly device_name: pulumi.Output<string>;
-    readonly external_cloudspace_id: pulumi.Output<string>;
+    readonly external_cloudspace_id: pulumi.Output<string | undefined>;
     readonly external_network_id: pulumi.Output<number>;
     readonly external_network_ip: pulumi.Output<string | undefined>;
     readonly external_network_type: pulumi.Output<string | undefined>;

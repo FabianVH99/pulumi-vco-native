@@ -61,6 +61,25 @@
              <param name="id">The unique provider ID of the resource to lookup.</param>
              <param name="options">A bag of options that control this resource's behavior</param>
         </member>
+        <member name="M:Pulumi.Vco.Base.ObjectSpace.#ctor(System.String,Pulumi.Vco.Base.ObjectSpaceArgs,Pulumi.CustomResourceOptions)">
+             <summary>
+             Create a ObjectSpace resource with the given unique name, arguments, and options.
+             </summary>
+            
+             <param name="name">The unique name of the resource</param>
+             <param name="args">The arguments used to populate this resource's properties</param>
+             <param name="options">A bag of options that control this resource's behavior</param>
+        </member>
+        <member name="M:Pulumi.Vco.Base.ObjectSpace.Get(System.String,Pulumi.Input{System.String},Pulumi.CustomResourceOptions)">
+             <summary>
+             Get an existing ObjectSpace resource's state with the given name, ID, and optional extra
+             properties used to qualify the lookup.
+             </summary>
+            
+             <param name="name">The unique name of the resulting resource.</param>
+             <param name="id">The unique provider ID of the resource to lookup.</param>
+             <param name="options">A bag of options that control this resource's behavior</param>
+        </member>
         <member name="M:Pulumi.Vco.Cloudspace.AntiAffinityGroup.#ctor(System.String,Pulumi.Vco.Cloudspace.AntiAffinityGroupArgs,Pulumi.CustomResourceOptions)">
              <summary>
              Create a AntiAffinityGroup resource with the given unique name, arguments, and options.

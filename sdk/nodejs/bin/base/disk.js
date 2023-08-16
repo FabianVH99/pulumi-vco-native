@@ -59,7 +59,7 @@ class Disk extends pulumi.CustomResource {
             if ((!args || args.url === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'url'");
             }
-            resourceInputs["customerID"] = args ? args.customerID : undefined;
+            resourceInputs["customerID"] = (args === null || args === void 0 ? void 0 : args.customerID) ? pulumi.secret(args.customerID) : undefined;
             resourceInputs["description"] = args ? args.description : undefined;
             resourceInputs["detach"] = args ? args.detach : undefined;
             resourceInputs["disk_name"] = args ? args.disk_name : undefined;
@@ -68,8 +68,8 @@ class Disk extends pulumi.CustomResource {
             resourceInputs["iops"] = args ? args.iops : undefined;
             resourceInputs["location"] = args ? args.location : undefined;
             resourceInputs["permanently"] = args ? args.permanently : undefined;
-            resourceInputs["token"] = args ? args.token : undefined;
-            resourceInputs["url"] = args ? args.url : undefined;
+            resourceInputs["token"] = (args === null || args === void 0 ? void 0 : args.token) ? pulumi.secret(args.token) : undefined;
+            resourceInputs["url"] = (args === null || args === void 0 ? void 0 : args.url) ? pulumi.secret(args.url) : undefined;
             resourceInputs["vm_id"] = args ? args.vm_id : undefined;
             resourceInputs["cloudspace_id"] = undefined /*out*/;
             resourceInputs["disk_id"] = undefined /*out*/;

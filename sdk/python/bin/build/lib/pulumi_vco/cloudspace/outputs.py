@@ -46,29 +46,25 @@ class CpuTopology(dict):
 class NetworkInterface(dict):
     def __init__(__self__, *,
                  device_name: str,
-                 external_cloudspace_id: str,
                  ip_address: str,
                  mac_address: str,
                  model: str,
                  network_id: int,
-                 nic_type: str):
+                 nic_type: str,
+                 external_cloudspace_id: Optional[str] = None):
         pulumi.set(__self__, "device_name", device_name)
-        pulumi.set(__self__, "external_cloudspace_id", external_cloudspace_id)
         pulumi.set(__self__, "ip_address", ip_address)
         pulumi.set(__self__, "mac_address", mac_address)
         pulumi.set(__self__, "model", model)
         pulumi.set(__self__, "network_id", network_id)
         pulumi.set(__self__, "nic_type", nic_type)
+        if external_cloudspace_id is not None:
+            pulumi.set(__self__, "external_cloudspace_id", external_cloudspace_id)
 
     @property
     @pulumi.getter
     def device_name(self) -> str:
         return pulumi.get(self, "device_name")
-
-    @property
-    @pulumi.getter
-    def external_cloudspace_id(self) -> str:
-        return pulumi.get(self, "external_cloudspace_id")
 
     @property
     @pulumi.getter
@@ -94,6 +90,11 @@ class NetworkInterface(dict):
     @pulumi.getter
     def nic_type(self) -> str:
         return pulumi.get(self, "nic_type")
+
+    @property
+    @pulumi.getter
+    def external_cloudspace_id(self) -> Optional[str]:
+        return pulumi.get(self, "external_cloudspace_id")
 
 
 @pulumi.output_type

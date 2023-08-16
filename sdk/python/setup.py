@@ -40,7 +40,7 @@ def readme():
 setup(name='pulumi_vco',
       python_requires='>=3.7',
       version=VERSION,
-      description="The Whitesky.cloud Vco Provider for Pulumi enables you to manipulate resources in the vco portal.",
+      description="The Whitesky.Cloud Vco Provider for Pulumi enables you to manipulate resources in the vco portal.",
       long_description=readme(),
       long_description_content_type='text/markdown',
       cmdclass={

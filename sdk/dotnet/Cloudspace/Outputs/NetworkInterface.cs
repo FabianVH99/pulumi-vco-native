@@ -14,7 +14,7 @@ namespace Pulumi.Vco.Cloudspace.Outputs
     public sealed class NetworkInterface
     {
         public readonly string Device_name;
-        public readonly string External_cloudspace_id;
+        public readonly string? External_cloudspace_id;
         public readonly string Ip_address;
         public readonly string Mac_address;
         public readonly string Model;
@@ -25,7 +25,7 @@ namespace Pulumi.Vco.Cloudspace.Outputs
         private NetworkInterface(
             string device_name,
 
-            string external_cloudspace_id,
+            string? external_cloudspace_id,
 
             string ip_address,
 

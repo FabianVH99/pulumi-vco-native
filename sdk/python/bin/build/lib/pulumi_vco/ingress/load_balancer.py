@@ -18,21 +18,39 @@ class LoadBalancerArgs:
                  cloudspace_id: pulumi.Input[str],
                  customer_id: pulumi.Input[str],
                  name: pulumi.Input[str],
+                 port: pulumi.Input[int],
+                 serverpool_id: pulumi.Input[str],
+                 target_port: pulumi.Input[int],
                  token: pulumi.Input[str],
                  type: pulumi.Input[str],
                  url: pulumi.Input[str],
-                 description: Optional[pulumi.Input[str]] = None):
+                 description: Optional[pulumi.Input[str]] = None,
+                 domain: Optional[pulumi.Input[str]] = None,
+                 ip_address: Optional[pulumi.Input[str]] = None,
+                 is_enabled: Optional[pulumi.Input[bool]] = None,
+                 tls_termination: Optional[pulumi.Input[bool]] = None):
         """
         The set of arguments for constructing a LoadBalancer resource.
         """
         pulumi.set(__self__, "cloudspace_id", cloudspace_id)
         pulumi.set(__self__, "customer_id", customer_id)
         pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "port", port)
+        pulumi.set(__self__, "serverpool_id", serverpool_id)
+        pulumi.set(__self__, "target_port", target_port)
         pulumi.set(__self__, "token", token)
         pulumi.set(__self__, "type", type)
         pulumi.set(__self__, "url", url)
         if description is not None:
             pulumi.set(__self__, "description", description)
+        if domain is not None:
+            pulumi.set(__self__, "domain", domain)
+        if ip_address is not None:
+            pulumi.set(__self__, "ip_address", ip_address)
+        if is_enabled is not None:
+            pulumi.set(__self__, "is_enabled", is_enabled)
+        if tls_termination is not None:
+            pulumi.set(__self__, "tls_termination", tls_termination)
 
     @property
     @pulumi.getter
@@ -60,6 +78,33 @@ class LoadBalancerArgs:
     @name.setter
     def name(self, value: pulumi.Input[str]):
         pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def port(self) -> pulumi.Input[int]:
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: pulumi.Input[int]):
+        pulumi.set(self, "port", value)
+
+    @property
+    @pulumi.getter
+    def serverpool_id(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "serverpool_id")
+
+    @serverpool_id.setter
+    def serverpool_id(self, value: pulumi.Input[str]):
+        pulumi.set(self, "serverpool_id", value)
+
+    @property
+    @pulumi.getter
+    def target_port(self) -> pulumi.Input[int]:
+        return pulumi.get(self, "target_port")
+
+    @target_port.setter
+    def target_port(self, value: pulumi.Input[int]):
+        pulumi.set(self, "target_port", value)
 
     @property
     @pulumi.getter
@@ -97,6 +142,42 @@ class LoadBalancerArgs:
     def description(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "description", value)
 
+    @property
+    @pulumi.getter
+    def domain(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "domain")
+
+    @domain.setter
+    def domain(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "domain", value)
+
+    @property
+    @pulumi.getter
+    def ip_address(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "ip_address")
+
+    @ip_address.setter
+    def ip_address(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "ip_address", value)
+
+    @property
+    @pulumi.getter
+    def is_enabled(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "is_enabled")
+
+    @is_enabled.setter
+    def is_enabled(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "is_enabled", value)
+
+    @property
+    @pulumi.getter
+    def tls_termination(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "tls_termination")
+
+    @tls_termination.setter
+    def tls_termination(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "tls_termination", value)
+
 
 class LoadBalancer(pulumi.CustomResource):
     @overload
@@ -106,7 +187,14 @@ class LoadBalancer(pulumi.CustomResource):
                  cloudspace_id: Optional[pulumi.Input[str]] = None,
                  customer_id: Optional[pulumi.Input[str]] = None,
                  description: Optional[pulumi.Input[str]] = None,
+                 domain: Optional[pulumi.Input[str]] = None,
+                 ip_address: Optional[pulumi.Input[str]] = None,
+                 is_enabled: Optional[pulumi.Input[bool]] = None,
                  name: Optional[pulumi.Input[str]] = None,
+                 port: Optional[pulumi.Input[int]] = None,
+                 serverpool_id: Optional[pulumi.Input[str]] = None,
+                 target_port: Optional[pulumi.Input[int]] = None,
+                 tls_termination: Optional[pulumi.Input[bool]] = None,
                  token: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None,
                  url: Optional[pulumi.Input[str]] = None,
@@ -142,7 +230,14 @@ class LoadBalancer(pulumi.CustomResource):
                  cloudspace_id: Optional[pulumi.Input[str]] = None,
                  customer_id: Optional[pulumi.Input[str]] = None,
                  description: Optional[pulumi.Input[str]] = None,
+                 domain: Optional[pulumi.Input[str]] = None,
+                 ip_address: Optional[pulumi.Input[str]] = None,
+                 is_enabled: Optional[pulumi.Input[bool]] = None,
                  name: Optional[pulumi.Input[str]] = None,
+                 port: Optional[pulumi.Input[int]] = None,
+                 serverpool_id: Optional[pulumi.Input[str]] = None,
+                 target_port: Optional[pulumi.Input[int]] = None,
+                 tls_termination: Optional[pulumi.Input[bool]] = None,
                  token: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None,
                  url: Optional[pulumi.Input[str]] = None,
@@ -162,9 +257,22 @@ class LoadBalancer(pulumi.CustomResource):
                 raise TypeError("Missing required property 'customer_id'")
             __props__.__dict__["customer_id"] = None if customer_id is None else pulumi.Output.secret(customer_id)
             __props__.__dict__["description"] = description
+            __props__.__dict__["domain"] = domain
+            __props__.__dict__["ip_address"] = ip_address
+            __props__.__dict__["is_enabled"] = is_enabled
             if name is None and not opts.urn:
                 raise TypeError("Missing required property 'name'")
             __props__.__dict__["name"] = name
+            if port is None and not opts.urn:
+                raise TypeError("Missing required property 'port'")
+            __props__.__dict__["port"] = port
+            if serverpool_id is None and not opts.urn:
+                raise TypeError("Missing required property 'serverpool_id'")
+            __props__.__dict__["serverpool_id"] = serverpool_id
+            if target_port is None and not opts.urn:
+                raise TypeError("Missing required property 'target_port'")
+            __props__.__dict__["target_port"] = target_port
+            __props__.__dict__["tls_termination"] = tls_termination
             if token is None and not opts.urn:
                 raise TypeError("Missing required property 'token'")
             __props__.__dict__["token"] = None if token is None else pulumi.Output.secret(token)
@@ -203,9 +311,16 @@ class LoadBalancer(pulumi.CustomResource):
         __props__.__dict__["cloudspace_id"] = None
         __props__.__dict__["customer_id"] = None
         __props__.__dict__["description"] = None
+        __props__.__dict__["domain"] = None
         __props__.__dict__["front_end"] = None
+        __props__.__dict__["ip_address"] = None
+        __props__.__dict__["is_enabled"] = None
         __props__.__dict__["loadbalancer_id"] = None
         __props__.__dict__["name"] = None
+        __props__.__dict__["port"] = None
+        __props__.__dict__["serverpool_id"] = None
+        __props__.__dict__["target_port"] = None
+        __props__.__dict__["tls_termination"] = None
         __props__.__dict__["token"] = None
         __props__.__dict__["type"] = None
         __props__.__dict__["url"] = None
@@ -213,7 +328,7 @@ class LoadBalancer(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def back_end(self) -> pulumi.Output['outputs.BackEndState']:
+    def back_end(self) -> pulumi.Output['outputs.BackEnd']:
         return pulumi.get(self, "back_end")
 
     @property
@@ -228,13 +343,28 @@ class LoadBalancer(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def description(self) -> pulumi.Output[str]:
+    def description(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "description")
+
+    @property
+    @pulumi.getter
+    def domain(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "domain")
 
     @property
     @pulumi.getter
     def front_end(self) -> pulumi.Output['outputs.FrontEnd']:
         return pulumi.get(self, "front_end")
+
+    @property
+    @pulumi.getter
+    def ip_address(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "ip_address")
+
+    @property
+    @pulumi.getter
+    def is_enabled(self) -> pulumi.Output[Optional[bool]]:
+        return pulumi.get(self, "is_enabled")
 
     @property
     @pulumi.getter
@@ -245,6 +375,26 @@ class LoadBalancer(pulumi.CustomResource):
     @pulumi.getter
     def name(self) -> pulumi.Output[str]:
         return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def port(self) -> pulumi.Output[int]:
+        return pulumi.get(self, "port")
+
+    @property
+    @pulumi.getter
+    def serverpool_id(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "serverpool_id")
+
+    @property
+    @pulumi.getter
+    def target_port(self) -> pulumi.Output[int]:
+        return pulumi.get(self, "target_port")
+
+    @property
+    @pulumi.getter
+    def tls_termination(self) -> pulumi.Output[Optional[bool]]:
+        return pulumi.get(self, "tls_termination")
 
     @property
     @pulumi.getter

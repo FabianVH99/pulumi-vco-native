@@ -496,7 +496,7 @@ class Cloudspace(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def local_domain(self) -> pulumi.Output[str]:
+    def local_domain(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "local_domain")
 
     @property

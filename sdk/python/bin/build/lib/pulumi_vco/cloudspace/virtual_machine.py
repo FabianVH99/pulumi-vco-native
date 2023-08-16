@@ -500,7 +500,7 @@ class VirtualMachine(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def anti_affinity_group_ids(self) -> pulumi.Output[Sequence[str]]:
+    def anti_affinity_group_ids(self) -> pulumi.Output[Optional[Sequence[str]]]:
         return pulumi.get(self, "anti_affinity_group_ids")
 
     @property
@@ -585,7 +585,7 @@ class VirtualMachine(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def impact_alert_hook(self) -> pulumi.Output[str]:
+    def impact_alert_hook(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "impact_alert_hook")
 
     @property

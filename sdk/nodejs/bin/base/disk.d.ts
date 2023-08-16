@@ -57,5 +57,5 @@ export interface DiskArgs {
     permanently?: pulumi.Input<boolean>;
     token: pulumi.Input<string>;
     url: pulumi.Input<string>;
-    vm_id?: pulumi.Input<string>;
+    vm_id?: pulumi.Input<number>;
 }

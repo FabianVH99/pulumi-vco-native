@@ -210,7 +210,7 @@ class ServerPool(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def hosts(self) -> pulumi.Output[Sequence['outputs.ServerPoolHost']]:
+    def hosts(self) -> pulumi.Output[Optional[Sequence['outputs.ServerPoolHost']]]:
         return pulumi.get(self, "hosts")
 
     @property

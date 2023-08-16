@@ -36,7 +36,7 @@ export class VirtualMachine extends pulumi.CustomResource {
     public readonly acronis!: pulumi.Output<boolean | undefined>;
     public /*out*/ readonly agent_status!: pulumi.Output<string>;
     public readonly all_vm_disks!: pulumi.Output<boolean | undefined>;
-    public /*out*/ readonly anti_affinity_group_ids!: pulumi.Output<string[]>;
+    public /*out*/ readonly anti_affinity_group_ids!: pulumi.Output<string[] | undefined>;
     public /*out*/ readonly appliance!: pulumi.Output<boolean>;
     public readonly boot_disk_id!: pulumi.Output<number>;
     public readonly boot_type!: pulumi.Output<string>;
@@ -53,7 +53,7 @@ export class VirtualMachine extends pulumi.CustomResource {
     public readonly enable_vm_agent!: pulumi.Output<boolean | undefined>;
     public /*out*/ readonly hostname!: pulumi.Output<string>;
     public readonly image_id!: pulumi.Output<number>;
-    public /*out*/ readonly impact_alert_hook!: pulumi.Output<string>;
+    public /*out*/ readonly impact_alert_hook!: pulumi.Output<string | undefined>;
     public /*out*/ readonly locked!: pulumi.Output<boolean>;
     public readonly memory!: pulumi.Output<number>;
     public readonly name!: pulumi.Output<string>;

@@ -9,42 +9,76 @@ import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 from . import outputs
-from ._inputs import *
 
 __all__ = ['ReverseProxyArgs', 'ReverseProxy']
 
 @pulumi.input_type
 class ReverseProxyArgs:
     def __init__(__self__, *,
-                 back_end: pulumi.Input['ReverseProxyBackendArgs'],
                  cloudspace_id: pulumi.Input[str],
                  customer_id: pulumi.Input[str],
-                 front_end: pulumi.Input['ReverseProxyFrontEndArgs'],
+                 domain: pulumi.Input[str],
+                 email: pulumi.Input[str],
+                 enabled: pulumi.Input[bool],
                  name: pulumi.Input[str],
+                 scheme: pulumi.Input[str],
+                 serverpool_id: pulumi.Input[str],
+                 target_port: pulumi.Input[int],
                  token: pulumi.Input[str],
                  url: pulumi.Input[str],
-                 description: Optional[pulumi.Input[str]] = None):
+                 description: Optional[pulumi.Input[str]] = None,
+                 health_check_scheme: Optional[pulumi.Input[str]] = None,
+                 http_only: Optional[pulumi.Input[bool]] = None,
+                 http_port: Optional[pulumi.Input[int]] = None,
+                 https_port: Optional[pulumi.Input[int]] = None,
+                 interval: Optional[pulumi.Input[int]] = None,
+                 ip_address: Optional[pulumi.Input[str]] = None,
+                 path: Optional[pulumi.Input[str]] = None,
+                 port: Optional[pulumi.Input[int]] = None,
+                 same_site: Optional[pulumi.Input[str]] = None,
+                 secure: Optional[pulumi.Input[bool]] = None,
+                 sticky_session_name: Optional[pulumi.Input[str]] = None,
+                 timeout: Optional[pulumi.Input[int]] = None):
         """
         The set of arguments for constructing a ReverseProxy resource.
         """
-        pulumi.set(__self__, "back_end", back_end)
         pulumi.set(__self__, "cloudspace_id", cloudspace_id)
         pulumi.set(__self__, "customer_id", customer_id)
-        pulumi.set(__self__, "front_end", front_end)
+        pulumi.set(__self__, "domain", domain)
+        pulumi.set(__self__, "email", email)
+        pulumi.set(__self__, "enabled", enabled)
         pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "scheme", scheme)
+        pulumi.set(__self__, "serverpool_id", serverpool_id)
+        pulumi.set(__self__, "target_port", target_port)
         pulumi.set(__self__, "token", token)
         pulumi.set(__self__, "url", url)
         if description is not None:
             pulumi.set(__self__, "description", description)
-
-    @property
-    @pulumi.getter
-    def back_end(self) -> pulumi.Input['ReverseProxyBackendArgs']:
-        return pulumi.get(self, "back_end")
-
-    @back_end.setter
-    def back_end(self, value: pulumi.Input['ReverseProxyBackendArgs']):
-        pulumi.set(self, "back_end", value)
+        if health_check_scheme is not None:
+            pulumi.set(__self__, "health_check_scheme", health_check_scheme)
+        if http_only is not None:
+            pulumi.set(__self__, "http_only", http_only)
+        if http_port is not None:
+            pulumi.set(__self__, "http_port", http_port)
+        if https_port is not None:
+            pulumi.set(__self__, "https_port", https_port)
+        if interval is not None:
+            pulumi.set(__self__, "interval", interval)
+        if ip_address is not None:
+            pulumi.set(__self__, "ip_address", ip_address)
+        if path is not None:
+            pulumi.set(__self__, "path", path)
+        if port is not None:
+            pulumi.set(__self__, "port", port)
+        if same_site is not None:
+            pulumi.set(__self__, "same_site", same_site)
+        if secure is not None:
+            pulumi.set(__self__, "secure", secure)
+        if sticky_session_name is not None:
+            pulumi.set(__self__, "sticky_session_name", sticky_session_name)
+        if timeout is not None:
+            pulumi.set(__self__, "timeout", timeout)
 
     @property
     @pulumi.getter
@@ -66,12 +100,30 @@ class ReverseProxyArgs:
 
     @property
     @pulumi.getter
-    def front_end(self) -> pulumi.Input['ReverseProxyFrontEndArgs']:
-        return pulumi.get(self, "front_end")
+    def domain(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "domain")
 
-    @front_end.setter
-    def front_end(self, value: pulumi.Input['ReverseProxyFrontEndArgs']):
-        pulumi.set(self, "front_end", value)
+    @domain.setter
+    def domain(self, value: pulumi.Input[str]):
+        pulumi.set(self, "domain", value)
+
+    @property
+    @pulumi.getter
+    def email(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "email")
+
+    @email.setter
+    def email(self, value: pulumi.Input[str]):
+        pulumi.set(self, "email", value)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> pulumi.Input[bool]:
+        return pulumi.get(self, "enabled")
+
+    @enabled.setter
+    def enabled(self, value: pulumi.Input[bool]):
+        pulumi.set(self, "enabled", value)
 
     @property
     @pulumi.getter
@@ -81,6 +133,33 @@ class ReverseProxyArgs:
     @name.setter
     def name(self, value: pulumi.Input[str]):
         pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def scheme(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "scheme")
+
+    @scheme.setter
+    def scheme(self, value: pulumi.Input[str]):
+        pulumi.set(self, "scheme", value)
+
+    @property
+    @pulumi.getter
+    def serverpool_id(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "serverpool_id")
+
+    @serverpool_id.setter
+    def serverpool_id(self, value: pulumi.Input[str]):
+        pulumi.set(self, "serverpool_id", value)
+
+    @property
+    @pulumi.getter
+    def target_port(self) -> pulumi.Input[int]:
+        return pulumi.get(self, "target_port")
+
+    @target_port.setter
+    def target_port(self, value: pulumi.Input[int]):
+        pulumi.set(self, "target_port", value)
 
     @property
     @pulumi.getter
@@ -109,18 +188,142 @@ class ReverseProxyArgs:
     def description(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "description", value)
 
+    @property
+    @pulumi.getter
+    def health_check_scheme(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "health_check_scheme")
+
+    @health_check_scheme.setter
+    def health_check_scheme(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "health_check_scheme", value)
+
+    @property
+    @pulumi.getter
+    def http_only(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "http_only")
+
+    @http_only.setter
+    def http_only(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "http_only", value)
+
+    @property
+    @pulumi.getter
+    def http_port(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "http_port")
+
+    @http_port.setter
+    def http_port(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "http_port", value)
+
+    @property
+    @pulumi.getter
+    def https_port(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "https_port")
+
+    @https_port.setter
+    def https_port(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "https_port", value)
+
+    @property
+    @pulumi.getter
+    def interval(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "interval")
+
+    @interval.setter
+    def interval(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "interval", value)
+
+    @property
+    @pulumi.getter
+    def ip_address(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "ip_address")
+
+    @ip_address.setter
+    def ip_address(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "ip_address", value)
+
+    @property
+    @pulumi.getter
+    def path(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "path")
+
+    @path.setter
+    def path(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "path", value)
+
+    @property
+    @pulumi.getter
+    def port(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "port", value)
+
+    @property
+    @pulumi.getter
+    def same_site(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "same_site")
+
+    @same_site.setter
+    def same_site(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "same_site", value)
+
+    @property
+    @pulumi.getter
+    def secure(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "secure")
+
+    @secure.setter
+    def secure(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "secure", value)
+
+    @property
+    @pulumi.getter(name="stickySession_name")
+    def sticky_session_name(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "sticky_session_name")
+
+    @sticky_session_name.setter
+    def sticky_session_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "sticky_session_name", value)
+
+    @property
+    @pulumi.getter
+    def timeout(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "timeout")
+
+    @timeout.setter
+    def timeout(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "timeout", value)
+
 
 class ReverseProxy(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 back_end: Optional[pulumi.Input[pulumi.InputType['ReverseProxyBackendArgs']]] = None,
                  cloudspace_id: Optional[pulumi.Input[str]] = None,
                  customer_id: Optional[pulumi.Input[str]] = None,
                  description: Optional[pulumi.Input[str]] = None,
-                 front_end: Optional[pulumi.Input[pulumi.InputType['ReverseProxyFrontEndArgs']]] = None,
+                 domain: Optional[pulumi.Input[str]] = None,
+                 email: Optional[pulumi.Input[str]] = None,
+                 enabled: Optional[pulumi.Input[bool]] = None,
+                 health_check_scheme: Optional[pulumi.Input[str]] = None,
+                 http_only: Optional[pulumi.Input[bool]] = None,
+                 http_port: Optional[pulumi.Input[int]] = None,
+                 https_port: Optional[pulumi.Input[int]] = None,
+                 interval: Optional[pulumi.Input[int]] = None,
+                 ip_address: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
+                 path: Optional[pulumi.Input[str]] = None,
+                 port: Optional[pulumi.Input[int]] = None,
+                 same_site: Optional[pulumi.Input[str]] = None,
+                 scheme: Optional[pulumi.Input[str]] = None,
+                 secure: Optional[pulumi.Input[bool]] = None,
+                 serverpool_id: Optional[pulumi.Input[str]] = None,
+                 sticky_session_name: Optional[pulumi.Input[str]] = None,
+                 target_port: Optional[pulumi.Input[int]] = None,
+                 timeout: Optional[pulumi.Input[int]] = None,
                  token: Optional[pulumi.Input[str]] = None,
                  url: Optional[pulumi.Input[str]] = None,
                  __props__=None):
@@ -152,12 +355,28 @@ class ReverseProxy(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 back_end: Optional[pulumi.Input[pulumi.InputType['ReverseProxyBackendArgs']]] = None,
                  cloudspace_id: Optional[pulumi.Input[str]] = None,
                  customer_id: Optional[pulumi.Input[str]] = None,
                  description: Optional[pulumi.Input[str]] = None,
-                 front_end: Optional[pulumi.Input[pulumi.InputType['ReverseProxyFrontEndArgs']]] = None,
+                 domain: Optional[pulumi.Input[str]] = None,
+                 email: Optional[pulumi.Input[str]] = None,
+                 enabled: Optional[pulumi.Input[bool]] = None,
+                 health_check_scheme: Optional[pulumi.Input[str]] = None,
+                 http_only: Optional[pulumi.Input[bool]] = None,
+                 http_port: Optional[pulumi.Input[int]] = None,
+                 https_port: Optional[pulumi.Input[int]] = None,
+                 interval: Optional[pulumi.Input[int]] = None,
+                 ip_address: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
+                 path: Optional[pulumi.Input[str]] = None,
+                 port: Optional[pulumi.Input[int]] = None,
+                 same_site: Optional[pulumi.Input[str]] = None,
+                 scheme: Optional[pulumi.Input[str]] = None,
+                 secure: Optional[pulumi.Input[bool]] = None,
+                 serverpool_id: Optional[pulumi.Input[str]] = None,
+                 sticky_session_name: Optional[pulumi.Input[str]] = None,
+                 target_port: Optional[pulumi.Input[int]] = None,
+                 timeout: Optional[pulumi.Input[int]] = None,
                  token: Optional[pulumi.Input[str]] = None,
                  url: Optional[pulumi.Input[str]] = None,
                  __props__=None):
@@ -169,9 +388,6 @@ class ReverseProxy(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = ReverseProxyArgs.__new__(ReverseProxyArgs)
 
-            if back_end is None and not opts.urn:
-                raise TypeError("Missing required property 'back_end'")
-            __props__.__dict__["back_end"] = back_end
             if cloudspace_id is None and not opts.urn:
                 raise TypeError("Missing required property 'cloudspace_id'")
             __props__.__dict__["cloudspace_id"] = cloudspace_id
@@ -179,18 +395,47 @@ class ReverseProxy(pulumi.CustomResource):
                 raise TypeError("Missing required property 'customer_id'")
             __props__.__dict__["customer_id"] = None if customer_id is None else pulumi.Output.secret(customer_id)
             __props__.__dict__["description"] = description
-            if front_end is None and not opts.urn:
-                raise TypeError("Missing required property 'front_end'")
-            __props__.__dict__["front_end"] = front_end
+            if domain is None and not opts.urn:
+                raise TypeError("Missing required property 'domain'")
+            __props__.__dict__["domain"] = domain
+            if email is None and not opts.urn:
+                raise TypeError("Missing required property 'email'")
+            __props__.__dict__["email"] = email
+            if enabled is None and not opts.urn:
+                raise TypeError("Missing required property 'enabled'")
+            __props__.__dict__["enabled"] = enabled
+            __props__.__dict__["health_check_scheme"] = health_check_scheme
+            __props__.__dict__["http_only"] = http_only
+            __props__.__dict__["http_port"] = http_port
+            __props__.__dict__["https_port"] = https_port
+            __props__.__dict__["interval"] = interval
+            __props__.__dict__["ip_address"] = ip_address
             if name is None and not opts.urn:
                 raise TypeError("Missing required property 'name'")
             __props__.__dict__["name"] = name
+            __props__.__dict__["path"] = path
+            __props__.__dict__["port"] = port
+            __props__.__dict__["same_site"] = same_site
+            if scheme is None and not opts.urn:
+                raise TypeError("Missing required property 'scheme'")
+            __props__.__dict__["scheme"] = scheme
+            __props__.__dict__["secure"] = secure
+            if serverpool_id is None and not opts.urn:
+                raise TypeError("Missing required property 'serverpool_id'")
+            __props__.__dict__["serverpool_id"] = serverpool_id
+            __props__.__dict__["sticky_session_name"] = sticky_session_name
+            if target_port is None and not opts.urn:
+                raise TypeError("Missing required property 'target_port'")
+            __props__.__dict__["target_port"] = target_port
+            __props__.__dict__["timeout"] = timeout
             if token is None and not opts.urn:
                 raise TypeError("Missing required property 'token'")
             __props__.__dict__["token"] = None if token is None else pulumi.Output.secret(token)
             if url is None and not opts.urn:
                 raise TypeError("Missing required property 'url'")
             __props__.__dict__["url"] = None if url is None else pulumi.Output.secret(url)
+            __props__.__dict__["back_end"] = None
+            __props__.__dict__["front_end"] = None
             __props__.__dict__["reverseproxy_id"] = None
             __props__.__dict__["type"] = None
         super(ReverseProxy, __self__).__init__(
@@ -219,9 +464,27 @@ class ReverseProxy(pulumi.CustomResource):
         __props__.__dict__["cloudspace_id"] = None
         __props__.__dict__["customer_id"] = None
         __props__.__dict__["description"] = None
+        __props__.__dict__["domain"] = None
+        __props__.__dict__["email"] = None
+        __props__.__dict__["enabled"] = None
         __props__.__dict__["front_end"] = None
+        __props__.__dict__["health_check_scheme"] = None
+        __props__.__dict__["http_only"] = None
+        __props__.__dict__["http_port"] = None
+        __props__.__dict__["https_port"] = None
+        __props__.__dict__["interval"] = None
+        __props__.__dict__["ip_address"] = None
         __props__.__dict__["name"] = None
+        __props__.__dict__["path"] = None
+        __props__.__dict__["port"] = None
         __props__.__dict__["reverseproxy_id"] = None
+        __props__.__dict__["same_site"] = None
+        __props__.__dict__["scheme"] = None
+        __props__.__dict__["secure"] = None
+        __props__.__dict__["serverpool_id"] = None
+        __props__.__dict__["sticky_session_name"] = None
+        __props__.__dict__["target_port"] = None
+        __props__.__dict__["timeout"] = None
         __props__.__dict__["token"] = None
         __props__.__dict__["type"] = None
         __props__.__dict__["url"] = None
@@ -244,8 +507,23 @@ class ReverseProxy(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def description(self) -> pulumi.Output[str]:
+    def description(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "description")
+
+    @property
+    @pulumi.getter
+    def domain(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "domain")
+
+    @property
+    @pulumi.getter
+    def email(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "email")
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> pulumi.Output[bool]:
+        return pulumi.get(self, "enabled")
 
     @property
     @pulumi.getter
@@ -254,13 +532,88 @@ class ReverseProxy(pulumi.CustomResource):
 
     @property
     @pulumi.getter
+    def health_check_scheme(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "health_check_scheme")
+
+    @property
+    @pulumi.getter
+    def http_only(self) -> pulumi.Output[Optional[bool]]:
+        return pulumi.get(self, "http_only")
+
+    @property
+    @pulumi.getter
+    def http_port(self) -> pulumi.Output[Optional[int]]:
+        return pulumi.get(self, "http_port")
+
+    @property
+    @pulumi.getter
+    def https_port(self) -> pulumi.Output[Optional[int]]:
+        return pulumi.get(self, "https_port")
+
+    @property
+    @pulumi.getter
+    def interval(self) -> pulumi.Output[Optional[int]]:
+        return pulumi.get(self, "interval")
+
+    @property
+    @pulumi.getter
+    def ip_address(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "ip_address")
+
+    @property
+    @pulumi.getter
     def name(self) -> pulumi.Output[str]:
         return pulumi.get(self, "name")
 
     @property
     @pulumi.getter
+    def path(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "path")
+
+    @property
+    @pulumi.getter
+    def port(self) -> pulumi.Output[Optional[int]]:
+        return pulumi.get(self, "port")
+
+    @property
+    @pulumi.getter
     def reverseproxy_id(self) -> pulumi.Output[str]:
         return pulumi.get(self, "reverseproxy_id")
+
+    @property
+    @pulumi.getter
+    def same_site(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "same_site")
+
+    @property
+    @pulumi.getter
+    def scheme(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "scheme")
+
+    @property
+    @pulumi.getter
+    def secure(self) -> pulumi.Output[Optional[bool]]:
+        return pulumi.get(self, "secure")
+
+    @property
+    @pulumi.getter
+    def serverpool_id(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "serverpool_id")
+
+    @property
+    @pulumi.getter(name="stickySession_name")
+    def sticky_session_name(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "sticky_session_name")
+
+    @property
+    @pulumi.getter
+    def target_port(self) -> pulumi.Output[int]:
+        return pulumi.get(self, "target_port")
+
+    @property
+    @pulumi.getter
+    def timeout(self) -> pulumi.Output[Optional[int]]:
+        return pulumi.get(self, "timeout")
 
     @property
     @pulumi.getter
