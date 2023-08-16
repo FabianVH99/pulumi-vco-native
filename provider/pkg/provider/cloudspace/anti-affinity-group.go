@@ -9,6 +9,8 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
 	"io/ioutil"
 	"net/http"
+	"net/url"
+	"strconv"
 )
 
 type AntiAffinityGroup struct{}
@@ -52,7 +54,18 @@ func (ag AntiAffinityGroup) Create(ctx p.Context, name string, input AntiAffinit
 		return name, state, nil
 	}
 
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/anti-affinity-groups?spread=%d&group_id=%s", input.URL, input.CustomerID, input.CloudSpaceID, input.Spread, input.GroupID)
+	u, err := url.Parse(fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/anti-affinity-groups", input.URL, input.CustomerID, input.CloudSpaceID))
+	if err != nil {
+		fmt.Printf("Error making API request for %s: %v", id, err)
+		return "", state, err
+	}
+
+	q := u.Query()
+	q.Set("group_id", input.GroupID)
+	q.Set("spread", strconv.Itoa(input.Spread))
+
+	u.RawQuery = q.Encode()
+	url := u.String()
 
 	client := &http.Client{}
 	req, err := http.NewRequest("POST", url, nil)
@@ -143,7 +156,15 @@ func (ag AntiAffinityGroup) Update(ctx p.Context, id string, state AntiAffinityG
 	if preview {
 		return state, nil
 	}
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/anti-affinity-groups/%s?spread=%d", state.URL, state.CustomerID, state.CloudSpaceID, input.GroupID, input.Spread)
+	u, err := url.Parse(fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/anti-affinity-groups/%s", state.URL, state.CustomerID, state.CloudSpaceID, state.GroupID))
+	if err != nil {
+		fmt.Printf("Error making API request for %s: %v", id, err)
+		return state, err
+	}
+	q := u.Query()
+	q.Set("spread", strconv.Itoa(input.Spread))
+	u.RawQuery = q.Encode()
+	url := u.String()
 
 	client := &http.Client{}
 	req, err := http.NewRequest("PUT", url, bytes.NewBuffer(nil))
@@ -153,7 +174,6 @@ func (ag AntiAffinityGroup) Update(ctx p.Context, id string, state AntiAffinityG
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
-
 	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Printf("Error updating resource %s: %v\n", id, err)

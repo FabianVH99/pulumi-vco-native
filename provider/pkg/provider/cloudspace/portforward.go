@@ -169,6 +169,7 @@ func (PortForward) Read(ctx p.Context, id string, state PortForwardState) (PortF
 	result.CustomerID = state.CustomerID
 	result.Token = state.Token
 	result.CloudSpaceID = state.CloudSpaceID
+	result.PortForwardID = state.PortForwardID
 
 	return result, nil
 }

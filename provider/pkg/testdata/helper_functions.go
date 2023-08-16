@@ -1,4 +1,4 @@
-package tests
+package testdata
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 )
 
 func refreshJWT() string {
-	url := fmt.Sprintf("%s/%s", os.Getenv("LAB_IAM_URL"), "/v1/oauth/jwt/refresh")
+	url := fmt.Sprintf("https://%s/%s", os.Getenv("LAB_IAM_URL"), "/v1/oauth/jwt/refresh")
 
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)

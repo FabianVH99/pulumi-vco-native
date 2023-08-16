@@ -15,18 +15,18 @@ type ObjectSpace struct{}
 
 type ObjectSpaceState struct {
 	ObjectSpaceArgs
-	URL             string `pulumi:"url"`
-	Token           string `pulumi:"token"`
-	CustomerID      string `pulumi:"customerID"`
-	ObjectSpaceID   string `pulumi:"objectspace_id" json:"objectspace_id"`
-	ObjectSpaceName string `pulumi:"objectspace_name" json:"objectspace_name"`
-	Status          string `pulumi:"status" json:"status"`
-	AccessKey       string `pulumi:"access_key" json:"access_key"`
-	Secret          string `pulumi:"secret" json:"secret"`
-	CreationTime    string `pulumi:"creation_time" json:"creation_time"`
-	UpdateTime      string `pulumi:"update_time" json:"update_time"`
-	Location        string `pulumi:"location" json:"location"`
-	Domain          string `pulumi:"domain" json:"domain"`
+	URL           string `pulumi:"url"`
+	Token         string `pulumi:"token"`
+	CustomerID    string `pulumi:"customerID"`
+	ObjectSpaceID string `pulumi:"objectspace_id" json:"objectspace_id"`
+	Name          string `pulumi:"objectspace_name" json:"objectspace_name"`
+	Status        string `pulumi:"status" json:"status"`
+	AccessKey     string `pulumi:"access_key" json:"access_key"`
+	Secret        string `pulumi:"secret" json:"secret"`
+	CreationTime  string `pulumi:"creation_time" json:"creation_time"`
+	UpdateTime    string `pulumi:"update_time" json:"update_time"`
+	Location      string `pulumi:"location" json:"location"`
+	Domain        string `pulumi:"domain" json:"domain"`
 }
 
 type ObjectSpaceArgs struct {
@@ -34,7 +34,7 @@ type ObjectSpaceArgs struct {
 	Token            string  `pulumi:"token" provider:"secret"`
 	CustomerID       string  `pulumi:"customerID" provider:"secret"`
 	Location         string  `pulumi:"location"`
-	ObjectSpaceName  string  `pulumi:"objectspace_name"`
+	Name             string  `pulumi:"objectspace_name"`
 	Domain           *string `pulumi:"domain,optional"`
 	CloudspaceID     *string `pulumi:"cloudspaceID,optional"`
 	Subnet           *string `pulumi:"subnet,optional"`
@@ -47,7 +47,7 @@ func (c ObjectSpace) WireDependencies(f infer.FieldSelector, args *ObjectSpaceAr
 	f.OutputField(&state.URL).DependsOn(f.InputField(&args.URL))
 	f.OutputField(&state.Token).DependsOn(f.InputField(&args.Token))
 	f.OutputField(&state.CustomerID).DependsOn(f.InputField(&args.CustomerID))
-	f.OutputField(&state.ObjectSpaceName).DependsOn(f.InputField(&args.ObjectSpaceName))
+	f.OutputField(&state.Name).DependsOn(f.InputField(&args.Name))
 	f.OutputField(&state.Location).DependsOn(f.InputField(&args.Location))
 	f.OutputField(&state.Location).DependsOn(f.InputField(&args.Location))
 }
@@ -62,7 +62,7 @@ func (obj ObjectSpace) Create(ctx p.Context, name string, input ObjectSpaceArgs,
 		return name, state, nil
 	}
 
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/objectspaces?name=%s&location=%s", input.URL, input.CustomerID, input.ObjectSpaceName, input.Location)
+	url := fmt.Sprintf("https://%s/api/1/customers/%s/objectspaces?name=%s&location=%s", input.URL, input.CustomerID, input.Name, input.Location)
 	payload := map[string]interface{}{}
 
 	if input.Domain != nil {

@@ -9,6 +9,7 @@ import (
 	"github.com/fabianv-cloud/pulumi-vco-native/provider/pkg/provider/ingress"
 	"github.com/fabianv-cloud/pulumi-vco-native/provider/pkg/provider/objectspace"
 	"github.com/fabianv-cloud/pulumi-vco-native/provider/pkg/provider/virtual_machine"
+	"github.com/fabianv-cloud/pulumi-vco-native/provider/pkg/version"
 	p "github.com/pulumi/pulumi-go-provider"
 	"github.com/pulumi/pulumi-go-provider/infer"
 	"github.com/pulumi/pulumi-go-provider/integration"
@@ -20,7 +21,13 @@ func NewProvider() p.Provider {
 	return infer.Provider(infer.Options{
 		Metadata: schema.Metadata{
 			DisplayName: "vco",
-			Description: "The Whitesky.cloud Vco Provider for Pulumi enables you to manipulate resources in the vco portal.",
+			Description: "The Whitesky.Cloud Vco Provider for Pulumi enables you to manipulate resources in the vco portal.\n" +
+				"Please read the documentation or consult the API docs in your vco portal in order to properly understand how the resources work.\n" +
+				"Before using this package you need to install the resource-vco plugin. The latest release of which can be found in the repository.\n" +
+				"You then have to install the plugin on your system by storing the contents of the zipped file in: \n" +
+				"Windows: %USERPROFILE%\\\\.pulumi\\\\plugins\\resource-vco-" + version.Version + ".\n" +
+				"Linux & Max: ~/.pulumi/plugins/resource-vco-" + version.Version + ".\n" +
+				"When you have moved the plugin to the appropriate directory you can in stall it using: pulumi plugin install resource vco" + version.Version + ".\n",
 			Keywords: []string{
 				"whitesky.cloud",
 				"pulumi",
@@ -56,6 +63,7 @@ func NewProvider() p.Provider {
 		Resources: []infer.InferredResource{
 			infer.Resource[base.Cloudspace, base.CloudspaceArgs, base.CloudspaceState](),
 			infer.Resource[base.Disk, base.DiskArgs, base.DiskState](),
+			infer.Resource[base.ObjectSpace, base.ObjectSpaceArgs, base.ObjectSpaceState](),
 			infer.Resource[cloudspace.AntiAffinityGroup, cloudspace.AntiAffinityGroupArgs, cloudspace.AntiAffinityGroupState](),
 			infer.Resource[cloudspace.VirtualMachine, cloudspace.VirtualMachineArgs, cloudspace.VirtualMachineState](),
 			infer.Resource[cloudspace.ConnectedCloudspace, cloudspace.ConnectedCloudspaceArgs, cloudspace.ConnectedCloudspaceState](),

@@ -9,6 +9,8 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
 	"io/ioutil"
 	"net/http"
+	"net/url"
+	"strconv"
 )
 
 type ExposedDisk struct{}
@@ -61,28 +63,28 @@ func (ExposedDisk) Create(ctx p.Context, name string, input ExposedDiskArgs, pre
 	if preview {
 		return name, state, nil
 	}
-
-	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/exposed-disks", input.URL, input.CustomerID, input.CloudSpaceID)
-	payload := map[string]interface{}{
-		"disk_id": input.DiskID,
-	}
-
-	if input.IOPS != nil {
-		payload["iops"] = *input.IOPS
-	}
-
-	if input.MaxConnections != nil {
-		payload["max_connections"] = *input.MaxConnections
-	}
-
-	jsonPayload, err := json.Marshal(payload)
+	u, err := url.Parse(fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/exposed-disks", input.URL, input.CustomerID, input.CloudSpaceID))
 	if err != nil {
-		fmt.Printf("Error constructing JSON payload %s: %v", id, err)
+		fmt.Printf("Error making API request for %s: %v", id, err)
 		return "", state, err
 	}
 
+	q := u.Query()
+	q.Set("disk_id", strconv.Itoa(input.DiskID))
+
+	if input.IOPS != nil {
+		q.Set("iops", strconv.Itoa(*input.IOPS))
+	}
+
+	if input.MaxConnections != nil {
+		q.Set("max_connections", strconv.Itoa(*input.MaxConnections))
+	}
+
+	u.RawQuery = q.Encode()
+	url := u.String()
+
 	client := &http.Client{}
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonPayload))
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(nil))
 	if err != nil {
 		fmt.Printf("Error making API request for %s: %v", id, err)
 		return "", state, err
@@ -106,17 +108,16 @@ func (ExposedDisk) Create(ctx p.Context, name string, input ExposedDiskArgs, pre
 		return "", state, fmt.Errorf("received status code %d\n: %s\n", resp.StatusCode, string(body))
 	}
 
-	state.URL = input.URL
-	state.CustomerID = input.CustomerID
-	state.Token = input.Token
-	state.CloudSpaceID = input.CloudSpaceID
-
 	var result ExposedDiskState
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		return name, ExposedDiskState{}, err
 	}
 
 	result.DiskID = input.DiskID
+	result.URL = input.URL
+	result.CustomerID = input.CustomerID
+	result.Token = input.Token
+	result.CloudSpaceID = input.CloudSpaceID
 
 	return id, result, nil
 }

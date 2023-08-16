@@ -71,7 +71,7 @@ func (cs ConnectedCloudspace) Create(ctx p.Context, name string, input Connected
 		return "", state, err
 	}
 	defer resp.Body.Close()
-	if resp.StatusCode != http.StatusOK {
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
 			fmt.Printf("Error reading response body for %s: %v\n", id, err)
@@ -117,7 +117,7 @@ func (ConnectedCloudspace) Delete(ctx p.Context, id string, state ConnectedCloud
 		return err
 	}
 	defer resp.Body.Close()
-	if resp.StatusCode != http.StatusOK {
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
 			fmt.Printf("Error reading response body for %s: %v\n", id, err)
