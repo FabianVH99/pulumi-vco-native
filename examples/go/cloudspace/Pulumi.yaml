@@ -1,3 +1,0 @@
-name: pulumi-go-example
-runtime: go
-description: A sample program showing how to create a cloudspace resource in go

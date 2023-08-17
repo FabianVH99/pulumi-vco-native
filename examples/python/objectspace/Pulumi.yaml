@@ -1,0 +1,6 @@
+name: pulumi-objspace-example
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: A sample program showing how to create an objectspace

@@ -23,29 +23,29 @@ type ReverseProxyState struct {
 	Name           string               `pulumi:"name" json:"name"`
 	Description    string               `pulumi:"description,optional" json:"description"`
 	Type           string               `pulumi:"type" json:"type"`
-	FrontEnd       ReverseProxyFrontEnd `pulumi:"front_end" json:"front_end"`
-	BackEnd        ReverseProxyBackend  `pulumi:"back_end" json:"back_end"`
+	FrontEnd       ReverseProxyFrontEnd `pulumi:"front_end,optional" json:"front_end"`
+	BackEnd        ReverseProxyBackend  `pulumi:"back_end,optional" json:"back_end"`
 }
 
 type ReverseProxyFrontEnd struct {
-	Domain      string      `pulumi:"domain" json:"domain"`
+	Domain      string      `pulumi:"domain,optional" json:"domain"`
 	HTTPPort    *int        `pulumi:"http_port,optional" json:"http_port"`
 	HTTPSPort   *int        `pulumi:"https_port,optional" json:"https_port"`
 	IPAddress   *string     `pulumi:"ip_address,optional" json:"ip_address"`
 	Scheme      string      `pulumi:"scheme" json:"scheme"`
-	LetsEncrypt LetsEncrypt `pulumi:"letsencrypt" json:"letsencrypt"`
+	LetsEncrypt LetsEncrypt `pulumi:"letsencrypt,optional" json:"letsencrypt"`
 }
 
 type LetsEncrypt struct {
-	Enabled bool    `pulumi:"enabled" json:"enabled"`
-	Email   *string `pulumi:"email" json:"email"`
+	Enabled bool    `pulumi:"enabled,optional" json:"enabled"`
+	Email   *string `pulumi:"email,optional" json:"email"`
 }
 
 type ReverseProxyBackend struct {
 	Scheme       string   `pulumi:"scheme" json:"scheme"`
 	ServerpoolID string   `pulumi:"serverpool_id" json:"serverpool_id"`
 	TargetPort   int      `pulumi:"target_port" json:"target_port"`
-	Options      *Options `pulumi:"options,optional" json:"options"`
+	Options      *Options `pulumi:"options,optional,optional" json:"options"`
 }
 
 type Options struct {
@@ -81,7 +81,7 @@ type ReverseProxyArgs struct {
 	IPAddress         *string `pulumi:"ip_address,optional"`
 	FrontEndScheme    string  `pulumi:"scheme"`
 	Enabled           bool    `pulumi:"enabled" json:"enabled"`
-	Email             *string `pulumi:"email" json:"email"`
+	Email             *string `pulumi:"email,optional" json:"email"`
 	BackendScheme     string  `pulumi:"scheme"`
 	ServerpoolID      string  `pulumi:"serverpool_id"`
 	TargetPort        int     `pulumi:"target_port"`

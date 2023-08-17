@@ -51,36 +51,35 @@ type CpuTopology struct {
 
 type VirtualMachineState struct {
 	VirtualMachineArgs
-	URL                  string             `pulumi:"url"`
-	Token                string             `pulumi:"token"`
-	CustomerID           string             `pulumi:"customerID"`
-	CloudSpaceID         string             `pulumi:"cloudspace_id"`
-	VirtualMachineID     int                `pulumi:"vm_id" json:"vm_id"`
-	Name                 string             `pulumi:"name" json:"name"`
-	Description          string             `pulumi:"description" json:"description"`
-	BootDiskID           int                `pulumi:"boot_disk_id" json:"boot_disk_id"`
-	CloudspaceID         string             `pulumi:"cloudspace_id" json:"cloudspace_id"`
-	Status               string             `pulumi:"status" json:"status"`
-	UpdateTime           float64            `pulumi:"update_time" json:"update_time"`
-	CreationTime         float64            `pulumi:"creation_time" json:"creation_time"`
-	Vcpus                int                `pulumi:"vcpus" json:"vcpus"`
-	Storage              int                `pulumi:"storage" json:"storage"`
-	Memory               int                `pulumi:"memory" json:"memory"`
-	AgentStatus          string             `pulumi:"agent_status" json:"agent_status"`
-	ImageID              int                `pulumi:"image_id" json:"image_id"`
-	Locked               bool               `pulumi:"locked" json:"locked"`
-	StackID              int                `pulumi:"stack_id" json:"stack_id"`
-	ImpactAlertHook      string             `pulumi:"impact_alert_hook,optional" json:"impact_alert_hook"`
-	OsImageName          string             `pulumi:"os_image_name" json:"os_image_name"`
-	Hostname             string             `pulumi:"hostname" json:"hostname"`
-	AntiAffinityGroupIDs []string           `pulumi:"anti_affinity_group_ids,optional" json:"anti_affinity_group_ids"`
-	Disks                []VmDisk           `pulumi:"disks" json:"disks"`
-	OsAccounts           []OsAccount        `pulumi:"os_accounts" json:"os_accounts"`
-	NetworkInterfaces    []NetworkInterface `pulumi:"network_interfaces" json:"network_interfaces"`
-	Appliance            bool               `pulumi:"appliance" json:"appliance"`
-	CpusPinStatus        bool               `pulumi:"cpus_pin_status" json:"cpus_pin_status"`
-	BootType             string             `pulumi:"boot_type" json:"boot_type"`
-	CpuTopology          CpuTopology        `pulumi:"cpu_topology" json:"cpu_topology"`
+	URL               string             `pulumi:"url"`
+	Token             string             `pulumi:"token"`
+	CustomerID        string             `pulumi:"customerID"`
+	CloudSpaceID      string             `pulumi:"cloudspace_id"`
+	VirtualMachineID  int                `pulumi:"vm_id" json:"vm_id"`
+	Name              string             `pulumi:"name" json:"name"`
+	Description       string             `pulumi:"description" json:"description"`
+	BootDiskID        int                `pulumi:"boot_disk_id" json:"boot_disk_id"`
+	CloudspaceID      string             `pulumi:"cloudspace_id" json:"cloudspace_id"`
+	Status            string             `pulumi:"status" json:"status"`
+	UpdateTime        float64            `pulumi:"update_time" json:"update_time"`
+	CreationTime      float64            `pulumi:"creation_time" json:"creation_time"`
+	Vcpus             int                `pulumi:"vcpus" json:"vcpus"`
+	Storage           int                `pulumi:"storage" json:"storage"`
+	Memory            int                `pulumi:"memory" json:"memory"`
+	AgentStatus       string             `pulumi:"agent_status" json:"agent_status"`
+	ImageID           int                `pulumi:"image_id" json:"image_id"`
+	Locked            bool               `pulumi:"locked" json:"locked"`
+	StackID           int                `pulumi:"stack_id" json:"stack_id"`
+	ImpactAlertHook   string             `pulumi:"impact_alert_hook,optional" json:"impact_alert_hook"`
+	OsImageName       string             `pulumi:"os_image_name" json:"os_image_name"`
+	Hostname          string             `pulumi:"hostname" json:"hostname"`
+	Disks             []VmDisk           `pulumi:"disks" json:"disks"`
+	OsAccounts        []OsAccount        `pulumi:"os_accounts" json:"os_accounts"`
+	NetworkInterfaces []NetworkInterface `pulumi:"network_interfaces" json:"network_interfaces"`
+	Appliance         bool               `pulumi:"appliance" json:"appliance"`
+	CpusPinStatus     bool               `pulumi:"cpus_pin_status" json:"cpus_pin_status"`
+	BootType          string             `pulumi:"boot_type" json:"boot_type"`
+	CpuTopology       CpuTopology        `pulumi:"cpu_topology" json:"cpu_topology"`
 }
 
 type VirtualMachineArgs struct {

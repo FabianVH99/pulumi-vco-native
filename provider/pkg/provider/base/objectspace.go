@@ -34,16 +34,16 @@ type ObjectSpaceArgs struct {
 	Token            string  `pulumi:"token" provider:"secret"`
 	CustomerID       string  `pulumi:"customerID" provider:"secret"`
 	Location         string  `pulumi:"location"`
-	Name             string  `pulumi:"objectspace_name"`
+	Name             string  `pulumi:"name"`
 	Domain           *string `pulumi:"domain,optional"`
-	CloudspaceID     *string `pulumi:"cloudspaceID,optional"`
+	CloudspaceID     *string `pulumi:"cloudspace_id,optional"`
 	Subnet           *string `pulumi:"subnet,optional"`
-	ExternalNetwork  *int    `pulumi:"externalNetwork,optional"`
-	LetsencryptEmail *string `pulumi:"letsencryptEmail,optional"`
+	ExternalNetwork  *int    `pulumi:"external_network,optional"`
+	LetsencryptEmail *string `pulumi:"letsencrypt_email,optional"`
 	Letsencrypt      *bool   `pulumi:"letsencrypt,optional"`
 }
 
-func (c ObjectSpace) WireDependencies(f infer.FieldSelector, args *ObjectSpaceArgs, state *ObjectSpaceState) {
+func (obj ObjectSpace) WireDependencies(f infer.FieldSelector, args *ObjectSpaceArgs, state *ObjectSpaceState) {
 	f.OutputField(&state.URL).DependsOn(f.InputField(&args.URL))
 	f.OutputField(&state.Token).DependsOn(f.InputField(&args.Token))
 	f.OutputField(&state.CustomerID).DependsOn(f.InputField(&args.CustomerID))

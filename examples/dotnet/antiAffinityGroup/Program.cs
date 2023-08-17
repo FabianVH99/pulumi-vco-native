@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Pulumi;
 using Pulumi.Vco.Base;
 using Pulumi.Vco.Cloudspace;
+using Pulumi.Vco.Anti_affinity_group;
 
 return await Deployment.RunAsync(() =>
 {
@@ -20,7 +21,7 @@ return await Deployment.RunAsync(() =>
        Url = url,
        Token = token,
        CustomerID = customerId,
-       Name = "Pulumi_dotnet_cloudspace",
+       Name = "Pulumi_dotnet_cloudspace_aag",
        Private_network = "192.168.10.0/24",
        Location = location,
        External_network_id = 13,
@@ -28,7 +29,17 @@ return await Deployment.RunAsync(() =>
        Local_domain = "pulumi-domain",
    });
 
-   var virtualMachine = new VirtualMachine("pulumi-vm", new VirtualMachineArgs
+    var antiAffinityGroup = new AntiAffinityGroup("pulumi-antiAffinityGroup", new AntiAffinityGroupArgs
+    {
+        Url = url,
+        Token = token,
+        CustomerID = customerId,
+        Cloudspace_id = cloudspace.Cloudspace_id,
+        Group_id = "Pulumi_AAG_group",
+        Spread = 3,
+    });
+
+    var virtualMachine = new VirtualMachine("pulumi-vm", new VirtualMachineArgs
    {
        Url = url,
        Token = token,
@@ -43,17 +54,17 @@ return await Deployment.RunAsync(() =>
        Boot_type = "bios",
    });
 
-   var antiAffinityGroup = new AntiAffinityGroup("pulumi-antiAffinityGroup", new AntiAffinityGroupArgs
-   {
-       Url = url,
-       Token = token,
-       CustomerID = customerId,
-       Cloudspace_id = cloudspace.Cloudspace_id,
-       Group_id = "Pulumi_AAG_group",
-       Spread = 3,
-   });
+    var antiAffinityGroupVM = new AntiAffinityGroupVM("pulumi-antiAffinityGroupVM", new AntiAffinityGroupVMArgs
+    {
+        Url = url,
+        Token = token,
+        CustomerID = customerId,
+        Cloudspace_id = cloudspace.Cloudspace_id,
+        Group_id = antiAffinityGroup.Group_id,
+        Vm_id = virtualMachine.Vm_id,
+    });
 
-   return new Dictionary<string, object?>
+    return new Dictionary<string, object?>
    {
       ["pulumi-cloudspace.cloudspace_id"] = cloudspace.Cloudspace_id,
       ["pulumi-antiAffinityGroup.group_id"] = antiAffinityGroup.Group_id,
