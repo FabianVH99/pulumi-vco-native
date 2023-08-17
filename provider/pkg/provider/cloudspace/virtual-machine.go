@@ -298,6 +298,7 @@ func (VirtualMachine) Update(ctx p.Context, id string, state VirtualMachineState
 	if preview {
 		return state, nil
 	}
+	state.Token = input.Token
 	return state, nil
 }
 

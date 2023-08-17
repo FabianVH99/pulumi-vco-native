@@ -218,6 +218,7 @@ func (Cloudspace) Update(ctx p.Context, id string, state CloudspaceState, input 
 	if preview {
 		return state, nil
 	}
+	state.Token = input.Token
 	return state, nil
 }
 

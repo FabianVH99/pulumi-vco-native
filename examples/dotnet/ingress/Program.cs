@@ -53,12 +53,19 @@ return await Deployment.RunAsync(() =>
         Cloudspace_id = cloudspace.Cloudspace_id,
         Name = "Pulumi_dotnet_lb",
         Type = "tcp",
-        Port = 
+        Port = 23,
+        Serverpool_id = serverPool.Serverpool_id,
+        Target_port = 23,
+        Ip_address = "127.0.0.1",
+        Is_enabled = true,
+        Domain = "whiteskycloud-2.try-dns.whitesky.cloud",
+        Tls_termination = true,
     });
 
     return new Dictionary<string, object?>
    {
       ["cs_id"] =cloudspace.Cloudspace_id,
       ["sv_id"] = serverPool.Serverpool_id,
+      ["lb_id"] = loadBalancer.Loadbalancer_id,
     };
 });

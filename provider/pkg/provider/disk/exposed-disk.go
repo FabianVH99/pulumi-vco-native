@@ -126,6 +126,7 @@ func (ExposedDisk) Update(ctx p.Context, id string, state ExposedDiskState, inpu
 	if preview {
 		return state, nil
 	}
+	state.Token = input.Token
 	return state, nil
 }
 

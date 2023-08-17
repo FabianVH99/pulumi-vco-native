@@ -203,6 +203,7 @@ func (VirtualMachineNIC) Update(ctx p.Context, id string, state VirtualMachineNI
 	if preview {
 		return state, nil
 	}
+	state.Token = input.Token
 	return state, nil
 }
 

@@ -178,6 +178,7 @@ func (pf PortForward) Update(ctx p.Context, id string, state PortForwardState, i
 	if preview {
 		return state, nil
 	}
+	state.Token = input.Token
 	u, err := url.Parse(fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/portforwards/%s", state.URL, state.CustomerID, state.CloudSpaceID, state.PortForwardID))
 	if err != nil {
 		return state, err

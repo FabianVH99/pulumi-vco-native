@@ -96,6 +96,7 @@ func (ConnectedCloudspace) Update(ctx p.Context, id string, state ConnectedCloud
 	if preview {
 		return state, nil
 	}
+	state.Token = input.Token
 	return state, nil
 }
 

@@ -14,6 +14,7 @@ require (
 	github.com/cloudflare/circl v1.1.0 // indirect
 	github.com/djherbis/times v1.5.0 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
+	github.com/fabianv-cloud/pulumi-vco-native v0.0.39 // indirect
 	github.com/go-git/gcfg v1.5.0 // indirect
 	github.com/go-git/go-billy/v5 v5.4.0 // indirect
 	github.com/go-git/go-git/v5 v5.6.0 // indirect

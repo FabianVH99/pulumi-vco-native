@@ -85,6 +85,7 @@ func (Link) Update(ctx p.Context, id string, state LinkState, input LinkArgs, pr
 	if preview {
 		return state, nil
 	}
+	state.Token = input.Token
 	return state, nil
 }
 

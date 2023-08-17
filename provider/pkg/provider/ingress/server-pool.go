@@ -144,6 +144,7 @@ func (sv ServerPool) Update(ctx p.Context, id string, state ServerPoolState, inp
 	if preview {
 		return state, nil
 	}
+	state.Token = input.Token
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/ingress/server-pools/%s?name=%s&description=%s", state.URL, state.CustomerID, state.CloudSpaceID, state.ServerPoolID, input.Name, input.Description)
 
 	client := &http.Client{}

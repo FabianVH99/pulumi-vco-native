@@ -142,6 +142,7 @@ func (VirtualMachineCD) Update(ctx p.Context, id string, state VirtualMachineCDS
 	if preview {
 		return state, nil
 	}
+	state.Token = input.Token
 	return state, nil
 }
 

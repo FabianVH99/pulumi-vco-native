@@ -96,6 +96,7 @@ func (ex ExternalNetwork) Update(ctx p.Context, id string, state ExternalNetwork
 	if preview {
 		return state, nil
 	}
+	state.Token = input.Token
 	url := fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/external-networks?external_network_id=%s&external_network_type=%s&metric=%d&external_network_ip=%s", state.URL, state.CustomerID, state.CloudSpaceID, input.ExternalNetworkID, state.ExternalNetworkType, input.Metric, input.ExternalNetworkIP)
 
 	client := &http.Client{}

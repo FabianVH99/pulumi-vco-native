@@ -150,6 +150,7 @@ func (AntiAffinityGroupVM) Update(ctx p.Context, id string, state AntiAffinityGr
 	if preview {
 		return state, nil
 	}
+	state.Token = input.Token
 	return state, nil
 }
 
