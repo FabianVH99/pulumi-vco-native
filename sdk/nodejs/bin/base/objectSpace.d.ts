@@ -15,13 +15,13 @@ export declare class ObjectSpace extends pulumi.CustomResource {
      */
     static isInstance(obj: any): obj is ObjectSpace;
     readonly access_key: pulumi.Output<string | undefined>;
-    readonly cloudspaceID: pulumi.Output<string | undefined>;
+    readonly cloudspace_id: pulumi.Output<string | undefined>;
     readonly creation_time: pulumi.Output<string>;
     readonly customerID: pulumi.Output<string>;
     readonly domain: pulumi.Output<string | undefined>;
-    readonly externalNetwork: pulumi.Output<number | undefined>;
+    readonly external_network: pulumi.Output<number | undefined>;
     readonly letsencrypt: pulumi.Output<boolean | undefined>;
-    readonly letsencryptEmail: pulumi.Output<string | undefined>;
+    readonly letsencrypt_email: pulumi.Output<string | undefined>;
     readonly location: pulumi.Output<string>;
     readonly objectspace_id: pulumi.Output<string>;
     readonly objectspace_name: pulumi.Output<string>;
@@ -44,14 +44,14 @@ export declare class ObjectSpace extends pulumi.CustomResource {
  * The set of arguments for constructing a ObjectSpace resource.
  */
 export interface ObjectSpaceArgs {
-    cloudspaceID?: pulumi.Input<string>;
+    cloudspace_id?: pulumi.Input<string>;
     customerID: pulumi.Input<string>;
     domain?: pulumi.Input<string>;
-    externalNetwork?: pulumi.Input<number>;
+    external_network?: pulumi.Input<number>;
     letsencrypt?: pulumi.Input<boolean>;
-    letsencryptEmail?: pulumi.Input<string>;
+    letsencrypt_email?: pulumi.Input<string>;
     location: pulumi.Input<string>;
-    objectspace_name: pulumi.Input<string>;
+    name: pulumi.Input<string>;
     subnet?: pulumi.Input<string>;
     token: pulumi.Input<string>;
     url: pulumi.Input<string>;

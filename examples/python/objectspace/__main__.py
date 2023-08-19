@@ -31,7 +31,7 @@ pulumi_objectspace = base.ObjectSpace("Python-objectspace", base.ObjectSpaceArgs
     objectspace_name="pulumi_python_objectspace",
 ))
 
-pulumi_objectspaceLink = objectspace.Link("Python-cloudspace", objectspace.LinkArgs(
+pulumi_objectspaceLink = objectspace.Link("Python-link", objectspace.LinkArgs(
     url= pulumi_url,
     customer_id=pulumi_customerId,
     token=pulumi_token,

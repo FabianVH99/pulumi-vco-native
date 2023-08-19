@@ -15,14 +15,14 @@ export declare class ReverseProxy extends pulumi.CustomResource {
      * when multiple copies of the Pulumi SDK have been loaded into the same process.
      */
     static isInstance(obj: any): obj is ReverseProxy;
-    readonly back_end: pulumi.Output<outputs.ingress.ReverseProxyBackend>;
+    readonly back_end: pulumi.Output<outputs.ingress.ReverseProxyBackend | undefined>;
     readonly cloudspace_id: pulumi.Output<string>;
     readonly customerID: pulumi.Output<string>;
     readonly description: pulumi.Output<string | undefined>;
     readonly domain: pulumi.Output<string>;
-    readonly email: pulumi.Output<string>;
+    readonly email: pulumi.Output<string | undefined>;
     readonly enabled: pulumi.Output<boolean>;
-    readonly front_end: pulumi.Output<outputs.ingress.ReverseProxyFrontEnd>;
+    readonly front_end: pulumi.Output<outputs.ingress.ReverseProxyFrontEnd | undefined>;
     readonly health_check_scheme: pulumi.Output<string | undefined>;
     readonly http_only: pulumi.Output<boolean | undefined>;
     readonly http_port: pulumi.Output<number | undefined>;
@@ -60,7 +60,7 @@ export interface ReverseProxyArgs {
     customerID: pulumi.Input<string>;
     description?: pulumi.Input<string>;
     domain: pulumi.Input<string>;
-    email: pulumi.Input<string>;
+    email?: pulumi.Input<string>;
     enabled: pulumi.Input<boolean>;
     health_check_scheme?: pulumi.Input<string>;
     http_only?: pulumi.Input<boolean>;

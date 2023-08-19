@@ -13,7 +13,7 @@ namespace Pulumi.Vco.Ingress
     public partial class LoadBalancer : global::Pulumi.CustomResource
     {
         [Output("back_end")]
-        public Output<Outputs.BackEnd> Back_end { get; private set; } = null!;
+        public Output<Outputs.BackEnd?> Back_end { get; private set; } = null!;
 
         [Output("cloudspace_id")]
         public Output<string> Cloudspace_id { get; private set; } = null!;
@@ -28,7 +28,7 @@ namespace Pulumi.Vco.Ingress
         public Output<string?> Domain { get; private set; } = null!;
 
         [Output("front_end")]
-        public Output<Outputs.FrontEnd> Front_end { get; private set; } = null!;
+        public Output<Outputs.FrontEnd?> Front_end { get; private set; } = null!;
 
         [Output("ip_address")]
         public Output<string?> Ip_address { get; private set; } = null!;

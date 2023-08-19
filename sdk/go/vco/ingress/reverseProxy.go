@@ -15,34 +15,34 @@ import (
 type ReverseProxy struct {
 	pulumi.CustomResourceState
 
-	Back_end            ReverseProxyBackendOutput  `pulumi:"back_end"`
-	Cloudspace_id       pulumi.StringOutput        `pulumi:"cloudspace_id"`
-	CustomerID          pulumi.StringOutput        `pulumi:"customerID"`
-	Description         pulumi.StringPtrOutput     `pulumi:"description"`
-	Domain              pulumi.StringOutput        `pulumi:"domain"`
-	Email               pulumi.StringOutput        `pulumi:"email"`
-	Enabled             pulumi.BoolOutput          `pulumi:"enabled"`
-	Front_end           ReverseProxyFrontEndOutput `pulumi:"front_end"`
-	Health_check_scheme pulumi.StringPtrOutput     `pulumi:"health_check_scheme"`
-	Http_only           pulumi.BoolPtrOutput       `pulumi:"http_only"`
-	Http_port           pulumi.IntPtrOutput        `pulumi:"http_port"`
-	Https_port          pulumi.IntPtrOutput        `pulumi:"https_port"`
-	Interval            pulumi.IntPtrOutput        `pulumi:"interval"`
-	Ip_address          pulumi.StringPtrOutput     `pulumi:"ip_address"`
-	Name                pulumi.StringOutput        `pulumi:"name"`
-	Path                pulumi.StringPtrOutput     `pulumi:"path"`
-	Port                pulumi.IntPtrOutput        `pulumi:"port"`
-	Reverseproxy_id     pulumi.StringOutput        `pulumi:"reverseproxy_id"`
-	Same_site           pulumi.StringPtrOutput     `pulumi:"same_site"`
-	Scheme              pulumi.StringOutput        `pulumi:"scheme"`
-	Secure              pulumi.BoolPtrOutput       `pulumi:"secure"`
-	Serverpool_id       pulumi.StringOutput        `pulumi:"serverpool_id"`
-	StickySession_name  pulumi.StringPtrOutput     `pulumi:"stickySession_name"`
-	Target_port         pulumi.IntOutput           `pulumi:"target_port"`
-	Timeout             pulumi.IntPtrOutput        `pulumi:"timeout"`
-	Token               pulumi.StringOutput        `pulumi:"token"`
-	Type                pulumi.StringOutput        `pulumi:"type"`
-	Url                 pulumi.StringOutput        `pulumi:"url"`
+	Back_end            ReverseProxyBackendPtrOutput  `pulumi:"back_end"`
+	Cloudspace_id       pulumi.StringOutput           `pulumi:"cloudspace_id"`
+	CustomerID          pulumi.StringOutput           `pulumi:"customerID"`
+	Description         pulumi.StringPtrOutput        `pulumi:"description"`
+	Domain              pulumi.StringOutput           `pulumi:"domain"`
+	Email               pulumi.StringPtrOutput        `pulumi:"email"`
+	Enabled             pulumi.BoolOutput             `pulumi:"enabled"`
+	Front_end           ReverseProxyFrontEndPtrOutput `pulumi:"front_end"`
+	Health_check_scheme pulumi.StringPtrOutput        `pulumi:"health_check_scheme"`
+	Http_only           pulumi.BoolPtrOutput          `pulumi:"http_only"`
+	Http_port           pulumi.IntPtrOutput           `pulumi:"http_port"`
+	Https_port          pulumi.IntPtrOutput           `pulumi:"https_port"`
+	Interval            pulumi.IntPtrOutput           `pulumi:"interval"`
+	Ip_address          pulumi.StringPtrOutput        `pulumi:"ip_address"`
+	Name                pulumi.StringOutput           `pulumi:"name"`
+	Path                pulumi.StringPtrOutput        `pulumi:"path"`
+	Port                pulumi.IntPtrOutput           `pulumi:"port"`
+	Reverseproxy_id     pulumi.StringOutput           `pulumi:"reverseproxy_id"`
+	Same_site           pulumi.StringPtrOutput        `pulumi:"same_site"`
+	Scheme              pulumi.StringOutput           `pulumi:"scheme"`
+	Secure              pulumi.BoolPtrOutput          `pulumi:"secure"`
+	Serverpool_id       pulumi.StringOutput           `pulumi:"serverpool_id"`
+	StickySession_name  pulumi.StringPtrOutput        `pulumi:"stickySession_name"`
+	Target_port         pulumi.IntOutput              `pulumi:"target_port"`
+	Timeout             pulumi.IntPtrOutput           `pulumi:"timeout"`
+	Token               pulumi.StringOutput           `pulumi:"token"`
+	Type                pulumi.StringOutput           `pulumi:"type"`
+	Url                 pulumi.StringOutput           `pulumi:"url"`
 }
 
 // NewReverseProxy registers a new resource with the given unique name, arguments, and options.
@@ -60,9 +60,6 @@ func NewReverseProxy(ctx *pulumi.Context,
 	}
 	if args.Domain == nil {
 		return nil, errors.New("invalid value for required argument 'Domain'")
-	}
-	if args.Email == nil {
-		return nil, errors.New("invalid value for required argument 'Email'")
 	}
 	if args.Enabled == nil {
 		return nil, errors.New("invalid value for required argument 'Enabled'")
@@ -131,7 +128,7 @@ type reverseProxyArgs struct {
 	CustomerID          string  `pulumi:"customerID"`
 	Description         *string `pulumi:"description"`
 	Domain              string  `pulumi:"domain"`
-	Email               string  `pulumi:"email"`
+	Email               *string `pulumi:"email"`
 	Enabled             bool    `pulumi:"enabled"`
 	Health_check_scheme *string `pulumi:"health_check_scheme"`
 	Http_only           *bool   `pulumi:"http_only"`
@@ -159,7 +156,7 @@ type ReverseProxyArgs struct {
 	CustomerID          pulumi.StringInput
 	Description         pulumi.StringPtrInput
 	Domain              pulumi.StringInput
-	Email               pulumi.StringInput
+	Email               pulumi.StringPtrInput
 	Enabled             pulumi.BoolInput
 	Health_check_scheme pulumi.StringPtrInput
 	Http_only           pulumi.BoolPtrInput
@@ -268,8 +265,8 @@ func (o ReverseProxyOutput) ToReverseProxyOutputWithContext(ctx context.Context)
 	return o
 }
 
-func (o ReverseProxyOutput) Back_end() ReverseProxyBackendOutput {
-	return o.ApplyT(func(v *ReverseProxy) ReverseProxyBackendOutput { return v.Back_end }).(ReverseProxyBackendOutput)
+func (o ReverseProxyOutput) Back_end() ReverseProxyBackendPtrOutput {
+	return o.ApplyT(func(v *ReverseProxy) ReverseProxyBackendPtrOutput { return v.Back_end }).(ReverseProxyBackendPtrOutput)
 }
 
 func (o ReverseProxyOutput) Cloudspace_id() pulumi.StringOutput {
@@ -288,16 +285,16 @@ func (o ReverseProxyOutput) Domain() pulumi.StringOutput {
 	return o.ApplyT(func(v *ReverseProxy) pulumi.StringOutput { return v.Domain }).(pulumi.StringOutput)
 }
 
-func (o ReverseProxyOutput) Email() pulumi.StringOutput {
-	return o.ApplyT(func(v *ReverseProxy) pulumi.StringOutput { return v.Email }).(pulumi.StringOutput)
+func (o ReverseProxyOutput) Email() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ReverseProxy) pulumi.StringPtrOutput { return v.Email }).(pulumi.StringPtrOutput)
 }
 
 func (o ReverseProxyOutput) Enabled() pulumi.BoolOutput {
 	return o.ApplyT(func(v *ReverseProxy) pulumi.BoolOutput { return v.Enabled }).(pulumi.BoolOutput)
 }
 
-func (o ReverseProxyOutput) Front_end() ReverseProxyFrontEndOutput {
-	return o.ApplyT(func(v *ReverseProxy) ReverseProxyFrontEndOutput { return v.Front_end }).(ReverseProxyFrontEndOutput)
+func (o ReverseProxyOutput) Front_end() ReverseProxyFrontEndPtrOutput {
+	return o.ApplyT(func(v *ReverseProxy) ReverseProxyFrontEndPtrOutput { return v.Front_end }).(ReverseProxyFrontEndPtrOutput)
 }
 
 func (o ReverseProxyOutput) Health_check_scheme() pulumi.StringPtrOutput {

@@ -402,7 +402,6 @@ class VirtualMachine(pulumi.CustomResource):
                 raise TypeError("Missing required property 'vcpus'")
             __props__.__dict__["vcpus"] = vcpus
             __props__.__dict__["agent_status"] = None
-            __props__.__dict__["anti_affinity_group_ids"] = None
             __props__.__dict__["appliance"] = None
             __props__.__dict__["cpu_topology"] = None
             __props__.__dict__["cpus_pin_status"] = None
@@ -444,7 +443,6 @@ class VirtualMachine(pulumi.CustomResource):
         __props__.__dict__["acronis"] = None
         __props__.__dict__["agent_status"] = None
         __props__.__dict__["all_vm_disks"] = None
-        __props__.__dict__["anti_affinity_group_ids"] = None
         __props__.__dict__["appliance"] = None
         __props__.__dict__["boot_disk_id"] = None
         __props__.__dict__["boot_type"] = None
@@ -497,11 +495,6 @@ class VirtualMachine(pulumi.CustomResource):
     @pulumi.getter
     def all_vm_disks(self) -> pulumi.Output[Optional[bool]]:
         return pulumi.get(self, "all_vm_disks")
-
-    @property
-    @pulumi.getter
-    def anti_affinity_group_ids(self) -> pulumi.Output[Optional[Sequence[str]]]:
-        return pulumi.get(self, "anti_affinity_group_ids")
 
     @property
     @pulumi.getter

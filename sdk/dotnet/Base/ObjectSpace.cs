@@ -15,8 +15,8 @@ namespace Pulumi.Vco.Base
         [Output("access_key")]
         public Output<string?> Access_key { get; private set; } = null!;
 
-        [Output("cloudspaceID")]
-        public Output<string?> CloudspaceID { get; private set; } = null!;
+        [Output("cloudspace_id")]
+        public Output<string?> Cloudspace_id { get; private set; } = null!;
 
         [Output("creation_time")]
         public Output<string> Creation_time { get; private set; } = null!;
@@ -27,14 +27,14 @@ namespace Pulumi.Vco.Base
         [Output("domain")]
         public Output<string?> Domain { get; private set; } = null!;
 
-        [Output("externalNetwork")]
-        public Output<int?> ExternalNetwork { get; private set; } = null!;
+        [Output("external_network")]
+        public Output<int?> External_network { get; private set; } = null!;
 
         [Output("letsencrypt")]
         public Output<bool?> Letsencrypt { get; private set; } = null!;
 
-        [Output("letsencryptEmail")]
-        public Output<string?> LetsencryptEmail { get; private set; } = null!;
+        [Output("letsencrypt_email")]
+        public Output<string?> Letsencrypt_email { get; private set; } = null!;
 
         [Output("location")]
         public Output<string> Location { get; private set; } = null!;
@@ -108,8 +108,8 @@ namespace Pulumi.Vco.Base
 
     public sealed class ObjectSpaceArgs : global::Pulumi.ResourceArgs
     {
-        [Input("cloudspaceID")]
-        public Input<string>? CloudspaceID { get; set; }
+        [Input("cloudspace_id")]
+        public Input<string>? Cloudspace_id { get; set; }
 
         [Input("customerID", required: true)]
         private Input<string>? _customerID;
@@ -126,20 +126,20 @@ namespace Pulumi.Vco.Base
         [Input("domain")]
         public Input<string>? Domain { get; set; }
 
-        [Input("externalNetwork")]
-        public Input<int>? ExternalNetwork { get; set; }
+        [Input("external_network")]
+        public Input<int>? External_network { get; set; }
 
         [Input("letsencrypt")]
         public Input<bool>? Letsencrypt { get; set; }
 
-        [Input("letsencryptEmail")]
-        public Input<string>? LetsencryptEmail { get; set; }
+        [Input("letsencrypt_email")]
+        public Input<string>? Letsencrypt_email { get; set; }
 
         [Input("location", required: true)]
         public Input<string> Location { get; set; } = null!;
 
-        [Input("objectspace_name", required: true)]
-        public Input<string> Objectspace_name { get; set; } = null!;
+        [Input("name", required: true)]
+        public Input<string> Name { get; set; } = null!;
 
         [Input("subnet")]
         public Input<string>? Subnet { get; set; }

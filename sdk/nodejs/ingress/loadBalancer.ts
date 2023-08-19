@@ -33,12 +33,12 @@ export class LoadBalancer extends pulumi.CustomResource {
         return obj['__pulumiType'] === LoadBalancer.__pulumiType;
     }
 
-    public /*out*/ readonly back_end!: pulumi.Output<outputs.ingress.BackEnd>;
+    public /*out*/ readonly back_end!: pulumi.Output<outputs.ingress.BackEnd | undefined>;
     public readonly cloudspace_id!: pulumi.Output<string>;
     public readonly customerID!: pulumi.Output<string>;
     public readonly description!: pulumi.Output<string | undefined>;
     public readonly domain!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly front_end!: pulumi.Output<outputs.ingress.FrontEnd>;
+    public /*out*/ readonly front_end!: pulumi.Output<outputs.ingress.FrontEnd | undefined>;
     public readonly ip_address!: pulumi.Output<string | undefined>;
     public readonly is_enabled!: pulumi.Output<boolean | undefined>;
     public /*out*/ readonly loadbalancer_id!: pulumi.Output<string>;

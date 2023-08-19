@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pulumi-vco
-Version: 0.0.39+dirty
+Version: 0.0.41a1692314989+dirty
 Summary: The Whitesky.Cloud Vco Provider for Pulumi enables you to manipulate resources in the vco portal.
 Home-page: https://whitesky.cloud/
 License: UNKNOWN

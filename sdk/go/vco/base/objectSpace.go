@@ -15,23 +15,23 @@ import (
 type ObjectSpace struct {
 	pulumi.CustomResourceState
 
-	Access_key       pulumi.StringPtrOutput `pulumi:"access_key"`
-	CloudspaceID     pulumi.StringPtrOutput `pulumi:"cloudspaceID"`
-	Creation_time    pulumi.StringOutput    `pulumi:"creation_time"`
-	CustomerID       pulumi.StringOutput    `pulumi:"customerID"`
-	Domain           pulumi.StringPtrOutput `pulumi:"domain"`
-	ExternalNetwork  pulumi.IntPtrOutput    `pulumi:"externalNetwork"`
-	Letsencrypt      pulumi.BoolPtrOutput   `pulumi:"letsencrypt"`
-	LetsencryptEmail pulumi.StringPtrOutput `pulumi:"letsencryptEmail"`
-	Location         pulumi.StringOutput    `pulumi:"location"`
-	Objectspace_id   pulumi.StringOutput    `pulumi:"objectspace_id"`
-	Objectspace_name pulumi.StringOutput    `pulumi:"objectspace_name"`
-	Secret           pulumi.StringPtrOutput `pulumi:"secret"`
-	Status           pulumi.StringOutput    `pulumi:"status"`
-	Subnet           pulumi.StringPtrOutput `pulumi:"subnet"`
-	Token            pulumi.StringOutput    `pulumi:"token"`
-	Update_time      pulumi.StringOutput    `pulumi:"update_time"`
-	Url              pulumi.StringOutput    `pulumi:"url"`
+	Access_key        pulumi.StringPtrOutput `pulumi:"access_key"`
+	Cloudspace_id     pulumi.StringPtrOutput `pulumi:"cloudspace_id"`
+	Creation_time     pulumi.StringOutput    `pulumi:"creation_time"`
+	CustomerID        pulumi.StringOutput    `pulumi:"customerID"`
+	Domain            pulumi.StringPtrOutput `pulumi:"domain"`
+	External_network  pulumi.IntPtrOutput    `pulumi:"external_network"`
+	Letsencrypt       pulumi.BoolPtrOutput   `pulumi:"letsencrypt"`
+	Letsencrypt_email pulumi.StringPtrOutput `pulumi:"letsencrypt_email"`
+	Location          pulumi.StringOutput    `pulumi:"location"`
+	Objectspace_id    pulumi.StringOutput    `pulumi:"objectspace_id"`
+	Objectspace_name  pulumi.StringOutput    `pulumi:"objectspace_name"`
+	Secret            pulumi.StringPtrOutput `pulumi:"secret"`
+	Status            pulumi.StringOutput    `pulumi:"status"`
+	Subnet            pulumi.StringPtrOutput `pulumi:"subnet"`
+	Token             pulumi.StringOutput    `pulumi:"token"`
+	Update_time       pulumi.StringOutput    `pulumi:"update_time"`
+	Url               pulumi.StringOutput    `pulumi:"url"`
 }
 
 // NewObjectSpace registers a new resource with the given unique name, arguments, and options.
@@ -47,8 +47,8 @@ func NewObjectSpace(ctx *pulumi.Context,
 	if args.Location == nil {
 		return nil, errors.New("invalid value for required argument 'Location'")
 	}
-	if args.Objectspace_name == nil {
-		return nil, errors.New("invalid value for required argument 'Objectspace_name'")
+	if args.Name == nil {
+		return nil, errors.New("invalid value for required argument 'Name'")
 	}
 	if args.Token == nil {
 		return nil, errors.New("invalid value for required argument 'Token'")
@@ -98,32 +98,32 @@ func (ObjectSpaceState) ElementType() reflect.Type {
 }
 
 type objectSpaceArgs struct {
-	CloudspaceID     *string `pulumi:"cloudspaceID"`
-	CustomerID       string  `pulumi:"customerID"`
-	Domain           *string `pulumi:"domain"`
-	ExternalNetwork  *int    `pulumi:"externalNetwork"`
-	Letsencrypt      *bool   `pulumi:"letsencrypt"`
-	LetsencryptEmail *string `pulumi:"letsencryptEmail"`
-	Location         string  `pulumi:"location"`
-	Objectspace_name string  `pulumi:"objectspace_name"`
-	Subnet           *string `pulumi:"subnet"`
-	Token            string  `pulumi:"token"`
-	Url              string  `pulumi:"url"`
+	Cloudspace_id     *string `pulumi:"cloudspace_id"`
+	CustomerID        string  `pulumi:"customerID"`
+	Domain            *string `pulumi:"domain"`
+	External_network  *int    `pulumi:"external_network"`
+	Letsencrypt       *bool   `pulumi:"letsencrypt"`
+	Letsencrypt_email *string `pulumi:"letsencrypt_email"`
+	Location          string  `pulumi:"location"`
+	Name              string  `pulumi:"name"`
+	Subnet            *string `pulumi:"subnet"`
+	Token             string  `pulumi:"token"`
+	Url               string  `pulumi:"url"`
 }
 
 // The set of arguments for constructing a ObjectSpace resource.
 type ObjectSpaceArgs struct {
-	CloudspaceID     pulumi.StringPtrInput
-	CustomerID       pulumi.StringInput
-	Domain           pulumi.StringPtrInput
-	ExternalNetwork  pulumi.IntPtrInput
-	Letsencrypt      pulumi.BoolPtrInput
-	LetsencryptEmail pulumi.StringPtrInput
-	Location         pulumi.StringInput
-	Objectspace_name pulumi.StringInput
-	Subnet           pulumi.StringPtrInput
-	Token            pulumi.StringInput
-	Url              pulumi.StringInput
+	Cloudspace_id     pulumi.StringPtrInput
+	CustomerID        pulumi.StringInput
+	Domain            pulumi.StringPtrInput
+	External_network  pulumi.IntPtrInput
+	Letsencrypt       pulumi.BoolPtrInput
+	Letsencrypt_email pulumi.StringPtrInput
+	Location          pulumi.StringInput
+	Name              pulumi.StringInput
+	Subnet            pulumi.StringPtrInput
+	Token             pulumi.StringInput
+	Url               pulumi.StringInput
 }
 
 func (ObjectSpaceArgs) ElementType() reflect.Type {
@@ -217,8 +217,8 @@ func (o ObjectSpaceOutput) Access_key() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *ObjectSpace) pulumi.StringPtrOutput { return v.Access_key }).(pulumi.StringPtrOutput)
 }
 
-func (o ObjectSpaceOutput) CloudspaceID() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ObjectSpace) pulumi.StringPtrOutput { return v.CloudspaceID }).(pulumi.StringPtrOutput)
+func (o ObjectSpaceOutput) Cloudspace_id() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ObjectSpace) pulumi.StringPtrOutput { return v.Cloudspace_id }).(pulumi.StringPtrOutput)
 }
 
 func (o ObjectSpaceOutput) Creation_time() pulumi.StringOutput {
@@ -233,16 +233,16 @@ func (o ObjectSpaceOutput) Domain() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *ObjectSpace) pulumi.StringPtrOutput { return v.Domain }).(pulumi.StringPtrOutput)
 }
 
-func (o ObjectSpaceOutput) ExternalNetwork() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *ObjectSpace) pulumi.IntPtrOutput { return v.ExternalNetwork }).(pulumi.IntPtrOutput)
+func (o ObjectSpaceOutput) External_network() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *ObjectSpace) pulumi.IntPtrOutput { return v.External_network }).(pulumi.IntPtrOutput)
 }
 
 func (o ObjectSpaceOutput) Letsencrypt() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *ObjectSpace) pulumi.BoolPtrOutput { return v.Letsencrypt }).(pulumi.BoolPtrOutput)
 }
 
-func (o ObjectSpaceOutput) LetsencryptEmail() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ObjectSpace) pulumi.StringPtrOutput { return v.LetsencryptEmail }).(pulumi.StringPtrOutput)
+func (o ObjectSpaceOutput) Letsencrypt_email() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ObjectSpace) pulumi.StringPtrOutput { return v.Letsencrypt_email }).(pulumi.StringPtrOutput)
 }
 
 func (o ObjectSpaceOutput) Location() pulumi.StringOutput {

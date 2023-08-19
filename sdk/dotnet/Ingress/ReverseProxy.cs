@@ -13,7 +13,7 @@ namespace Pulumi.Vco.Ingress
     public partial class ReverseProxy : global::Pulumi.CustomResource
     {
         [Output("back_end")]
-        public Output<Outputs.ReverseProxyBackend> Back_end { get; private set; } = null!;
+        public Output<Outputs.ReverseProxyBackend?> Back_end { get; private set; } = null!;
 
         [Output("cloudspace_id")]
         public Output<string> Cloudspace_id { get; private set; } = null!;
@@ -28,13 +28,13 @@ namespace Pulumi.Vco.Ingress
         public Output<string> Domain { get; private set; } = null!;
 
         [Output("email")]
-        public Output<string> Email { get; private set; } = null!;
+        public Output<string?> Email { get; private set; } = null!;
 
         [Output("enabled")]
         public Output<bool> Enabled { get; private set; } = null!;
 
         [Output("front_end")]
-        public Output<Outputs.ReverseProxyFrontEnd> Front_end { get; private set; } = null!;
+        public Output<Outputs.ReverseProxyFrontEnd?> Front_end { get; private set; } = null!;
 
         [Output("health_check_scheme")]
         public Output<string?> Health_check_scheme { get; private set; } = null!;
@@ -162,8 +162,8 @@ namespace Pulumi.Vco.Ingress
         [Input("domain", required: true)]
         public Input<string> Domain { get; set; } = null!;
 
-        [Input("email", required: true)]
-        public Input<string> Email { get; set; } = null!;
+        [Input("email")]
+        public Input<string>? Email { get; set; }
 
         [Input("enabled", required: true)]
         public Input<bool> Enabled { get; set; } = null!;

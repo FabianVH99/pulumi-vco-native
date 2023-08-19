@@ -15,12 +15,12 @@ import (
 type LoadBalancer struct {
 	pulumi.CustomResourceState
 
-	Back_end        BackEndOutput          `pulumi:"back_end"`
+	Back_end        BackEndPtrOutput       `pulumi:"back_end"`
 	Cloudspace_id   pulumi.StringOutput    `pulumi:"cloudspace_id"`
 	CustomerID      pulumi.StringOutput    `pulumi:"customerID"`
 	Description     pulumi.StringPtrOutput `pulumi:"description"`
 	Domain          pulumi.StringPtrOutput `pulumi:"domain"`
-	Front_end       FrontEndOutput         `pulumi:"front_end"`
+	Front_end       FrontEndPtrOutput      `pulumi:"front_end"`
 	Ip_address      pulumi.StringPtrOutput `pulumi:"ip_address"`
 	Is_enabled      pulumi.BoolPtrOutput   `pulumi:"is_enabled"`
 	Loadbalancer_id pulumi.StringOutput    `pulumi:"loadbalancer_id"`
@@ -231,8 +231,8 @@ func (o LoadBalancerOutput) ToLoadBalancerOutputWithContext(ctx context.Context)
 	return o
 }
 
-func (o LoadBalancerOutput) Back_end() BackEndOutput {
-	return o.ApplyT(func(v *LoadBalancer) BackEndOutput { return v.Back_end }).(BackEndOutput)
+func (o LoadBalancerOutput) Back_end() BackEndPtrOutput {
+	return o.ApplyT(func(v *LoadBalancer) BackEndPtrOutput { return v.Back_end }).(BackEndPtrOutput)
 }
 
 func (o LoadBalancerOutput) Cloudspace_id() pulumi.StringOutput {
@@ -251,8 +251,8 @@ func (o LoadBalancerOutput) Domain() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *LoadBalancer) pulumi.StringPtrOutput { return v.Domain }).(pulumi.StringPtrOutput)
 }
 
-func (o LoadBalancerOutput) Front_end() FrontEndOutput {
-	return o.ApplyT(func(v *LoadBalancer) FrontEndOutput { return v.Front_end }).(FrontEndOutput)
+func (o LoadBalancerOutput) Front_end() FrontEndPtrOutput {
+	return o.ApplyT(func(v *LoadBalancer) FrontEndPtrOutput { return v.Front_end }).(FrontEndPtrOutput)
 }
 
 func (o LoadBalancerOutput) Ip_address() pulumi.StringPtrOutput {

@@ -13,16 +13,16 @@ namespace Pulumi.Vco.Ingress.Outputs
     [OutputType]
     public sealed class ReverseProxyFrontEnd
     {
-        public readonly string Domain;
+        public readonly string? Domain;
         public readonly int? Http_port;
         public readonly int? Https_port;
         public readonly string? Ip_address;
-        public readonly Outputs.LetsEncrypt Letsencrypt;
+        public readonly Outputs.LetsEncrypt? Letsencrypt;
         public readonly string Scheme;
 
         [OutputConstructor]
         private ReverseProxyFrontEnd(
-            string domain,
+            string? domain,
 
             int? http_port,
 
@@ -30,7 +30,7 @@ namespace Pulumi.Vco.Ingress.Outputs
 
             string? ip_address,
 
-            Outputs.LetsEncrypt letsencrypt,
+            Outputs.LetsEncrypt? letsencrypt,
 
             string scheme)
         {

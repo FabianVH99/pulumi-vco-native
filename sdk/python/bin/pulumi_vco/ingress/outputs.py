@@ -126,19 +126,21 @@ class HealthCheck(dict):
 @pulumi.output_type
 class LetsEncrypt(dict):
     def __init__(__self__, *,
-                 email: str,
-                 enabled: bool):
-        pulumi.set(__self__, "email", email)
-        pulumi.set(__self__, "enabled", enabled)
+                 email: Optional[str] = None,
+                 enabled: Optional[bool] = None):
+        if email is not None:
+            pulumi.set(__self__, "email", email)
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
 
     @property
     @pulumi.getter
-    def email(self) -> str:
+    def email(self) -> Optional[str]:
         return pulumi.get(self, "email")
 
     @property
     @pulumi.getter
-    def enabled(self) -> bool:
+    def enabled(self) -> Optional[bool]:
         return pulumi.get(self, "enabled")
 
 
@@ -200,36 +202,33 @@ class ReverseProxyBackend(dict):
 @pulumi.output_type
 class ReverseProxyFrontEnd(dict):
     def __init__(__self__, *,
-                 domain: str,
-                 letsencrypt: 'outputs.LetsEncrypt',
                  scheme: str,
+                 domain: Optional[str] = None,
                  http_port: Optional[int] = None,
                  https_port: Optional[int] = None,
-                 ip_address: Optional[str] = None):
-        pulumi.set(__self__, "domain", domain)
-        pulumi.set(__self__, "letsencrypt", letsencrypt)
+                 ip_address: Optional[str] = None,
+                 letsencrypt: Optional['outputs.LetsEncrypt'] = None):
         pulumi.set(__self__, "scheme", scheme)
+        if domain is not None:
+            pulumi.set(__self__, "domain", domain)
         if http_port is not None:
             pulumi.set(__self__, "http_port", http_port)
         if https_port is not None:
             pulumi.set(__self__, "https_port", https_port)
         if ip_address is not None:
             pulumi.set(__self__, "ip_address", ip_address)
-
-    @property
-    @pulumi.getter
-    def domain(self) -> str:
-        return pulumi.get(self, "domain")
-
-    @property
-    @pulumi.getter
-    def letsencrypt(self) -> 'outputs.LetsEncrypt':
-        return pulumi.get(self, "letsencrypt")
+        if letsencrypt is not None:
+            pulumi.set(__self__, "letsencrypt", letsencrypt)
 
     @property
     @pulumi.getter
     def scheme(self) -> str:
         return pulumi.get(self, "scheme")
+
+    @property
+    @pulumi.getter
+    def domain(self) -> Optional[str]:
+        return pulumi.get(self, "domain")
 
     @property
     @pulumi.getter
@@ -245,6 +244,11 @@ class ReverseProxyFrontEnd(dict):
     @pulumi.getter
     def ip_address(self) -> Optional[str]:
         return pulumi.get(self, "ip_address")
+
+    @property
+    @pulumi.getter
+    def letsencrypt(self) -> Optional['outputs.LetsEncrypt']:
+        return pulumi.get(self, "letsencrypt")
 
 
 @pulumi.output_type

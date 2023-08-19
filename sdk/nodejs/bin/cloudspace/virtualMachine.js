@@ -85,7 +85,6 @@ class VirtualMachine extends pulumi.CustomResource {
             resourceInputs["user_data"] = args ? args.user_data : undefined;
             resourceInputs["vcpus"] = args ? args.vcpus : undefined;
             resourceInputs["agent_status"] = undefined /*out*/;
-            resourceInputs["anti_affinity_group_ids"] = undefined /*out*/;
             resourceInputs["appliance"] = undefined /*out*/;
             resourceInputs["cpu_topology"] = undefined /*out*/;
             resourceInputs["cpus_pin_status"] = undefined /*out*/;
@@ -107,7 +106,6 @@ class VirtualMachine extends pulumi.CustomResource {
             resourceInputs["acronis"] = undefined /*out*/;
             resourceInputs["agent_status"] = undefined /*out*/;
             resourceInputs["all_vm_disks"] = undefined /*out*/;
-            resourceInputs["anti_affinity_group_ids"] = undefined /*out*/;
             resourceInputs["appliance"] = undefined /*out*/;
             resourceInputs["boot_disk_id"] = undefined /*out*/;
             resourceInputs["boot_type"] = undefined /*out*/;

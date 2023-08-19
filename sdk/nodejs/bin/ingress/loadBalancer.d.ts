@@ -15,12 +15,12 @@ export declare class LoadBalancer extends pulumi.CustomResource {
      * when multiple copies of the Pulumi SDK have been loaded into the same process.
      */
     static isInstance(obj: any): obj is LoadBalancer;
-    readonly back_end: pulumi.Output<outputs.ingress.BackEnd>;
+    readonly back_end: pulumi.Output<outputs.ingress.BackEnd | undefined>;
     readonly cloudspace_id: pulumi.Output<string>;
     readonly customerID: pulumi.Output<string>;
     readonly description: pulumi.Output<string | undefined>;
     readonly domain: pulumi.Output<string | undefined>;
-    readonly front_end: pulumi.Output<outputs.ingress.FrontEnd>;
+    readonly front_end: pulumi.Output<outputs.ingress.FrontEnd | undefined>;
     readonly ip_address: pulumi.Output<string | undefined>;
     readonly is_enabled: pulumi.Output<boolean | undefined>;
     readonly loadbalancer_id: pulumi.Output<string>;

@@ -328,7 +328,7 @@ class LoadBalancer(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def back_end(self) -> pulumi.Output['outputs.BackEnd']:
+    def back_end(self) -> pulumi.Output[Optional['outputs.BackEnd']]:
         return pulumi.get(self, "back_end")
 
     @property
@@ -353,7 +353,7 @@ class LoadBalancer(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def front_end(self) -> pulumi.Output['outputs.FrontEnd']:
+    def front_end(self) -> pulumi.Output[Optional['outputs.FrontEnd']]:
         return pulumi.get(self, "front_end")
 
     @property

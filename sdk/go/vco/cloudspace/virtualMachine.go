@@ -15,46 +15,45 @@ import (
 type VirtualMachine struct {
 	pulumi.CustomResourceState
 
-	Acronis                 pulumi.BoolPtrOutput        `pulumi:"acronis"`
-	Agent_status            pulumi.StringOutput         `pulumi:"agent_status"`
-	All_vm_disks            pulumi.BoolPtrOutput        `pulumi:"all_vm_disks"`
-	Anti_affinity_group_ids pulumi.StringArrayOutput    `pulumi:"anti_affinity_group_ids"`
-	Appliance               pulumi.BoolOutput           `pulumi:"appliance"`
-	Boot_disk_id            pulumi.IntOutput            `pulumi:"boot_disk_id"`
-	Boot_type               pulumi.StringOutput         `pulumi:"boot_type"`
-	Cdrom_id                pulumi.IntPtrOutput         `pulumi:"cdrom_id"`
-	Cloudspace_id           pulumi.StringOutput         `pulumi:"cloudspace_id"`
-	Cpu_topology            CpuTopologyOutput           `pulumi:"cpu_topology"`
-	Cpus_pin_status         pulumi.BoolOutput           `pulumi:"cpus_pin_status"`
-	Creation_time           pulumi.Float64Output        `pulumi:"creation_time"`
-	CustomerID              pulumi.StringOutput         `pulumi:"customerID"`
-	Data_disks              pulumi.IntArrayOutput       `pulumi:"data_disks"`
-	Description             pulumi.StringOutput         `pulumi:"description"`
-	Disk_size               pulumi.IntPtrOutput         `pulumi:"disk_size"`
-	Disks                   VmDiskArrayOutput           `pulumi:"disks"`
-	Enable_vm_agent         pulumi.BoolPtrOutput        `pulumi:"enable_vm_agent"`
-	Hostname                pulumi.StringOutput         `pulumi:"hostname"`
-	Image_id                pulumi.IntOutput            `pulumi:"image_id"`
-	Impact_alert_hook       pulumi.StringPtrOutput      `pulumi:"impact_alert_hook"`
-	Locked                  pulumi.BoolOutput           `pulumi:"locked"`
-	Memory                  pulumi.IntOutput            `pulumi:"memory"`
-	Name                    pulumi.StringOutput         `pulumi:"name"`
-	Network_interfaces      NetworkInterfaceArrayOutput `pulumi:"network_interfaces"`
-	Os_accounts             OsAccountArrayOutput        `pulumi:"os_accounts"`
-	Os_image_name           pulumi.StringOutput         `pulumi:"os_image_name"`
-	Os_name                 pulumi.StringPtrOutput      `pulumi:"os_name"`
-	Os_type                 pulumi.StringPtrOutput      `pulumi:"os_type"`
-	Private_ip              pulumi.StringPtrOutput      `pulumi:"private_ip"`
-	Snapshot_id             pulumi.StringPtrOutput      `pulumi:"snapshot_id"`
-	Stack_id                pulumi.IntOutput            `pulumi:"stack_id"`
-	Status                  pulumi.StringOutput         `pulumi:"status"`
-	Storage                 pulumi.IntOutput            `pulumi:"storage"`
-	Token                   pulumi.StringOutput         `pulumi:"token"`
-	Update_time             pulumi.Float64Output        `pulumi:"update_time"`
-	Url                     pulumi.StringOutput         `pulumi:"url"`
-	User_data               pulumi.StringPtrOutput      `pulumi:"user_data"`
-	Vcpus                   pulumi.IntOutput            `pulumi:"vcpus"`
-	Vm_id                   pulumi.IntOutput            `pulumi:"vm_id"`
+	Acronis            pulumi.BoolPtrOutput        `pulumi:"acronis"`
+	Agent_status       pulumi.StringOutput         `pulumi:"agent_status"`
+	All_vm_disks       pulumi.BoolPtrOutput        `pulumi:"all_vm_disks"`
+	Appliance          pulumi.BoolOutput           `pulumi:"appliance"`
+	Boot_disk_id       pulumi.IntOutput            `pulumi:"boot_disk_id"`
+	Boot_type          pulumi.StringOutput         `pulumi:"boot_type"`
+	Cdrom_id           pulumi.IntPtrOutput         `pulumi:"cdrom_id"`
+	Cloudspace_id      pulumi.StringOutput         `pulumi:"cloudspace_id"`
+	Cpu_topology       CpuTopologyOutput           `pulumi:"cpu_topology"`
+	Cpus_pin_status    pulumi.BoolOutput           `pulumi:"cpus_pin_status"`
+	Creation_time      pulumi.Float64Output        `pulumi:"creation_time"`
+	CustomerID         pulumi.StringOutput         `pulumi:"customerID"`
+	Data_disks         pulumi.IntArrayOutput       `pulumi:"data_disks"`
+	Description        pulumi.StringOutput         `pulumi:"description"`
+	Disk_size          pulumi.IntPtrOutput         `pulumi:"disk_size"`
+	Disks              VmDiskArrayOutput           `pulumi:"disks"`
+	Enable_vm_agent    pulumi.BoolPtrOutput        `pulumi:"enable_vm_agent"`
+	Hostname           pulumi.StringOutput         `pulumi:"hostname"`
+	Image_id           pulumi.IntOutput            `pulumi:"image_id"`
+	Impact_alert_hook  pulumi.StringPtrOutput      `pulumi:"impact_alert_hook"`
+	Locked             pulumi.BoolOutput           `pulumi:"locked"`
+	Memory             pulumi.IntOutput            `pulumi:"memory"`
+	Name               pulumi.StringOutput         `pulumi:"name"`
+	Network_interfaces NetworkInterfaceArrayOutput `pulumi:"network_interfaces"`
+	Os_accounts        OsAccountArrayOutput        `pulumi:"os_accounts"`
+	Os_image_name      pulumi.StringOutput         `pulumi:"os_image_name"`
+	Os_name            pulumi.StringPtrOutput      `pulumi:"os_name"`
+	Os_type            pulumi.StringPtrOutput      `pulumi:"os_type"`
+	Private_ip         pulumi.StringPtrOutput      `pulumi:"private_ip"`
+	Snapshot_id        pulumi.StringPtrOutput      `pulumi:"snapshot_id"`
+	Stack_id           pulumi.IntOutput            `pulumi:"stack_id"`
+	Status             pulumi.StringOutput         `pulumi:"status"`
+	Storage            pulumi.IntOutput            `pulumi:"storage"`
+	Token              pulumi.StringOutput         `pulumi:"token"`
+	Update_time        pulumi.Float64Output        `pulumi:"update_time"`
+	Url                pulumi.StringOutput         `pulumi:"url"`
+	User_data          pulumi.StringPtrOutput      `pulumi:"user_data"`
+	Vcpus              pulumi.IntOutput            `pulumi:"vcpus"`
+	Vm_id              pulumi.IntOutput            `pulumi:"vm_id"`
 }
 
 // NewVirtualMachine registers a new resource with the given unique name, arguments, and options.
@@ -277,10 +276,6 @@ func (o VirtualMachineOutput) Agent_status() pulumi.StringOutput {
 
 func (o VirtualMachineOutput) All_vm_disks() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *VirtualMachine) pulumi.BoolPtrOutput { return v.All_vm_disks }).(pulumi.BoolPtrOutput)
-}
-
-func (o VirtualMachineOutput) Anti_affinity_group_ids() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v *VirtualMachine) pulumi.StringArrayOutput { return v.Anti_affinity_group_ids }).(pulumi.StringArrayOutput)
 }
 
 func (o VirtualMachineOutput) Appliance() pulumi.BoolOutput {

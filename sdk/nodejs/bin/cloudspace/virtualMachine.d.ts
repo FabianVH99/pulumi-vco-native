@@ -18,7 +18,6 @@ export declare class VirtualMachine extends pulumi.CustomResource {
     readonly acronis: pulumi.Output<boolean | undefined>;
     readonly agent_status: pulumi.Output<string>;
     readonly all_vm_disks: pulumi.Output<boolean | undefined>;
-    readonly anti_affinity_group_ids: pulumi.Output<string[] | undefined>;
     readonly appliance: pulumi.Output<boolean>;
     readonly boot_disk_id: pulumi.Output<number>;
     readonly boot_type: pulumi.Output<string>;

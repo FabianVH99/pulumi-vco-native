@@ -47,9 +47,6 @@ class ReverseProxy extends pulumi.CustomResource {
             if ((!args || args.domain === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'domain'");
             }
-            if ((!args || args.email === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'email'");
-            }
             if ((!args || args.enabled === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'enabled'");
             }

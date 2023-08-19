@@ -33,14 +33,14 @@ export class ReverseProxy extends pulumi.CustomResource {
         return obj['__pulumiType'] === ReverseProxy.__pulumiType;
     }
 
-    public /*out*/ readonly back_end!: pulumi.Output<outputs.ingress.ReverseProxyBackend>;
+    public /*out*/ readonly back_end!: pulumi.Output<outputs.ingress.ReverseProxyBackend | undefined>;
     public readonly cloudspace_id!: pulumi.Output<string>;
     public readonly customerID!: pulumi.Output<string>;
     public readonly description!: pulumi.Output<string | undefined>;
     public readonly domain!: pulumi.Output<string>;
-    public readonly email!: pulumi.Output<string>;
+    public readonly email!: pulumi.Output<string | undefined>;
     public readonly enabled!: pulumi.Output<boolean>;
-    public /*out*/ readonly front_end!: pulumi.Output<outputs.ingress.ReverseProxyFrontEnd>;
+    public /*out*/ readonly front_end!: pulumi.Output<outputs.ingress.ReverseProxyFrontEnd | undefined>;
     public readonly health_check_scheme!: pulumi.Output<string | undefined>;
     public readonly http_only!: pulumi.Output<boolean | undefined>;
     public readonly http_port!: pulumi.Output<number | undefined>;
@@ -81,9 +81,6 @@ export class ReverseProxy extends pulumi.CustomResource {
             }
             if ((!args || args.domain === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'domain'");
-            }
-            if ((!args || args.email === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'email'");
             }
             if ((!args || args.enabled === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'enabled'");
@@ -177,7 +174,7 @@ export interface ReverseProxyArgs {
     customerID: pulumi.Input<string>;
     description?: pulumi.Input<string>;
     domain: pulumi.Input<string>;
-    email: pulumi.Input<string>;
+    email?: pulumi.Input<string>;
     enabled: pulumi.Input<boolean>;
     health_check_scheme?: pulumi.Input<string>;
     http_only?: pulumi.Input<boolean>;

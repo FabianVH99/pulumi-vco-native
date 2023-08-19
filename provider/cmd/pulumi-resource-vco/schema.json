@@ -1,6 +1,6 @@
 {
     "config": {},
-    "description": "The Whitesky.Cloud Vco Provider for Pulumi enables you to manipulate resources in the vco portal.\nPlease read the documentation or consult the API docs in your vco portal in order to properly understand how the resources work.\nBefore using this package you need to install the resource-vco plugin. The latest release of which can be found in the repository.\nYou then have to install the plugin on your system by storing the contents of the zipped file in: \nWindows: %USERPROFILE%\\\\.pulumi\\\\plugins\\resource-vco-v0.0.40.\nLinux and MacOS: ~/.pulumi/plugins/resource-vco-v0.0.40.\nWhen you have moved the plugin to the appropriate directory you can in stall it using: pulumi plugin install resource vcov0.0.40.\n",
+    "description": "The Whitesky.Cloud Vco Provider for Pulumi enables you to manipulate resources in the vco portal.\nPlease read the documentation or consult the API docs in your vco portal in order to properly understand how the resources work.\nBefore using this package you need to install the resource-vco plugin. The latest release of which can be found in the repository.\nYou then have to install the plugin on your system by storing the contents of the zipped file in: \nWindows: %USERPROFILE%\\\\.pulumi\\\\plugins\\resource-vco-v0.0.41.\nLinux and MacOS: ~/.pulumi/plugins/resource-vco-v0.0.41.\nWhen you have moved the plugin to the appropriate directory you can in stall it using: pulumi plugin install resource vcov0.0.41.\n",
     "displayName": "vco",
     "homepage": "https://whitesky.cloud/",
     "keywords": [
@@ -415,7 +415,7 @@
         },
         "vco:base:ObjectSpace": {
             "inputProperties": {
-                "cloudspaceID": {
+                "cloudspace_id": {
                     "type": "string"
                 },
                 "customerID": {
@@ -425,19 +425,19 @@
                 "domain": {
                     "type": "string"
                 },
-                "externalNetwork": {
+                "external_network": {
                     "type": "integer"
                 },
                 "letsencrypt": {
                     "type": "boolean"
                 },
-                "letsencryptEmail": {
+                "letsencrypt_email": {
                     "type": "string"
                 },
                 "location": {
                     "type": "string"
                 },
-                "objectspace_name": {
+                "name": {
                     "type": "string"
                 },
                 "subnet": {
@@ -456,7 +456,7 @@
                 "access_key": {
                     "type": "string"
                 },
-                "cloudspaceID": {
+                "cloudspace_id": {
                     "type": "string"
                 },
                 "creation_time": {
@@ -468,13 +468,13 @@
                 "domain": {
                     "type": "string"
                 },
-                "externalNetwork": {
+                "external_network": {
                     "type": "integer"
                 },
                 "letsencrypt": {
                     "type": "boolean"
                 },
-                "letsencryptEmail": {
+                "letsencrypt_email": {
                     "type": "string"
                 },
                 "location": {
@@ -521,7 +521,7 @@
                 "token",
                 "customerID",
                 "location",
-                "objectspace_name"
+                "name"
             ]
         },
         "vco:cloudspace:AntiAffinityGroup": {
@@ -926,12 +926,6 @@
                 },
                 "all_vm_disks": {
                     "type": "boolean"
-                },
-                "anti_affinity_group_ids": {
-                    "items": {
-                        "type": "string"
-                    },
-                    "type": "array"
                 },
                 "appliance": {
                     "type": "boolean"
@@ -1344,9 +1338,7 @@
                 "loadbalancer_id",
                 "cloudspace_id",
                 "name",
-                "type",
-                "front_end",
-                "back_end"
+                "type"
             ],
             "requiredInputs": [
                 "url",
@@ -1528,7 +1520,6 @@
                 "domain",
                 "scheme",
                 "enabled",
-                "email",
                 "scheme",
                 "serverpool_id",
                 "target_port",
@@ -1538,9 +1529,7 @@
                 "cloudspace_id",
                 "reverseproxy_id",
                 "name",
-                "type",
-                "front_end",
-                "back_end"
+                "type"
             ],
             "requiredInputs": [
                 "url",
@@ -1551,7 +1540,6 @@
                 "domain",
                 "scheme",
                 "enabled",
-                "email",
                 "scheme",
                 "serverpool_id",
                 "target_port"
@@ -2141,10 +2129,6 @@
                     "type": "boolean"
                 }
             },
-            "required": [
-                "enabled",
-                "email"
-            ],
             "type": "object"
         },
         "vco:ingress:Options": {
@@ -2202,9 +2186,7 @@
                 }
             },
             "required": [
-                "domain",
-                "scheme",
-                "letsencrypt"
+                "scheme"
             ],
             "type": "object"
         },

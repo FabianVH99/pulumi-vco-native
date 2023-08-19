@@ -18,7 +18,6 @@ class ReverseProxyArgs:
                  cloudspace_id: pulumi.Input[str],
                  customer_id: pulumi.Input[str],
                  domain: pulumi.Input[str],
-                 email: pulumi.Input[str],
                  enabled: pulumi.Input[bool],
                  name: pulumi.Input[str],
                  scheme: pulumi.Input[str],
@@ -27,6 +26,7 @@ class ReverseProxyArgs:
                  token: pulumi.Input[str],
                  url: pulumi.Input[str],
                  description: Optional[pulumi.Input[str]] = None,
+                 email: Optional[pulumi.Input[str]] = None,
                  health_check_scheme: Optional[pulumi.Input[str]] = None,
                  http_only: Optional[pulumi.Input[bool]] = None,
                  http_port: Optional[pulumi.Input[int]] = None,
@@ -45,7 +45,6 @@ class ReverseProxyArgs:
         pulumi.set(__self__, "cloudspace_id", cloudspace_id)
         pulumi.set(__self__, "customer_id", customer_id)
         pulumi.set(__self__, "domain", domain)
-        pulumi.set(__self__, "email", email)
         pulumi.set(__self__, "enabled", enabled)
         pulumi.set(__self__, "name", name)
         pulumi.set(__self__, "scheme", scheme)
@@ -55,6 +54,8 @@ class ReverseProxyArgs:
         pulumi.set(__self__, "url", url)
         if description is not None:
             pulumi.set(__self__, "description", description)
+        if email is not None:
+            pulumi.set(__self__, "email", email)
         if health_check_scheme is not None:
             pulumi.set(__self__, "health_check_scheme", health_check_scheme)
         if http_only is not None:
@@ -106,15 +107,6 @@ class ReverseProxyArgs:
     @domain.setter
     def domain(self, value: pulumi.Input[str]):
         pulumi.set(self, "domain", value)
-
-    @property
-    @pulumi.getter
-    def email(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "email")
-
-    @email.setter
-    def email(self, value: pulumi.Input[str]):
-        pulumi.set(self, "email", value)
 
     @property
     @pulumi.getter
@@ -187,6 +179,15 @@ class ReverseProxyArgs:
     @description.setter
     def description(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "description", value)
+
+    @property
+    @pulumi.getter
+    def email(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "email")
+
+    @email.setter
+    def email(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "email", value)
 
     @property
     @pulumi.getter
@@ -398,8 +399,6 @@ class ReverseProxy(pulumi.CustomResource):
             if domain is None and not opts.urn:
                 raise TypeError("Missing required property 'domain'")
             __props__.__dict__["domain"] = domain
-            if email is None and not opts.urn:
-                raise TypeError("Missing required property 'email'")
             __props__.__dict__["email"] = email
             if enabled is None and not opts.urn:
                 raise TypeError("Missing required property 'enabled'")
@@ -492,7 +491,7 @@ class ReverseProxy(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def back_end(self) -> pulumi.Output['outputs.ReverseProxyBackend']:
+    def back_end(self) -> pulumi.Output[Optional['outputs.ReverseProxyBackend']]:
         return pulumi.get(self, "back_end")
 
     @property
@@ -517,7 +516,7 @@ class ReverseProxy(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def email(self) -> pulumi.Output[str]:
+    def email(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "email")
 
     @property
@@ -527,7 +526,7 @@ class ReverseProxy(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def front_end(self) -> pulumi.Output['outputs.ReverseProxyFrontEnd']:
+    def front_end(self) -> pulumi.Output[Optional['outputs.ReverseProxyFrontEnd']]:
         return pulumi.get(self, "front_end")
 
     @property

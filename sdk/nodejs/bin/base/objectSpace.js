@@ -44,8 +44,8 @@ class ObjectSpace extends pulumi.CustomResource {
             if ((!args || args.location === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'location'");
             }
-            if ((!args || args.objectspace_name === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'objectspace_name'");
+            if ((!args || args.name === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'name'");
             }
             if ((!args || args.token === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'token'");
@@ -53,33 +53,34 @@ class ObjectSpace extends pulumi.CustomResource {
             if ((!args || args.url === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'url'");
             }
-            resourceInputs["cloudspaceID"] = args ? args.cloudspaceID : undefined;
+            resourceInputs["cloudspace_id"] = args ? args.cloudspace_id : undefined;
             resourceInputs["customerID"] = (args === null || args === void 0 ? void 0 : args.customerID) ? pulumi.secret(args.customerID) : undefined;
             resourceInputs["domain"] = args ? args.domain : undefined;
-            resourceInputs["externalNetwork"] = args ? args.externalNetwork : undefined;
+            resourceInputs["external_network"] = args ? args.external_network : undefined;
             resourceInputs["letsencrypt"] = args ? args.letsencrypt : undefined;
-            resourceInputs["letsencryptEmail"] = args ? args.letsencryptEmail : undefined;
+            resourceInputs["letsencrypt_email"] = args ? args.letsencrypt_email : undefined;
             resourceInputs["location"] = args ? args.location : undefined;
-            resourceInputs["objectspace_name"] = args ? args.objectspace_name : undefined;
+            resourceInputs["name"] = args ? args.name : undefined;
             resourceInputs["subnet"] = args ? args.subnet : undefined;
             resourceInputs["token"] = (args === null || args === void 0 ? void 0 : args.token) ? pulumi.secret(args.token) : undefined;
             resourceInputs["url"] = (args === null || args === void 0 ? void 0 : args.url) ? pulumi.secret(args.url) : undefined;
             resourceInputs["access_key"] = undefined /*out*/;
             resourceInputs["creation_time"] = undefined /*out*/;
             resourceInputs["objectspace_id"] = undefined /*out*/;
+            resourceInputs["objectspace_name"] = undefined /*out*/;
             resourceInputs["secret"] = undefined /*out*/;
             resourceInputs["status"] = undefined /*out*/;
             resourceInputs["update_time"] = undefined /*out*/;
         }
         else {
             resourceInputs["access_key"] = undefined /*out*/;
-            resourceInputs["cloudspaceID"] = undefined /*out*/;
+            resourceInputs["cloudspace_id"] = undefined /*out*/;
             resourceInputs["creation_time"] = undefined /*out*/;
             resourceInputs["customerID"] = undefined /*out*/;
             resourceInputs["domain"] = undefined /*out*/;
-            resourceInputs["externalNetwork"] = undefined /*out*/;
+            resourceInputs["external_network"] = undefined /*out*/;
             resourceInputs["letsencrypt"] = undefined /*out*/;
-            resourceInputs["letsencryptEmail"] = undefined /*out*/;
+            resourceInputs["letsencrypt_email"] = undefined /*out*/;
             resourceInputs["location"] = undefined /*out*/;
             resourceInputs["objectspace_id"] = undefined /*out*/;
             resourceInputs["objectspace_name"] = undefined /*out*/;

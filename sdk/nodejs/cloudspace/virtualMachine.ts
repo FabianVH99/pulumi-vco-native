@@ -36,7 +36,6 @@ export class VirtualMachine extends pulumi.CustomResource {
     public readonly acronis!: pulumi.Output<boolean | undefined>;
     public /*out*/ readonly agent_status!: pulumi.Output<string>;
     public readonly all_vm_disks!: pulumi.Output<boolean | undefined>;
-    public /*out*/ readonly anti_affinity_group_ids!: pulumi.Output<string[] | undefined>;
     public /*out*/ readonly appliance!: pulumi.Output<boolean>;
     public readonly boot_disk_id!: pulumi.Output<number>;
     public readonly boot_type!: pulumi.Output<string>;
@@ -132,7 +131,6 @@ export class VirtualMachine extends pulumi.CustomResource {
             resourceInputs["user_data"] = args ? args.user_data : undefined;
             resourceInputs["vcpus"] = args ? args.vcpus : undefined;
             resourceInputs["agent_status"] = undefined /*out*/;
-            resourceInputs["anti_affinity_group_ids"] = undefined /*out*/;
             resourceInputs["appliance"] = undefined /*out*/;
             resourceInputs["cpu_topology"] = undefined /*out*/;
             resourceInputs["cpus_pin_status"] = undefined /*out*/;
@@ -153,7 +151,6 @@ export class VirtualMachine extends pulumi.CustomResource {
             resourceInputs["acronis"] = undefined /*out*/;
             resourceInputs["agent_status"] = undefined /*out*/;
             resourceInputs["all_vm_disks"] = undefined /*out*/;
-            resourceInputs["anti_affinity_group_ids"] = undefined /*out*/;
             resourceInputs["appliance"] = undefined /*out*/;
             resourceInputs["boot_disk_id"] = undefined /*out*/;
             resourceInputs["boot_type"] = undefined /*out*/;

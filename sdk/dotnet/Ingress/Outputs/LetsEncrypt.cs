@@ -13,14 +13,14 @@ namespace Pulumi.Vco.Ingress.Outputs
     [OutputType]
     public sealed class LetsEncrypt
     {
-        public readonly string Email;
-        public readonly bool Enabled;
+        public readonly string? Email;
+        public readonly bool? Enabled;
 
         [OutputConstructor]
         private LetsEncrypt(
-            string email,
+            string? email,
 
-            bool enabled)
+            bool? enabled)
         {
             Email = email;
             Enabled = enabled;

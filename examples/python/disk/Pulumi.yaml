@@ -1,0 +1,6 @@
+name: python-disk-example
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: A sample program showing how to manipulate disk resources

@@ -61,8 +61,8 @@ export declare namespace ingress {
         timeout?: number;
     }
     interface LetsEncrypt {
-        email: string;
-        enabled: boolean;
+        email?: string;
+        enabled?: boolean;
     }
     interface Options {
         health_check?: outputs.ingress.HealthCheck;
@@ -75,11 +75,11 @@ export declare namespace ingress {
         target_port: number;
     }
     interface ReverseProxyFrontEnd {
-        domain: string;
+        domain?: string;
         http_port?: number;
         https_port?: number;
         ip_address?: string;
-        letsencrypt: outputs.ingress.LetsEncrypt;
+        letsencrypt?: outputs.ingress.LetsEncrypt;
         scheme: string;
     }
     interface ServerPoolHost {

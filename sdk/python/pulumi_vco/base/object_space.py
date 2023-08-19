@@ -16,7 +16,7 @@ class ObjectSpaceArgs:
     def __init__(__self__, *,
                  customer_id: pulumi.Input[str],
                  location: pulumi.Input[str],
-                 objectspace_name: pulumi.Input[str],
+                 name: pulumi.Input[str],
                  token: pulumi.Input[str],
                  url: pulumi.Input[str],
                  cloudspace_id: Optional[pulumi.Input[str]] = None,
@@ -30,7 +30,7 @@ class ObjectSpaceArgs:
         """
         pulumi.set(__self__, "customer_id", customer_id)
         pulumi.set(__self__, "location", location)
-        pulumi.set(__self__, "objectspace_name", objectspace_name)
+        pulumi.set(__self__, "name", name)
         pulumi.set(__self__, "token", token)
         pulumi.set(__self__, "url", url)
         if cloudspace_id is not None:
@@ -66,12 +66,12 @@ class ObjectSpaceArgs:
 
     @property
     @pulumi.getter
-    def objectspace_name(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "objectspace_name")
+    def name(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "name")
 
-    @objectspace_name.setter
-    def objectspace_name(self, value: pulumi.Input[str]):
-        pulumi.set(self, "objectspace_name", value)
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
 
     @property
     @pulumi.getter
@@ -92,7 +92,7 @@ class ObjectSpaceArgs:
         pulumi.set(self, "url", value)
 
     @property
-    @pulumi.getter(name="cloudspaceID")
+    @pulumi.getter
     def cloudspace_id(self) -> Optional[pulumi.Input[str]]:
         return pulumi.get(self, "cloudspace_id")
 
@@ -110,7 +110,7 @@ class ObjectSpaceArgs:
         pulumi.set(self, "domain", value)
 
     @property
-    @pulumi.getter(name="externalNetwork")
+    @pulumi.getter
     def external_network(self) -> Optional[pulumi.Input[int]]:
         return pulumi.get(self, "external_network")
 
@@ -128,7 +128,7 @@ class ObjectSpaceArgs:
         pulumi.set(self, "letsencrypt", value)
 
     @property
-    @pulumi.getter(name="letsencryptEmail")
+    @pulumi.getter
     def letsencrypt_email(self) -> Optional[pulumi.Input[str]]:
         return pulumi.get(self, "letsencrypt_email")
 
@@ -158,7 +158,7 @@ class ObjectSpace(pulumi.CustomResource):
                  letsencrypt: Optional[pulumi.Input[bool]] = None,
                  letsencrypt_email: Optional[pulumi.Input[str]] = None,
                  location: Optional[pulumi.Input[str]] = None,
-                 objectspace_name: Optional[pulumi.Input[str]] = None,
+                 name: Optional[pulumi.Input[str]] = None,
                  subnet: Optional[pulumi.Input[str]] = None,
                  token: Optional[pulumi.Input[str]] = None,
                  url: Optional[pulumi.Input[str]] = None,
@@ -198,7 +198,7 @@ class ObjectSpace(pulumi.CustomResource):
                  letsencrypt: Optional[pulumi.Input[bool]] = None,
                  letsencrypt_email: Optional[pulumi.Input[str]] = None,
                  location: Optional[pulumi.Input[str]] = None,
-                 objectspace_name: Optional[pulumi.Input[str]] = None,
+                 name: Optional[pulumi.Input[str]] = None,
                  subnet: Optional[pulumi.Input[str]] = None,
                  token: Optional[pulumi.Input[str]] = None,
                  url: Optional[pulumi.Input[str]] = None,
@@ -222,9 +222,9 @@ class ObjectSpace(pulumi.CustomResource):
             if location is None and not opts.urn:
                 raise TypeError("Missing required property 'location'")
             __props__.__dict__["location"] = location
-            if objectspace_name is None and not opts.urn:
-                raise TypeError("Missing required property 'objectspace_name'")
-            __props__.__dict__["objectspace_name"] = objectspace_name
+            if name is None and not opts.urn:
+                raise TypeError("Missing required property 'name'")
+            __props__.__dict__["name"] = name
             __props__.__dict__["subnet"] = subnet
             if token is None and not opts.urn:
                 raise TypeError("Missing required property 'token'")
@@ -235,6 +235,7 @@ class ObjectSpace(pulumi.CustomResource):
             __props__.__dict__["access_key"] = None
             __props__.__dict__["creation_time"] = None
             __props__.__dict__["objectspace_id"] = None
+            __props__.__dict__["objectspace_name"] = None
             __props__.__dict__["secret"] = None
             __props__.__dict__["status"] = None
             __props__.__dict__["update_time"] = None
@@ -285,7 +286,7 @@ class ObjectSpace(pulumi.CustomResource):
         return pulumi.get(self, "access_key")
 
     @property
-    @pulumi.getter(name="cloudspaceID")
+    @pulumi.getter
     def cloudspace_id(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "cloudspace_id")
 
@@ -305,7 +306,7 @@ class ObjectSpace(pulumi.CustomResource):
         return pulumi.get(self, "domain")
 
     @property
-    @pulumi.getter(name="externalNetwork")
+    @pulumi.getter
     def external_network(self) -> pulumi.Output[Optional[int]]:
         return pulumi.get(self, "external_network")
 
@@ -315,7 +316,7 @@ class ObjectSpace(pulumi.CustomResource):
         return pulumi.get(self, "letsencrypt")
 
     @property
-    @pulumi.getter(name="letsencryptEmail")
+    @pulumi.getter
     def letsencrypt_email(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "letsencrypt_email")
 

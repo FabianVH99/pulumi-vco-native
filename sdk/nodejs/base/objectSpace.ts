@@ -32,16 +32,16 @@ export class ObjectSpace extends pulumi.CustomResource {
     }
 
     public /*out*/ readonly access_key!: pulumi.Output<string | undefined>;
-    public readonly cloudspaceID!: pulumi.Output<string | undefined>;
+    public readonly cloudspace_id!: pulumi.Output<string | undefined>;
     public /*out*/ readonly creation_time!: pulumi.Output<string>;
     public readonly customerID!: pulumi.Output<string>;
     public readonly domain!: pulumi.Output<string | undefined>;
-    public readonly externalNetwork!: pulumi.Output<number | undefined>;
+    public readonly external_network!: pulumi.Output<number | undefined>;
     public readonly letsencrypt!: pulumi.Output<boolean | undefined>;
-    public readonly letsencryptEmail!: pulumi.Output<string | undefined>;
+    public readonly letsencrypt_email!: pulumi.Output<string | undefined>;
     public readonly location!: pulumi.Output<string>;
     public /*out*/ readonly objectspace_id!: pulumi.Output<string>;
-    public readonly objectspace_name!: pulumi.Output<string>;
+    public /*out*/ readonly objectspace_name!: pulumi.Output<string>;
     public /*out*/ readonly secret!: pulumi.Output<string | undefined>;
     public /*out*/ readonly status!: pulumi.Output<string>;
     public readonly subnet!: pulumi.Output<string | undefined>;
@@ -66,8 +66,8 @@ export class ObjectSpace extends pulumi.CustomResource {
             if ((!args || args.location === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'location'");
             }
-            if ((!args || args.objectspace_name === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'objectspace_name'");
+            if ((!args || args.name === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'name'");
             }
             if ((!args || args.token === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'token'");
@@ -75,32 +75,33 @@ export class ObjectSpace extends pulumi.CustomResource {
             if ((!args || args.url === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'url'");
             }
-            resourceInputs["cloudspaceID"] = args ? args.cloudspaceID : undefined;
+            resourceInputs["cloudspace_id"] = args ? args.cloudspace_id : undefined;
             resourceInputs["customerID"] = args?.customerID ? pulumi.secret(args.customerID) : undefined;
             resourceInputs["domain"] = args ? args.domain : undefined;
-            resourceInputs["externalNetwork"] = args ? args.externalNetwork : undefined;
+            resourceInputs["external_network"] = args ? args.external_network : undefined;
             resourceInputs["letsencrypt"] = args ? args.letsencrypt : undefined;
-            resourceInputs["letsencryptEmail"] = args ? args.letsencryptEmail : undefined;
+            resourceInputs["letsencrypt_email"] = args ? args.letsencrypt_email : undefined;
             resourceInputs["location"] = args ? args.location : undefined;
-            resourceInputs["objectspace_name"] = args ? args.objectspace_name : undefined;
+            resourceInputs["name"] = args ? args.name : undefined;
             resourceInputs["subnet"] = args ? args.subnet : undefined;
             resourceInputs["token"] = args?.token ? pulumi.secret(args.token) : undefined;
             resourceInputs["url"] = args?.url ? pulumi.secret(args.url) : undefined;
             resourceInputs["access_key"] = undefined /*out*/;
             resourceInputs["creation_time"] = undefined /*out*/;
             resourceInputs["objectspace_id"] = undefined /*out*/;
+            resourceInputs["objectspace_name"] = undefined /*out*/;
             resourceInputs["secret"] = undefined /*out*/;
             resourceInputs["status"] = undefined /*out*/;
             resourceInputs["update_time"] = undefined /*out*/;
         } else {
             resourceInputs["access_key"] = undefined /*out*/;
-            resourceInputs["cloudspaceID"] = undefined /*out*/;
+            resourceInputs["cloudspace_id"] = undefined /*out*/;
             resourceInputs["creation_time"] = undefined /*out*/;
             resourceInputs["customerID"] = undefined /*out*/;
             resourceInputs["domain"] = undefined /*out*/;
-            resourceInputs["externalNetwork"] = undefined /*out*/;
+            resourceInputs["external_network"] = undefined /*out*/;
             resourceInputs["letsencrypt"] = undefined /*out*/;
-            resourceInputs["letsencryptEmail"] = undefined /*out*/;
+            resourceInputs["letsencrypt_email"] = undefined /*out*/;
             resourceInputs["location"] = undefined /*out*/;
             resourceInputs["objectspace_id"] = undefined /*out*/;
             resourceInputs["objectspace_name"] = undefined /*out*/;
@@ -120,14 +121,14 @@ export class ObjectSpace extends pulumi.CustomResource {
  * The set of arguments for constructing a ObjectSpace resource.
  */
 export interface ObjectSpaceArgs {
-    cloudspaceID?: pulumi.Input<string>;
+    cloudspace_id?: pulumi.Input<string>;
     customerID: pulumi.Input<string>;
     domain?: pulumi.Input<string>;
-    externalNetwork?: pulumi.Input<number>;
+    external_network?: pulumi.Input<number>;
     letsencrypt?: pulumi.Input<boolean>;
-    letsencryptEmail?: pulumi.Input<string>;
+    letsencrypt_email?: pulumi.Input<string>;
     location: pulumi.Input<string>;
-    objectspace_name: pulumi.Input<string>;
+    name: pulumi.Input<string>;
     subnet?: pulumi.Input<string>;
     token: pulumi.Input<string>;
     url: pulumi.Input<string>;

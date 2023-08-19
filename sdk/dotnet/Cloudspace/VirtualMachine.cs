@@ -21,9 +21,6 @@ namespace Pulumi.Vco.Cloudspace
         [Output("all_vm_disks")]
         public Output<bool?> All_vm_disks { get; private set; } = null!;
 
-        [Output("anti_affinity_group_ids")]
-        public Output<ImmutableArray<string>> Anti_affinity_group_ids { get; private set; } = null!;
-
         [Output("appliance")]
         public Output<bool> Appliance { get; private set; } = null!;
 

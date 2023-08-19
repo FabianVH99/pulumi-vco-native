@@ -45,6 +45,57 @@ func (o BackEndOutput) Target_port() pulumi.IntOutput {
 	return o.ApplyT(func(v BackEnd) int { return v.Target_port }).(pulumi.IntOutput)
 }
 
+type BackEndPtrOutput struct{ *pulumi.OutputState }
+
+func (BackEndPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BackEnd)(nil)).Elem()
+}
+
+func (o BackEndPtrOutput) ToBackEndPtrOutput() BackEndPtrOutput {
+	return o
+}
+
+func (o BackEndPtrOutput) ToBackEndPtrOutputWithContext(ctx context.Context) BackEndPtrOutput {
+	return o
+}
+
+func (o BackEndPtrOutput) Elem() BackEndOutput {
+	return o.ApplyT(func(v *BackEnd) BackEnd {
+		if v != nil {
+			return *v
+		}
+		var ret BackEnd
+		return ret
+	}).(BackEndOutput)
+}
+
+func (o BackEndPtrOutput) Serverpool_id() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BackEnd) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Serverpool_id
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o BackEndPtrOutput) Serverpool_name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BackEnd) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Serverpool_name
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o BackEndPtrOutput) Target_port() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *BackEnd) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.Target_port
+	}).(pulumi.IntPtrOutput)
+}
+
 type FrontEnd struct {
 	Ip_address *string `pulumi:"ip_address"`
 	Port       int     `pulumi:"port"`
@@ -75,6 +126,57 @@ func (o FrontEndOutput) Port() pulumi.IntOutput {
 
 func (o FrontEndOutput) Tls() TLSPtrOutput {
 	return o.ApplyT(func(v FrontEnd) *TLS { return v.Tls }).(TLSPtrOutput)
+}
+
+type FrontEndPtrOutput struct{ *pulumi.OutputState }
+
+func (FrontEndPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FrontEnd)(nil)).Elem()
+}
+
+func (o FrontEndPtrOutput) ToFrontEndPtrOutput() FrontEndPtrOutput {
+	return o
+}
+
+func (o FrontEndPtrOutput) ToFrontEndPtrOutputWithContext(ctx context.Context) FrontEndPtrOutput {
+	return o
+}
+
+func (o FrontEndPtrOutput) Elem() FrontEndOutput {
+	return o.ApplyT(func(v *FrontEnd) FrontEnd {
+		if v != nil {
+			return *v
+		}
+		var ret FrontEnd
+		return ret
+	}).(FrontEndOutput)
+}
+
+func (o FrontEndPtrOutput) Ip_address() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FrontEnd) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Ip_address
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o FrontEndPtrOutput) Port() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FrontEnd) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.Port
+	}).(pulumi.IntPtrOutput)
+}
+
+func (o FrontEndPtrOutput) Tls() TLSPtrOutput {
+	return o.ApplyT(func(v *FrontEnd) *TLS {
+		if v == nil {
+			return nil
+		}
+		return v.Tls
+	}).(TLSPtrOutput)
 }
 
 type HealthCheck struct {
@@ -189,8 +291,8 @@ func (o HealthCheckPtrOutput) Timeout() pulumi.IntPtrOutput {
 }
 
 type LetsEncrypt struct {
-	Email   string `pulumi:"email"`
-	Enabled bool   `pulumi:"enabled"`
+	Email   *string `pulumi:"email"`
+	Enabled *bool   `pulumi:"enabled"`
 }
 
 type LetsEncryptOutput struct{ *pulumi.OutputState }
@@ -207,12 +309,54 @@ func (o LetsEncryptOutput) ToLetsEncryptOutputWithContext(ctx context.Context) L
 	return o
 }
 
-func (o LetsEncryptOutput) Email() pulumi.StringOutput {
-	return o.ApplyT(func(v LetsEncrypt) string { return v.Email }).(pulumi.StringOutput)
+func (o LetsEncryptOutput) Email() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v LetsEncrypt) *string { return v.Email }).(pulumi.StringPtrOutput)
 }
 
-func (o LetsEncryptOutput) Enabled() pulumi.BoolOutput {
-	return o.ApplyT(func(v LetsEncrypt) bool { return v.Enabled }).(pulumi.BoolOutput)
+func (o LetsEncryptOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v LetsEncrypt) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+type LetsEncryptPtrOutput struct{ *pulumi.OutputState }
+
+func (LetsEncryptPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**LetsEncrypt)(nil)).Elem()
+}
+
+func (o LetsEncryptPtrOutput) ToLetsEncryptPtrOutput() LetsEncryptPtrOutput {
+	return o
+}
+
+func (o LetsEncryptPtrOutput) ToLetsEncryptPtrOutputWithContext(ctx context.Context) LetsEncryptPtrOutput {
+	return o
+}
+
+func (o LetsEncryptPtrOutput) Elem() LetsEncryptOutput {
+	return o.ApplyT(func(v *LetsEncrypt) LetsEncrypt {
+		if v != nil {
+			return *v
+		}
+		var ret LetsEncrypt
+		return ret
+	}).(LetsEncryptOutput)
+}
+
+func (o LetsEncryptPtrOutput) Email() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *LetsEncrypt) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Email
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o LetsEncryptPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *LetsEncrypt) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
 }
 
 type Options struct {
@@ -321,13 +465,73 @@ func (o ReverseProxyBackendOutput) Target_port() pulumi.IntOutput {
 	return o.ApplyT(func(v ReverseProxyBackend) int { return v.Target_port }).(pulumi.IntOutput)
 }
 
+type ReverseProxyBackendPtrOutput struct{ *pulumi.OutputState }
+
+func (ReverseProxyBackendPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**ReverseProxyBackend)(nil)).Elem()
+}
+
+func (o ReverseProxyBackendPtrOutput) ToReverseProxyBackendPtrOutput() ReverseProxyBackendPtrOutput {
+	return o
+}
+
+func (o ReverseProxyBackendPtrOutput) ToReverseProxyBackendPtrOutputWithContext(ctx context.Context) ReverseProxyBackendPtrOutput {
+	return o
+}
+
+func (o ReverseProxyBackendPtrOutput) Elem() ReverseProxyBackendOutput {
+	return o.ApplyT(func(v *ReverseProxyBackend) ReverseProxyBackend {
+		if v != nil {
+			return *v
+		}
+		var ret ReverseProxyBackend
+		return ret
+	}).(ReverseProxyBackendOutput)
+}
+
+func (o ReverseProxyBackendPtrOutput) Options() OptionsPtrOutput {
+	return o.ApplyT(func(v *ReverseProxyBackend) *Options {
+		if v == nil {
+			return nil
+		}
+		return v.Options
+	}).(OptionsPtrOutput)
+}
+
+func (o ReverseProxyBackendPtrOutput) Scheme() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ReverseProxyBackend) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Scheme
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o ReverseProxyBackendPtrOutput) Serverpool_id() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ReverseProxyBackend) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Serverpool_id
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o ReverseProxyBackendPtrOutput) Target_port() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *ReverseProxyBackend) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.Target_port
+	}).(pulumi.IntPtrOutput)
+}
+
 type ReverseProxyFrontEnd struct {
-	Domain      string      `pulumi:"domain"`
-	Http_port   *int        `pulumi:"http_port"`
-	Https_port  *int        `pulumi:"https_port"`
-	Ip_address  *string     `pulumi:"ip_address"`
-	Letsencrypt LetsEncrypt `pulumi:"letsencrypt"`
-	Scheme      string      `pulumi:"scheme"`
+	Domain      *string      `pulumi:"domain"`
+	Http_port   *int         `pulumi:"http_port"`
+	Https_port  *int         `pulumi:"https_port"`
+	Ip_address  *string      `pulumi:"ip_address"`
+	Letsencrypt *LetsEncrypt `pulumi:"letsencrypt"`
+	Scheme      string       `pulumi:"scheme"`
 }
 
 type ReverseProxyFrontEndOutput struct{ *pulumi.OutputState }
@@ -344,8 +548,8 @@ func (o ReverseProxyFrontEndOutput) ToReverseProxyFrontEndOutputWithContext(ctx 
 	return o
 }
 
-func (o ReverseProxyFrontEndOutput) Domain() pulumi.StringOutput {
-	return o.ApplyT(func(v ReverseProxyFrontEnd) string { return v.Domain }).(pulumi.StringOutput)
+func (o ReverseProxyFrontEndOutput) Domain() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ReverseProxyFrontEnd) *string { return v.Domain }).(pulumi.StringPtrOutput)
 }
 
 func (o ReverseProxyFrontEndOutput) Http_port() pulumi.IntPtrOutput {
@@ -360,12 +564,90 @@ func (o ReverseProxyFrontEndOutput) Ip_address() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v ReverseProxyFrontEnd) *string { return v.Ip_address }).(pulumi.StringPtrOutput)
 }
 
-func (o ReverseProxyFrontEndOutput) Letsencrypt() LetsEncryptOutput {
-	return o.ApplyT(func(v ReverseProxyFrontEnd) LetsEncrypt { return v.Letsencrypt }).(LetsEncryptOutput)
+func (o ReverseProxyFrontEndOutput) Letsencrypt() LetsEncryptPtrOutput {
+	return o.ApplyT(func(v ReverseProxyFrontEnd) *LetsEncrypt { return v.Letsencrypt }).(LetsEncryptPtrOutput)
 }
 
 func (o ReverseProxyFrontEndOutput) Scheme() pulumi.StringOutput {
 	return o.ApplyT(func(v ReverseProxyFrontEnd) string { return v.Scheme }).(pulumi.StringOutput)
+}
+
+type ReverseProxyFrontEndPtrOutput struct{ *pulumi.OutputState }
+
+func (ReverseProxyFrontEndPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**ReverseProxyFrontEnd)(nil)).Elem()
+}
+
+func (o ReverseProxyFrontEndPtrOutput) ToReverseProxyFrontEndPtrOutput() ReverseProxyFrontEndPtrOutput {
+	return o
+}
+
+func (o ReverseProxyFrontEndPtrOutput) ToReverseProxyFrontEndPtrOutputWithContext(ctx context.Context) ReverseProxyFrontEndPtrOutput {
+	return o
+}
+
+func (o ReverseProxyFrontEndPtrOutput) Elem() ReverseProxyFrontEndOutput {
+	return o.ApplyT(func(v *ReverseProxyFrontEnd) ReverseProxyFrontEnd {
+		if v != nil {
+			return *v
+		}
+		var ret ReverseProxyFrontEnd
+		return ret
+	}).(ReverseProxyFrontEndOutput)
+}
+
+func (o ReverseProxyFrontEndPtrOutput) Domain() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ReverseProxyFrontEnd) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Domain
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o ReverseProxyFrontEndPtrOutput) Http_port() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *ReverseProxyFrontEnd) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Http_port
+	}).(pulumi.IntPtrOutput)
+}
+
+func (o ReverseProxyFrontEndPtrOutput) Https_port() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *ReverseProxyFrontEnd) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Https_port
+	}).(pulumi.IntPtrOutput)
+}
+
+func (o ReverseProxyFrontEndPtrOutput) Ip_address() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ReverseProxyFrontEnd) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Ip_address
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o ReverseProxyFrontEndPtrOutput) Letsencrypt() LetsEncryptPtrOutput {
+	return o.ApplyT(func(v *ReverseProxyFrontEnd) *LetsEncrypt {
+		if v == nil {
+			return nil
+		}
+		return v.Letsencrypt
+	}).(LetsEncryptPtrOutput)
+}
+
+func (o ReverseProxyFrontEndPtrOutput) Scheme() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ReverseProxyFrontEnd) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Scheme
+	}).(pulumi.StringPtrOutput)
 }
 
 type ServerPoolHost struct {
@@ -597,14 +879,19 @@ func (o TLSPtrOutput) Tls_termination() pulumi.BoolPtrOutput {
 
 func init() {
 	pulumi.RegisterOutputType(BackEndOutput{})
+	pulumi.RegisterOutputType(BackEndPtrOutput{})
 	pulumi.RegisterOutputType(FrontEndOutput{})
+	pulumi.RegisterOutputType(FrontEndPtrOutput{})
 	pulumi.RegisterOutputType(HealthCheckOutput{})
 	pulumi.RegisterOutputType(HealthCheckPtrOutput{})
 	pulumi.RegisterOutputType(LetsEncryptOutput{})
+	pulumi.RegisterOutputType(LetsEncryptPtrOutput{})
 	pulumi.RegisterOutputType(OptionsOutput{})
 	pulumi.RegisterOutputType(OptionsPtrOutput{})
 	pulumi.RegisterOutputType(ReverseProxyBackendOutput{})
+	pulumi.RegisterOutputType(ReverseProxyBackendPtrOutput{})
 	pulumi.RegisterOutputType(ReverseProxyFrontEndOutput{})
+	pulumi.RegisterOutputType(ReverseProxyFrontEndPtrOutput{})
 	pulumi.RegisterOutputType(ServerPoolHostOutput{})
 	pulumi.RegisterOutputType(ServerPoolHostArrayOutput{})
 	pulumi.RegisterOutputType(StickySessionCookieOutput{})
