@@ -61,16 +61,6 @@ return await Deployment.RunAsync(() =>
         Disk_size = 100,
     });
 
-    var virtualMachineDisk = new VirtualMachineDisk("pulumi-vm-disk", new VirtualMachineDiskArgs
-    {
-        Url = url,
-        Token = token,
-        CustomerID = customerId,
-        Cloudspace_id = cloudspace.Cloudspace_id,
-        Vm_id = virtualMachine.Vm_id,
-        Disk_id = disk.Disk_id,
-    });
-
     var virtualMachineNIC = new VirtualMachineNIC("pulumi-vm-nic", new VirtualMachineNICArgs
     {
         Url = url,
@@ -80,6 +70,16 @@ return await Deployment.RunAsync(() =>
         Vm_id = virtualMachine.Vm_id,
         External_network_id = cloudspace.External_network_id,
     });
+
+    var virtualMachineDisk = new VirtualMachineDisk("pulumi-vm-disk", new VirtualMachineDiskArgs
+    {
+        Url = url,
+        Token = token,
+        CustomerID = customerId,
+        Cloudspace_id = cloudspace.Cloudspace_id,
+        Vm_id = virtualMachine.Vm_id,
+        Disk_id = disk.Disk_id,
+    }, new CustomResourceOptions { DependsOn = { virtualMachineNIC } });
 
     return new Dictionary<string, object?>
     {

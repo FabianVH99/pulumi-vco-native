@@ -185,18 +185,31 @@ func (VirtualMachineNIC) Read(ctx p.Context, id string, state VirtualMachineNICS
 		return state, fmt.Errorf("received status code %d\n: %s\n", resp.StatusCode, string(body))
 	}
 
-	var result VirtualMachineNICState
+	var result map[string]interface{}
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		return VirtualMachineNICState{}, err
 	}
 
-	result.URL = state.URL
-	result.CustomerID = state.CustomerID
-	result.Token = state.Token
-	result.CloudSpaceID = state.CloudSpaceID
-	result.VirtualMachineID = state.VirtualMachineID
+	if result["external_cloudspace_id"] == nil {
+		result["external_cloudspace_id"] = ""
+	}
 
-	return result, nil
+	data, err := json.Marshal(result)
+	if err != nil {
+		return VirtualMachineNICState{}, err
+	}
+	var stateResult VirtualMachineNICState
+	if err := json.Unmarshal(data, &stateResult); err != nil {
+		return VirtualMachineNICState{}, err
+	}
+
+	stateResult.URL = state.URL
+	stateResult.CustomerID = state.CustomerID
+	stateResult.Token = state.Token
+	stateResult.CloudSpaceID = state.CloudSpaceID
+	stateResult.VirtualMachineID = state.VirtualMachineID
+
+	return stateResult, nil
 }
 
 func (VirtualMachineNIC) Update(ctx p.Context, id string, state VirtualMachineNICState, input VirtualMachineNICArgs, preview bool) (VirtualMachineNICState, error) {
