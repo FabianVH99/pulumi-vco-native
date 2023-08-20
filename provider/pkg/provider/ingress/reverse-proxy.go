@@ -15,25 +15,25 @@ type ReverseProxy struct{}
 
 type ReverseProxyState struct {
 	ReverseProxyArgs
-	URL            string               `pulumi:"url"`
-	Token          string               `pulumi:"token"`
-	CustomerID     string               `pulumi:"customerID"`
-	CloudSpaceID   string               `pulumi:"cloudspace_id"`
-	ReverseProxyID string               `pulumi:"reverseproxy_id" json:"reverseproxy_id"`
-	Name           string               `pulumi:"name" json:"name"`
-	Description    string               `pulumi:"description,optional" json:"description"`
-	Type           string               `pulumi:"type" json:"type"`
-	FrontEnd       ReverseProxyFrontEnd `pulumi:"front_end,optional" json:"front_end"`
-	BackEnd        ReverseProxyBackend  `pulumi:"back_end,optional" json:"back_end"`
+	URL            string                `pulumi:"url"`
+	Token          string                `pulumi:"token"`
+	CustomerID     string                `pulumi:"customerID"`
+	CloudSpaceID   string                `pulumi:"cloudspace_id"`
+	ReverseProxyID string                `pulumi:"reverseproxy_id" json:"reverseproxy_id"`
+	Name           string                `pulumi:"name" json:"name"`
+	Description    string                `pulumi:"description,optional" json:"description"`
+	Type           string                `pulumi:"type" json:"type"`
+	FrontEnd       *ReverseProxyFrontEnd `pulumi:"front_end,optional" json:"front_end"`
+	BackEnd        *ReverseProxyBackend  `pulumi:"back_end,optional" json:"back_end"`
 }
 
 type ReverseProxyFrontEnd struct {
-	Domain      string      `pulumi:"domain,optional" json:"domain"`
-	HTTPPort    *int        `pulumi:"http_port,optional" json:"http_port"`
-	HTTPSPort   *int        `pulumi:"https_port,optional" json:"https_port"`
-	IPAddress   *string     `pulumi:"ip_address,optional" json:"ip_address"`
-	Scheme      string      `pulumi:"scheme" json:"scheme"`
-	LetsEncrypt LetsEncrypt `pulumi:"letsencrypt,optional" json:"letsencrypt"`
+	Domain      string       `pulumi:"domain" json:"domain"`
+	HTTPPort    *int         `pulumi:"http_port,optional" json:"http_port"`
+	HTTPSPort   *int         `pulumi:"https_port,optional" json:"https_port"`
+	IPAddress   *string      `pulumi:"ip_address,optional" json:"ip_address"`
+	Scheme      string       `pulumi:"scheme" json:"scheme"`
+	LetsEncrypt *LetsEncrypt `pulumi:"letsencrypt,optional" json:"letsencrypt"`
 }
 
 type LetsEncrypt struct {
@@ -80,8 +80,8 @@ type ReverseProxyArgs struct {
 	HTTPSPort         *int    `pulumi:"https_port,optional"`
 	IPAddress         *string `pulumi:"ip_address,optional"`
 	FrontEndScheme    string  `pulumi:"scheme"`
-	Enabled           bool    `pulumi:"enabled" json:"enabled"`
-	Email             *string `pulumi:"email,optional" json:"email"`
+	Enabled           bool    `pulumi:"enabled"`
+	Email             *string `pulumi:"email,optional"`
 	BackendScheme     string  `pulumi:"scheme"`
 	ServerpoolID      string  `pulumi:"serverpool_id"`
 	TargetPort        int     `pulumi:"target_port"`

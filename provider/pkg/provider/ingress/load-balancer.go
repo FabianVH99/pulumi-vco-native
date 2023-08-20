@@ -15,16 +15,16 @@ type LoadBalancer struct{}
 
 type LoadBalancerState struct {
 	LoadBalancerArgs
-	URL            string   `pulumi:"url"`
-	Token          string   `pulumi:"token"`
-	CustomerID     string   `pulumi:"customerID"`
-	LoadBalancerID string   `pulumi:"loadbalancer_id" json:"loadbalancer_id"`
-	CloudSpaceID   string   `pulumi:"cloudspace_id"`
-	Name           string   `pulumi:"name" json:"name"`
-	Description    string   `pulumi:"description,optional" json:"description"`
-	Type           string   `pulumi:"type" json:"type"`
-	FrontEnd       FrontEnd `pulumi:"front_end,optional" json:"front_end"`
-	BackEnd        BackEnd  `pulumi:"back_end,optional" json:"back_end"`
+	URL            string    `pulumi:"url"`
+	Token          string    `pulumi:"token"`
+	CustomerID     string    `pulumi:"customerID"`
+	LoadBalancerID string    `pulumi:"loadbalancer_id" json:"loadbalancer_id"`
+	CloudSpaceID   string    `pulumi:"cloudspace_id"`
+	Name           string    `pulumi:"name" json:"name"`
+	Description    string    `pulumi:"description,optional" json:"description"`
+	Type           string    `pulumi:"type" json:"type"`
+	FrontEnd       *FrontEnd `pulumi:"front_end,optional" json:"front_end"`
+	BackEnd        *BackEnd  `pulumi:"back_end,optional" json:"back_end"`
 }
 
 type FrontEnd struct {
@@ -53,13 +53,13 @@ type LoadBalancerArgs struct {
 	Name           string  `pulumi:"name"`
 	Description    *string `pulumi:"description,optional"`
 	Type           string  `pulumi:"type"`
-	Port           int     `pulumi:"port" json:"port"`
-	IPAddress      *string `pulumi:"ip_address,optional" json:"ip_address"`
+	Port           int     `pulumi:"port"`
+	IPAddress      *string `pulumi:"ip_address,optional"`
 	ServerpoolID   string  `pulumi:"serverpool_id"`
 	TargetPort     int     `pulumi:"target_port"`
-	IsEnabled      *bool   `pulumi:"is_enabled,optional" json:"is_enabled"`
-	Domain         *string `pulumi:"domain,optional" json:"domain"`
-	TLSTermination *bool   `pulumi:"tls_termination,optional" json:"tls_termination"`
+	IsEnabled      *bool   `pulumi:"is_enabled,optional"`
+	Domain         *string `pulumi:"domain,optional"`
+	TLSTermination *bool   `pulumi:"tls_termination,optional"`
 }
 
 func (lb LoadBalancer) WireDependencies(f infer.FieldSelector, args *LoadBalancerArgs, state *LoadBalancerState) {
@@ -191,18 +191,40 @@ func (LoadBalancer) Read(ctx p.Context, id string, state LoadBalancerState) (Loa
 		return state, fmt.Errorf("received status code %d\n: %s\n", resp.StatusCode, string(body))
 	}
 
-	var result LoadBalancerState
+	var result map[string]interface{}
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		return LoadBalancerState{}, err
 	}
 
-	result.URL = state.URL
-	result.CustomerID = state.CustomerID
-	result.Token = state.Token
-	result.CloudSpaceID = state.CloudSpaceID
-	result.LoadBalancerID = state.LoadBalancerID
+	if result["ip_address"] == nil {
+		result["ip_address"] = ""
+	}
+	if result["is_enabled"] == nil {
+		result["is_enabled"] = false
+	}
+	if result["domain"] == nil {
+		result["domain"] = ""
+	}
+	if result["tls_termination"] == nil {
+		result["tls_termination"] = false
+	}
 
-	return result, nil
+	data, err := json.Marshal(result)
+	if err != nil {
+		return LoadBalancerState{}, err
+	}
+	var stateResult LoadBalancerState
+	if err := json.Unmarshal(data, &stateResult); err != nil {
+		return LoadBalancerState{}, err
+	}
+
+	stateResult.URL = state.URL
+	stateResult.CustomerID = state.CustomerID
+	stateResult.Token = state.Token
+	stateResult.CloudSpaceID = state.CloudSpaceID
+	stateResult.LoadBalancerID = state.LoadBalancerID
+
+	return stateResult, nil
 }
 
 func (lb LoadBalancer) Update(ctx p.Context, id string, state LoadBalancerState, input LoadBalancerArgs, preview bool) (LoadBalancerState, error) {
