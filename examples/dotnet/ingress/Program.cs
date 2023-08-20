@@ -62,10 +62,26 @@ return await Deployment.RunAsync(() =>
         Tls_termination = true,
     });
 
+    var reverseProxy = new ReverseProxy("pulumi-rp", new ReverseProxyArgs
+    {
+        Url = url,
+        Token = token,
+        CustomerID = customerId,
+        Cloudspace_id = cloudspace.Cloudspace_id,
+        Name = "Pulumi_dotnet_rp",
+        Domain = "Pulumi",
+        Scheme = "http",
+        Enabled = false,
+        Http_port = 25,
+        Target_port = 25,
+        Serverpool_id = serverPool.Serverpool_id,
+    });
+
     return new Dictionary<string, object?>
    {
       ["cs_id"] =cloudspace.Cloudspace_id,
       ["sv_id"] = serverPool.Serverpool_id,
       ["lb_id"] = loadBalancer.Loadbalancer_id,
+      ["rp_id"] = reverseProxy.Reverseproxy_id,
     };
 });

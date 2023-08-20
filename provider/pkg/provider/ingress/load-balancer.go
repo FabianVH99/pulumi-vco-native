@@ -23,6 +23,8 @@ type LoadBalancerState struct {
 	Name           string    `pulumi:"name" json:"name"`
 	Description    string    `pulumi:"description,optional" json:"description"`
 	Type           string    `pulumi:"type" json:"type"`
+	Port           int       `pulumi:"port"`
+	TargetPort     int       `pulumi:"target_port"`
 	FrontEnd       *FrontEnd `pulumi:"front_end,optional" json:"front_end"`
 	BackEnd        *BackEnd  `pulumi:"back_end,optional" json:"back_end"`
 }
@@ -223,6 +225,8 @@ func (LoadBalancer) Read(ctx p.Context, id string, state LoadBalancerState) (Loa
 	stateResult.Token = state.Token
 	stateResult.CloudSpaceID = state.CloudSpaceID
 	stateResult.LoadBalancerID = state.LoadBalancerID
+	stateResult.Port = stateResult.FrontEnd.Port
+	stateResult.TargetPort = stateResult.BackEnd.TargetPort
 
 	return stateResult, nil
 }

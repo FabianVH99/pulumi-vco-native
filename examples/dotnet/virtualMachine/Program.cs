@@ -40,6 +40,19 @@ return await Deployment.RunAsync(() =>
         Boot_type = "bios",
     });
 
+    var virtualMachinePortforward = new PortForward("pulumi-pf", new PortForwardArgs
+    {
+        Url = url,
+        Token = token,
+        CustomerID = customerId,
+        Cloudspace_id = cloudspace.Cloudspace_id,
+        Local_port = 22,
+        Public_port = 22,
+        Protocol = "tcp",
+        Public_ip = cloudspace.External_network_ip,
+        Vm_id = virtualMachine.Vm_id,
+    });
+
     var virtualMachineNIC = new VirtualMachineNIC("pulumi-vm-nic", new VirtualMachineNICArgs
     {
         Url = url,
@@ -48,7 +61,7 @@ return await Deployment.RunAsync(() =>
         Cloudspace_id = cloudspace.Cloudspace_id,
         Vm_id = virtualMachine.Vm_id,
         External_network_id = cloudspace.External_network_id,
-    });
+    }, new CustomResourceOptions { DependsOn = { virtualMachinePortforward } });
 
     var virtualMachineCD = new VirtualMachineCD("pulumi-vm-cd", new VirtualMachineCDArgs
     {
@@ -86,5 +99,6 @@ return await Deployment.RunAsync(() =>
         ["cloudspace_id"] = cloudspace.Cloudspace_id,
         ["vm_id"] = virtualMachine.Vm_id,
         ["disk_id"] = disk.Disk_id,
+        ["portforward_id"] = virtualMachinePortforward.Portforward_id,
     };
 });

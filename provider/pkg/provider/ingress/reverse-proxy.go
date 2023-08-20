@@ -45,7 +45,7 @@ type ReverseProxyBackend struct {
 	Scheme       string   `pulumi:"scheme" json:"scheme"`
 	ServerpoolID string   `pulumi:"serverpool_id" json:"serverpool_id"`
 	TargetPort   int      `pulumi:"target_port" json:"target_port"`
-	Options      *Options `pulumi:"options,optional,optional" json:"options"`
+	Options      *Options `pulumi:"options,optional" json:"options"`
 }
 
 type Options struct {
@@ -96,7 +96,7 @@ type ReverseProxyArgs struct {
 	Timeout           *int    `pulumi:"timeout,optional"`
 }
 
-func (lb ReverseProxy) WireDependencies(f infer.FieldSelector, args *ReverseProxyArgs, state *ReverseProxyState) {
+func (rp ReverseProxy) WireDependencies(f infer.FieldSelector, args *ReverseProxyArgs, state *ReverseProxyState) {
 	f.OutputField(&state.URL).DependsOn(f.InputField(&args.URL))
 	f.OutputField(&state.Token).DependsOn(f.InputField(&args.Token))
 	f.OutputField(&state.CustomerID).DependsOn(f.InputField(&args.CustomerID))
@@ -283,18 +283,50 @@ func (ReverseProxy) Read(ctx p.Context, id string, state ReverseProxyState) (Rev
 		return state, fmt.Errorf("received status code %d\n: %s\n", resp.StatusCode, string(body))
 	}
 
-	var result ReverseProxyState
+	var result map[string]interface{}
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		return ReverseProxyState{}, err
 	}
 
-	result.URL = state.URL
-	result.CustomerID = state.CustomerID
-	result.Token = state.Token
-	result.CloudSpaceID = state.CloudSpaceID
-	result.ReverseProxyID = state.ReverseProxyID
+	frontEnd := result["front_end"].(map[string]interface{})
+	backEnd := result["back_end"].(map[string]interface{})
+	letEncrypt := frontEnd["letsencrypt"].(map[string]interface{})
 
-	return result, nil
+	if result["description"] == nil {
+		result["description"] = ""
+	}
+	if frontEnd["https_port"] == nil {
+		frontEnd["https_port"] = 0
+	}
+	if frontEnd["http_port"] == nil {
+		frontEnd["http_port"] = 0
+	}
+	if letEncrypt["email"] == nil {
+		letEncrypt["email"] = ""
+	}
+	if backEnd["serverpool_name"] == nil {
+		backEnd["serverpool_name"] = ""
+	}
+	if backEnd["options"] == nil {
+		backEnd["options"] = ""
+	}
+
+	data, err := json.Marshal(result)
+	if err != nil {
+		return ReverseProxyState{}, err
+	}
+	var stateResult ReverseProxyState
+	if err := json.Unmarshal(data, &stateResult); err != nil {
+		return ReverseProxyState{}, err
+	}
+
+	stateResult.URL = state.URL
+	stateResult.CustomerID = state.CustomerID
+	stateResult.Token = state.Token
+	stateResult.CloudSpaceID = state.CloudSpaceID
+	stateResult.ReverseProxyID = state.ReverseProxyID
+
+	return stateResult, nil
 }
 
 func (rp ReverseProxy) Update(ctx p.Context, id string, state ReverseProxyState, input ReverseProxyArgs, preview bool) (ReverseProxyState, error) {

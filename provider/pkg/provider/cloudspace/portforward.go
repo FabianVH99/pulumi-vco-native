@@ -27,8 +27,8 @@ type PortForwardState struct {
 	Protocol         string  `json:"protocol" pulumi:"protocol"`
 	VirtualMachineID int     `json:"vm_id" pulumi:"vm_id"`
 	PublicIP         string  `json:"public_ip" pulumi:"public_ip"`
-	TillPublicPort   *int    `json:"till_public_port" pulumi:"till_public_port"`
-	NestedCSID       *string `json:"nested_cs_id" pulumi:"nested_cs_id"`
+	TillPublicPort   *int    `json:"till_public_port" pulumi:"till_public_port,optional"`
+	NestedCSID       *string `json:"nested_cloudspace_id" pulumi:"nested_cs_id,optional"`
 }
 
 type PortForwardArgs struct {
@@ -160,18 +160,34 @@ func (PortForward) Read(ctx p.Context, id string, state PortForwardState) (PortF
 		return state, fmt.Errorf("received status code %d\n: %s\n", resp.StatusCode, string(body))
 	}
 
-	var result PortForwardState
+	var result map[string]interface{}
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		return PortForwardState{}, err
 	}
 
-	result.URL = state.URL
-	result.CustomerID = state.CustomerID
-	result.Token = state.Token
-	result.CloudSpaceID = state.CloudSpaceID
-	result.PortForwardID = state.PortForwardID
+	if result["nested_cloudspace_id"] == nil {
+		result["nested_cloudspace_id"] = ""
+	}
+	if result["till_public_port"] == nil {
+		result["till_public_port"] = 0
+	}
 
-	return result, nil
+	data, err := json.Marshal(result)
+	if err != nil {
+		return PortForwardState{}, err
+	}
+	var stateResult PortForwardState
+	if err := json.Unmarshal(data, &stateResult); err != nil {
+		return PortForwardState{}, err
+	}
+
+	stateResult.URL = state.URL
+	stateResult.CustomerID = state.CustomerID
+	stateResult.Token = state.Token
+	stateResult.CloudSpaceID = state.CloudSpaceID
+	stateResult.PortForwardID = state.PortForwardID
+
+	return stateResult, nil
 }
 
 func (pf PortForward) Update(ctx p.Context, id string, state PortForwardState, input PortForwardArgs, preview bool) (PortForwardState, error) {
