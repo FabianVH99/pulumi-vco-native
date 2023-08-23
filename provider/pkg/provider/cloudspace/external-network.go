@@ -84,13 +84,13 @@ func (ExternalNetwork) Create(ctx p.Context, name string, input ExternalNetworkA
 		return "", state, fmt.Errorf("received status code %d\n: %s\n", resp.StatusCode, string(body))
 	}
 
-	url = fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/external-networks", state.URL, state.CustomerID, state.CloudSpaceID)
+	url = fmt.Sprintf("https://%s/api/1/customers/%s/cloudspaces/%s/external-networks", input.URL, input.CustomerID, input.CloudSpaceID)
 	req, err = http.NewRequest("GET", url, nil)
 	if err != nil {
 		return "", state, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", state.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", input.Token))
 
 	resp, err = client.Do(req)
 	if err != nil {
@@ -115,13 +115,13 @@ func (ExternalNetwork) Create(ctx p.Context, name string, input ExternalNetworkA
 	externalNetworks := result["result"].([]interface{})
 	lastExternalNetwork := externalNetworks[len(externalNetworks)-1].(map[string]interface{})
 
-	state.ExternalNetworkIP = lastExternalNetwork["external_network_ip"].(string)
-	state.Metric = int(lastExternalNetwork["metric"].(float64))
-	state.ExternalNetworkID = lastExternalNetwork["external_network_id"].(string)
 	state.URL = input.URL
 	state.CustomerID = input.CustomerID
 	state.Token = input.Token
 	state.CloudSpaceID = input.CloudSpaceID
+	state.ExternalNetworkIP = lastExternalNetwork["external_network_ip"].(string)
+	state.Metric = int(lastExternalNetwork["metric"].(float64))
+	state.ExternalNetworkID = lastExternalNetwork["external_network_id"].(string)
 
 	return id, state, nil
 }

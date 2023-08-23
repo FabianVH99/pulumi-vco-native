@@ -308,7 +308,7 @@ func (ReverseProxy) Read(ctx p.Context, id string, state ReverseProxyState) (Rev
 		backEnd["serverpool_name"] = ""
 	}
 	if backEnd["options"] == nil {
-		backEnd["options"] = ""
+		backEnd["options"] = &Options{}
 	}
 
 	data, err := json.Marshal(result)
