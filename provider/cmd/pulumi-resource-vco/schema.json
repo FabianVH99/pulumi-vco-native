@@ -1,6 +1,6 @@
 {
     "config": {},
-    "description": "The Whitesky.Cloud Vco Provider for Pulumi enables you to manipulate resources in the vco portal.\nPlease read the documentation or consult the API docs in your vco portal in order to properly understand how the resources work.\nBefore using this package you need to install the resource-vco plugin. The latest release of which can be found in the repository.\nYou then have to install the plugin on your system by storing the contents of the zipped file in: \nWindows: %USERPROFILE%\\\\.pulumi\\\\plugins\\resource-vco-v0.0.41.\nLinux and MacOS: ~/.pulumi/plugins/resource-vco-v0.0.41.\nWhen you have moved the plugin to the appropriate directory you can in stall it using: pulumi plugin install resource vcov0.0.41.\n",
+    "description": "The Whitesky.Cloud Vco Provider for Pulumi enables you to manipulate resources in the vco portal.\nPlease read the documentation or consult the API docs in your vco portal in order to properly understand how the resources work.\nBefore using this package you need to install the resource-vco plugin. The latest release of which can be found in the repository.\nYou then have to install the plugin on your system by storing the contents of the zipped file in: \nWindows: %USERPROFILE%\\\\.pulumi\\\\plugins\\resource-vco-v0.0.46.\nLinux and MacOS: ~/.pulumi/plugins/resource-vco-v0.0.46.\nWhen you have moved the plugin to the appropriate directory you can in stall it using: pulumi plugin install resource vcov0.0.46.\n",
     "displayName": "vco",
     "homepage": "https://whitesky.cloud/",
     "keywords": [
@@ -826,9 +826,7 @@
                 "public_port",
                 "protocol",
                 "vm_id",
-                "public_ip",
-                "till_public_port",
-                "nested_cs_id"
+                "public_ip"
             ],
             "requiredInputs": [
                 "url",
@@ -1329,16 +1327,16 @@
                 }
             },
             "required": [
-                "port",
                 "serverpool_id",
-                "target_port",
                 "url",
                 "token",
                 "customerID",
                 "loadbalancer_id",
                 "cloudspace_id",
                 "name",
-                "type"
+                "type",
+                "port",
+                "target_port"
             ],
             "requiredInputs": [
                 "url",
@@ -2186,6 +2184,7 @@
                 }
             },
             "required": [
+                "domain",
                 "scheme"
             ],
             "type": "object"

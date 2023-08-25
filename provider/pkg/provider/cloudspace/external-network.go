@@ -31,10 +31,10 @@ type ExternalNetworkArgs struct {
 	Token               string `pulumi:"token" provider:"secret"`
 	CustomerID          string `pulumi:"customerID" provider:"secret"`
 	CloudSpaceID        string `pulumi:"cloudspace_id"`
-	ExternalNetworkID   string `pulumi:"external_network_id"`
-	ExternalNetworkType string `pulumi:"external_network_type"`
+	ExternalNetworkID   string `pulumi:"external_network_id" provider:"ignoreOnChanges"`
+	ExternalNetworkType string `pulumi:"external_network_type" provider:"ignoreOnChanges"`
 	Metric              int    `pulumi:"metric"`
-	ExternalNetworkIP   string `pulumi:"external_network_ip"`
+	ExternalNetworkIP   string `pulumi:"external_network_ip" provider:"ignoreOnChanges"`
 }
 
 func (ex ExternalNetwork) WireDependencies(f infer.FieldSelector, args *ExternalNetworkArgs, state *ExternalNetworkState) {

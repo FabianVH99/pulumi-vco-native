@@ -1,0 +1,7 @@
+{
+    "name": "javascript-cloudspace-example",
+    "main": "index.js",
+    "dependencies": {
+        "@pulumi/pulumi": "^3.0.0"
+    }
+}

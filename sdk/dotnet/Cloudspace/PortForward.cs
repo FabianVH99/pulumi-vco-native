@@ -22,7 +22,7 @@ namespace Pulumi.Vco.Cloudspace
         public Output<int> Local_port { get; private set; } = null!;
 
         [Output("nested_cs_id")]
-        public Output<string> Nested_cs_id { get; private set; } = null!;
+        public Output<string?> Nested_cs_id { get; private set; } = null!;
 
         [Output("portforward_id")]
         public Output<string> Portforward_id { get; private set; } = null!;
@@ -37,7 +37,7 @@ namespace Pulumi.Vco.Cloudspace
         public Output<int> Public_port { get; private set; } = null!;
 
         [Output("till_public_port")]
-        public Output<int> Till_public_port { get; private set; } = null!;
+        public Output<int?> Till_public_port { get; private set; } = null!;
 
         [Output("token")]
         public Output<string> Token { get; private set; } = null!;

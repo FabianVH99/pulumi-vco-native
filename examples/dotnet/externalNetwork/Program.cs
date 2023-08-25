@@ -30,10 +30,10 @@ return await Deployment.RunAsync(() =>
         Token = token,
         CustomerID = customerId,
         Cloudspace_id = cloudspace.Cloudspace_id,
-        External_network_id = cloudspace.External_network_id.Apply(id => id.ToString()),
+        External_network_id = stcloudspace.External_network_id.Apply(id => id.ToString()),
         External_network_type = "external",
         External_network_ip = "",
-        Metric = 502,
+        Metric = 503,
     });
 
     return new Dictionary<string, object?>

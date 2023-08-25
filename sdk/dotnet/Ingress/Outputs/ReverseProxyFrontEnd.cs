@@ -13,7 +13,7 @@ namespace Pulumi.Vco.Ingress.Outputs
     [OutputType]
     public sealed class ReverseProxyFrontEnd
     {
-        public readonly string? Domain;
+        public readonly string Domain;
         public readonly int? Http_port;
         public readonly int? Https_port;
         public readonly string? Ip_address;
@@ -22,7 +22,7 @@ namespace Pulumi.Vco.Ingress.Outputs
 
         [OutputConstructor]
         private ReverseProxyFrontEnd(
-            string? domain,
+            string domain,
 
             int? http_port,
 

@@ -290,7 +290,7 @@ class PortForward(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def nested_cs_id(self) -> pulumi.Output[str]:
+    def nested_cs_id(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "nested_cs_id")
 
     @property
@@ -315,7 +315,7 @@ class PortForward(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def till_public_port(self) -> pulumi.Output[int]:
+    def till_public_port(self) -> pulumi.Output[Optional[int]]:
         return pulumi.get(self, "till_public_port")
 
     @property

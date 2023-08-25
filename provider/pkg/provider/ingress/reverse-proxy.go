@@ -307,8 +307,23 @@ func (ReverseProxy) Read(ctx p.Context, id string, state ReverseProxyState) (Rev
 	if backEnd["serverpool_name"] == nil {
 		backEnd["serverpool_name"] = ""
 	}
-	if backEnd["options"] == nil {
-		backEnd["options"] = &Options{}
+	emptyString := ""
+	falseBool := false
+	zeroInt := 0
+	backEnd["options"] = &Options{
+		StickySessionCookie: &StickySessionCookie{
+			Name:     &emptyString,
+			Secure:   &falseBool,
+			HttpOnly: &falseBool,
+			SameSite: &emptyString,
+		},
+		HealthCheck: &HealthCheck{
+			Path:     &emptyString,
+			Scheme:   &emptyString,
+			Port:     &zeroInt,
+			Interval: &zeroInt,
+			Timeout:  &zeroInt,
+		},
 	}
 
 	data, err := json.Marshal(result)

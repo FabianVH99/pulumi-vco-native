@@ -23,7 +23,3 @@ pulumi_cloudspace = base.Cloudspace("Python-cloudspace", base.CloudspaceArgs(
 ))
 
 pulumi.export('cloudspace_id', pulumi_cloudspace.cloudspace_id)
-
-
-
-

@@ -34,12 +34,12 @@ export class PortForward extends pulumi.CustomResource {
     public readonly cloudspace_id!: pulumi.Output<string>;
     public readonly customerID!: pulumi.Output<string>;
     public readonly local_port!: pulumi.Output<number>;
-    public readonly nested_cs_id!: pulumi.Output<string>;
+    public readonly nested_cs_id!: pulumi.Output<string | undefined>;
     public /*out*/ readonly portforward_id!: pulumi.Output<string>;
     public readonly protocol!: pulumi.Output<string>;
     public readonly public_ip!: pulumi.Output<string>;
     public readonly public_port!: pulumi.Output<number>;
-    public readonly till_public_port!: pulumi.Output<number>;
+    public readonly till_public_port!: pulumi.Output<number | undefined>;
     public readonly token!: pulumi.Output<string>;
     public readonly url!: pulumi.Output<string>;
     public readonly vm_id!: pulumi.Output<number>;

@@ -94,7 +94,7 @@ export namespace ingress {
     }
 
     export interface ReverseProxyFrontEnd {
-        domain?: string;
+        domain: string;
         http_port?: number;
         https_port?: number;
         ip_address?: string;

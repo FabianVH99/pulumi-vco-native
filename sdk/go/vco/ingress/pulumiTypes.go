@@ -526,7 +526,7 @@ func (o ReverseProxyBackendPtrOutput) Target_port() pulumi.IntPtrOutput {
 }
 
 type ReverseProxyFrontEnd struct {
-	Domain      *string      `pulumi:"domain"`
+	Domain      string       `pulumi:"domain"`
 	Http_port   *int         `pulumi:"http_port"`
 	Https_port  *int         `pulumi:"https_port"`
 	Ip_address  *string      `pulumi:"ip_address"`
@@ -548,8 +548,8 @@ func (o ReverseProxyFrontEndOutput) ToReverseProxyFrontEndOutputWithContext(ctx 
 	return o
 }
 
-func (o ReverseProxyFrontEndOutput) Domain() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v ReverseProxyFrontEnd) *string { return v.Domain }).(pulumi.StringPtrOutput)
+func (o ReverseProxyFrontEndOutput) Domain() pulumi.StringOutput {
+	return o.ApplyT(func(v ReverseProxyFrontEnd) string { return v.Domain }).(pulumi.StringOutput)
 }
 
 func (o ReverseProxyFrontEndOutput) Http_port() pulumi.IntPtrOutput {
@@ -601,7 +601,7 @@ func (o ReverseProxyFrontEndPtrOutput) Domain() pulumi.StringPtrOutput {
 		if v == nil {
 			return nil
 		}
-		return v.Domain
+		return &v.Domain
 	}).(pulumi.StringPtrOutput)
 }
 

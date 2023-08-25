@@ -15,18 +15,18 @@ import (
 type PortForward struct {
 	pulumi.CustomResourceState
 
-	Cloudspace_id    pulumi.StringOutput `pulumi:"cloudspace_id"`
-	CustomerID       pulumi.StringOutput `pulumi:"customerID"`
-	Local_port       pulumi.IntOutput    `pulumi:"local_port"`
-	Nested_cs_id     pulumi.StringOutput `pulumi:"nested_cs_id"`
-	Portforward_id   pulumi.StringOutput `pulumi:"portforward_id"`
-	Protocol         pulumi.StringOutput `pulumi:"protocol"`
-	Public_ip        pulumi.StringOutput `pulumi:"public_ip"`
-	Public_port      pulumi.IntOutput    `pulumi:"public_port"`
-	Till_public_port pulumi.IntOutput    `pulumi:"till_public_port"`
-	Token            pulumi.StringOutput `pulumi:"token"`
-	Url              pulumi.StringOutput `pulumi:"url"`
-	Vm_id            pulumi.IntOutput    `pulumi:"vm_id"`
+	Cloudspace_id    pulumi.StringOutput    `pulumi:"cloudspace_id"`
+	CustomerID       pulumi.StringOutput    `pulumi:"customerID"`
+	Local_port       pulumi.IntOutput       `pulumi:"local_port"`
+	Nested_cs_id     pulumi.StringPtrOutput `pulumi:"nested_cs_id"`
+	Portforward_id   pulumi.StringOutput    `pulumi:"portforward_id"`
+	Protocol         pulumi.StringOutput    `pulumi:"protocol"`
+	Public_ip        pulumi.StringOutput    `pulumi:"public_ip"`
+	Public_port      pulumi.IntOutput       `pulumi:"public_port"`
+	Till_public_port pulumi.IntPtrOutput    `pulumi:"till_public_port"`
+	Token            pulumi.StringOutput    `pulumi:"token"`
+	Url              pulumi.StringOutput    `pulumi:"url"`
+	Vm_id            pulumi.IntOutput       `pulumi:"vm_id"`
 }
 
 // NewPortForward registers a new resource with the given unique name, arguments, and options.
@@ -232,8 +232,8 @@ func (o PortForwardOutput) Local_port() pulumi.IntOutput {
 	return o.ApplyT(func(v *PortForward) pulumi.IntOutput { return v.Local_port }).(pulumi.IntOutput)
 }
 
-func (o PortForwardOutput) Nested_cs_id() pulumi.StringOutput {
-	return o.ApplyT(func(v *PortForward) pulumi.StringOutput { return v.Nested_cs_id }).(pulumi.StringOutput)
+func (o PortForwardOutput) Nested_cs_id() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *PortForward) pulumi.StringPtrOutput { return v.Nested_cs_id }).(pulumi.StringPtrOutput)
 }
 
 func (o PortForwardOutput) Portforward_id() pulumi.StringOutput {
@@ -252,8 +252,8 @@ func (o PortForwardOutput) Public_port() pulumi.IntOutput {
 	return o.ApplyT(func(v *PortForward) pulumi.IntOutput { return v.Public_port }).(pulumi.IntOutput)
 }
 
-func (o PortForwardOutput) Till_public_port() pulumi.IntOutput {
-	return o.ApplyT(func(v *PortForward) pulumi.IntOutput { return v.Till_public_port }).(pulumi.IntOutput)
+func (o PortForwardOutput) Till_public_port() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *PortForward) pulumi.IntPtrOutput { return v.Till_public_port }).(pulumi.IntPtrOutput)
 }
 
 func (o PortForwardOutput) Token() pulumi.StringOutput {

@@ -202,15 +202,14 @@ class ReverseProxyBackend(dict):
 @pulumi.output_type
 class ReverseProxyFrontEnd(dict):
     def __init__(__self__, *,
+                 domain: str,
                  scheme: str,
-                 domain: Optional[str] = None,
                  http_port: Optional[int] = None,
                  https_port: Optional[int] = None,
                  ip_address: Optional[str] = None,
                  letsencrypt: Optional['outputs.LetsEncrypt'] = None):
+        pulumi.set(__self__, "domain", domain)
         pulumi.set(__self__, "scheme", scheme)
-        if domain is not None:
-            pulumi.set(__self__, "domain", domain)
         if http_port is not None:
             pulumi.set(__self__, "http_port", http_port)
         if https_port is not None:
@@ -222,13 +221,13 @@ class ReverseProxyFrontEnd(dict):
 
     @property
     @pulumi.getter
-    def scheme(self) -> str:
-        return pulumi.get(self, "scheme")
+    def domain(self) -> str:
+        return pulumi.get(self, "domain")
 
     @property
     @pulumi.getter
-    def domain(self) -> Optional[str]:
-        return pulumi.get(self, "domain")
+    def scheme(self) -> str:
+        return pulumi.get(self, "scheme")
 
     @property
     @pulumi.getter

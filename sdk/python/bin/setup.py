@@ -8,8 +8,8 @@ from setuptools.command.install import install
 from subprocess import check_call
 
 
-VERSION = "0.0.41a1692314989+dirty"
-PLUGIN_VERSION = "0.0.41-alpha.1692314989+bf884992.dirty"
+VERSION = "0.0.45+dirty"
+PLUGIN_VERSION = "v0.0.46"
 
 class InstallPluginCommand(install):
     def run(self):
