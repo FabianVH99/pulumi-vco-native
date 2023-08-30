@@ -1,0 +1,6 @@
+name: python-antiAffinityGroup-example
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: A sample program showing how to manipulate resources in an antiAffinityGroup

@@ -5,64 +5,16 @@ import * as pulumi from "@pulumi/pulumi";
 import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 
-export namespace resources {
-    export interface BackEndState {
-        serverpool_id: string;
-        serverpool_name: string;
-        target_port: number;
-    }
-
+export namespace cloudspace {
     export interface CpuTopology {
         cores: number;
         sockets: number;
         threads: number;
     }
 
-    export interface Endpoint {
-        address: string;
-        name: string;
-        port: number;
-        private_address: string;
-        private_port: number;
-        psk: string;
-        user: string;
-    }
-
-    export interface FirewallCustom {
-        cdrom_id: number;
-        disk_size: number;
-        image_id: number;
-        memory: number;
-        type: string;
-        vcpus: number;
-    }
-
-    export interface FrontEnd {
-        ip_address: string;
-        port: number;
-        tls: outputs.resources.TLS;
-    }
-
-    export interface HealthCheck {
-        interval: number;
-        path: string;
-        port: number;
-        scheme: string;
-        timeout: number;
-    }
-
-    export interface IOTune {
-        iops: number;
-    }
-
-    export interface LetsEncrypt {
-        email: string;
-        enabled: boolean;
-    }
-
     export interface NetworkInterface {
         device_name: string;
-        external_cloudspace_id: string;
+        external_cloudspace_id?: string;
         ip_address: string;
         mac_address: string;
         model: string;
@@ -70,56 +22,9 @@ export namespace resources {
         nic_type: string;
     }
 
-    export interface Options {
-        health_check: outputs.resources.HealthCheck;
-        sticky_session_cookie: outputs.resources.StickySessionCookie;
-    }
-
     export interface OsAccount {
         login: string;
         password: string;
-    }
-
-    export interface ResourceLimits {
-        external_network_quota: number;
-        memory_quota: number;
-        public_ip_quota: number;
-        vcpu_quota: number;
-        vdisk_space_quota: number;
-    }
-
-    export interface ReverseProxyBackend {
-        options: outputs.resources.Options;
-        scheme: string;
-        serverpool_id: string;
-        target_port: number;
-    }
-
-    export interface ReverseProxyFrontEnd {
-        domain: string;
-        http_port: number;
-        https_port: number;
-        ip_address: string;
-        letsencrypt: outputs.resources.LetsEncrypt;
-        scheme: string;
-    }
-
-    export interface ServerPoolHost {
-        address: string;
-        host_id: string;
-    }
-
-    export interface StickySessionCookie {
-        http_only: boolean;
-        name: string;
-        same_site: string;
-        secure: boolean;
-    }
-
-    export interface TLS {
-        domain: string;
-        is_enabled: boolean;
-        tls_termination: boolean;
     }
 
     export interface VmDisk {
@@ -133,6 +38,86 @@ export namespace resources {
         pci_bus: number;
         pci_slot: number;
         status: string;
+    }
+
+}
+
+export namespace disk {
+    export interface Endpoint {
+        address: string;
+        name: string;
+        port: number;
+        private_address: string;
+        private_port: number;
+        psk: string;
+        user: string;
+    }
+
+}
+
+export namespace ingress {
+    export interface BackEnd {
+        serverpool_id: string;
+        serverpool_name?: string;
+        target_port: number;
+    }
+
+    export interface FrontEnd {
+        ip_address?: string;
+        port: number;
+        tls?: outputs.ingress.TLS;
+    }
+
+    export interface HealthCheck {
+        interval?: number;
+        path?: string;
+        port?: number;
+        scheme?: string;
+        timeout?: number;
+    }
+
+    export interface LetsEncrypt {
+        email?: string;
+        enabled?: boolean;
+    }
+
+    export interface Options {
+        health_check?: outputs.ingress.HealthCheck;
+        sticky_session_cookie?: outputs.ingress.StickySessionCookie;
+    }
+
+    export interface ReverseProxyBackend {
+        options?: outputs.ingress.Options;
+        scheme: string;
+        serverpool_id: string;
+        target_port: number;
+    }
+
+    export interface ReverseProxyFrontEnd {
+        domain: string;
+        http_port?: number;
+        https_port?: number;
+        ip_address?: string;
+        letsencrypt?: outputs.ingress.LetsEncrypt;
+        scheme: string;
+    }
+
+    export interface ServerPoolHost {
+        address?: string;
+        host_id?: string;
+    }
+
+    export interface StickySessionCookie {
+        http_only?: boolean;
+        name?: string;
+        same_site?: string;
+        secure?: boolean;
+    }
+
+    export interface TLS {
+        domain?: string;
+        is_enabled?: boolean;
+        tls_termination?: boolean;
     }
 
 }

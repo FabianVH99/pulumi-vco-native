@@ -1,0 +1,11 @@
+{
+    "name": "tsc-cloudspace-example",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^16"
+    },
+    "dependencies": {
+        "@fabianv-cloud/vco": "^0.0.48",
+        "@pulumi/pulumi": "^3.0.0"
+    }
+}

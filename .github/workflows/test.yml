@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - main
+      - dev
 
 jobs:
   test:
@@ -21,12 +22,13 @@ jobs:
           wget https://go.dev/dl/go1.20.6.linux-amd64.tar.gz
           sudo tar -C /usr/local -xzf go1.20.6.linux-amd64.tar.gz
           echo "export PATH=$PATH:/usr/local/go/bin" >> $GITHUB_ENV
-      - name: Run tests
+      - name: Run testdata
         env:
           LAB_CUSTOMER: ${{ secrets.LAB_CUSTOMER }}
           LAB_URL: ${{ secrets.LAB_URL }}
           LAB_IAM_URL: ${{ secrets.LAB_IAM_URL }}
           LAB_TOKEN: ${{ secrets.LAB_TOKEN }}
         run: |
-          cd provider/cmd/pulumi-resource-vco/tests
-          go test helper_functions.go main_test.go -v
+          cd provider/pkg/testdata
+          go test helper_functions.go main_test.go -v -timeout 20m
+

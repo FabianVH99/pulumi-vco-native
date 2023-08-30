@@ -3,14 +3,16 @@ PROJECT_NAME := Pulumi Vco Resource Provider
 PACK             := vco
 PACKDIR          := sdk
 PROJECT          := github.com/fabianv-cloud/pulumi-vco-native
-NODE_MODULE_NAME := @pulumi/vco
-NUGET_PKG_NAME   := Pulumi.Vco
+NODE_MODULE_NAME := @fabianv-cloud/vco
+NUGET_PKG_NAME   := Fabianv-cloud.Vco
 
 PROVIDER        := pulumi-resource-${PACK}
+CODEGEN         := pulumi-gen-${PACK}
 VERSION         ?= $(shell pulumictl get version)
 PROVIDER_PATH   := provider
 VERSION_PATH     := ${PROVIDER_PATH}/cmd/main.Version
 
+SCHEMA_FILE     := provider/cmd/pulumi-resource-vco/schema.json
 GOPATH			:= $(shell go env GOPATH)
 
 WORKING_DIR     := $(shell pwd)
@@ -20,6 +22,11 @@ ensure::
 	cd provider && go mod tidy
 	cd sdk && go mod tidy
 	cd tests && go mod tidy
+
+codegen::
+	(cd provider && VERSION=${VERSION} go generate cmd/${PROVIDER}/main.go)
+	(cd provider && go build -o $(WORKING_DIR)/bin/${CODEGEN} -ldflags "-X ${PROJECT}/${VERSION_PATH}=${VERSION}" ${PROJECT}/${PROVIDER_PATH}/cmd/$(CODEGEN))
+	$(WORKING_DIR)/bin/${CODEGEN} $(SCHEMA_FILE) --version ${VERSION}
 
 provider::
 	(cd provider && go build -o $(WORKING_DIR)/bin/${PROVIDER} -ldflags "-X ${PROJECT}/${VERSION_PATH}=${VERSION}" $(PROJECT)/${PROVIDER_PATH}/cmd/$(PROVIDER))
@@ -33,31 +40,37 @@ test_provider::
 dotnet_sdk:: DOTNET_VERSION := $(shell pulumictl get version --language dotnet)
 dotnet_sdk::
 	rm -rf sdk/dotnet
-	pulumi package gen-sdk $(WORKING_DIR)/bin/$(PROVIDER) --language dotnet
+	chmod +x $(WORKING_DIR)/bin/$(PROVIDER)
+	pulumi package gen-sdk --language dotnet $(SCHEMA_FILE)
 	cd ${PACKDIR}/dotnet/&& \
 		echo "${DOTNET_VERSION}" >version.txt && \
 		dotnet build /p:Version=${DOTNET_VERSION}
 
-go_sdk:: $(WORKING_DIR)/bin/$(PROVIDER)
+go_sdk::
 	rm -rf sdk/go
-	pulumi package gen-sdk $(WORKING_DIR)/bin/$(PROVIDER) --language go
+	pulumi package gen-sdk --language go $(SCHEMA_FILE)
 
 nodejs_sdk:: VERSION := $(shell pulumictl get version --language javascript)
 nodejs_sdk::
 	rm -rf sdk/nodejs
-	pulumi package gen-sdk $(WORKING_DIR)/bin/$(PROVIDER) --language nodejs
+	chmod +x $(WORKING_DIR)/bin/$(PROVIDER)
+	pulumi package gen-sdk --language nodejs $(SCHEMA_FILE)
 	cd ${PACKDIR}/nodejs/ && \
 		yarn install && \
-		yarn run tsc && \
-		cp -R scripts/ bin && \
-		cp ../../README.md ../../LICENSE package.json yarn.lock bin/ && \
-		sed -i.bak 's/$${VERSION}/$(VERSION)/g' bin/package.json && \
-		rm ./bin/package.json.bak
+		yarn run tsc
+	cp README.md LICENSE ${PACKDIR}/nodejs/package.json ${PACKDIR}/nodejs/yarn.lock ${PACKDIR}/nodejs/bin/
+	sed -i.bak 's/$${VERSION}/$(VERSION)/g' ${PACKDIR}/nodejs/bin/package.json
+	grep -rlZ '@pulumi/vco' $(WORKING_DIR)/${PACKDIR}/nodejs/ | xargs -0 sed -i 's/@pulumi\/vco/@fabianv-cloud\/vco/g'
+	sed -i.bak '/"install"/d' ${PACKDIR}/nodejs/bin/package.json
+	sed -i.bak '/"build": "tsc",/s/,//' ${PACKDIR}/nodejs/bin/package.json
+	sed -i.bak '/"install"/d' ${PACKDIR}/nodejs/package.json
+	sed -i.bak '/"build": "tsc",/s/,//' ${PACKDIR}/nodejs/package.json
 
 python_sdk:: PYPI_VERSION := $(shell pulumictl get version --language python)
 python_sdk::
 	rm -rf sdk/python
-	pulumi package gen-sdk $(WORKING_DIR)/bin/$(PROVIDER) --language python
+	chmod +x $(WORKING_DIR)/bin/$(PROVIDER)
+	pulumi package gen-sdk --language python $(SCHEMA_FILE)
 	cp README.md ${PACKDIR}/python/
 	cd ${PACKDIR}/python/ && \
 		python3 setup.py clean --all 2>/dev/null && \
@@ -67,9 +80,11 @@ python_sdk::
 		cd ./bin && python3 setup.py build sdist
 
 .PHONY: build
-build:: provider dotnet_sdk go_sdk nodejs_sdk python_sdk
+build:: provider build_sdks
 
-# Required for the codegen action that runs in pulumi/pulumi
+.PHONY: build_sdks
+build_sdks: codegen dotnet_sdk go_sdk nodejs_sdk python_sdk
+
 only_build:: build
 
 lint::
@@ -77,12 +92,10 @@ lint::
 		pushd $$DIR && golangci-lint run -c ../.golangci.yml --timeout 10m && popd ; \
 	done
 
-
 install:: install_nodejs_sdk install_dotnet_sdk
 	cp $(WORKING_DIR)/bin/${PROVIDER} ${GOPATH}/bin
 
-
-GO_TEST 	 := go test -v -count=1 -cover -timeout 2h -parallel ${TESTPARALLELISM}
+GO_TEST := go test -v -count=1 -cover -timeout 2h -parallel ${TESTPARALLELISM}
 
 test_all::
 	cd provider/pkg && $(GO_TEST) ./...
@@ -105,3 +118,6 @@ install_go_sdk::
 install_nodejs_sdk::
 	-yarn unlink --cwd $(WORKING_DIR)/sdk/nodejs/bin
 	yarn link --cwd $(WORKING_DIR)/sdk/nodejs/bin
+
+test::
+	cd examples && go test -v -tags=all -timeout 2h

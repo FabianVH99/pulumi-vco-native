@@ -1,0 +1,31 @@
+before:
+  hooks:
+    - make codegen
+archives:
+  - id: archive
+    name_template: '{{ .Binary }}-{{ .Tag }}-{{ .Os }}-{{ .Arch }}'
+    format_overrides:
+      - goos: windows
+        format: zip
+builds:
+  - binary: pulumi-resource-vco
+    dir: provider
+    env:
+      - CGO_ENABLED=0
+    goarch:
+      - amd64
+      - arm64
+    goos:
+      - darwin
+      - windows
+      - linux
+    ldflags:
+      - -X github.com/fabianv-cloud/pulumi-vco-native/provider/cmd/pulumi-resource-vco/version.Version={{.Tag }}
+    main: ./cmd/pulumi-resource-vco/
+changelog:
+  skip: true
+release:
+  disable: false
+  prerelease: auto
+snapshot:
+  name_template: '{{ .Tag }}-SNAPSHOT'
