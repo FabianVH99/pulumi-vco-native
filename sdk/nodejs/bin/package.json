@@ -1,6 +1,6 @@
 {
     "name": "@fabianv-cloud/vco",
-    "version": "v0.0.45+dirty",
+    "version": "v0.0.46+dirty",
     "keywords": [
         "whitesky.cloud",
         "pulumi",
@@ -11,8 +11,7 @@
     "homepage": "https://whitesky.cloud/",
     "repository": "https://github.com/fabianv-cloud/pulumi-vco-native",
     "scripts": {
-        "build": "tsc",
-        "install": "node scripts/install-pulumi-plugin.js resource vco v0.0.45+dirty"
+        "build": "tsc"
     },
     "dependencies": {
         "@pulumi/pulumi": "^3.0.0"
