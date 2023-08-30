@@ -12,14 +12,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     ],\
     "dependencyTreeRoots": [\
       {\
-        "name": "typescript-cloudspace-example",\
+        "name": "tsc-cloudspace-example",\
         "reference": "workspace:."\
       }\
     ],\
     "enableTopLevelFallback": true,\
     "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
     "fallbackExclusionList": [\
-      ["typescript-cloudspace-example", ["workspace:."]]\
+      ["tsc-cloudspace-example", ["workspace:."]]\
     ],\
     "fallbackPool": [\
     ],\
@@ -28,7 +28,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
-            ["@fabianv-cloud/vco", "npm:0.0.46"],\
+            ["@fabianv-cloud/vco", "npm:0.0.48"],\
             ["@pulumi/pulumi", "npm:3.79.0"],\
             ["@types/node", "npm:16.18.46"]\
           ],\
@@ -36,10 +36,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fabianv-cloud/vco", [\
-        ["npm:0.0.46", {\
-          "packageLocation": "./.yarn/unplugged/@fabianv-cloud-vco-npm-0.0.46-35a272338e/node_modules/@fabianv-cloud/vco/",\
+        ["npm:0.0.48", {\
+          "packageLocation": "./.yarn/cache/@fabianv-cloud-vco-npm-0.0.48-317bd151a7-fc1b9f39b3.zip/node_modules/@fabianv-cloud/vco/",\
           "packageDependencies": [\
-            ["@fabianv-cloud/vco", "npm:0.0.46"],\
+            ["@fabianv-cloud/vco", "npm:0.0.48"],\
             ["@pulumi/pulumi", "npm:3.79.0"]\
           ],\
           "linkType": "HARD"\
@@ -550,10 +550,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["array.prototype.reduce", [\
-        ["npm:1.0.5", {\
-          "packageLocation": "./.yarn/cache/array.prototype.reduce-npm-1.0.5-161dafd7db-f44691395f.zip/node_modules/array.prototype.reduce/",\
+        ["npm:1.0.6", {\
+          "packageLocation": "./.yarn/cache/array.prototype.reduce-npm-1.0.6-d706585613-c709c3f5ca.zip/node_modules/array.prototype.reduce/",\
           "packageDependencies": [\
-            ["array.prototype.reduce", "npm:1.0.5"],\
+            ["array.prototype.reduce", "npm:1.0.6"],\
             ["call-bind", "npm:1.0.2"],\
             ["define-properties", "npm:1.2.0"],\
             ["es-abstract", "npm:1.22.1"],\
@@ -1555,7 +1555,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/object.getownpropertydescriptors-npm-2.1.6-6cf48de07f-7757ce0ef6.zip/node_modules/object.getownpropertydescriptors/",\
           "packageDependencies": [\
             ["object.getownpropertydescriptors", "npm:2.1.6"],\
-            ["array.prototype.reduce", "npm:1.0.5"],\
+            ["array.prototype.reduce", "npm:1.0.6"],\
             ["call-bind", "npm:1.0.2"],\
             ["define-properties", "npm:1.2.0"],\
             ["es-abstract", "npm:1.22.1"],\
@@ -2016,6 +2016,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["tsc-cloudspace-example", [\
+        ["workspace:.", {\
+          "packageLocation": "./",\
+          "packageDependencies": [\
+            ["tsc-cloudspace-example", "workspace:."],\
+            ["@fabianv-cloud/vco", "npm:0.0.48"],\
+            ["@pulumi/pulumi", "npm:3.79.0"],\
+            ["@types/node", "npm:16.18.46"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
       ["typed-array-buffer", [\
         ["npm:1.0.0", {\
           "packageLocation": "./.yarn/cache/typed-array-buffer-npm-1.0.0-95cb610310-3e0281c79b.zip/node_modules/typed-array-buffer/",\
@@ -2074,18 +2086,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["typescript", "patch:typescript@npm%3A3.8.3#~builtin<compat/typescript>::version=3.8.3&hash=c44097"]\
           ],\
           "linkType": "HARD"\
-        }]\
-      ]],\
-      ["typescript-cloudspace-example", [\
-        ["workspace:.", {\
-          "packageLocation": "./",\
-          "packageDependencies": [\
-            ["typescript-cloudspace-example", "workspace:."],\
-            ["@fabianv-cloud/vco", "npm:0.0.46"],\
-            ["@pulumi/pulumi", "npm:3.79.0"],\
-            ["@types/node", "npm:16.18.46"]\
-          ],\
-          "linkType": "SOFT"\
         }]\
       ]],\
       ["unbox-primitive", [\

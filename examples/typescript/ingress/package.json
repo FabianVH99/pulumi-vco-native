@@ -1,5 +1,5 @@
 {
-    "name": "tsc-cloudspace-example",
+    "name": "tsc-ingress-example",
     "main": "index.ts",
     "devDependencies": {
         "@types/node": "^16"
