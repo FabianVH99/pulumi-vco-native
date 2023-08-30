@@ -11,7 +11,7 @@
     "homepage": "https://whitesky.cloud/",
     "repository": "https://github.com/fabianv-cloud/pulumi-vco-native",
     "scripts": {
-        "build": "tsc"
+        "build": "tsc",
     },
     "dependencies": {
         "@pulumi/pulumi": "^3.0.0"
