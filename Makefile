@@ -45,6 +45,7 @@ dotnet_sdk::
 	cd ${PACKDIR}/dotnet/&& \
 		echo "${DOTNET_VERSION}" >version.txt && \
 		dotnet build /p:Version=${DOTNET_VERSION}
+	cp docs/dotnet/README.md ${PACKDIR}/dotnet/
 
 go_sdk::
 	rm -rf sdk/go
@@ -58,7 +59,8 @@ nodejs_sdk::
 	cd ${PACKDIR}/nodejs/ && \
 		yarn install && \
 		yarn run tsc
-	cp README.md LICENSE ${PACKDIR}/nodejs/package.json ${PACKDIR}/nodejs/yarn.lock ${PACKDIR}/nodejs/bin/
+	cp docs/nodejs/README.md ${PACKDIR}/nodejs/
+	cp docs/nodejs/README.md LICENSE ${PACKDIR}/nodejs/package.json ${PACKDIR}/nodejs/yarn.lock ${PACKDIR}/nodejs/bin/
 	sed -i.bak 's/$${VERSION}/$(VERSION)/g' ${PACKDIR}/nodejs/bin/package.json
 	grep -rlZ '@pulumi/vco' $(WORKING_DIR)/${PACKDIR}/nodejs/ | xargs -0 sed -i 's/@pulumi\/vco/@fabianv-cloud\/vco/g'
 	sed -i.bak '/"install"/d' ${PACKDIR}/nodejs/bin/package.json
@@ -71,7 +73,7 @@ python_sdk::
 	rm -rf sdk/python
 	chmod +x $(WORKING_DIR)/bin/$(PROVIDER)
 	pulumi package gen-sdk --language python $(SCHEMA_FILE)
-	cp README.md ${PACKDIR}/python/
+	cp docs/python/README.md ${PACKDIR}/python/
 	cd ${PACKDIR}/python/ && \
 		python3 setup.py clean --all 2>/dev/null && \
 		rm -rf ./bin/ ../python.bin/ && cp -R . ../python.bin && mv ../python.bin ./bin && \

@@ -1,7 +1,4 @@
-[![NPM version](https://badge.fury.io/js/@fabianv-cloud%2Fvco.svg)](https://www.npmjs.com/package/@fabianv-cloud/vco)
-[![PyPI version](https://badge.fury.io/py/pulumi-vco.svg)](https://badge.fury.io/py/pulumi-vco)
-[![NuGet version](https://badge.fury.io/nu/Pulumi.Vco.svg)](https://badge.fury.io/nu/Pulumi.Vco)
-# Pulumi Vco Native
+# pulumi-vco package
 
 A Pulumi provider for Whitesky.Cloud Virtual Cloud Operators.
 <br><br>
@@ -10,18 +7,17 @@ Please read the documentation or consult the API docs in your vco portal in orde
 
 ## Install plugin binary
 
-Before using this package you need to install the resource-vco plugin. The latest release of which can be found [here](https://github.com/fabianv-cloud/pulumi-vco-native).
-You then have to install the plugin on your system by storing the contents of the zipped file in: <br>
-* Windows: %USERPROFILE%\.pulumi\plugins\resource-vco-{VERSION}
-* Linux and MacOS: ~/.pulumi/plugins/resource-vco-{VERSION}
-<br>
-
-When you have moved the plugin to the appropriate directory you can install it using: 
-```commandline
-pulumi plugin install resource vco {VERSION}
-```
+Before using this package you need to install the resource-vco pulumi plugin. The latest release of which can be found [here](https://github.com/fabianv-cloud/pulumi-vco-native).
+Instructions are provided in the repository's README.
 
 ## Install package
-You can find links to the various packages at the top of the Readme. Once you have installed the desired package
-you can import it into your program. Please consult the [examples](https://github.com/fabianv-cloud/pulumi-vco-native/tree/main/examples)
+
+You can install the *pulumi-vco* package with pip:
+
+```commandline
+pip install pulumi-vco
+```
+
+Once you have installed the package
+you can import it into your program. Please consult the [examples](https://github.com/fabianv-cloud/pulumi-vco-native/tree/main/examples/python)
 to figure out how to get started.
