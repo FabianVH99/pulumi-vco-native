@@ -11,23 +11,6 @@ from subprocess import check_call
 VERSION = "0.0.0"
 PLUGIN_VERSION = "0.0.0"
 
-class InstallPluginCommand(install):
-    def run(self):
-        install.run(self)
-        try:
-            check_call(['pulumi', 'plugin', 'install', 'resource', 'vco', PLUGIN_VERSION])
-        except OSError as error:
-            if error.errno == errno.ENOENT:
-                print(f"""
-                There was an error installing the vco resource provider plugin.
-                It looks like `pulumi` is not installed on your system.
-                Please visit https://pulumi.com/ to install the Pulumi CLI.
-                You may try manually installing the plugin by running
-                `pulumi plugin install resource vco {PLUGIN_VERSION}`
-                """)
-            else:
-                raise
-
 
 def readme():
     try:
@@ -43,9 +26,6 @@ setup(name='pulumi_vco',
       description="The Whitesky.Cloud Vco Provider for Pulumi enables you to manipulate resources in the vco portal.",
       long_description=readme(),
       long_description_content_type='text/markdown',
-      cmdclass={
-          'install': InstallPluginCommand,
-      },
       keywords='whitesky.cloud pulumi vco category/utility kind/native',
       url='https://whitesky.cloud/',
       project_urls={

@@ -80,6 +80,10 @@ python_sdk::
 		sed -i.bak -e 's/^VERSION = .*/VERSION = "$(PYPI_VERSION)"/g' -e 's/^PLUGIN_VERSION = .*/PLUGIN_VERSION = "$(VERSION)"/g' ./bin/setup.py && \
 		rm ./bin/setup.py.bak && \
 		cd ./bin && python3 setup.py build sdist
+	sed -i '/class InstallPluginCommand/,/^[[:space:]]*$$/d' ${PACKDIR}/python/setup.py
+	sed -i '/class InstallPluginCommand/,/^[[:space:]]*$$/d' ${PACKDIR}/python/bin/setup.py
+	sed -i '/cmdclass={/,/},/d' ${PACKDIR}/python/setup.py
+	sed -i '/cmdclass={/,/},/d' ${PACKDIR}/python/bin/setup.py
 
 .PHONY: build
 build:: provider build_sdks

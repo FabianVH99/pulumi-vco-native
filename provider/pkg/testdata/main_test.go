@@ -225,7 +225,7 @@ func TestProvider(t *testing.T) {
 		_, state, err := loadBalancer.Create(nil, "lb-test-pulumi", ingress.LoadBalancerArgs{
 			URL:          url,
 			Token:        token,
-			CustomerID:   url,
+			CustomerID:   customer,
 			CloudSpaceID: CloudSpaceState.CloudSpaceID,
 			Name:         "Pulumi_lb_test",
 			Type:         "tcp",
@@ -239,7 +239,7 @@ func TestProvider(t *testing.T) {
 		updatedState, err := loadBalancer.Update(nil, "lb-test-pulumi", state, ingress.LoadBalancerArgs{
 			URL:          url,
 			Token:        token,
-			CustomerID:   url,
+			CustomerID:   customer,
 			CloudSpaceID: CloudSpaceState.CloudSpaceID,
 			Name:         "Pulumi_lb_test",
 			Type:         "udp",
@@ -260,7 +260,7 @@ func TestProvider(t *testing.T) {
 		_, state, err := reverseProxy.Create(nil, "rp-test-pulumi", ingress.ReverseProxyArgs{
 			URL:            url,
 			Token:          token,
-			CustomerID:     url,
+			CustomerID:     customer,
 			CloudSpaceID:   CloudSpaceState.CloudSpaceID,
 			Name:           "Reverse_Proxy_Pulumi",
 			Domain:         "Pulumi",
@@ -277,7 +277,7 @@ func TestProvider(t *testing.T) {
 		updatedState, err := reverseProxy.Update(nil, "rp-test-pulumi", state, ingress.ReverseProxyArgs{
 			URL:            url,
 			Token:          token,
-			CustomerID:     url,
+			CustomerID:     customer,
 			CloudSpaceID:   CloudSpaceState.CloudSpaceID,
 			Name:           "Reverse_Proxy_Pulumi",
 			Domain:         "Pulumi",
