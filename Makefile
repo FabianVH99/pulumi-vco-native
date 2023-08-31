@@ -73,7 +73,11 @@ python_sdk::
 	rm -rf sdk/python
 	chmod +x $(WORKING_DIR)/bin/$(PROVIDER)
 	pulumi package gen-sdk --language python $(SCHEMA_FILE)
+	sed -i '/class InstallPluginCommand/,/^[[:space:]]*$$/d' ${PACKDIR}/python/bin/setup.py
+	sed -i '/cmdclass={/,/},/d' ${PACKDIR}/python/bin/setup.py
 	cp docs/python/README.md ${PACKDIR}/python/
+	sed -i '/class InstallPluginCommand/,/^[[:space:]]*$$/d' ${PACKDIR}/python/setup.py
+	sed -i '/cmdclass={/,/},/d' ${PACKDIR}/python/setup.py
 	cd ${PACKDIR}/python/ && \
 		python3 setup.py clean --all 2>/dev/null && \
 		rm -rf ./bin/ ../python.bin/ && cp -R . ../python.bin && mv ../python.bin ./bin && \
@@ -116,7 +120,8 @@ install_dotnet_sdk::
 	find . -name '*.nupkg' -print -exec cp -p {} ${WORKING_DIR}/nuget \;
 
 install_python_sdk::
-	#target intentionally blank
+	sed -i '/cmdclass={/,/},/d' ${PACKDIR}/python/bin/setup.py
+
 
 install_go_sdk::
 	#target intentionally blank
