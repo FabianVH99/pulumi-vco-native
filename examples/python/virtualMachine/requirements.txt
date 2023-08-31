@@ -1,1 +1,11 @@
-pulumi>=3.0.0,<4.0.0
+Arpeggio==2.0.2
+attrs==23.1.0
+dill==0.3.6
+grpcio==1.56.0
+parver==0.4
+protobuf==4.23.4
+pulumi==3.75.0
+pulumi-vco==1.0.1
+PyYAML==6.0.1
+semver==2.13.0
+six==1.16.0

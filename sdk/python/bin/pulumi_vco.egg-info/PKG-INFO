@@ -1,12 +1,10 @@
 Metadata-Version: 2.1
 Name: pulumi-vco
-Version: 0.0.49a1693483789+dirty
+Version: 1.0.1
 Summary: The Whitesky.Cloud Vco Provider for Pulumi enables you to manipulate resources in the vco portal.
 Home-page: https://whitesky.cloud/
-License: UNKNOWN
 Project-URL: Repository, https://github.com/fabianv-cloud/pulumi-vco-native
 Keywords: whitesky.cloud pulumi vco category/utility kind/native
-Platform: UNKNOWN
 Requires-Python: >=3.7
 Description-Content-Type: text/markdown
 
@@ -33,4 +31,3 @@ pip install pulumi-vco
 Once you have installed the package
 you can import it into your program. Please consult the [examples](https://github.com/fabianv-cloud/pulumi-vco-native/tree/main/examples/python)
 to figure out how to get started.
-
