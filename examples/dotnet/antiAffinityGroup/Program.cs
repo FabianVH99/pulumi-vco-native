@@ -36,7 +36,7 @@ return await Deployment.RunAsync(() =>
         CustomerID = customerId,
         Cloudspace_id = cloudspace.Cloudspace_id,
         Group_id = "Pulumi_AAG_group",
-        Spread = 2,
+        Spread = 3,
     });
 
     var virtualMachine = new VirtualMachine("pulumi-vm", new VirtualMachineArgs
@@ -53,6 +53,16 @@ return await Deployment.RunAsync(() =>
        Disk_size = 250,
        Boot_type = "bios",
    });
+
+    var antiAffinityGroupVM = new AntiAffinityGroupVM("pulumi-antiAffinityGroupVM", new AntiAffinityGroupVMArgs
+        {
+            Url = url,
+            Token = token,
+            CustomerID = customerId,
+            Cloudspace_id = cloudspace.Cloudspace_id,
+            Group_id = antiAffinityGroup.Group_id,
+            Vm_id = virtualMachine.Vm_id,
+        });
 
     return new Dictionary<string, object?>
    {
