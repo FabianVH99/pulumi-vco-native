@@ -55,14 +55,14 @@ return await Deployment.RunAsync(() =>
    });
 
     var antiAffinityGroupVM = new AntiAffinityGroupVM("pulumi-antiAffinityGroupVM", new AntiAffinityGroupVMArgs
-    {
-        Url = url,
-        Token = token,
-        CustomerID = customerId,
-        Cloudspace_id = cloudspace.Cloudspace_id,
-        Group_id = antiAffinityGroup.Group_id,
-        Vm_id = virtualMachine.Vm_id,
-    });
+        {
+            Url = url,
+            Token = token,
+            CustomerID = customerId,
+            Cloudspace_id = cloudspace.Cloudspace_id,
+            Group_id = antiAffinityGroup.Group_id,
+            Vm_id = virtualMachine.Vm_id,
+        });
 
     return new Dictionary<string, object?>
    {
