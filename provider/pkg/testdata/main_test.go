@@ -151,7 +151,7 @@ func TestProvider(t *testing.T) {
 			CloudSpaceID:        CloudSpaceState.CloudSpaceID,
 			ExternalNetworkID:   strconv.Itoa(CloudSpaceState.ExternalNetworkID),
 			ExternalNetworkType: "external",
-			ExternalNetworkIP:   "185.151.60.222",
+			ExternalNetworkIP:   "",
 			Metric:              503,
 		}, false)
 		assert.NoError(t, err)
