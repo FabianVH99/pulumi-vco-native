@@ -73,6 +73,10 @@ python_sdk::
 	rm -rf sdk/python
 	chmod +x $(WORKING_DIR)/bin/$(PROVIDER)
 	pulumi package gen-sdk --language python $(SCHEMA_FILE)
+	sed -i '/class InstallPluginCommand/,/^[[:space:]]*$$/d' ${PACKDIR}/python/bin/setup.py
+	sed -i '/cmdclass={/,/},/d' ${PACKDIR}/python/bin/setup.py
+	sed -i '/class InstallPluginCommand/,/^[[:space:]]*$$/d' ${PACKDIR}/python/setup.py
+	sed -i '/cmdclass={/,/},/d' ${PACKDIR}/python/setup.py
 	cp docs/python/README.md ${PACKDIR}/python/
 	cd ${PACKDIR}/python/ && \
 		python3 setup.py clean --all 2>/dev/null && \
